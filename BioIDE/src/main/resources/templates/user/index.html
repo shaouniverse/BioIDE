@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>BioIDE</title>
+    <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <!-- 引入css -->
+    <span th:substituteby="pageFrame/basicsCss :: copy" />
+</head>
+<body>
+<header id="header" class="header header--fixed hide-from-print" role="banner">
+    <!-- 引入Menu -->
+    <span th:substituteby="pageFrame/basicsMenu :: copy" />
+</header>
+<br/>
+<br/>
+<br/>
+<article>
+    <div class="container">
+        <h2>BioIDE</h2>
+        <p class="complimentary">Note: This is BioIDE.</p>
+
+        <h2>User 表</h2>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">操作</h3>
+            </div>
+            <div class="panel-body">
+                <a class="btn btn-success wts-btn" th:href="@{/user/add}" href="/user/add">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    &nbsp;<span>ADD</span>
+                </a>
+                <button type="button" class="btn btn-warning wts-btn" onclick="editSelectObject('user');">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    &nbsp;<span>EDIT</span>
+                </button>
+                <button type="button" class="btn btn-danger wts-btn" onclick="removeSelectObject('user');">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    &nbsp;<span>REMOVE</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="table table-responsive">
+            <table
+                    id="results_table"
+                    data-locale="zh-CN"
+                    data-classes="table table-hover table-condensed"
+                    data-toggle="table"
+                    th:attr="data-url=@{/user/rest/list}"
+                    data-pagination="true"
+                    data-side-pagination="server"
+                    data-page-list="[10, 20, 30, 50, 100]"
+                    data-search="true"
+                    data-show-columns="true"
+                    data-show-toggle="true"
+                    data-toolbar="#toolbar"
+                    data-show-export="false"
+                    data-show-refresh="true"
+                    data-export-types="['excel', 'txt']">
+                <thead>
+                <tr>
+                    <th data-field="select" data-align="center" data-sortable="false"></th>
+                    <th data-field="userName" data-align="center" data-sortable="true">用户名</th>
+                    <th data-field="email" data-align="center" data-sortable="true">邮箱</th>
+                    <th data-field="phone" data-align="center" data-sortable="true">电话</th>
+                    <th data-field="role" data-align="center" data-sortable="true">角色</th>
+                    <th data-field="adddate" data-align="center" data-sortable="true">注册时间</th>
+                    <th data-field="edit" data-align="center" data-sortable="false">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</article>
+<footer>
+    <!-- 引入Footer -->
+    <span th:substituteby="pageFrame/basicsFooter :: copy" />
+    <!-- 引入Copyright -->
+    <span th:substituteby="pageFrame/basicsCopyright :: copy" />
+</footer>
+<!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
+<span th:substituteby="pageFrame/basicsJs :: copy" />
+<!-- page_script -->
+<script th:src="@{/js/tableScript.js}"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>BioIDE</title>
+    <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <!-- 引入css -->
+    <span th:substituteby="pageFrame/basicsCss :: copy" />
+</head>
+<body>
+<header id="header" class="header header--fixed hide-from-print" role="banner">
+    <!-- 引入Menu -->
+    <span th:substituteby="pageFrame/basicsMenu :: copy" />
+</header>
+<br/>
+<br/>
+<br/>
+<article>
+    <div class="container">
+        <h2>BioIDE</h2>
+        <p class="complimentary">Note: This is BioIDE.</p>
+
+        <h2>What's it all about?</h2>
+
+        <p>BioIDE is th best !!!!!!</p>
+
+        <h3>Why use it?</h3>
+
+        <p>BioIDE is th best !!!!!!</p>
+        <p>BioIDE is th best !!!!!!</p>
+        <p>BioIDE is th best !!!!!!</p>
+
+        <h3>How does it work?</h3>
+
+        <p>BioIDE is th best !!!!!!</p>
+
+        <pre class="language-markup"><code>&lt;!-- BioIDE is th best !!!!!! --&gt;
+&lt;BioIDE is th best !!!!!!"&gt;
+
+&lt;!-- BioIDE is th best !!!!!! --&gt;
+&lt;BioIDE is th best !!!!!!"&gt;
+
+&lt;!-- BioIDE is th best !!!!!! --&gt;
+&lt;BioIDE is th best !!!!!!"&gt;
+</code></pre>
+
+        <p>BioIDE is th best !!!!!!</p>
+
+        <h2>Usage</h2>
+
+        <p>BioIDE is th best !!!!!!</p>
+
+
+        <h3>Options</h3>
+
+        <p>BioIDE is th best !!!!!!</p>
+
+        <pre class="language-javascript"><code>{
+    // vertical offset in px before element is first unpinned
+    offset : 0,
+    // scroll tolerance in px before state changes
+    tolerance : 0,
+    // or you can specify tolerance individually for up/down scroll
+    tolerance : {
+        up : 5,
+        down : 0
+    },
+    // css classes to apply
+    classes : {
+        // when element is initialised
+        initial : "headroom",
+        // when scrolling up
+        pinned : "headroom--pinned",
+        // when scrolling down
+        unpinned : "headroom--unpinned",
+        // when above offset
+        top : "headroom--top",
+        // when below offset
+        notTop : "headroom--not-top",
+        // when at bottom of scoll area
+        bottom : "headroom--bottom",
+        // when not at bottom of scroll area
+        notBottom : "headroom--not-bottom"
+    },
+    // element to listen to scroll events on, defaults to `window`
+    scroller : someElement,
+    // callback when pinned, `this` is headroom object
+    onPin : function() {},
+    // callback when unpinned, `this` is headroom object
+    onUnpin : function() {},
+    // callback when above offset, `this` is headroom object
+    onTop : function() {},
+    // callback when below offset, `this` is headroom object
+    onNotTop : function() {},
+    // callback when at bottom of page, `this` is headroom object
+    onBottom : function() {},
+    // callback when moving away from bottom of page, `this` is headroom object
+    onNotBottom : function() {}
+}
+</code></pre>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+        <h3>CSS</h3>
+
+        <p>
+            BioIDE is th best !!!!!!
+        </p>
+
+        <h2>Share this on:</h2>
+
+    </div>
+</article>
+<footer>
+    <!-- 引入Footer -->
+    <span th:substituteby="pageFrame/basicsFooter :: copy" />
+    <!-- 引入Copyright -->
+    <span th:substituteby="pageFrame/basicsCopyright :: copy" />
+</footer>
+<!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
+<span th:substituteby="pageFrame/basicsJs :: copy" />
+<script>
+    (function() {
+        var header = document.querySelector("#header");
+
+        if(window.location.hash) {
+            header.classList.add("headroom--unpinned");
+        }
+
+        var headroom = new Headroom(header, {
+            tolerance: {
+                down : 1,
+                up : 1
+            },
+            offset : 1,
+            classes: {
+                "initial": "animated",
+                "pinned": "swingInX",
+                "unpinned": "swingOutX"
+            }
+        });
+        headroom.init();
+
+    }());
+</script>
+</body>
+</html>

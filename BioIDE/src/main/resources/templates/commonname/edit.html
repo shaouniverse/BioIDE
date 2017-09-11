@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, commonname-scalable=0"/>
+    <title>BioIDE</title>
+    <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <!-- 引入css -->
+    <span th:substituteby="pageFrame/basicsCss :: copy" />
+</head>
+<body>
+<header id="header" class="header header--fixed hide-from-print" role="banner">
+    <!-- 引入Menu -->
+    <span th:substituteby="pageFrame/basicsMenu :: copy" />
+</header>
+<br/>
+<br/>
+<br/>
+<article>
+    <div class="container">
+        <h2>BioIDE</h2>
+        <p class="complimentary">Note: This is BioIDE.</p>
+
+        <h2>Commonname 表</h2>
+
+
+        <div class="well">
+            <form id="thisForm" class="form-horizontal" action="/commonname/save" th:action="@{/commonname/save}" method="post" th:object="${thisCommonname}">
+                <!-- 引入form -->
+                <span th:substituteby="commonname/form :: copy" />
+                <p></p>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="pull-right">
+                            <a type="button" class="btn btn-primary wts-btn" th:href="@{/commonname}" href="/commonname">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span>取消编辑并返回列表</span>
+                            </a>
+                            <button type="button" class="btn btn-warning wts-btn" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="clearInput();">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span>清空表单</span>
+                            </button>
+                            <button type="submit" class="btn btn-success wts-btn">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span>提交</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</article>
+<footer>
+    <!-- 引入Footer -->
+    <span th:substituteby="pageFrame/basicsFooter :: copy" />
+    <!-- 引入Copyright -->
+    <span th:substituteby="pageFrame/basicsCopyright :: copy" />
+</footer>
+<!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
+<span th:substituteby="pageFrame/basicsJs :: copy" />
+<!-- page_script -->
+<script th:src="@{/js/tableScript.js}"></script>
+</body>
+</html>

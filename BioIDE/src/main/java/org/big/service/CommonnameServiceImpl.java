@@ -3,10 +3,12 @@ package org.big.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.big.common.QueryTool;
 import org.big.entity.Commonname;
 import org.big.repository.CommonnameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -55,13 +57,11 @@ public class CommonnameServiceImpl implements CommonnameService {
             order="desc";
         }
         JSONObject thisTable= new JSONObject();
-        thisTable.put("total",this.commonnameRepository.countSearchInfoQuery(searchText));
         JSONArray rows = new JSONArray();
         List<Commonname> thisList=new ArrayList<>();
-        if(order.equals("asc"))
-            thisList = this.commonnameRepository.searchInfo(searchText,new Sort(Sort.Direction.ASC, sort));
-        else
-            thisList = this.commonnameRepository.searchInfo(searchText,new Sort(Sort.Direction.DESC, sort));
+        Page<Commonname> thisPage=this.commonnameRepository.searchInfo(searchText, QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        thisTable.put("total",thisPage.getTotalElements());
+        thisList=thisPage.getContent();
         for(int i=0;i<thisList.size();i++){
             JSONObject row= new JSONObject();
             String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";

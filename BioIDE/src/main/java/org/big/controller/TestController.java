@@ -39,7 +39,7 @@ public class TestController {
         thisUser.setPhone("www");
         thisUser.setUserName("www");
         thisUser.setAdddate(new Timestamp(System.currentTimeMillis()));
-        this.userService.addNew(thisUser);
+        this.userService.saveOne(thisUser);
         return "test";
     }
 
@@ -62,7 +62,7 @@ public class TestController {
         thisUser.setPhone("www");
         thisUser.setUserName("www");
         thisUser.setAdddate(new Timestamp(System.currentTimeMillis()));
-        this.userService.addNew(thisUser);
+        this.userService.saveOne(thisUser);
         return "test";
     }
 

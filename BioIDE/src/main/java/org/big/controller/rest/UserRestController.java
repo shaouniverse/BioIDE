@@ -4,14 +4,18 @@ import com.alibaba.fastjson.JSON;
 import org.big.entity.User;
 import org.big.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.rowset.Predicate;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -19,7 +23,7 @@ import java.sql.Timestamp;
  */
 @RestController  //返回json
 @Controller
-@RequestMapping("/user/rest/")
+@RequestMapping("/user/rest")
 public class UserRestController {
 
     @Autowired

@@ -1,8 +1,10 @@
 package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
+import org.big.entity.Commonname;
 import org.big.service.CommonnameServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController  //返回json
 @Controller
-@RequestMapping("/commonname/rest/")
+@RequestMapping("/commonname/rest")
 public class CommonnameRestController {
 
     @Autowired
@@ -55,4 +57,5 @@ public class CommonnameRestController {
             return false;
         }
     }
+
 }

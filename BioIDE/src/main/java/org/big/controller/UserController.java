@@ -50,7 +50,7 @@ public class UserController {
     //save
     @RequestMapping(value="/save", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisUser") User thisUser) {
-        this.userService.addNew(thisUser);
+        this.userService.saveOne(thisUser);
         return "redirect:/user";
     }
 
@@ -74,7 +74,7 @@ public class UserController {
         thisUser.setPhone("www");
         thisUser.setUserName("www");
         thisUser.setAdddate(new Timestamp(System.currentTimeMillis()));
-        this.userService.addNew(thisUser);
+        this.userService.saveOne(thisUser);
         return "test";
     }
 

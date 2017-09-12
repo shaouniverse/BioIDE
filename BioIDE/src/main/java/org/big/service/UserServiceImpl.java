@@ -3,6 +3,7 @@ package org.big.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.big.common.QueryTool;
 import org.big.entity.User;
 import org.big.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,6 +34,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
+    @Transactional
     public JSON findbyInfo(HttpServletRequest request) {
         String this_language="en";
         Locale this_locale= LocaleContextHolder.getLocale();
@@ -59,22 +62,11 @@ public class UserServiceImpl implements UserService{
             order="desc";
         }
         JSONObject thisTable= new JSONObject();
-        thisTable.put("total",this.userRepository.countSearchInfo(searchText));
         JSONArray rows = new JSONArray();
         List<User> thisList=new ArrayList<>();
-        if(order.equals("asc")){
-            //PageRequest pageAsc=new PageRequest(offset_serch-1,limit_serch,new Sort(Sort.Direction.ASC, sort));
-            //Page<User> thisPages= this.userRepository.searchInfo(searchText,pageAsc);
-            //thisList = this.userRepository.searchInfo(searchText,new Sort(Sort.Direction.ASC, sort));
-            thisList = this.userRepository.searchInfo(searchText,sort,order,offset_serch,limit_serch);
-        }
-        else{
-            //PageRequest pageDesc=new PageRequest(offset_serch-1,limit_serch,new Sort(Sort.Direction.DESC, sort));
-            //thisList = this.userRepository.searchInfo(searchText,pageDesc);
-            //Page<User> thisPages= this.userRepository.searchInfo(searchText,pageDesc);
-            //thisList = this.userRepository.searchInfo(searchText,new Sort(Sort.Direction.DESC, sort));
-            thisList = this.userRepository.searchInfo(searchText,sort,order,offset_serch,limit_serch);
-        }
+        Page<User> thisPage=this.userRepository.searchInfo(searchText,QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        thisTable.put("total",thisPage.getTotalElements());
+        thisList=thisPage.getContent();
         for(int i=0;i<thisList.size();i++){
             JSONObject row= new JSONObject();
             String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
@@ -111,44 +103,8 @@ public class UserServiceImpl implements UserService{
         return this.userRepository.getOne(ID);
     }
 
-//    @Override
-//    public List<User> findbyInfoPage(String findText, int limit_serch, int offset_serch, String order, String sort) {
-//        System.out.println("==========");
-//        System.out.println("findText:"+findText);
-//        System.out.println("limit_serch:"+limit_serch);
-//        System.out.println("offset_serch:"+offset_serch);
-//        System.out.println("order:"+order);
-//        System.out.println("sort:"+sort);
-//        System.out.println("==========");
-//        if(order.equals("asc"))
-//            return this.userRepository.searchInfoPage(findText,new Sort(Sort.Direction.ASC, sort),new PageRequest(offset_serch+1,limit_serch));
-//        else
-//            return this.userRepository.searchInfoPage(findText,new Sort(Sort.Direction.DESC, sort),new PageRequest(offset_serch+1,limit_serch));
-//    }
-
-//    @Override
-//    public List<User> findbyInfo(String findText, int limit_serch, int offset_serch,String order, String sort) {
-//        //return this.personRepository.searchInfoQuery(findText,limit_serch,offset_serch,order,sort);
-//        System.out.println("==========");
-//        System.out.println("findText:"+findText);
-//        System.out.println("limit_serch:"+limit_serch);
-//        System.out.println("offset_serch:"+offset_serch);
-//        System.out.println("order:"+order);
-//        System.out.println("sort:"+sort);
-//        System.out.println("==========");
-//        if(order.equals("asc"))
-//            return this.userRepository.searchInfo(findText,new Sort(Sort.Direction.ASC, sort));
-//        else
-//            return this.userRepository.searchInfo(findText,new Sort(Sort.Direction.DESC, sort));
-//    }
-
     @Override
-    public int countfindbyInfo(String findText) {
-        return this.userRepository.countSearchInfo("%"+findText+"%");
-    }
-
-    @Override
-    public void addNew(User thisUser) {
+    public void saveOne(User thisUser) {
         if(thisUser.getId()==null||thisUser.getId().equals("")||thisUser.getId().length()<=0){
             thisUser.setId(UUID.randomUUID().toString());
             thisUser.setAdddate(new Timestamp(System.currentTimeMillis()));
@@ -161,8 +117,4 @@ public class UserServiceImpl implements UserService{
         this.userRepository.deleteById(ID);
     }
 
-    @Override
-    public void updateOne(User thisUser) {
-        this.userRepository.save(thisUser);
-    }
 }

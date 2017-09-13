@@ -11,52 +11,69 @@
     <!-- 引入css -->
     <span th:substituteby="pageFrame/basicsCss :: copy" />
 </head>
-<body>
-<header id="header" class="header header--fixed hide-from-print" role="banner">
-    <!-- 引入Menu -->
+<body class="hold-transition skin-blue fixed sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+    <header id="header" class="main-header">
+        <!-- 引入Header -->
+        <span th:substituteby="pageFrame/basicsHeader :: copy" />
+    </header>
+    <!-- 引入 Left side column. contains the sidebar -->
     <span th:substituteby="pageFrame/basicsMenu :: copy" />
-</header>
-<br/>
-<br/>
-<br/>
-<article>
-    <div class="container">
-        <h2>BioIDE</h2>
-        <p class="complimentary">Note: This is BioIDE.</p>
-
-        <h2>Commonname 表</h2>
-
-
-        <div class="well">
-            <form id="thisForm" class="form-horizontal" action="/commonname/save" th:action="@{/commonname/save}" method="post" th:object="${thisCommonname}">
-                <!-- 引入form -->
-                <span th:substituteby="commonname/form :: copy" />
-                <p></p>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <div class="pull-right">
-                            <a type="button" class="btn btn-primary wts-btn" th:href="@{/commonname}" href="/commonname">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span>取消编辑并返回列表</span>
-                            </a>
-                            <button type="button" class="btn btn-warning wts-btn" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="clearInput();">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span>清空表单</span>
-                            </button>
-                            <button type="submit" class="btn btn-success wts-btn">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span>提交</span>
-                            </button>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                BioIDE
+                <small>This is a IDE for Bio</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="well">
+                <form id="thisForm" class="form-horizontal"
+                      action="/commonname/save"
+                      th:action="@{/commonname/save}"
+                      method="post"
+                      th:object="${thisCommonname}">
+                    <!-- 引入form -->
+                    <span th:substituteby="commonname/form :: copy" />
+                    <p></p>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="pull-right">
+                                <a type="button" class="btn btn-primary wts-btn" th:href="@{/commonname}" href="/commonname">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span>取消编辑并返回列表</span>
+                                </a>
+                                <button type="button" class="btn btn-warning wts-btn" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="clearInput();">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span>清空表单</span>
+                                </button>
+                                <button type="submit" class="btn btn-success wts-btn">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span>提交</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        </section>
+        <!-- /.content -->
     </div>
-</article>
-<footer>
-    <!-- 引入Footer -->
-    <span th:substituteby="pageFrame/basicsFooter :: copy" />
-    <!-- 引入Copyright -->
-    <span th:substituteby="pageFrame/basicsCopyright :: copy" />
-</footer>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <span th:substituteby="pageFrame/basicsFooter :: copy" />
+    </footer>
+    <!-- Control Sidebar -->
+    <span th:substituteby="pageFrame/basicsControl :: copy" />
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
 <span th:substituteby="pageFrame/basicsJs :: copy" />
 <!-- page_script -->

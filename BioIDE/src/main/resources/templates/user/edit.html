@@ -25,21 +25,21 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                团队管理
-                <small>在这里您可以对您的团队成员进行管理</small>
+                编辑成员信息
+                <small>在这里您可以对您的团队成员信息进行修改</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
                 <li><a th:href="@{/user}" href="user"><i class="fa fa-users"></i> 团队管理</a></li>
+                <li class="active"><i class="fa fa-edit"></i> 编辑成员信息</li>
             </ol>
         </section>
         <!-- Main content -->
         <section class="content">
             <div class="well">
-                <form id="thisForm" class="form-horizontal" action="/user/save" th:action="@{/user/save}" method="post" th:object="${thisUser}">
+                <form id="thisForm" class="form-horizontal" action="/user/save" th:attr="action=@{/user/save}" method="post" th:object="${thisUser}">
                     <!-- 引入form -->
                     <span th:substituteby="user/form :: copy" />
-                    <p></p>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">

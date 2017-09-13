@@ -1,44 +1,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<div style="background-color: rgb(46, 46, 46); color:rgb(255, 255, 255);padding-top: 90px; padding-bottom: 90px;" th:fragment="copy">
-    <div class="container">
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <div><img th:src="@{/images/logo.png}" src="/images/logo.png" class="card-img-top"/></div>
-            <ul class="list-group list-group-flush">
-                <li>
-                    <span>+1 (0) 000 0000 001 or +1 (0) 000 0000 002</span>
-                </li>
-                <li>
-                    <span>1234 Street Name, City AA 99999</span>
-                </li>
-                <li>
-                    <span><a href="mailto:tianshanroy@163.com">tianshanroy@163.com</a></span>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <h4>Useful Links</h4>
-            <ul>
-                <li>
-                    <a class="text-white" th:href="@{/test}" href="/test">Test</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-3">
-            <p>
-                <strong>Contacts</strong>
-                <br/>Email: tianshanroy@163.com
-                <br/>Phone: +1 (0) 000 0000 001
-                <br/>Fax: +1 (0) 000 0000 002
-                <br/>
-                <br/>
-                <br/><strong>Address</strong>
-                <br/>1234 Street Name
-                <br/>City, AA 99999
-            </p>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-3" data-form-type="formoid">
-            <h4>Links</h4>
-        </div>
+<div th:fragment="copy">
+    <div class="pull-right hidden-xs">
+        <b>Version</b> 0.0.1
     </div>
+    <strong>Copyright &copy; 2017-2018 <a href="http://www.biodinfo.org/">The Research Group of Biodiversity Informatics</a>.</strong> All rights
+    reserved.
 </div>
 </html>

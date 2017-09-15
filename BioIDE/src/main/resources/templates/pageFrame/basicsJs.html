@@ -50,7 +50,19 @@
         }());
         //初始化组件
         $( document ).ready( function() {
+            $("#changeSkin").click(function(){
+                var thisSkin=$('body').attr('class');
+                if(thisSkin.indexOf("skin-light") >= 0 )
+                {
 
+                    $('body').removeClass("skin-light");
+                    $('body').addClass("skin-dark")
+                }
+                else{
+                    $('body').removeClass("skin-dark");
+                    $('body').addClass("skin-light")
+                }
+            });
         } );
     </script>
 </span>

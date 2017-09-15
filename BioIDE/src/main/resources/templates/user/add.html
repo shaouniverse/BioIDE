@@ -18,8 +18,6 @@
         <!-- 引入Header -->
         <span th:substituteby="pageFrame/basicsHeader :: copy" />
     </header>
-    <!-- 引入 Left side column. contains the sidebar -->
-    <span th:substituteby="pageFrame/basicsMenu :: copy" />
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -63,7 +61,8 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+    <!-- 引入 Left side column. contains the sidebar -->
+    <span th:substituteby="pageFrame/basicsMenu :: copy" />
     <footer class="main-footer">
         <span th:substituteby="pageFrame/basicsFooter :: copy" />
     </footer>

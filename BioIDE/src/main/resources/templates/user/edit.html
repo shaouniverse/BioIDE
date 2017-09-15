@@ -18,8 +18,6 @@
         <!-- 引入Header -->
         <span th:substituteby="pageFrame/basicsHeader :: copy" />
     </header>
-    <!-- 引入 Left side column. contains the sidebar -->
-    <span th:substituteby="pageFrame/basicsMenu :: copy" />
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -37,7 +35,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="well">
-                <form id="thisForm" class="form-horizontal" action="/user/save" th:attr="action=@{/user/save}" method="post" th:object="${thisUser}">
+                <form id="thisForm" class="form-horizontal" action="/user/save" th:action="@{/user/save}" method="post" th:object="${thisUser}">
                     <!-- 引入form -->
                     <span th:substituteby="user/form :: copy" />
                     <div class="form-group">
@@ -60,6 +58,9 @@
         </section>
         <!-- /.content -->
     </div>
+
+    <!-- 引入 Left side column. contains the sidebar -->
+    <span th:substituteby="pageFrame/basicsMenu :: copy" />
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <span th:substituteby="pageFrame/basicsFooter :: copy" />

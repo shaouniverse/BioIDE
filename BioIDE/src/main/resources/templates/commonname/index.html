@@ -25,12 +25,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                团队管理
-                <small>在这里您可以对您的团队成员进行管理</small>
+                别名管理
+                <small>在这里您可以对别名进行管理</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="#"><i class="fa fa-cube"></i> 分类单元管理</a></li>
+                <li><i class="fa fa-cube"></i> 分类单元管理</li>
                 <li class="active"><i class="fa fa-circle-o"></i> 别名管理</li>
             </ol>
         </section>
@@ -49,13 +49,13 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <a class="btn btn-app" th:href="@{/commonname/add}" href="/commonname/add">
-                        <i class="fa fa-user-plus"></i> ADD
+                        <i class="fa fa-plus"></i> ADD
                     </a>
                     <a class="btn btn-app" onclick="editSelectObject('commonname');">
                         <i class="fa fa-edit"></i> EDIT
                     </a>
                     <a class="btn btn-app" onclick="removeSelectObject('commonname');">
-                        <i class="fa fa-user-times"></i> REMOVE
+                        <i class="fa fa-remove"></i> REMOVE
                     </a>
                 </div>
                 <!-- /.box-body -->

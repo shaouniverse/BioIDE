@@ -34,7 +34,6 @@ public class UserController {
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
         User thisUser=new User();
-        thisUser.setAdddate(new Timestamp(System.currentTimeMillis()));
         model.addAttribute("thisUser", thisUser);
         return "user/add";
     }
@@ -82,9 +81,6 @@ public class UserController {
     @RequestMapping(value="/get/{id}", method = {RequestMethod.GET})
     public String FindOne(@PathVariable String id) {
         User thisUser=this.userService.findbyID(id);
-        System.out.println("=======");
-        //System.out.println(thisUser.getUserName());
-        System.out.println("=======");
         return "test";
     }
 }

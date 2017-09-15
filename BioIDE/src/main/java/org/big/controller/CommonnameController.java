@@ -33,8 +33,6 @@ public class CommonnameController {
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
         Commonname thisCommonname=new Commonname();
-        thisCommonname.setInputtime(new Timestamp(System.currentTimeMillis()));
-        thisCommonname.setSynchdate(new Timestamp(System.currentTimeMillis()));
         model.addAttribute("thisCommonname", thisCommonname);
         return "commonname/add";
     }

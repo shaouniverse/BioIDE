@@ -16,4 +16,5 @@ public interface UserService {
     void saveOne(User thisUser);
     void removeOne(String ID);
     JSON findbyInfo(HttpServletRequest request);
+    User findOneByName(String user_name);
 }

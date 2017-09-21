@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by WangTianshan on 2017/9/6.
  */
 @Controller
-public class IndexController {
+@RequestMapping("/console")
+public class ConsoleController {
     //首页
-    @RequestMapping(value="/", method = {RequestMethod.GET})
+    @RequestMapping(value="/{consoleId}", method = {RequestMethod.GET})
     public String Index() {
 
-        return "redirect:/console/1";
+        return "console/index";
     }
 }

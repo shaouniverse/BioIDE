@@ -17,6 +17,17 @@ public class User {
     private String role;
     private Timestamp adddate;
 
+    public User() {
+    }
+
+    public User(User user){
+        this.id = user.getId();
+        this.userName = user.getUserName();
+        this.role = user.getRole();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+    }
+
     @Id
     @Column(name = "id")
     public String getId() {

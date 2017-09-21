@@ -117,4 +117,8 @@ public class UserServiceImpl implements UserService{
         this.userRepository.deleteById(ID);
     }
 
+    @Override
+    public User findOneByName(String user_name) {
+        return this.userRepository.findOneByUserName(user_name);
+    }
 }

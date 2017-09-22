@@ -9,14 +9,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
     <!-- 引入css -->
-    <span th:substituteby="pageFrame/basicsCss :: copy" />
+    <span th:replace="pageFrame/basicsCss :: copy" />
 </head>
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
     <header id="header" class="main-header">
         <!-- 引入Header -->
-        <span th:substituteby="pageFrame/basicsHeader :: copy" />
+        <span th:replace="pageFrame/basicsHeader :: copy" />
     </header>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -66,19 +66,19 @@
         <!-- /.content -->
     </div>
     <!-- 引入 Left side column. contains the sidebar -->
-    <span th:substituteby="pageFrame/basicsMenu :: copy" />
+    <span th:replace="pageFrame/basicsMenu :: copy" />
     <footer class="main-footer">
-        <span th:substituteby="pageFrame/basicsFooter :: copy" />
+        <span th:replace="pageFrame/basicsFooter :: copy" />
     </footer>
     <!-- Control Sidebar -->
-    <span th:substituteby="pageFrame/basicsControl :: copy" />
+    <span th:replace="pageFrame/basicsControl :: copy" />
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
-<span th:substituteby="pageFrame/basicsJs :: copy" />
+<span th:replace="pageFrame/basicsJs :: copy" />
 <!-- page_script -->
 <script th:src="@{/js/tableScript.js}"></script>
 </body>

@@ -33,16 +33,16 @@ public class UserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("读取数据库失败");
         }
         if(user == null){
-
-            request.getSession().setAttribute("login_error","没有该用户");
-            throw new UsernameNotFoundException("没有这个用户");
-        } else {
+            request.getSession().setAttribute("loginError","name");
+            throw new UsernameNotFoundException("nameError");
+        }
+        else {
             try {
                 List<Team> teams = teamService.selectTeamByUserId(user.getId());
                 return new UserDetail(user, teams);
             } catch (Exception e) {
-                request.getSession().setAttribute("login_error","密码错误");
-                throw new UsernameNotFoundException("密码不正确");
+                request.getSession().setAttribute("loginError","password");
+                throw new UsernameNotFoundException("passwordError");
             }
         }
     }

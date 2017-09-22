@@ -17,6 +17,11 @@ public class TeamServiceImpl implements TeamService  {
 
     @Override
     public List<Team> selectTeamByUserId(String user_id) {
+        System.out.println("user_id="+user_id);
+        List<Team> teams = this.teamRepository.selectTeamByUserId(user_id);
+        for(Team thisTeam:teams){
+            System.out.println(thisTeam.getName());
+        }
         return this.teamRepository.selectTeamByUserId(user_id);
     }
 

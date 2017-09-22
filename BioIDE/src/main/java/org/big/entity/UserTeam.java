@@ -13,7 +13,6 @@ public class UserTeam {
     private String userId;
     private String teamId;
 
-    @Basic
     @Id
     @Column(name = "user_id")
     public String getUserId() {
@@ -24,7 +23,6 @@ public class UserTeam {
         this.userId = userId;
     }
 
-    @Basic
     @Id
     @Column(name = "team_id")
     public String getTeamId() {

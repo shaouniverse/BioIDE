@@ -12,7 +12,7 @@ import java.util.List;
  * Created by WangTianshan on 2017/9/6.
  */
 @Repository
-public interface TeamRepository extends BaseRepository<User, String> {
+public interface TeamRepository extends BaseRepository<Team, String> {
 
     @Query(value ="SELECT t.* FROM team AS t " +
             "LEFT JOIN user_team AS ut " +

@@ -11,8 +11,9 @@ public class UserTeamPK implements Serializable {
     private String userId;
     private String teamId;
 
-    @Id
+
     @Column(name = "user_id")
+    @Id
     public String getUserId() {
         return userId;
     }
@@ -21,8 +22,9 @@ public class UserTeamPK implements Serializable {
         this.userId = userId;
     }
 
-    @Id
+
     @Column(name = "team_id")
+    @Id
     public String getTeamId() {
         return teamId;
     }

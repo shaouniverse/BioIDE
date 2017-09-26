@@ -1,8 +1,10 @@
 package org.big.service;
 
 
+import com.alibaba.fastjson.JSON;
 import org.big.entity.Team;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -10,4 +12,9 @@ import java.util.List;
  */
 public interface TeamService {
     List<Team> selectTeamByUserId(String user_id);
+    Team findbyID(String ID);
+    void saveOne(Team thisTeam);
+    void removeOne(String ID);
+    JSON findbyInfo(HttpServletRequest request);
+    Team findOneByName(String name);
 }

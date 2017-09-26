@@ -1,8 +1,9 @@
 package org.big.repository;
 
 import org.big.entity.Team;
-import org.big.entity.User;
 import org.big.repository.base.BaseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +21,17 @@ public interface TeamRepository extends BaseRepository<Team, String> {
             "WHERE ut.user_id=?1"
             , nativeQuery = true)
     List<Team> selectTeamByUserId(String user_id);
+
+    @Query(value = "select t from Team t" +
+            " where (" +
+            "t.name like %?1% " +
+            "or t.leader like %?1%)"
+    )
+    Page<Team> searchInfo(
+            String findText,
+            Pageable pageable
+    );
+
+    Team findOneByName(String name);
 
 }

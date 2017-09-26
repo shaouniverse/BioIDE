@@ -26,15 +26,6 @@ public interface UserRepository extends BaseRepository<User, String> {
         Pageable pageable
     );
 
-//    @Query(value ="SELECT DISTINCT(url) FROM power AS p " +
-//            "LEFT JOIN role_has_power AS rp " +
-//            "ON rp.power_id=p.id " +
-//            "LEFT JOIN user_has_role AS ur " +
-//            "ON ur.role_id=rp.role_id " +
-//            "WHERE ur.user_id=?1"
-//            , nativeQuery = true)
-//    List<String> findUrlByUser(String user_id);
-
     User findOneByUserName(String name);
 
 }

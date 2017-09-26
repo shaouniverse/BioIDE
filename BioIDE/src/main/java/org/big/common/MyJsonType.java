@@ -1,5 +1,6 @@
 package org.big.common;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.HibernateException;
@@ -17,7 +18,7 @@ import java.util.Objects;
 /**
  * Created by WangTianshan on 2017/9/8.
  */
-public class MyJsonType implements UserType {
+public class MyJsonType extends JSON implements UserType {
 
     @Override
     public int[] sqlTypes() {

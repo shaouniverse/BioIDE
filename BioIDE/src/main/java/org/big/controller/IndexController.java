@@ -44,7 +44,8 @@ public class IndexController {
 //                System.out.println("Authority=" + grantedAuthority.getAuthority());
 //            }
             UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            return "redirect:/console/"+thisUser.getId();
+            return "redirect:/console/"+thisUser.getUsername();
+            //return "redirect:/console/"+thisUser.getId();
         }
         catch(Exception e){
         }

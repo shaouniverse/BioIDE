@@ -37,14 +37,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         // 下面是验证逻辑，验证通过则返回UsernamePasswordAuthenticationToken，
         // 否则，可直接抛出错误（AuthenticationException的子类，在登录验证不通过重定向至登录页时可通过session.SPRING_SECURITY_LAST_EXCEPTION.message获取具体错误提示信息）
         request.getSession().setAttribute("loginError","");
-        System.out.println(name);
-        System.out.println(password);
         if (details.getToken().equalsIgnoreCase(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())) {
             UserDetail user = (UserDetail) userService.loadUserByUsername(name);
             if(user == null){
                 throw new BadCredentialsException("没有该用户");
             }
             if (!password.equals(user.getPassword())) {
+                request.getSession().setAttribute("loginError","password");
                 throw new BadCredentialsException("密码错误");
             }
             Collection<? extends GrantedAuthority> authorities = user.getAuthorities();

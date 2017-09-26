@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, team-scalable=0"/>
     <title>BioIDE</title>
     <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -30,7 +30,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
-                <li class="active"><i class="fa fa-users"></i> 团队管理</li>
+                <li class="active"><i class="fa fa-teams"></i> 团队管理</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -47,13 +47,13 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <a class="btn btn-app" th:href="@{/super/user/add}" href="/user/add">
+                    <a class="btn btn-app" th:href="@{/console/team/add}" href="/team/add">
                         <i class="fa fa-user-plus"></i> ADD
                     </a>
-                    <a class="btn btn-app" onclick="editSelectObject('user');">
+                    <a class="btn btn-app" onclick="editSelectObject('team');">
                         <i class="fa fa-edit"></i> EDIT
                     </a>
-                    <a class="btn btn-app" onclick="removeSelectObject('user');">
+                    <a class="btn btn-app" onclick="removeSelectObject('team');">
                         <i class="fa fa-user-times"></i> REMOVE
                     </a>
                 </div>
@@ -65,7 +65,7 @@
                         data-locale="zh-CN"
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
-                        th:attr="data-url=@{/super/user/rest/list}"
+                        th:attr="data-url=@{/console/team/rest/list}"
                         data-pagination="true"
                         data-side-pagination="server"
                         data-page-list="[10, 20, 30, 50, 100]"
@@ -79,10 +79,8 @@
                     <thead>
                     <tr>
                         <th data-field="select" data-align="center" data-sortable="false"></th>
-                        <th data-field="userName" data-align="center" data-sortable="true">用户名</th>
-                        <th data-field="email" data-align="center" data-sortable="true">邮箱</th>
-                        <th data-field="phone" data-align="center" data-sortable="true">电话</th>
-                        <th data-field="role" data-align="center" data-sortable="true">角色</th>
+                        <th data-field="name" data-align="center" data-sortable="true">团队名称</th>
+                        <th data-field="leader" data-align="center" data-sortable="true">团队负责人</th>
                         <th data-field="adddate" data-align="center" data-sortable="true">注册时间</th>
                         <th data-field="edit" data-align="center" data-sortable="false">操作</th>
                     </tr>
@@ -106,6 +104,6 @@
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
 <span th:replace="pageFrame/basicsJs :: copy" />
 <!-- page_script -->
-<script th:src="@{/js/superTableScript.js}"></script>
+<script th:src="@{/js/tableScript.js}"></script>
 </body>
 </html>

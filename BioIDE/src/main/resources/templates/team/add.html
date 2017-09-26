@@ -28,7 +28,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
-                <li><a th:href="@{/team}" href="team"><i class="fa fa-teams"></i> 团队管理</a></li>
+                <li><a th:href="@{/super/team}" href="team"><i class="fa fa-teams"></i> 团队管理</a></li>
                 <li class="active"><i class="fa fa-team-plus"></i> 添加成员</li>
             </ol>
         </section>
@@ -36,7 +36,7 @@
         <section class="content">
             <div class="well">
                 <form id="thisForm" class="form-horizontal"
-                      th:action="@{/team/save}"
+                      th:action="@{/super/team/save}"
                       method="post" th:object="${thisTeam}">
                     <!-- 引入form -->
                     <span th:substituteby="team/form :: copy" />
@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">
-                                <a class="btn btn-app" th:href="@{/team}" href="/team">
+                                <a class="btn btn-app" th:href="@{/super/team}" href="/team">
                                     <i class="fa fa-chevron-left"></i> 取消编辑
                                 </a>
                                 <a class="btn btn-app" onclick="clearInput();">
@@ -76,6 +76,6 @@
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
 <span th:replace="pageFrame/basicsJs :: copy" />
 <!-- page_script -->
-<script th:src="@{/js/tableScript.js}"></script>
+<script th:src="@{/js/superTableScript.js}"></script>
 </body>
 </html>

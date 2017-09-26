@@ -38,8 +38,9 @@ public class UserDetailService implements UserDetailsService {
         }
         else {
             try {
-                List<Team> teams = teamService.selectTeamByUserId(user.getId());
-                return new UserDetail(user, teams);
+                //List<Team> teams = teamService.selectTeamByUserId(user.getId());
+                //return new UserDetail(user, teams);
+                return new UserDetail(user);
             } catch (Exception e) {
                 request.getSession().setAttribute("loginError","password");
                 throw new UsernameNotFoundException("passwordError");

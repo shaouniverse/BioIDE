@@ -17,16 +17,16 @@ import java.sql.Timestamp;
  * Created by WangTianshan on 2017/9/6.
  */
 @Controller
-@RequestMapping("/team")
+@RequestMapping("/console/team")
 public class TeamController {
 
     @Autowired
     private TeamServiceImpl teamService;
 
-    //test
+    //index
     @RequestMapping(value="", method = {RequestMethod.GET})
-    public String FindOne() {
-        return "team/index";
+    public String Index() {
+        return "team/myTeam";
     }
 
     //add
@@ -49,7 +49,7 @@ public class TeamController {
     @RequestMapping(value="/save", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisTeam") Team thisTeam) {
         this.teamService.saveOne(thisTeam);
-        return "redirect:/team";
+        return "redirect:/console/team";
     }
 
 
@@ -60,10 +60,4 @@ public class TeamController {
         return "index";
     }
 
-    //findOne
-    @RequestMapping(value="/get/{id}", method = {RequestMethod.GET})
-    public String FindOne(@PathVariable String id) {
-        Team thisTeam=this.teamService.findbyID(id);
-        return "test";
-    }
 }

@@ -12,13 +12,13 @@ function resetFrom() {
     $('#thisForm')[0].reset();
 };
 function editThisObject(id,type) {
-    window.location.href="/console/"+type+"/edit/"+id;
+    window.location.href="/super/"+type+"/edit/"+id;
 };
 function removeThisObject(id,type) {
-    var r=confirm("remove?");
+    var r=confirm("是否删除?");
     if (r==true)
     {
-        $.get("/console/"+type+"/rest/remove/"+id,
+        $.get("/super/"+type+"/rest/remove/"+id,
             {},
             function(data,status){
                 if(status){
@@ -95,7 +95,7 @@ function removeSelectObject(type){
                 }
             });
             $.ajax({
-                url: '/console/'+type+'/rest/removeMany/'+ids,
+                url: '/super/'+type+'/rest/removeMany/'+ids,
                 cache: false,
                 success: function () {
                     layer.msg('已批量删除'+number+'数据',

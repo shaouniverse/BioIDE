@@ -24,16 +24,12 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    //test
-    @RequestMapping(value="", method = {RequestMethod.GET})
-    public String FindOne() {
-        return "user/index";
-    }
 
     //add
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
         User thisUser=new User();
+        thisUser.setRole("user");
         model.addAttribute("thisUser", thisUser);
         return "user/add";
     }
@@ -54,33 +50,4 @@ public class UserController {
     }
 
 
-    //remove
-    @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
-    public String Remove(@PathVariable String id) {
-        this.userService.removeOne(id);
-        return "index";
-    }
-
-    //update
-    @RequestMapping(value="/update", method = {RequestMethod.GET})
-    public String Update() {
-        //this.userService.findbyID("1");
-        User thisUser=new User();
-        thisUser.setId("2");
-        thisUser.setEmail("www");
-        thisUser.setPassword("www");
-        thisUser.setRole("www");
-        thisUser.setPhone("www");
-        thisUser.setUserName("www");
-        thisUser.setAdddate(new Timestamp(System.currentTimeMillis()));
-        this.userService.saveOne(thisUser);
-        return "test";
-    }
-
-    //findOne
-    @RequestMapping(value="/get/{id}", method = {RequestMethod.GET})
-    public String FindOne(@PathVariable String id) {
-        User thisUser=this.userService.findbyID(id);
-        return "test";
-    }
 }

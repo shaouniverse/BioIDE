@@ -12,28 +12,34 @@ import java.util.List;
  */
 public class UserDetail extends User implements UserDetails {
 
-    private List<Team> teams;
+    //private List<Team> teams;
 
     public UserDetail(User user){
         super(user);
-        this.teams = teams;
+        //this.teams = teams;
     }
-    public UserDetail(User user, List<Team> teams){
-        super(user);
-        this.teams = teams;
-    }
+//    public UserDetail(User user, List<Team> teams){
+//        super(user);
+//        this.teams = teams;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(teams == null || teams.size() <1){
+        if(this.getRole() == null || this.getRole().length() <1){
             return AuthorityUtils.commaSeparatedStringToAuthorityList("");
         }
-        StringBuilder commaBuilder = new StringBuilder();
-        for(Team team : teams){
-            commaBuilder.append(team.getName()).append(",");
+        else{
+            return AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRole());
         }
-        String authorities = commaBuilder.substring(0,commaBuilder.length()-1);
-        return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+//        if(teams == null || teams.size() <1){
+//            return AuthorityUtils.commaSeparatedStringToAuthorityList("");
+//        }
+//        StringBuilder commaBuilder = new StringBuilder();
+//        for(Team team : teams){
+//            commaBuilder.append(team.getName()).append(",");
+//        }
+//        String authorities = commaBuilder.substring(0,commaBuilder.length()-1);
+//        return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
     }
 
     @Override

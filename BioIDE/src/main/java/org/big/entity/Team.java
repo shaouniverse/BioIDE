@@ -15,6 +15,7 @@ public class Team {
     private String name;
     private String leader;
     private Timestamp adddate;
+    private String note;
 
     @Id
     @Column(name = "id")
@@ -78,5 +79,15 @@ public class Team {
         result = 31 * result + (leader != null ? leader.hashCode() : 0);
         result = 31 * result + (adddate != null ? adddate.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "note")
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

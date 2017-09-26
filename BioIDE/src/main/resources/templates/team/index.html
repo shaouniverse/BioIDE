@@ -47,7 +47,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <a class="btn btn-app" th:href="@{/team/add}" href="/team/add">
+                    <a class="btn btn-app" th:href="@{/super/team/add}" href="/team/add">
                         <i class="fa fa-user-plus"></i> ADD
                     </a>
                     <a class="btn btn-app" onclick="editSelectObject('team');">
@@ -65,7 +65,7 @@
                         data-locale="zh-CN"
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
-                        th:attr="data-url=@{/team/rest/list}"
+                        th:attr="data-url=@{/super/team/rest/list}"
                         data-pagination="true"
                         data-side-pagination="server"
                         data-page-list="[10, 20, 30, 50, 100]"
@@ -104,6 +104,6 @@
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
 <span th:replace="pageFrame/basicsJs :: copy" />
 <!-- page_script -->
-<script th:src="@{/js/tableScript.js}"></script>
+<script th:src="@{/js/superTableScript.js}"></script>
 </body>
 </html>

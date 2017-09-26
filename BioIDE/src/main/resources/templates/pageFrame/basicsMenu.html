@@ -95,8 +95,19 @@
                         <li><a href="#"><i class="fa fa-copyright"></i> 版权许可证管理</a></li>
                     </ul>
                 </li>
-                <li><a th:href="@{/team}" href="team"><i class="fa fa-users"></i> <span>团队管理</span></a></li>
-                <li><a th:href="@{/user}" href="user"><i class="fa fa-user"></i> <span>用户管理</span></a></li>
+                <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队</span></a></li>
+                <li class="treeview">
+              <a href="#">
+                        <i class="fa fa-user"></i> <span>用户管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/super/user}" href="user"><i class="fa fa-user"></i> <span> 用户管理</span></a></li>
+                        <li><a th:href="@{/super/team}" href="team"><i class="fa fa-users"></i> <span> 团队管理</span></a></li>
+                    </ul>
+                </li>
                 <li class="header">关于我们</li>
                 <li><a href="#"><i class="fa fa-users text-green"></i> <span>开发团队</span></a></li>
                 <li><a href="#"><i class="fa fa-globe text-blue"></i> <span>官方网站</span></a></li>

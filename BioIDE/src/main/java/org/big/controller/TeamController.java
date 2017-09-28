@@ -1,8 +1,12 @@
 package org.big.controller;
 
+import org.aspectj.lang.annotation.Before;
+import org.big.common.IdentityVote;
 import org.big.entity.Team;
+import org.big.entity.UserDetail;
 import org.big.service.TeamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +37,8 @@ public class TeamController {
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
         Team thisTeam=new Team();
+        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        thisTeam.setLeader(thisUser.getId());
         model.addAttribute("thisTeam", thisTeam);
         return "team/add";
     }
@@ -48,7 +54,8 @@ public class TeamController {
     //save
     @RequestMapping(value="/save", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisTeam") Team thisTeam) {
-        this.teamService.saveOne(thisTeam);
+        if(IdentityVote.isTeamLeader(thisTeam))
+            this.teamService.saveOne(thisTeam);
         return "redirect:/console/team";
     }
 

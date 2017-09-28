@@ -19,6 +19,7 @@ public interface UserRepository extends BaseRepository<User, String> {
                     " where (" +
                     "u.userName like %?1% " +
                     "or u.email like %?1% " +
+                    "or u.nickname like %?1% " +
                     "or u.phone like %?1%)"
     )
     Page<User> searchInfo(

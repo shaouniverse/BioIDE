@@ -1,4 +1,6 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <section th:fragment="copy">
     <!-- Logo -->
     <a th:href="@{/}" href="/" class="logo">
@@ -60,8 +62,8 @@
                             <img th:src="@{/img/user-none-160x160.jpg}" src="/img/user-none-160x160.jpg" class="img-circle" alt="User Image">
 
                             <p>
-                                王天山
-                                <small>超级管理员</small>
+                                <span sec:authentication="principal.username">UserName</span>
+                                <small sec:authorize="hasRole('ROLE_SUPER')">超级管理员</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->

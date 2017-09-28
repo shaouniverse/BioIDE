@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService{
                             "</a>";
             row.put("select",thisSelect);
             row.put("userName",thisList.get(i).getUserName());
+            row.put("nickname",thisList.get(i).getNickname());
             row.put("email",thisList.get(i).getEmail());
             row.put("phone",thisList.get(i).getPhone());
             row.put("role",thisList.get(i).getRole());

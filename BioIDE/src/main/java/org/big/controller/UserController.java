@@ -29,7 +29,7 @@ public class UserController {
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
         User thisUser=new User();
-        thisUser.setRole("user");
+        thisUser.setRole("ROLE_USER");
         model.addAttribute("thisUser", thisUser);
         return "user/add";
     }

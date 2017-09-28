@@ -23,6 +23,7 @@ public class UserDetail extends User implements UserDetails {
 //        this.teams = teams;
 //    }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.getRole() == null || this.getRole().length() <1){
@@ -69,6 +70,6 @@ public class UserDetail extends User implements UserDetails {
 
     @Override
     public String getName() {
-        return null;
+        return super.getNickname();
     }
 }

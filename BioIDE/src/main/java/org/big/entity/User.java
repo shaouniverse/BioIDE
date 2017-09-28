@@ -13,6 +13,7 @@ public class User {
     private String userName;
     private String password;
     private String email;
+    private String nickname;
     private String phone;
     private String role;
     private Timestamp adddate;
@@ -26,6 +27,7 @@ public class User {
         this.role = user.getRole();
         this.email = user.getEmail();
         this.password = user.getPassword();
+        this.nickname = user.getNickname();
     }
 
     @Id
@@ -66,6 +68,16 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Basic
+    @Column(name = "nickname")
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Basic
@@ -127,4 +139,6 @@ public class User {
         result = 31 * result + (adddate != null ? adddate.hashCode() : 0);
         return result;
     }
+
+
 }

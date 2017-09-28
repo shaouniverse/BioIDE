@@ -1,12 +1,11 @@
 package org.big.controller;
 
-import org.big.entity.Team;
-import org.big.entity.User;
+import org.big.common.Children;
+import org.big.common.IdentityVote;
 import org.big.service.TeamService;
 import org.big.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,13 +26,13 @@ public class TestController {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private Children a;
+
     //test
     @RequestMapping(value="", method = {RequestMethod.GET})
     public String Test() {
-        List<Team> teams = teamService.selectTeamByUserId("0a");
-        for(Team thisTeam:teams){
-            System.out.println(thisTeam.getName());
-        }
+        a.hello("aaa");
         return "test";
     }
 }

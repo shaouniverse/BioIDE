@@ -5,6 +5,7 @@ import org.big.common.IdentityVote;
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
 import org.big.service.TeamServiceImpl;
+import org.big.service.UserTeamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ public class TeamController {
 
     @Autowired
     private TeamServiceImpl teamService;
+    @Autowired
+    private UserTeamServiceImpl userTeamService;
 
     //index
     @RequestMapping(value="", method = {RequestMethod.GET})
@@ -54,8 +57,7 @@ public class TeamController {
     //save
     @RequestMapping(value="/save", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisTeam") Team thisTeam) {
-        if(IdentityVote.isTeamLeader(thisTeam))
-            this.teamService.saveOne(thisTeam);
+        this.teamService.saveOneByUser(thisTeam);
         return "redirect:/console/team";
     }
 
@@ -63,7 +65,7 @@ public class TeamController {
     //remove
     @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
     public String Remove(@PathVariable String id) {
-        this.teamService.removeOne(id);
+        this.teamService.removeOneByUser(id);
         return "index";
     }
 

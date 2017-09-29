@@ -22,4 +22,8 @@ public class Children{
     public void run(String name) {
         System.out.println("runnnnnnnnnnnnnnnnnnn: "+name);
     }
+
+    public void run2(String name) {
+        System.out.println("run222222222222222222: "+name);
+    }
 }

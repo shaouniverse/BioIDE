@@ -14,7 +14,10 @@ public interface TeamService {
     List<Team> selectTeamByUserId(String user_id);
     Team findbyID(String ID);
     void saveOne(Team thisTeam);
+    void saveOneByUser(Team thisTeam);
     void removeOne(String ID);
+    void removeOneByUser(String ID);
     JSON findbyInfo(HttpServletRequest request);
+    JSON findbyUser(HttpServletRequest request);
     Team findOneByName(String name);
 }

@@ -33,7 +33,8 @@ public class TestController {
     //test
     @RequestMapping(value="", method = {RequestMethod.GET})
     public String Test() {
-        a.run("wts1");
+        a.run("wts");
+        a.run2("wts1");
         return "test";
     }
 }

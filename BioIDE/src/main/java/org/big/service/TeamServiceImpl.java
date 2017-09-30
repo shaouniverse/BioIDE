@@ -3,6 +3,7 @@ package org.big.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.big.common.BuildEntity;
 import org.big.common.QueryTool;
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
@@ -139,27 +140,28 @@ public class TeamServiceImpl implements TeamService  {
         }
         JSONObject thisTable= new JSONObject();
         JSONArray rows = new JSONArray();
-        List<Team> thisList=new ArrayList<>();
-        Page<Team> thisPage=this.teamRepository.searchInfoByUser(searchText,thisUser.getId(),QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
-        thisTable.put("total",thisPage.getTotalElements());
+        Page<Object> thisPage=this.teamRepository.searchInfoByUser(searchText,thisUser.getId(),QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        List<Object> thisList=new ArrayList<>();
         thisList=thisPage.getContent();
+        thisTable.put("total",thisPage.getTotalElements());
         for(int i=0;i<thisList.size();i++){
             JSONObject row= new JSONObject();
-            String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
+            Team thisTeam= BuildEntity.buildTeam(thisList.get(i));
+            String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisTeam.getId()+"' />";
             String thisEdit=
-                    "<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','team')\" >" +
+                    "<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisTeam.getId()+"','team')\" >" +
                             "<span class=\"glyphicon glyphicon-edit\"></span>" +
                             "</a>" +
-                            "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','team')\" >" +
+                            "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisTeam.getId()+"','team')\" >" +
                             "<span class=\"glyphicon glyphicon-remove\"></span>" +
                             "</a>";
             row.put("select",thisSelect);
-            row.put("name",thisList.get(i).getName());
-            row.put("leader",thisList.get(i).getLeader());
+            row.put("name",thisTeam.getName());
+            row.put("leader",thisTeam.getLeader());
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String addTime="";
             try {
-                addTime=formatter.format(thisList.get(i).getAdddate());
+                addTime=formatter.format(thisTeam.getAdddate());
             } catch (Exception e) {
                 //e.printStackTrace();
             }

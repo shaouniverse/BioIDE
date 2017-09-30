@@ -32,16 +32,24 @@ public interface TeamRepository extends BaseRepository<Team, String> {
             Pageable pageable
     );
 
-    @Query(value = "SELECT t FROM Team t " +
+    @Query(value = "SELECT " +
+            "t.id AS id," +
+            "t.name AS name," +
+            "u.userName AS leader," +
+            "t.note AS note," +
+            "t.adddate AS adddate " +
+            "FROM Team t " +
             "LEFT JOIN UserTeam ut " +
             "ON ut.teamId=t.id " +
+            "LEFT JOIN User u " +
+            "ON u.id=t.leader " +
             "WHERE " +
             "ut.userId=?2 "+
             "AND (" +
             "t.name LIKE %?1% " +
-            "OR t.leader LIKE %?1%)"
+            "OR u.userName LIKE %?1%)"
     )
-    Page<Team> searchInfoByUser(
+    Page<Object> searchInfoByUser(
             String findText,
             String user_id,
             Pageable pageable

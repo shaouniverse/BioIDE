@@ -5,12 +5,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.big.common.QueryTool;
 import org.big.entity.Team;
+import org.big.entity.UserDetail;
 import org.big.entity.UserTeam;
 import org.big.repository.TeamRepository;
 import org.big.repository.UserTeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,6 +110,8 @@ public class TeamServiceImpl implements TeamService  {
     @Override
     @Transactional
     public JSON findbyUser(HttpServletRequest request) {
+        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         String this_language="en";
         Locale this_locale= LocaleContextHolder.getLocale();
         if(this_locale.getLanguage().equals("zh")){
@@ -136,7 +140,7 @@ public class TeamServiceImpl implements TeamService  {
         JSONObject thisTable= new JSONObject();
         JSONArray rows = new JSONArray();
         List<Team> thisList=new ArrayList<>();
-        Page<Team> thisPage=this.teamRepository.searchInfo(searchText, QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        Page<Team> thisPage=this.teamRepository.searchInfoByUser(searchText,thisUser.getId(),QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
         thisTable.put("total",thisPage.getTotalElements());
         thisList=thisPage.getContent();
         for(int i=0;i<thisList.size();i++){

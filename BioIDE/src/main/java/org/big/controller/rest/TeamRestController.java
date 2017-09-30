@@ -26,7 +26,7 @@ public class TeamRestController {
     //List
     @RequestMapping("/list")
     public JSON List(HttpServletRequest request) {
-        return this.teamService.findbyInfo(request);
+        return this.teamService.findbyUser(request);
     }
 
     //removeMany
@@ -47,9 +47,14 @@ public class TeamRestController {
 
     //removeOne
     @RequestMapping(value="/remove/{id}",method = {RequestMethod.GET})
-    public boolean Remove(@PathVariable String id) {
+    public boolean Remove(@PathVariable String id,HttpServletRequest request) {
         try{
+            request.getSession().setAttribute("operationError","");
             this.teamService.removeOneByUser(id);
+            if(request.getSession().getAttribute("operationError").equals("authority")){
+                request.getSession().setAttribute("operationError","");
+                return false;
+            }
             return true;
         }catch(Exception e){
             return false;

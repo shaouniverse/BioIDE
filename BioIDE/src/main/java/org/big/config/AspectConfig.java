@@ -1,10 +1,12 @@
 package org.big.config;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.big.common.IdentityVote;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.swing.*;
 import java.lang.reflect.Method;
@@ -15,6 +17,8 @@ import java.lang.reflect.Method;
 @Aspect //声明这是一个切面。必须的！
 @Component
 public class AspectConfig {
+    @Autowired
+    private HttpServletRequest request;
 
 //    @Pointcut("@annotation(org.big.config.Action)")
 //    public void annotationPointCut(){};
@@ -73,23 +77,19 @@ public class AspectConfig {
     //对team的删除权限判断
     @Around("execution(* org.big.service.TeamService.removeOneByUser(..)) && args(teamId)")
     public Object before(JoinPoint joinPoint,String teamId){
-        MethodSignature signature=(MethodSignature)joinPoint.getSignature();
-        Method method=signature.getMethod();
-        System.out.println("teamId："+teamId);
-        System.out.println("method是："+method.getName());
         ProceedingJoinPoint pjp = (ProceedingJoinPoint) joinPoint;
         IdentityVote thisIdentityVote=new IdentityVote();
-        System.out.println("thisIdentityVote："+thisIdentityVote.isTeamLeaderByTeamId(teamId));
         if(thisIdentityVote.isTeamLeaderByTeamId(teamId)){
             try {
                 return pjp.proceed();
             } catch (Throwable throwable) {
+                request.getSession().setAttribute("operationError","authority");
                 throwable.printStackTrace();
             }
-            return null;
+            return false;
         }else{
-            //返回你失败的信息也可以直接抛出校验失败的异常
-            return null;
+            request.getSession().setAttribute("operationError","authority");
+            return false;
         }
     }
 }

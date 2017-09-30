@@ -32,20 +32,20 @@ public interface TeamRepository extends BaseRepository<Team, String> {
             Pageable pageable
     );
 
-//    @Query(value = "SELECT t.* FROM team AS t " +
-//            "LEFT JOIN user_team AS ut " +
-//            "ON ut.team_id=t.id " +
-//            "WHERE " +
-//            "ut.user_id=?2"+
-//            "AND (" +
-//            "t.name LIKE %?1% " +
-//            "OR t.leader LIKE %?1%)"
-//    )
-//    Page<Team> searchInfoByUser(
-//            String findText,
-//            String user_id,
-//            Pageable pageable
-//    );
+    @Query(value = "SELECT t FROM Team t " +
+            "LEFT JOIN UserTeam ut " +
+            "ON ut.teamId=t.id " +
+            "WHERE " +
+            "ut.userId=?2 "+
+            "AND (" +
+            "t.name LIKE %?1% " +
+            "OR t.leader LIKE %?1%)"
+    )
+    Page<Team> searchInfoByUser(
+            String findText,
+            String user_id,
+            Pageable pageable
+    );
 
     Team findOneByName(String name);
 

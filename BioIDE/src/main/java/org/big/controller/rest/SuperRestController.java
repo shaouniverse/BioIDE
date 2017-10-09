@@ -1,6 +1,7 @@
 package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
+import org.big.service.MessageServiceImpl;
 import org.big.service.TeamServiceImpl;
 import org.big.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class SuperRestController {
     private TeamServiceImpl teamService;
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private MessageServiceImpl messageService;
 
     //team-List
     @RequestMapping("/team/rest/list")
@@ -91,4 +94,11 @@ public class SuperRestController {
             return false;
         }
     }
+
+    //message-List
+    @RequestMapping("/message/rest/list")
+    public JSON MessageList(HttpServletRequest request) {
+        return this.messageService.findbyInfo(request);
+    }
+
 }

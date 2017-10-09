@@ -101,4 +101,10 @@ public class SuperController {
         this.userService.removeOne(id);
         return "index";
     }
+
+    //message
+    @RequestMapping(value="/message", method = {RequestMethod.GET})
+    public String ViewMessage() {
+        return "message/index";
+    }
 }

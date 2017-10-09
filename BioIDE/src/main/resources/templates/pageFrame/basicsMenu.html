@@ -29,92 +29,84 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">BioIDE操作选项</li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-hdd-o"></i> <span>数据集管理</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-cubes"></i> 分类单元集管理</a></li>
-                        <li><a href="#"><i class="fa fa-sitemap"></i> 分类树集管理</a></li>
-                        <li><a href="#"><i class="fa fa-code-fork"></i> 进化树集管理</a></li>
-                        <li><a href="#"><i class="fa fa-database"></i> Data Set 管理</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-cube"></i> <span> 分类单元管理</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-cube"></i> 分类单元管理</a></li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-list-alt"></i> 描述管理
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-bug"></i> 标本管理</a></li>
-                                <li><a href="#"><i class="fa fa-globe"></i> 分布信息管理</a></li>
-                                <li><a href="#"><i class="fa fa-flag"></i> 保护信息管理</a></li>
-                                <li><a href="#"><i class="fa fa-key"></i> 检索表管理</a></li>
-                                <li class="treeview">
-                                    <a href="#"><i class="fa fa-book"></i> 术语管理
-                                        <span class="pull-right-container">
-                                             <i class="fa fa-angle-left pull-right"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="#"><i class="fa fa-book"></i> 术语集管理</a></li>
-                                        <li><a href="#"><i class="fa fa-book"></i> 术语表管理</a></li>
-                                        <li><a href="#"><i class="fa fa-book"></i> 术语信息管理</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#"><i class="fa fa-barcode"></i> 分子数据管理</a></li>
-                        <li><a href="#"><i class="fa fa-photo"></i> 媒体数据管理</a></li>
-                        <li><a th:href="@{/commonname}" href="#"><i class="fa fa-circle-o"></i> 别名管理</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 观测记录管理</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-file-text-o"></i> <span>信息管理</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-list-ol"></i> 参考文献管理</a></li>
-                        <li><a href="#"><i class="fa fa-database"></i> 源数据管理</a></li>
-                        <li><a href="#"><i class="fa fa-copyright"></i> 版权许可证管理</a></li>
-                    </ul>
-                </li>
-                <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队</span></a></li>
-                <li sec:authorize="hasRole('ROLE_SUPER')" class="treeview">
-                    <a href="#">
-                        <i class="fa fa-user"></i> <span>用户管理</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a th:href="@{/super/user}" href="user"><i class="fa fa-user"></i> <span> 用户管理</span></a></li>
-                        <li><a th:href="@{/super/team}" href="team"><i class="fa fa-users"></i> <span> 团队管理</span></a></li>
-                    </ul>
-                </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-hdd-o"></i> <span>数据集管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-cubes"></i> 分类单元集管理</a></li>
+                            <li><a href="#"><i class="fa fa-sitemap"></i> 分类树集管理</a></li>
+                            <li><a href="#"><i class="fa fa-code-fork"></i> 进化树集管理</a></li>
+                            <li><a href="#"><i class="fa fa-database"></i> Data Set 管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-cube"></i> <span> 分类单元管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-cube"></i> 分类单元管理</a></li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-list-alt"></i> 描述管理
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="#"><i class="fa fa-bug"></i> 标本管理</a></li>
+                                    <li><a href="#"><i class="fa fa-globe"></i> 分布信息管理</a></li>
+                                    <li><a href="#"><i class="fa fa-flag"></i> 保护信息管理</a></li>
+                                    <li><a href="#"><i class="fa fa-key"></i> 检索表管理</a></li>
+                                    <li class="treeview">
+                                        <a href="#"><i class="fa fa-book"></i> 术语管理
+                                            <span class="pull-right-container">
+                                                 <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href="#"><i class="fa fa-book"></i> 术语集管理</a></li>
+                                            <li><a href="#"><i class="fa fa-book"></i> 术语表管理</a></li>
+                                            <li><a href="#"><i class="fa fa-book"></i> 术语信息管理</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="fa fa-barcode"></i> 分子数据管理</a></li>
+                            <li><a href="#"><i class="fa fa-photo"></i> 媒体数据管理</a></li>
+                            <li><a th:href="@{/commonname}" href="#"><i class="fa fa-circle-o"></i> 别名管理</a></li>
+                            <li><a href="#"><i class="fa fa-map-marker"></i> 观测记录管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-file-text-o"></i> <span>信息管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-list-ol"></i> 参考文献管理</a></li>
+                            <li><a href="#"><i class="fa fa-database"></i> 源数据管理</a></li>
+                            <li><a href="#"><i class="fa fa-copyright"></i> 版权许可证管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队</span></a></li>
+                <li sec:authorize="hasRole('ROLE_SUPER')" class="header">管理员操作</li>
+                    <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/user}" href="user"><i class="fa fa-user"></i> <span> 用户管理</span></a></li>
+                    <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/team}" href="team"><i class="fa fa-users"></i> <span> 团队管理</span></a></li>
+                    <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/message}" href="user"><i class="fa fa-envelope"></i> <span> 消息管理</span></a></li>
                 <li class="header">关于我们</li>
-                <li><a href="#"><i class="fa fa-users text-green"></i> <span>开发团队</span></a></li>
-                <li><a href="#"><i class="fa fa-globe text-blue"></i> <span>官方网站</span></a></li>
+                    <li><a href="#"><i class="fa fa-users text-green"></i> <span>开发团队</span></a></li>
+                    <li><a href="#"><i class="fa fa-globe text-blue"></i> <span>官方网站</span></a></li>
                 <li class="header">测试页</li>
-                <li><a th:href="@{/test}" ><i class="fa fa-users text-green"></i> <span>测试</span></a></li>
+                    <li><a th:href="@{/test}" ><i class="fa fa-users text-green"></i> <span>测试</span></a></li>
             </ul>
         </section>
         <!-- /.sidebar -->

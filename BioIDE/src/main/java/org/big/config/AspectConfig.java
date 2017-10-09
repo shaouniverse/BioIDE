@@ -76,7 +76,7 @@ public class AspectConfig {
 
     //对team的删除权限判断
     @Around("execution(* org.big.service.TeamService.removeOneByUser(..)) && args(teamId)")
-    public Object before(JoinPoint joinPoint,String teamId){
+    public Object canReove(JoinPoint joinPoint,String teamId){
         ProceedingJoinPoint pjp = (ProceedingJoinPoint) joinPoint;
         IdentityVote thisIdentityVote=new IdentityVote();
         if(thisIdentityVote.isTeamLeaderByTeamId(teamId)){
@@ -91,5 +91,11 @@ public class AspectConfig {
             request.getSession().setAttribute("operationError","authority");
             return false;
         }
+    }
+
+    //对team的删除权限判断
+    @After("execution(* org.big.service.TeamService.removeOneByUser(..)) && args(teamId)")
+    public void afterRemove(String teamId){
+        System.out.println("后续工作..."+teamId);
     }
 }

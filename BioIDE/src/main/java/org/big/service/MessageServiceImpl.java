@@ -67,6 +67,8 @@ public class MessageServiceImpl implements MessageService{
         for(int i=0;i<thisList.size();i++){
             JSONObject row= new JSONObject();
             Message thisMessage= BuildEntity.buildMessage(thisList.get(i));
+            String title="<a target='_blank' href='super/message/read/"+thisMessage.getId()+"'>"+thisMessage.getTitle()+"</a>";
+            row.put("title",title);
             row.put("sender",thisMessage.getSender());
             row.put("addressee",thisMessage.getAddressee());
             String type=thisMessage.getType();
@@ -121,9 +123,11 @@ public class MessageServiceImpl implements MessageService{
     }
 
     @Override
-    public void saveOne(Message thisMessage) {
+    public void sendOne(Message thisMessage) {
         if(thisMessage.getId()==null||thisMessage.getId().equals("")||thisMessage.getId().length()<=0){
             thisMessage.setId(UUID.randomUUID().toString());
+            thisMessage.setStatus(0);
+            thisMessage.setType("information");
             thisMessage.setSendtime(new Timestamp(System.currentTimeMillis()));
         }
         this.messageRepository.save(thisMessage);

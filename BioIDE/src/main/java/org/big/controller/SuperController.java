@@ -1,7 +1,9 @@
 package org.big.controller;
 
+import org.big.entity.Message;
 import org.big.entity.Team;
 import org.big.entity.User;
+import org.big.service.MessageServiceImpl;
 import org.big.service.TeamServiceImpl;
 import org.big.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class SuperController {
     private TeamServiceImpl teamService;
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private MessageServiceImpl messageService;
 
     //team-index
     @RequestMapping(value="/team", method = {RequestMethod.GET})
@@ -102,9 +106,19 @@ public class SuperController {
         return "index";
     }
 
-    //message
+    //message-index
     @RequestMapping(value="/message", method = {RequestMethod.GET})
     public String ViewMessage() {
         return "message/index";
+    }
+
+    //message-read
+    @RequestMapping(value="/message/read/{id}", method = {RequestMethod.GET})
+    public String ReadMessage(Model model,@PathVariable String id) {
+        Message thisMessage=this.messageService.findbyID(id);
+        User thisSender=this.userService.findbyID(thisMessage.getSender());
+        model.addAttribute("thisMessage", thisMessage);
+        model.addAttribute("thisSender", "From:"+thisSender.getNickname());
+        return "message/read_admin";
     }
 }

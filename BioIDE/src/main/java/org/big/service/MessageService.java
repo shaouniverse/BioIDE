@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface MessageService {
     Message findbyID(String ID);
-    void saveOne(Message thisMessage);
+    void sendOne(Message thisMessage);
     void removeOne(String ID);
     JSON findbyInfo(HttpServletRequest request);
 }

@@ -74,12 +74,16 @@ public class AspectConfig {
 //        }
 //    }
 
-    //对team的删除权限判断
-    @Around("execution(* org.big.service.TeamService.removeOneByUser(..)) && args(teamId)")
-    public Object canReove(JoinPoint joinPoint,String teamId){
+    //删除权限判断
+    @Around("execution(* org.big.service.*.remove*(..)) && args(objectId)")
+    public Object canReove(JoinPoint joinPoint,String objectId){
         ProceedingJoinPoint pjp = (ProceedingJoinPoint) joinPoint;
         IdentityVote thisIdentityVote=new IdentityVote();
-        if(thisIdentityVote.isTeamLeaderByTeamId(teamId)){
+        String targetName = pjp.getSignature().getDeclaringTypeName();
+        //System.out.println(pjp.getTarget().getClass().getName());
+        //targetName=targetName.substring(16);
+        targetName=targetName.replace("org.big.service.","");
+        if(thisIdentityVote.hasAuthority(targetName,objectId)){
             try {
                 return pjp.proceed();
             } catch (Throwable throwable) {
@@ -91,11 +95,5 @@ public class AspectConfig {
             request.getSession().setAttribute("operationError","authority");
             return false;
         }
-    }
-
-    //对team的删除权限判断
-    @After("execution(* org.big.service.TeamService.removeOneByUser(..)) && args(teamId)")
-    public void afterRemove(String teamId){
-        System.out.println("后续工作..."+teamId);
     }
 }

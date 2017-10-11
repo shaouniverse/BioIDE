@@ -26,8 +26,8 @@ public class TeamRestController {
     //List
     @RequestMapping("/list")
     public JSON List(HttpServletRequest request) {
-        return this.teamService.findbyUser(request);
-        //return this.teamService.findbyInfo(request);
+        //return this.teamService.findbyUser(request);
+        return this.teamService.findbyInfo(request);
     }
 
     //removeMany

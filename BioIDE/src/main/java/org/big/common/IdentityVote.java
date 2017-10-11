@@ -14,6 +14,18 @@ public class IdentityVote {
     TeamServiceImpl teamServiceImpl = (TeamServiceImpl) SpringTool.getBean("teamServiceImpl");
     public UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+    public Boolean hasAuthority(String targetName,String objectId){
+        Boolean hasAuthority=false;
+        switch (targetName){
+            case "TeamServiceImpl":
+                hasAuthority=isTeamLeaderByTeamId(objectId);
+                break;
+            default:
+                break;
+        }
+        return hasAuthority;
+    }
+
     public Boolean isTeamLeaderByTeamId(String teamId){
         Team thisTeam = teamServiceImpl.findbyID(teamId);
         for (GrantedAuthority grantedAuthority : thisUser.getAuthorities()) {

@@ -14,4 +14,6 @@ public interface MessageService {
     void sendOne(Message thisMessage);
     void removeOne(String ID);
     JSON findbyInfo(HttpServletRequest request);
+    JSON findInfoByAddressee(HttpServletRequest request);
+    JSON findInfoBySender(HttpServletRequest request);
 }

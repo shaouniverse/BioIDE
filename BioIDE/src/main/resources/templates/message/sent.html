@@ -37,6 +37,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-3">
+
                     <div class="box box-solid">
                         <div class="box-header with-border">
                             <h3 class="box-title">操作</h3>
@@ -52,41 +53,56 @@
                                         <span class="label label-primary pull-right">12</span>
                                     </a>
                                 </li>
-                                <li><a href="#" th:href="@{/console/message/sent}"><i class="fa fa-mail-forward"></i> 发信箱</a></li>
-                                <li class="active"><a href="#" th:href="@{/console/message/compose}"><i class="fa fa-file-text-o"></i> 写信</a></li>
+                                <li class="active"><a href="#" th:href="@{/console/message/sent}"><i class="fa fa-mail-forward"></i> 发信箱</a></li>
+                                <li><a href="#" th:href="@{/console/message/compose}"><i class="fa fa-file-text-o"></i> 写信</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <!-- /.col -->
                 <div class="col-md-9">
-                    <div class="box box-primary">
+                    <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Compose New Message</h3>
+                            <h3 class="box-title">Inbox</h3>
                         </div>
-                        <div class="box-body">
-                            <form id="thisForm"
-                                  th:action="@{/console/message/send}"
-                                  method="post" th:object="${thisMessage}">
-                                <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
-                                <div class="form-group">
-                                    <input class="form-control" th:field="*{addressee}" placeholder="To:">
+                        <div class="box-body no-padding">
+                            <div class="mailbox-controls">
+                                <div class="table table-responsive">
+                                    <table
+                                            id="results_table"
+                                            data-locale="zh-CN"
+                                            data-classes="table table-hover table-condensed"
+                                            data-toggle="table"
+                                            th:attr="data-url=@{/console/message/rest/sent}"
+                                            data-pagination="true"
+                                            data-side-pagination="server"
+                                            data-page-list="[10, 20, 30, 50, 100]"
+                                            data-search="true"
+                                            data-show-columns="true"
+                                            data-show-toggle="true"
+                                            data-toolbar="#toolbar"
+                                            data-show-export="false"
+                                            data-show-refresh="true"
+                                            data-export-types="['excel', 'txt']">
+                                        <thead>
+                                        <tr>
+                                            <th data-field="title" data-align="center" data-sortable="true">标题</th>
+                                            <th data-field="sender" data-align="center" data-sortable="true">发件人</th>
+                                            <th data-field="addressee" data-align="center" data-sortable="true">收件人</th>
+                                            <th data-field="sendtime" data-align="center" data-sortable="true">发送时间</th>
+                                            <th data-field="type" data-align="center" data-sortable="true">类别</th>
+                                            <th data-field="status" data-align="center" data-sortable="true">消息状态</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
                                 </div>
-                                <div class="form-group">
-                                    <input class="form-control" th:field="*{title}" placeholder="Title:">
-                                </div>
-                                <div class="form-group">
-                                <textarea id="editor"  th:field="*{text}" class="form-control" style="height: 300px">
-                                </textarea>
                             </div>
-                            <div class="box-footer">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
-                                </div>
-                                <a onclick="clearInput();" type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</a>
-                            </div>
-                            </form>
+                        </div>
+                        <div class="box-footer no-padding">
+
                         </div>
                     </div>
+                    <!-- /. box -->
                 </div>
                 <!-- /.col -->
             </div>
@@ -108,18 +124,5 @@
 <span th:replace="pageFrame/basicsJs :: copy" />
 <!-- page_script -->
 <script th:src="@{/js/superTableScript.js}"></script>
-<script th:src="@{/plugins/CKEditor5/classic/ckeditor.js}"></script>
-<!--<script th:src="@{/plugins/CKEditor4/ckeditor.js}"></script>-->
-<script>
-    // CKEditor5
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-        console.error( error );
-    } );
-
-    // CKEditor4
-    //CKEDITOR.replace( 'editor' );
-</script>
 </body>
 </html>

@@ -2,9 +2,11 @@ package org.big.controller;
 
 import org.big.entity.Message;
 import org.big.entity.Team;
+import org.big.entity.User;
 import org.big.entity.UserDetail;
 import org.big.service.MessageServiceImpl;
 import org.big.service.TeamServiceImpl;
+import org.big.service.UserServiceImpl;
 import org.big.service.UserTeamServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,11 +27,29 @@ public class MessageController {
 
     @Autowired
     private MessageServiceImpl messageService;
+    @Autowired
+    private UserServiceImpl userService;
 
     //index
     @RequestMapping(value="", method = {RequestMethod.GET})
     public String Index() {
         return "message/myMessage";
+    }
+
+    //sent
+    @RequestMapping(value="/sent", method = {RequestMethod.GET})
+    public String Sent() {
+        return "message/sent";
+    }
+
+    //read
+    @RequestMapping(value="/read/{id}", method = {RequestMethod.GET})
+    public String ReadMessage(Model model,@PathVariable String id) {
+        Message thisMessage=this.messageService.findbyID(id);
+        User thisSender=this.userService.findbyID(thisMessage.getSender());
+        model.addAttribute("thisMessage", thisMessage);
+        model.addAttribute("thisSender", "From:"+thisSender.getNickname());
+        return "message/read_admin";
     }
 
     //add

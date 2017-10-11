@@ -10,9 +10,22 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.sql.Timestamp;
 
 /**
- * Created by WangTianshan on 2017/9/28.
+ *<p><b>构造实体类</b></p>
+ *<p> 将传入的java对象对应至已有的Entity实体</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 7-10-11 下午9:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 public class BuildEntity {
+    /**
+     *<b>构造TeamEntity</b>
+     *<p> 将传入的java对象对应至已有的TeamEntity实体</p>
+     * @author WangTianshan (王天山)
+     * @param obj 传入的Object对象
+     * @return thisTeam（Team）
+     */
     public static Team buildTeam(Object obj){
         Team thisTeam=new Team();
         Object[] objs = (Object[]) obj;
@@ -23,6 +36,13 @@ public class BuildEntity {
         thisTeam.setAdddate((Timestamp) objs[4]);
         return thisTeam;
     }
+    /**
+     *<b>构造MessageEntity</b>
+     *<p> 将传入的java对象对应至已有的MessageEntity实体</p>
+     * @author WangTianshan (王天山)
+     * @param obj 传入的Object对象
+     * @return thisMessage（Message）
+     */
     public static Message buildMessage(Object obj){
         Message thisMessage=new Message();
         Object[] objs = (Object[]) obj;

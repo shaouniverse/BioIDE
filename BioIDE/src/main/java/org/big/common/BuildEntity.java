@@ -2,10 +2,6 @@ package org.big.common;
 
 import org.big.entity.Message;
 import org.big.entity.Team;
-import org.big.entity.UserDetail;
-import org.big.service.TeamServiceImpl;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.sql.Timestamp;
 
@@ -13,7 +9,7 @@ import java.sql.Timestamp;
  *<p><b>构造实体类</b></p>
  *<p> 将传入的java对象对应至已有的Entity实体</p>
  * @author WangTianshan (王天山)
- *<p>Created date: 7-10-11 下午9:35</p>
+ *<p>Created date: 2017/10/11 21:35</p>
  *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
  * @version: 0.1
  * @since JDK 1.80_144

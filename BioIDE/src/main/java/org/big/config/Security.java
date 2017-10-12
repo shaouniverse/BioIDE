@@ -16,7 +16,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by WangTianshan on 2017/9/6.
+ *<p><b>SpringSecurity配置类</b></p>
+ *<p> 配置SpringSecurity</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/6 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @EnableWebSecurity
 @Configuration
@@ -29,6 +35,13 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
+    /**
+     *<b>配置详情</b>
+     *<p> 配置参数详情</p>
+     * @author WangTianshan (王天山)
+     * @param http
+     * @return void
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().and()
@@ -72,6 +85,13 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .csrf();
     }
 
+    /**
+     *<b>全局应用</b>
+     *<p> 全局应用</p>
+     * @author WangTianshan (王天山)
+     * @param auth
+     * @return void
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider);

@@ -13,7 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * Created by WangTianshan on 2017/9/6.
+ *<p><b>TeamController的Rest风格类</b></p>
+ *<p> TeamController的Rest风格类</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/6 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @RestController  //返回json
 @Controller
@@ -23,14 +29,26 @@ public class TeamRestController {
     @Autowired
     private TeamServiceImpl teamService;
 
-    //List
+    /**
+     *<b>列表</b>
+     *<p> 当前用户所能查看权限的列表</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
     @RequestMapping("/list")
     public JSON List(HttpServletRequest request) {
         //return this.teamService.findbyUser(request);
         return this.teamService.findbyInfo(request);
     }
 
-    //removeMany
+    /**
+     *<b>删除多个</b>
+     *<p> 根据id序列一次性删除多个</p>
+     * @author WangTianshan (王天山)
+     * @param ids id序列，用"￥"分隔
+     * @return boolean
+     */
     @RequestMapping(value="/removeMany/{ids}",method = {RequestMethod.GET})
     public boolean RemoveMany(@PathVariable String ids) {
         try{
@@ -46,7 +64,13 @@ public class TeamRestController {
         }
     }
 
-    //removeOne
+    /**
+     *<b>删除单个</b>
+     *<p> 根据id删除单个</p>
+     * @author WangTianshan (王天山)
+     * @param id 实体id
+     * @return boolean
+     */
     @RequestMapping(value="/remove/{id}",method = {RequestMethod.GET})
     public boolean Remove(@PathVariable String id,HttpServletRequest request) {
         try{

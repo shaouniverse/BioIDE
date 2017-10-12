@@ -8,7 +8,13 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by WangTianshan on 2017/9/19.
+ *<p><b>UserDetail的Entity类</b></p>
+ *<p> 此类用于操作SpringSecurity的存储访问用户的重写</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/5 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 public class UserDetail extends User implements UserDetails {
 

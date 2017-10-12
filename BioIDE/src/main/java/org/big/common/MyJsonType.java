@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
 
@@ -16,7 +15,13 @@ import java.sql.Types;
 import java.util.Objects;
 
 /**
- * Created by WangTianshan on 2017/9/8.
+ *<p><b>自定义JSON类</b></p>
+ *<p> 用于SpringDataJPA的拓展</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/28 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 public class MyJsonType extends JSON implements UserType {
 

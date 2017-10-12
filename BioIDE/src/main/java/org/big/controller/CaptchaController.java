@@ -14,7 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 
 /**
- * Created by Tianshan on 17/5/23.
+ *<p><b>验证码相关的Controller类</b></p>
+ *<p> 验证码相关的Controller</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/12 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Controller   /* 返回页面*/
 public class CaptchaController {
@@ -26,9 +32,16 @@ public class CaptchaController {
         this.captchaProducer = captchaProducer;
     }
 
+    /**
+     *<b>展示验证码</b>
+     *<p> 以jpg格式展示验证码</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @param response 页面响应
+     * @return org.springframework.web.servlet.ModelAndView
+     */
     @RequestMapping("/captchaImg")
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         response.setDateHeader("Expires", 0);
         // Set standard HTTP/1.1 no-cache headers.
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");

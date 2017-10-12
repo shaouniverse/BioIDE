@@ -15,7 +15,13 @@ import java.util.UUID;
 
 
 /**
- * Created by WangTianshan on 2017/9/6.
+ *<p><b>User相关的Controller类</b></p>
+ *<p> User相关的Controller</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/12 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Controller
 @RequestMapping("/user")
@@ -25,7 +31,13 @@ public class UserController {
     private UserServiceImpl userService;
 
 
-    //add
+    /**
+     *<b>添加</b>
+     *<p> 添加新的实体的编辑的页面</p>
+     * @author WangTianshan (王天山)
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
         User thisUser=new User();
@@ -34,7 +46,14 @@ public class UserController {
         return "user/add";
     }
 
-    //edit
+    /**
+     *<b>编辑</b>
+     *<p> 对已有的实体进行编辑的页面</p>
+     * @author WangTianshan (王天山)
+     * @param model 初始化模型
+     * @param id 被编辑实体id
+     * @return java.lang.String
+     */
     @RequestMapping(value="/edit/{id}", method = {RequestMethod.GET})
     public String Edit(Model model,@PathVariable String id) {
         User thisUser=this.userService.findbyID(id);
@@ -42,7 +61,13 @@ public class UserController {
         return "user/edit";
     }
 
-    //save
+    /**
+     *<b>保存</b>
+     *<p> 将传入的实体保存</p>
+     * @author WangTianshan (王天山)
+     * @param thisUser 传入的实体id
+     * @return java.lang.String
+     */
     @RequestMapping(value="/save", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisUser") User thisUser) {
         this.userService.saveOne(thisUser);

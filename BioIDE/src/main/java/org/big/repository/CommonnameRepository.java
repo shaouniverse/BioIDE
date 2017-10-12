@@ -7,13 +7,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-
 /**
- * Created by WangTianshan on 2017/9/6.
+ *<p><b>Commonname的DAO类接口</b></p>
+ *<p> Commonname的DAO类接口，与Commonname有关的持久化操作方法</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/6 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Repository
 public interface CommonnameRepository extends BaseRepository<Commonname, String> {
 
+    /**
+     *<b>带分页排序的条件查询</b>
+     *<p> 带分页排序的条件查询</p>
+     * @author WangTianshan (王天山)
+     * @param findText 条件关键词，这里是模糊匹配
+     * @param pageable 分页排序方案实体
+     * @return org.springframework.data.domain.Page<org.big.entity.Commonname>
+     */
     @Query(value = "select c from Commonname c" +
             " where (" +
             "c.commonname like %?1% " +
@@ -24,28 +37,5 @@ public interface CommonnameRepository extends BaseRepository<Commonname, String>
         String findText,
         Pageable pageable
     );
-
-
-    //条件查询，使用原生的 SQL
-//    @Query(value=
-//            "select * from Commoname c" +
-//                    " where (c.commonname like %:findText% or c.language like %:findText% or c.status like %:findText%) " +
-//                    " order by :sort :order " +
-//                    " limit :offset_serch , :limit_serch",
-//            nativeQuery=true
-//    )
-//    List<Commonname> searchInfoQuery(
-//            @Param("findText") String findText,
-//            @Param("sort") String sort,
-//            @Param("order") String order,
-//            @Param("offset_serch") int offset_serch,
-//            @Param("limit_serch") int limit_serch
-//    );
-
-    //条件查询+分页+排序的计数
-//    @Query("select count(*) from Commonname c where (c.commonname like %:findText% or c.language like %:findText% or c.status like %:findText%)")
-//    int countSearchInfoQuery(
-//            @Param("findText") String findText
-//    );
 
 }

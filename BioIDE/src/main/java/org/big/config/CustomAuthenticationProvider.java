@@ -17,7 +17,13 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 
 /**
- * Created by Tianshan on 17/5/25.
+ *<p><b>自定义用户登陆验证类</b></p>
+ *<p> 自定义用户登陆判定</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/12 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -28,6 +34,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private HttpServletRequest request;
 
+    /**
+     *<b>用户登陆验证</b>
+     *<p> 根据传入的验证实体来比对数据库及验证码判定是否通过验证</p>
+     * @author WangTianshan (王天山)
+     * @param authentication
+     * @return org.springframework.security.core.Authentication
+     */
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {

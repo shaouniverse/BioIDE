@@ -4,7 +4,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by WangTianshan on 2017/9/5.
+ *<p><b>User的Entity类</b></p>
+ *<p> User的Entity类</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/5 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
 @Table(name = "user", schema = "biodata", catalog = "")

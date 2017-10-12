@@ -1,9 +1,5 @@
 package org.big.entity;
 
-import com.alibaba.fastjson.JSON;
-import org.big.common.Characteristics;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +7,13 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by WangTianshan on 2017/9/7.
+ *<p><b>Commonname的Entity类</b></p>
+ *<p> Commonname的Entity类</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/12 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
 public class Commonname {

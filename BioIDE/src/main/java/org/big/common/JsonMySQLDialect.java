@@ -5,7 +5,13 @@ import org.hibernate.dialect.MySQLDialect;
 import java.sql.Types;
 
 /**
- * Created by WangTianshan on 2017/9/8.
+ *<p><b>自定义JSON类</b></p>
+ *<p> 用于SpringDataJPA的拓展</p>
+ * @author WangTianshan (王天山)
+ *<p>Created date: 2017/9/28 21:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 public class JsonMySQLDialect extends MySQLDialect {
 

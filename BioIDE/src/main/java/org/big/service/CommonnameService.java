@@ -15,8 +15,40 @@ import javax.servlet.http.HttpServletRequest;
  * @since JDK 1.80_144
  */
 public interface CommonnameService {
+
+    /**
+     *<b>根据id查找一个实体</b>
+     *<p> 据id查找一个实体</p>
+     * @author WangTianshan (王天山)
+     * @param ID 实体的id
+     * @return org.big.entity.Commonname
+     */
     Commonname findbyID(String ID);
+
+    /**
+     *<b>根据id删除一个实体</b>
+     *<p> 据id删除一个实体</p>
+     * @author WangTianshan (王天山)
+     * @param ID 实体的id
+     * @return void
+     */
     void removeOne(String ID);
+
+    /**
+     *<b>保存一个实体</b>
+     *<p> 保存一个实体</p>
+     * @author WangTianshan (王天山)
+     * @param thisPerson 实体
+     * @return void
+     */
     void saveOne(Commonname thisPerson);
+
+    /**
+     *<b>带分页排序的条件查询</b>
+     *<p> 带分页排序的条件查询</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
     JSON findbyInfo(HttpServletRequest request);
 }

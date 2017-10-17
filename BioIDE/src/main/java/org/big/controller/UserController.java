@@ -1,7 +1,7 @@
 package org.big.controller;
 
 import org.big.entity.User;
-import org.big.service.UserServiceImpl;
+import org.big.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.sql.Timestamp;
-import java.util.UUID;
-
 
 /**
  *<p><b>User相关的Controller类</b></p>
@@ -28,7 +24,7 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
 
     /**

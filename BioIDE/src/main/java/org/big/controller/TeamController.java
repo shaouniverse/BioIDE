@@ -2,8 +2,8 @@ package org.big.controller;
 
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
-import org.big.service.TeamServiceImpl;
-import org.big.service.UserTeamServiceImpl;
+import org.big.service.TeamService;
+import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TeamController {
 
     @Autowired
-    private TeamServiceImpl teamService;
+    private TeamService teamService;
     @Autowired
-    private UserTeamServiceImpl userTeamService;
+    private UserTeamService userTeamService;
 
     /**
      *<b>默认页面</b>

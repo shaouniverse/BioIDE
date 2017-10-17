@@ -1,6 +1,6 @@
 package org.big.controller;
 
-import org.big.service.UserServiceImpl;
+import org.big.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
     @Autowired
     private org.apache.catalina.servlet4preview.http.HttpServletRequest request;
 

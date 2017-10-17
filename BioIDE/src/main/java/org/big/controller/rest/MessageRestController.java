@@ -1,7 +1,7 @@
 package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
-import org.big.service.MessageServiceImpl;
+import org.big.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class MessageRestController {
 
     @Autowired
-    private MessageServiceImpl messageService;
+    private MessageService messageService;
 
     /**
      *<b>收信列表</b>

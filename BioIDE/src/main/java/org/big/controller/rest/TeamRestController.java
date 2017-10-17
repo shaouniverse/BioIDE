@@ -1,7 +1,7 @@
 package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
-import org.big.service.TeamServiceImpl;
+import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class TeamRestController {
 
     @Autowired
-    private TeamServiceImpl teamService;
+    private TeamService teamService;
 
     /**
      *<b>列表</b>
@@ -38,8 +38,8 @@ public class TeamRestController {
      */
     @RequestMapping("/list")
     public JSON List(HttpServletRequest request) {
-        //return this.teamService.findbyUser(request);
-        return this.teamService.findbyInfo(request);
+        return this.teamService.findbyUser(request);
+        //return this.teamService.findbyInfo(request);
     }
 
     /**

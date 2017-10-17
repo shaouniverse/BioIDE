@@ -1,9 +1,9 @@
 package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
-import org.big.service.MessageServiceImpl;
-import org.big.service.TeamServiceImpl;
-import org.big.service.UserServiceImpl;
+import org.big.service.MessageService;
+import org.big.service.TeamService;
+import org.big.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 public class SuperRestController {
 
     @Autowired
-    private TeamServiceImpl teamService;
+    private TeamService teamService;
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
     @Autowired
-    private MessageServiceImpl messageService;
+    private MessageService messageService;
 
     /**
      *<b>Team列表</b>

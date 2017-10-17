@@ -1,7 +1,7 @@
 package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
-import org.big.service.CommonnameServiceImpl;
+import org.big.service.CommonnameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CommonnameRestController {
 
     @Autowired
-    private CommonnameServiceImpl commonnameService;
+    private CommonnameService commonnameService;
 
     /**
      *<b>列表</b>

@@ -1,13 +1,10 @@
 package org.big.controller;
 
 import org.big.entity.Message;
-import org.big.entity.Team;
 import org.big.entity.User;
 import org.big.entity.UserDetail;
-import org.big.service.MessageServiceImpl;
-import org.big.service.TeamServiceImpl;
-import org.big.service.UserServiceImpl;
-import org.big.service.UserTeamServiceImpl;
+import org.big.service.MessageService;
+import org.big.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,9 +29,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MessageController {
 
     @Autowired
-    private MessageServiceImpl messageService;
+    private MessageService messageService;
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     /**
      *<b>默认页面</b>

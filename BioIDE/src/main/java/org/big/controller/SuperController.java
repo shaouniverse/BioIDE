@@ -3,9 +3,9 @@ package org.big.controller;
 import org.big.entity.Message;
 import org.big.entity.Team;
 import org.big.entity.User;
-import org.big.service.MessageServiceImpl;
-import org.big.service.TeamServiceImpl;
-import org.big.service.UserServiceImpl;
+import org.big.service.MessageService;
+import org.big.service.TeamService;
+import org.big.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +29,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SuperController {
 
     @Autowired
-    private TeamServiceImpl teamService;
+    private TeamService teamService;
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
     @Autowired
-    private MessageServiceImpl messageService;
+    private MessageService messageService;
 
     /**
      *<b>Team管理页</b>

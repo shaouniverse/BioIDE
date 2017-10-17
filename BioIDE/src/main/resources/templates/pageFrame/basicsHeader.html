@@ -18,14 +18,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-
+        <!-- Right navbar -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <!-- Message -->
                 <li class="dropdown messages-menu">
+                    <!-- New message amount -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
                         <span class="label label-success">4</span>
                     </a>
+                    <!-- Message frame -->
                     <ul class="dropdown-menu">
                         <li class="header">You have 4 new messages</li>
                         <li>
@@ -42,13 +45,12 @@
                                         <p>Why not buy a new awesome theme?</p>
                                     </a>
                                 </li>
-                                <!-- end message -->
                             </ul>
                         </li>
                         <li class="footer"><a href="#" th:href="@{/console/message}">See All Messages</a></li>
                     </ul>
                 </li>
-                <!-- User Account: style can be found in dropdown.less -->
+                <!-- User Account-->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img th:src="@{/img/user-none-160x160.jpg}" src="/img/user-none-160x160.jpg" class="user-image" alt="User Image">

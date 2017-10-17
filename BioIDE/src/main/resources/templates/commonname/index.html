@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Title:俗名管理的首页
+    Description：俗名管理首页
+    Author：WangTianshan (王天山)
+    Created date: 2017/9/15 21:35
+    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
+    Version: Html5
+ -->
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -37,16 +45,16 @@
         <!-- Main content -->
         <section class="content">
             <div class="box box-default box-solid">
+                <!-- box-header -->
                 <div class="box-header with-border">
                     <h3 class="box-title">操作</h3>
-
+                    <!-- box-tools -->
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <!-- /.box-tools -->
                 </div>
-                <!-- /.box-header -->
+                <!-- box-body -->
                 <div class="box-body">
                     <a class="btn btn-app" th:href="@{/commonname/add}" href="/commonname/add">
                         <i class="fa fa-plus"></i> ADD
@@ -58,8 +66,8 @@
                         <i class="fa fa-remove"></i> REMOVE
                     </a>
                 </div>
-                <!-- /.box-body -->
             </div>
+            <!-- table -->
             <div class="table table-responsive">
                 <table
                         id="results_table"
@@ -96,7 +104,6 @@
                 </table>
             </div>
         </section>
-        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -104,7 +111,6 @@
     </footer>
     <!-- Control Sidebar -->
     <span th:replace="pageFrame/basicsControl :: copy" />
-    <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>

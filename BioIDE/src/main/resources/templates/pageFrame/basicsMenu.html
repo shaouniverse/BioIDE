@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <section th:fragment="copy">
     <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
+        <!-- sidebar-->
         <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
@@ -25,9 +25,9 @@
               </span>
                 </div>
             </form>
-            <!-- /.search form -->
-            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <!-- sidebar menu -->
             <ul class="sidebar-menu" data-widget="tree">
+                <!-- BioIDE操作选项 -->
                 <li class="header">BioIDE操作选项</li>
                     <li class="treeview">
                         <a href="#">
@@ -98,10 +98,12 @@
                         </ul>
                     </li>
                     <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队</span></a></li>
-                <li sec:authorize="hasRole('ROLE_SUPER')" class="header">管理员操作</li>
+                <!-- 管理员操作选项 -->
+                <li sec:authorize="hasRole('ROLE_SUPER')" class="header">管理员操作选项</li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/user}" href="user"><i class="fa fa-user"></i> <span> 用户管理</span></a></li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/team}" href="team"><i class="fa fa-users"></i> <span> 团队管理</span></a></li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/message}" href="user"><i class="fa fa-envelope"></i> <span> 消息管理</span></a></li>
+                <!-- 关于我们 -->
                 <li class="header">关于我们</li>
                     <li><a href="#"><i class="fa fa-users text-green"></i> <span>开发团队</span></a></li>
                     <li><a href="#"><i class="fa fa-globe text-blue"></i> <span>官方网站</span></a></li>
@@ -109,7 +111,6 @@
                     <li><a th:href="@{/test}" ><i class="fa fa-users text-green"></i> <span>测试</span></a></li>
             </ul>
         </section>
-        <!-- /.sidebar -->
     </aside>
 </section>
 </html>

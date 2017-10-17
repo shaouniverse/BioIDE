@@ -58,7 +58,7 @@ public class MessageController {
     }
 
     /**
-     *<b>查看详情</b>
+     *<b>查看消息详情</b>
      *<p> 查看消息的详情，如果是收信人进行此操作将改变此消息的状态为“已读”</p>
      * @author WangTianshan (王天山)
      * @param model 初始化模型
@@ -69,6 +69,7 @@ public class MessageController {
     public String ReadMessage(Model model,@PathVariable String id) {
         Message thisMessage=this.messageService.findbyID(id);
         User thisSender=this.userService.findbyID(thisMessage.getSender());
+        this.messageService.changeStatus(id,1);
         model.addAttribute("thisMessage", thisMessage);
         model.addAttribute("thisSender", "From:"+thisSender.getNickname());
         return "message/read_admin";

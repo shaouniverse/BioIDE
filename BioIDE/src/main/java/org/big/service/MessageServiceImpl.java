@@ -328,4 +328,9 @@ public class MessageServiceImpl implements MessageService{
         this.messageRepository.deleteById(ID);
     }
 
+
+    @Override
+    public void changeStatus(String ID,int newStatus) {
+        this.messageRepository.changeStatus(ID,newStatus);
+    }
 }

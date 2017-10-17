@@ -4,8 +4,10 @@ import org.big.entity.Message;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *<p><b>Message的DAO类接口</b></p>
@@ -122,4 +124,17 @@ public interface MessageRepository extends BaseRepository<Message, String> {
             String user_id,
             Pageable pageable
     );
+
+    /**
+     *<b>改变消息状态</b>
+     *<p> 改变消息状态</p>
+     * @author WangTianshan (王天山)
+     * @param ID 实体的id
+     * @param newStatus 新的状态代码
+     * @return void
+     */
+    @Modifying
+    @Transactional
+    @Query("update Message m SET m.status = ?2 WHERE m.id = ?1")
+    void changeStatus(String ID,int newStatus);
 }

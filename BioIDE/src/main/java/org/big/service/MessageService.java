@@ -69,4 +69,14 @@ public interface MessageService {
      * @return com.alibaba.fastjson.JSON
      */
     JSON findInfoBySender(HttpServletRequest request);
+
+    /**
+     *<b>改变消息状态</b>
+     *<p> 改变消息状态</p>
+     * @author WangTianshan (王天山)
+     * @param ID 实体的id
+     * @param newStatus 新的状态代码
+     * @return void
+     */
+    void changeStatus(String ID,int newStatus);
 }

@@ -1,5 +1,6 @@
 package org.big.common;
 
+import org.big.entity.Message;
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
 import org.big.service.TeamServiceImpl;
@@ -61,6 +62,23 @@ public class IdentityVote {
             }
             else
                 return false;
+        }
+        return false;
+    }
+
+    /**
+     *<b>根据Message、Addressee判断是否具有修改已读状态权限</b>
+     *<p> 根据Message、Addressee判断是否具有修改已读状态权限，超级管理员和该Addressee具有权限</p>
+     * @author WangTianshan (王天山)
+     * @param thisMessage 被判断的Message实体
+     * @return java.lang.Boolean
+     */
+    public Boolean isAddresseeByMessage(Message thisMessage){
+        //判断当前状态
+        if(thisMessage.getStatus()==0){
+            if(thisMessage.getAddressee().equals(thisUser.getId())){
+                return true;
+            }
         }
         return false;
     }

@@ -44,6 +44,21 @@ public class TeamController {
     }
 
     /**
+     *<b>查看团队详情</b>
+     *<p> 查看团队的详情</p>
+     * @author WangTianshan (王天山)
+     * @param model 初始化模型
+     * @param id 实体的
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/details/{id}", method = {RequestMethod.GET})
+    public String ReadMessage(Model model,@PathVariable String id) {
+        Team thisTeam=this.teamService.findbyID(id);
+        model.addAttribute("thisTeam", thisTeam);
+        return "team/details";
+    }
+
+    /**
      *<b>添加</b>
      *<p> 添加新的实体的编辑的页面</p>
      * @author WangTianshan (王天山)

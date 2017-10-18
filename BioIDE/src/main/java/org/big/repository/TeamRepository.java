@@ -66,6 +66,7 @@ public interface TeamRepository extends BaseRepository<Team, String> {
             "t.id AS id," +
             "t.name AS name," +
             "u.userName AS leader," +
+            "u.nickname AS leaderName," +
             "t.note AS note," +
             "t.adddate AS adddate " +
             "FROM Team t " +
@@ -94,4 +95,13 @@ public interface TeamRepository extends BaseRepository<Team, String> {
      */
     Team findOneByName(String name);
 
+    /**
+     *<b>统计指定Team的成员计数</b>
+     *<p> 统计指定Team的成员计数</p>
+     * @author WangTianshan (王天山)
+     * @param Id Team的id
+     * @return void
+     */
+    @Query(" select count(ut) from UserTeam ut where ut.teamId = ?1")
+    Integer countMembersByTeamId(String Id);
 }

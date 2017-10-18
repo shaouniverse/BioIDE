@@ -56,13 +56,13 @@
                 <!-- box-body -->
                 <div class="box-body">
                     <a class="btn btn-app" th:href="@{/console/team/add}" href="/team/add">
-                        <i class="fa fa-user-plus"></i> ADD
+                        <i class="fa fa-plus"></i> ADD
                     </a>
                     <a class="btn btn-app" onclick="editSelectObject('team');">
                         <i class="fa fa-edit"></i> EDIT
                     </a>
                     <a class="btn btn-app" onclick="removeSelectObject('team');">
-                        <i class="fa fa-user-times"></i> REMOVE
+                        <i class="fa fa-remove"></i> REMOVE
                     </a>
                 </div>
             </div>
@@ -89,7 +89,8 @@
                         <th data-field="select" data-align="center" data-sortable="false"></th>
                         <th data-field="name" data-align="center" data-sortable="true">团队名称</th>
                         <th data-field="leader" data-align="center" data-sortable="true">团队负责人</th>
-                        <th data-field="adddate" data-align="center" data-sortable="true">注册时间</th>
+                        <th data-field="members" data-align="center" data-sortable="false">团队成员</th>
+                        <th data-field="adddate" data-align="center" data-sortable="true">建立时间</th>
                         <th data-field="edit" data-align="center" data-sortable="false">操作</th>
                     </tr>
                     </thead>

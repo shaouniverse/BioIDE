@@ -162,8 +162,9 @@ public class TeamServiceImpl implements TeamService  {
                             "<span class=\"glyphicon glyphicon-remove\"></span>" +
                             "</a>";
             row.put("select",thisSelect);
-            row.put("name",thisTeam.getName());
+            row.put("name","<a target='_blank' href='console/team/details/"+thisTeam.getId()+"'>"+thisTeam.getName()+"</a>");
             row.put("leader",thisTeam.getLeader());
+            row.put("members","共"+this.teamRepository.countMembersByTeamId(thisTeam.getId())+"人");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String addTime="";
             try {

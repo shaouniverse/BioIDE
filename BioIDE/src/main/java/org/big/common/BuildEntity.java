@@ -27,9 +27,9 @@ public class BuildEntity {
         Object[] objs = (Object[]) obj;
         thisTeam.setId((String)objs[0]);
         thisTeam.setName((String)objs[1]);
-        thisTeam.setLeader((String)objs[2]);
-        thisTeam.setNote((String)objs[3]);
-        thisTeam.setAdddate((Timestamp) objs[4]);
+        thisTeam.setLeader((String)objs[3]+"("+(String)objs[2]+")");
+        thisTeam.setNote((String)objs[4]);
+        thisTeam.setAdddate((Timestamp) objs[5]);
         return thisTeam;
     }
     /**

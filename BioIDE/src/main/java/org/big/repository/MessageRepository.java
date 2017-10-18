@@ -137,4 +137,15 @@ public interface MessageRepository extends BaseRepository<Message, String> {
     @Transactional
     @Query("update Message m SET m.status = ?2 WHERE m.id = ?1")
     void changeStatus(String ID,int newStatus);
+
+    /**
+     *<b>统计指定收信人的状态条件计数</b>
+     *<p> 统计指定收信人的状态条件计数</p>
+     * @author WangTianshan (王天山)
+     * @param userId 收信人的id
+     * @param statusNum 状态代码
+     * @return void
+     */
+    @Query(" select count(m) from Message m where m.addressee =?1  AND m.status = ?2")
+    Integer countStatus(String userId,int statusNum);
 }

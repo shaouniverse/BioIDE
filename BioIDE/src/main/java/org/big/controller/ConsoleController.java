@@ -1,6 +1,9 @@
 package org.big.controller;
 
+import org.big.service.MessageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -17,6 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/console")
 public class ConsoleController {
 
+    @Autowired
+    private MessageService messageService;
+    @Autowired
+    private org.apache.catalina.servlet4preview.http.HttpServletRequest request;
+
     /**
      *<b>默认页面</b>
      *<p> 登录后自动跳转的控制台默认页面</p>
@@ -25,7 +33,9 @@ public class ConsoleController {
      * @return java.lang.String
      */
     @RequestMapping(value="/{consoleId}", method = {RequestMethod.GET})
-    public String Index() {
+    public String Index(Model model) {
+        int unReadMessageNum=messageService.countStatus(0);
+        request.getSession().setAttribute("unReadMessageNum",unReadMessageNum);
         return "console/index";
     }
 }

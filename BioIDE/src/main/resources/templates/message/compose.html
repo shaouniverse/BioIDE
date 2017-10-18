@@ -57,7 +57,7 @@
                             <ul class="nav nav-pills nav-stacked">
                                 <li>
                                     <a href="#" th:href="@{/console/message}"><i class="fa fa-inbox"></i> 收信箱
-                                        <span class="label label-primary pull-right">12</span>
+                                        <span class="label label-primary pull-right" th:if="${session.unReadMessageNum} &gt; 0" th:text="${session.unReadMessageNum}"></span>
                                     </a>
                                 </li>
                                 <li><a href="#" th:href="@{/console/message/sent}"><i class="fa fa-mail-forward"></i> 发信箱</a></li>

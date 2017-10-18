@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.big.common.BuildEntity;
+import org.big.common.IdentityVote;
 import org.big.common.QueryTool;
 import org.big.entity.Message;
 import org.big.entity.UserDetail;
@@ -330,7 +331,17 @@ public class MessageServiceImpl implements MessageService{
 
 
     @Override
-    public void changeStatus(String ID,int newStatus) {
-        this.messageRepository.changeStatus(ID,newStatus);
+    public void changeStatus(Message thisMessage,int newStatus) {
+        //身份判断
+        IdentityVote identityVote=new IdentityVote();
+        if(identityVote.isAddresseeByMessage(thisMessage)){
+            this.messageRepository.changeStatus(thisMessage.getId(),newStatus);
+        }
+    }
+
+    @Override
+    public int countStatus(int statusNum) {
+        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return this.messageRepository.countStatus(thisUser.getId(),statusNum);
     }
 }

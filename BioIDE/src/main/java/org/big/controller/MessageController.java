@@ -32,6 +32,8 @@ public class MessageController {
     private MessageService messageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private org.apache.catalina.servlet4preview.http.HttpServletRequest request;
 
     /**
      *<b>默认页面</b>
@@ -69,7 +71,9 @@ public class MessageController {
     public String ReadMessage(Model model,@PathVariable String id) {
         Message thisMessage=this.messageService.findbyID(id);
         User thisSender=this.userService.findbyID(thisMessage.getSender());
-        this.messageService.changeStatus(id,1);
+        this.messageService.changeStatus(thisMessage,1);
+        int unReadMessageNum=messageService.countStatus(0);
+        request.getSession().setAttribute("unReadMessageNum",unReadMessageNum);
         model.addAttribute("thisMessage", thisMessage);
         model.addAttribute("thisSender", "From:"+thisSender.getNickname());
         return "message/read_admin";

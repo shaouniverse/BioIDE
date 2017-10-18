@@ -74,9 +74,20 @@ public interface MessageService {
      *<b>改变消息状态</b>
      *<p> 改变消息状态</p>
      * @author WangTianshan (王天山)
-     * @param ID 实体的id
+     * @param thisMessage 实体
      * @param newStatus 新的状态代码
      * @return void
      */
-    void changeStatus(String ID,int newStatus);
+    void changeStatus(Message thisMessage,int newStatus);
+
+
+    /**
+     *<b>根据状态统计消息数量</b>
+     *<p> 根据状态统计消息数量</p>
+     * @author WangTianshan (王天山)
+     * @param statusNum 被查找的状态代码
+     * @return void
+     */
+    int countStatus(int statusNum);
+
 }

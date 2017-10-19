@@ -60,4 +60,13 @@ public interface UserService {
      * @return org.big.entity.User
      */
     User findOneByName(String user_name);
+
+    /**
+     *<b>带分页排序的条件查询的Team成员列表</b>
+     *<p> 带分页排序的条件查询的当前用户所能查看权限的Team成员列表</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+    JSON findbyTeamId(HttpServletRequest request);
 }

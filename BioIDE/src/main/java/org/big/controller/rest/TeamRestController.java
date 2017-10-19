@@ -2,6 +2,8 @@ package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
 import org.big.service.TeamService;
+import org.big.service.UserService;
+import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,8 @@ public class TeamRestController {
 
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private UserService userService;
 
     /**
      *<b>列表</b>
@@ -80,6 +84,40 @@ public class TeamRestController {
                 request.getSession().setAttribute("operationError","");
                 return false;
             }
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    /**
+     *<b>Team成员列表</b>
+     *<p> 当前用户所能查看权限的Team成员列表</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+    @RequestMapping("/memberList")
+    public JSON MemberList(HttpServletRequest request) {
+        return this.userService.findbyTeamId(request);
+    }
+
+    /**
+     *<b>删除单个</b>
+     *<p> 根据id删除单个</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @return boolean
+     */
+    @RequestMapping(value="/removeMember",method = {RequestMethod.POST})
+    public boolean RemoveMember(HttpServletRequest request) {
+        System.out.println("====================");
+        String teamId=request.getParameter("teamId");
+        String userId=request.getParameter("userId");
+        System.out.println("teamId="+teamId);
+        System.out.println("userId="+userId);
+        try{
+            this.teamService.removeMembersByTeamIdAndUserId(teamId,userId);
             return true;
         }catch(Exception e){
             return false;

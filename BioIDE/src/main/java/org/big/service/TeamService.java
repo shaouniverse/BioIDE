@@ -98,4 +98,23 @@ public interface TeamService {
      * @return org.big.entity.Team
      */
     Team findOneByName(String name);
+
+    /**
+     *<b>根据TeamId统计成员数量</b>
+     *<p> 根据TeamId统计成员数量</p>
+     * @author WangTianshan (王天山)
+     * @param ID Team的ID
+     * @return int
+     */
+    int countMembersByTeamId(String ID);
+
+    /**
+     *<b>根据TeamId与UserIds删除成员</b>
+     *<p> 根据TeamId与UserIds删除成员</p>
+     * @author WangTianshan (王天山)
+     * @param teamId Team的ID
+     * @param userId User的ID
+     * @return int
+     */
+    void removeMembersByTeamIdAndUserId(String teamId,String userId);
 }

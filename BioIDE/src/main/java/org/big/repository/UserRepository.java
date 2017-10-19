@@ -50,4 +50,27 @@ public interface UserRepository extends BaseRepository<User, String> {
      */
     User findOneByUserName(String name);
 
+    /**
+     *<b>带分页排序的条件查询的Team成员列表</b>
+     *<p> 带分页排序的条件查询的当前用户所能查看权限的Team成员列表</p>
+     * @author WangTianshan (王天山)
+     * @param findText 条件关键词，这里是模糊匹配
+     * @param pageable 分页排序方案实体
+     * @return org.springframework.data.domain.Page<org.big.entity.User>
+     */
+    @Query(value = "select u from User u " +
+            "LEFT JOIN UserTeam ut "+
+            "ON ut.teamId=?1"+
+            " where " +
+            "ut.userId=u.id AND"+
+            "(" +
+            "u.userName like %?2% " +
+            "or u.email like %?2% " +
+            "or u.nickname like %?2%)"
+    )
+    Page<User> searchByTeamId(
+            String teamId,
+            String findText,
+            Pageable pageable
+    );
 }

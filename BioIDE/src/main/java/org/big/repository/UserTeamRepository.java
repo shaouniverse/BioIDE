@@ -32,4 +32,16 @@ public interface UserTeamRepository extends BaseRepository<UserTeam, String> {
     @Query("delete from UserTeam ut where ut.teamId = ?1")
     void deleteByTeamId(String teamId);
 
+    /**
+     *<b>根据TeamId与UserIds删除成员</b>
+     *<p> 根据TeamId与UserIds删除成员</p>
+     * @author WangTianshan (王天山)
+     * @param teamId Team的ID
+     * @param userId User的ID
+     * @return void
+     */
+    @Modifying
+    @Transactional
+    @Query("delete from UserTeam ut where ut.teamId = ?1 and ut.userId=?2")
+    void deleteMembersByTeamIdAndUserId(String teamId,String userId);
 }

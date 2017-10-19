@@ -3,6 +3,7 @@ package org.big.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.big.common.IdentityVote;
 import org.big.common.QueryTool;
 import org.big.entity.User;
 import org.big.repository.UserRepository;
@@ -34,6 +35,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TeamService teamRepository;
 
     @Override
     @Transactional
@@ -123,5 +126,72 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findOneByName(String user_name) {
         return this.userRepository.findOneByUserName(user_name);
+    }
+
+    @Override
+    @Transactional
+    public JSON findbyTeamId(HttpServletRequest request) {
+        String this_language="en";
+        Locale this_locale= LocaleContextHolder.getLocale();
+        if(this_locale.getLanguage().equals("zh")){
+            this_language="zh";
+        }
+        if(this_locale.getLanguage().equals("en")){
+            this_language="en";
+        }
+        JSON json= null;
+        String searchText=request.getParameter("search");
+        if(searchText==null || searchText.length()<=0){
+            searchText="";
+        }
+        int limit_serch=Integer.parseInt(request.getParameter("limit"));
+        int offset_serch=Integer.parseInt(request.getParameter("offset"));
+        String teamId=request.getParameter("teamId");
+        String sort="desc";
+        String order="date";
+        sort=request.getParameter("sort");
+        order=request.getParameter("order");
+        if(sort==null || sort.length()<=0){
+            sort="adddate";
+        }
+        if(order==null || order.length()<=0){
+            order="desc";
+        }
+        JSONObject thisTable= new JSONObject();
+        JSONArray rows = new JSONArray();
+        List<User> thisList=new ArrayList<>();
+        Page<User> thisPage=this.userRepository.searchByTeamId(teamId,searchText,QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        thisTable.put("total",thisPage.getTotalElements());
+        thisList=thisPage.getContent();
+        for(int i=0;i<thisList.size();i++){
+            JSONObject row= new JSONObject();
+            String thisEdit=
+                            "<a class=\"wts-table-edit-icon\" onclick=\"removeThisMember('"+teamId+"','"+thisList.get(i).getId()+"')\" >" +
+                            "<span class=\"glyphicon glyphicon-remove\"></span>" +
+                            "</a>";
+            row.put("userName",thisList.get(i).getUserName());
+            row.put("nickname",thisList.get(i).getNickname());
+            row.put("email",thisList.get(i).getEmail());
+            String role="成员";
+            if(this.teamRepository.findbyID(teamId).getLeader().equals(thisList.get(i).getId())){
+                role="<span class=\"badge bg-light-blue\">负责人</span>";
+            }
+            row.put("role",role);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String addTime="";
+            try {
+                addTime=formatter.format(thisList.get(i).getAdddate());
+            } catch (Exception e) {
+                //e.printStackTrace();
+            }
+            row.put("adddate",addTime);
+            IdentityVote identityVote=new IdentityVote();
+            if(identityVote.isTeamLeaderByTeamId(teamId))
+                row.put("edit",thisEdit);
+            rows.add(i,row);
+        }
+        thisTable.put("rows",rows);
+        json=thisTable;
+        return json;
     }
 }

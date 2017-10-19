@@ -223,4 +223,14 @@ public class TeamServiceImpl implements TeamService  {
     public Team findOneByName(String name) {
         return this.teamRepository.findOneByName(name);
     }
+
+    @Override
+    public int countMembersByTeamId(String ID){
+        return this.teamRepository.countMembersByTeamId(ID);
+    }
+
+    @Override
+    public void removeMembersByTeamIdAndUserId(String teamId,String userId){
+        this.userTeamRepository.deleteMembersByTeamIdAndUserId(teamId,userId);
+    }
 }

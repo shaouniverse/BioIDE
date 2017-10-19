@@ -1,8 +1,10 @@
 package org.big.controller;
 
 import org.big.entity.Team;
+import org.big.entity.User;
 import org.big.entity.UserDetail;
 import org.big.service.TeamService;
+import org.big.service.UserService;
 import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +31,8 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private UserTeamService userTeamService;
 
     /**
@@ -52,9 +56,13 @@ public class TeamController {
      * @return java.lang.String
      */
     @RequestMapping(value="/details/{id}", method = {RequestMethod.GET})
-    public String ReadMessage(Model model,@PathVariable String id) {
+    public String TeamDetails(Model model,@PathVariable String id) {
         Team thisTeam=this.teamService.findbyID(id);
+        int members=this.teamService.countMembersByTeamId(id);
+        User leader=this.userService.findbyID(thisTeam.getLeader());
         model.addAttribute("thisTeam", thisTeam);
+        model.addAttribute("members", members);
+        model.addAttribute("leader", leader);
         return "team/details";
     }
 

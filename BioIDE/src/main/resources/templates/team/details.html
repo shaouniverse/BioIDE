@@ -46,31 +46,82 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-black" style="background: url('/img/info-bg.jpg') center center;">
                     <h3 class="widget-user-username" th:text ="${thisTeam.name}">Elizabeth Pierce</h3>
-                    <h5 class="widget-user-desc">创立于：<span th:text ="${#calendars.format(thisTeam.adddate,'yyyy-MM-dd hh:mm:ss')}"></span></h5>
+                    <h5 class="widget-user-desc" th:text ="${thisTeam.note}"></h5>
                 </div>
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                                <h5 class="description-header">3,200</h5>
+                                <h5 class="description-header" th:text="${members}">0</h5>
                                 <span class="description-text">MEMBERS</span>
                             </div>
                         </div>
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
                                 <h5 class="description-header">13,000</h5>
-                                <span class="description-text">FOLLOWERS</span>
+                                <span class="description-text">条记录</span>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="description-block">
-                                <h5 class="description-header">35</h5>
-                                <span class="description-text">PRODUCTS</span>
+                                <h5 class="description-header" th:text ="${#calendars.format(thisTeam.adddate,'yyyy-MM-dd hh:mm:ss')}">-</h5>
+                                <span class="description-text">创立</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#info" id="home-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="true">基本信息</a></li>
+                    <li role="presentation" class=""><a href="#members" role="tab" id="profile-tab" data-toggle="tab" aria-controls="members" aria-expanded="false">成员信息</a></li>
+                </ul>
                 <div class="box-footer">
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="info" aria-labelledby="home-tab">
+                            <ul class="list-group">
+                                <li class="list-group-item"><b>团队名：</b><span th:text ="${thisTeam.name}"></span></li>
+                                <li class="list-group-item"><b>创立时间：</b><span th:text ="${#calendars.format(thisTeam.adddate,'yyyy-MM-dd hh:mm:ss')}"></span></li>
+                                <li class="list-group-item"><b>团队简介：</b><span th:text ="${thisTeam.note}"></span></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="members" aria-labelledby="profile-tab">
+                            <ul class="list-group">
+                                <li class="list-group-item"><b>团队成员数量：</b><span th:text ="${members}"></span></li>
+                                <li class="list-group-item"><b>团队负责人：</b><span th:text ="${leader.nickname}"></span></li>
+                                <li class="list-group-item"><b>团队成员：</b>
+                                    <p></p>
+                                    <div class="table table-responsive">
+                                        <table
+                                                id="results_table"
+                                                data-locale="zh-CN"
+                                                data-classes="table table-hover table-condensed"
+                                                data-toggle="table"
+                                                th:attr="data-url=@{/console/team/rest/memberList(teamId=${thisTeam.id})}"
+                                                data-pagination="true"
+                                                data-side-pagination="server"
+                                                data-page-list="[10, 20, 30, 50, 100]"
+                                                data-search="true"
+                                                data-show-columns="true"
+                                                data-show-toggle="true"
+                                                data-toolbar="#toolbar"
+                                                data-show-export="false"
+                                                data-show-refresh="true"
+                                                data-export-types="['excel', 'txt']">
+                                            <thead>
+                                            <tr>
+                                                <th data-field="nickname" data-align="center" data-sortable="true">姓名</th>
+                                                <th data-field="userName" data-align="center" data-sortable="true">用户名</th>
+                                                <th data-field="role" data-align="center" data-sortable="false">角色</th>
+                                                <th data-field="email" data-align="center" data-sortable="true">邮箱</th>
+                                                <th data-field="adddate" data-align="center" data-sortable="true">加入时间</th>
+                                                <th data-field="edit" data-align="center" data-sortable="false">操作</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

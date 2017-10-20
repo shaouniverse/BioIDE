@@ -58,12 +58,11 @@ function removeThisMember(teamId,userId) {
     {
         $.post("/console/team/rest/removeMember",
             {
+                "_csrf":$('input[name="_csrf"]').val(),
                 teamId:teamId,
                 userId:userId
             },
             function(status){
-                alert(teamId);
-                alert(userId);
                 if(status){
                     layer.msg('删除成功',
                         {

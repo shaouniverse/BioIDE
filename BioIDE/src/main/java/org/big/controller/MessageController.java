@@ -1,10 +1,13 @@
 package org.big.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.big.entity.Message;
 import org.big.entity.User;
 import org.big.entity.UserDetail;
 import org.big.service.MessageService;
 import org.big.service.UserService;
+import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,8 +36,8 @@ public class MessageController {
     @Autowired
     private UserService userService;
     @Autowired
-    private org.apache.catalina.servlet4preview.http.HttpServletRequest request;
-
+    private UserTeamService userTeamService;
+    
     /**
      *<b>默认页面</b>
      *<p> 展示收信列表和操作选项</p>
@@ -66,9 +69,9 @@ public class MessageController {
      * @param model 初始化模型
      * @param id 实体的
      * @return java.lang.String
-     */
+     */ // 
     @RequestMapping(value="/read/{id}", method = {RequestMethod.GET})
-    public String ReadMessage(Model model,@PathVariable String id) {
+    public String ReadMessage(Model model,@PathVariable String id, HttpServletRequest request) {
         Message thisMessage=this.messageService.findbyID(id);
         User thisSender=this.userService.findbyID(thisMessage.getSender());
         this.messageService.changeStatus(thisMessage,1);
@@ -86,16 +89,34 @@ public class MessageController {
      * @param model 初始化模型
      * @return java.lang.String
      */
+    @RequestMapping(value="/compose/{id}", method = {RequestMethod.GET})
+    public String Add(@PathVariable String id, Model model) {
+        Message thisMessage=new Message();
+        thisMessage.setText("<p></p><p></p>");
+        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        thisMessage.setSender(thisUser.getId());	// 将当前登录用户(团队管理员)，设置为邀请人
+        thisMessage.setTeamid(id);
+        model.addAttribute("thisMessage", thisMessage);
+        return "message/compose";
+    }
+
+    /**
+     *<b>添加</b>
+     *<p> 添加新的实体的编辑的页面</p>
+     * @author WangTianshan (王天山)
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
     @RequestMapping(value="/compose", method = {RequestMethod.GET})
     public String Add(Model model) {
         Message thisMessage=new Message();
         thisMessage.setText("<p></p><p></p>");
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        thisMessage.setSender(thisUser.getId());
+        thisMessage.setSender(thisUser.getId());	// 将当前登录用户(团队管理员)，设置为邀请人
         model.addAttribute("thisMessage", thisMessage);
         return "message/compose";
     }
-
+    
     /**
      *<b>保存</b>
      *<p> 将传入的实体保存</p>
@@ -104,11 +125,33 @@ public class MessageController {
      * @return java.lang.String
      */
     @RequestMapping(value="/send", method = {RequestMethod.POST})
-    public String Save(@ModelAttribute("thisMessage") Message thisMessage) {
-        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String Save(@ModelAttribute("thisMessage") Message thisMessage, HttpServletRequest request) {
+    	UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         thisMessage.setSender(thisUser.getId());
+        if (null != request.getParameter("TeamID") && !"".equals(request.getAttribute("TeamID"))) {
+        	thisMessage.setTeamid(request.getParameter("TeamID"));
+		}
+        String udata = request.getParameter("udata");
+        if (null != udata && !"".equals(udata)) {
+        	String email = userService.findOneByName(udata).getEmail();
+        	thisMessage.setAddressee(email);
+        }
+        System.out.println(thisMessage.toString());
         this.messageService.sendOne(thisMessage);
         return "redirect:/console/message";
     }
-
+    /**
+     * 处理超级管理员的团队邀请
+     * @param userName
+     * @param teamid
+     * @return
+     */
+    @RequestMapping(value="/invite/{userName}/{teamid}", method = {RequestMethod.GET})
+    public String Invite(@PathVariable String userName, @PathVariable String teamid) {
+    	System.out.println("被邀请人：" + userName);
+    	System.out.println("邀请TeamID：" + teamid);
+    	// 用户接收邀请
+    	userTeamService.saveOne(userService.findOneByName(userName).getId(), teamid);
+    	return "redirect:/console/team";
+    }
 }

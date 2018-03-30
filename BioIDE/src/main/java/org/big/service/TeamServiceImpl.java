@@ -9,6 +9,7 @@ import org.big.entity.Team;
 import org.big.entity.UserDetail;
 import org.big.entity.UserTeam;
 import org.big.repository.TeamRepository;
+import org.big.repository.UserRepository;
 import org.big.repository.UserTeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -40,7 +41,8 @@ public class TeamServiceImpl implements TeamService  {
     private TeamRepository teamRepository;
     @Autowired
     private UserTeamRepository userTeamRepository;
-
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public List<Team> selectTeamByUserId(String team_id) {
         System.out.println("team_id="+team_id);
@@ -89,7 +91,7 @@ public class TeamServiceImpl implements TeamService  {
             JSONObject row= new JSONObject();
             String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
             String thisEdit=
-                    "<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','team')\" >" +
+                    		"<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','team')\" >" +
                             "<span class=\"glyphicon glyphicon-edit\"></span>" +
                             "</a>" +
                             "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','team')\" >" +
@@ -233,4 +235,13 @@ public class TeamServiceImpl implements TeamService  {
     public void removeMembersByTeamIdAndUserId(String teamId,String userId){
         this.userTeamRepository.deleteMembersByTeamIdAndUserId(teamId,userId);
     }
+
+	@Override
+	public void updateTeamInfoByLeader(String teamId, String userId) {
+		String name = this.userRepository.findOneById(userId).getUserName();
+		if (null != name && !"".contains(name)) {
+			// 修改Team表的name & leader字段
+			this.userTeamRepository.updateTeamInfoByLeader(name, userId, teamId);
+		}
+	}
 }

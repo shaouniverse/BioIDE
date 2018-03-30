@@ -3,20 +3,27 @@ package org.big.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 import org.big.common.BuildEntity;
 import org.big.common.IdentityVote;
 import org.big.common.QueryTool;
 import org.big.entity.Message;
+import org.big.entity.User;
 import org.big.entity.UserDetail;
 import org.big.repository.MessageRepository;
 import org.big.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -41,6 +48,16 @@ public class MessageServiceImpl implements MessageService{
     private UserRepository userRepository;
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private LocaleService localeService;
+    @Autowired
+    private JavaMailSender mailSender;
+    @Value("${spring.mail.username}") // -- 换成当前登录用户
+    private String fromEmail;
+    @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private HttpServletResponse response;
 
     @Override
     @Transactional
@@ -221,6 +238,7 @@ public class MessageServiceImpl implements MessageService{
     @Transactional
     public JSON findInfoBySender(HttpServletRequest request) {
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("User:" + thisUser);
         String this_language="en";
         Locale this_locale= LocaleContextHolder.getLocale();
         if(this_locale.getLanguage().equals("zh")){
@@ -309,17 +327,21 @@ public class MessageServiceImpl implements MessageService{
     public Message findbyID(String ID) {
         return this.messageRepository.getOne(ID);
     }
-
+    
     @Override
     public void sendOne(Message thisMessage) {
+    	// 生成邮件ID
         if(thisMessage.getId()==null||thisMessage.getId().equals("")||thisMessage.getId().length()<=0){
             thisMessage.setId(UUID.randomUUID().toString());
-            thisMessage.setStatus(0);
-            thisMessage.setType("information");
-            //build Addressee
-            String addresseeUserName=thisMessage.getAddressee();
-            thisMessage.setAddressee(this.userRepository.findOneByUserName(addresseeUserName).getId());
+            thisMessage.setStatus(0); 				// 邮件状态
+            thisMessage.setType("information");		// 邮件类型
+            // 通过用户名拿到用户ID，作为团队邀请人
             thisMessage.setSendtime(new Timestamp(System.currentTimeMillis()));
+            if (null != thisMessage.getTeamid() && !"".equals(thisMessage.getTeamid())) {
+            	sendInviteEmail(request, response, thisMessage);
+            }else {
+				sendEmail(request, response, thisMessage);
+			}
         }
         this.messageRepository.save(thisMessage);
     }
@@ -328,7 +350,6 @@ public class MessageServiceImpl implements MessageService{
     public void removeOne(String ID) {
         this.messageRepository.deleteById(ID);
     }
-
 
     @Override
     public void changeStatus(Message thisMessage,int newStatus) {
@@ -343,5 +364,182 @@ public class MessageServiceImpl implements MessageService{
     public int countStatus(int statusNum) {
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return this.messageRepository.countStatus(thisUser.getId(),statusNum);
+    }
+    /**
+     * 发送邀请信
+     * @param request
+     * @param response
+     * @return
+     */
+    public String sendInviteEmail(HttpServletRequest request, HttpServletResponse response, Message message) {
+    	String thisLanguage=localeService.getLanguage(request,response);
+        String sendMsg="error";
+            //根据邮箱判断用户是否存在(只能向已有用户发出邀请)
+            User thisUser= userRepository.findOneByEmail(message.getAddressee());
+            if(thisUser!=null){
+	            try{
+	                //base_url
+	                String contextPath=request.getContextPath();
+	                String base_url=request.getServerName().toString()+":"+request.getServerPort();
+	                if(contextPath!=null && contextPath.length()>0){
+	                    base_url=base_url+contextPath;
+	                }
+	                ///邮件的内容
+	                StringBuffer sb=new StringBuffer("AnimalSeeker<br/>");
+	                if(thisLanguage.equals("zh")){
+	                	// http://localhost:8081/register/active/BINZI/ccbf732b-1880-4cca-b2f5-8b3566a987d2/
+	                    sb.append("物种数据采集系统<b>" + message.getTitle() + "</b>");
+	                    sb.append("接受邀请，点击下面链接，即可加入团队！<br/>");
+	                    sb.append("<a href=\"http://"+base_url+"/console/team/invite/");
+	                    sb.append(thisUser.getUserName());
+	                    sb.append("/");
+	                    if (null != request.getParameter("TeamID") && !"".equals(request.getAttribute("TeamID"))) {
+	                    	sb.append(message.getTeamid());
+		                    sb.append("/");
+	                    }
+	                    sb.append("\">http://"+base_url+"/console/message/invite/");
+	                    sb.append(thisUser.getUserName());
+	                    sb.append("/");
+	                    if (null != request.getParameter("TeamID") && !"".equals(request.getAttribute("TeamID"))) {
+	                    	sb.append(message.getTeamid());
+		                    sb.append("/");
+	                    }
+	                    sb.append("</a>");
+	                }
+	                else if(thisLanguage.equals("en")){
+	                    sb.append("Recording lives around us, citizen science starts from here.<br/>");
+	                    sb.append("Click the link below to activate the account, please activate it as soon as possible!<br/>");
+	                    sb.append("<a href=\"http://"+base_url+"/console/message/invite/");
+	                    sb.append(thisUser.getUserName());
+	                    sb.append("/");
+	                    sb.append(message.getTeamid());
+	                    sb.append("/");
+	                    sb.append("\">http://"+base_url+"/console/message/invite/");
+	                    sb.append(thisUser.getUserName());
+	                    sb.append("/");
+	                    sb.append(message.getTeamid());
+	                    sb.append("/");
+	                    sb.append("</a>");
+	                }
+	                else{
+	                    sb.append("Recording lives around us, citizen science starts from here.<br/>");
+	                    sb.append("Click the link below to activate the account, please activate it as soon as possible!<br/>");
+	                    sb.append("<a href=\"http://"+base_url+"/console/message/invite/");
+	                    sb.append(thisUser.getUserName());
+	                    sb.append("/");
+	                    sb.append(message.getTeamid());
+	                    sb.append("/");
+	                    sb.append("\">http://"+base_url+"/console/message/invite/");
+	                    sb.append(thisUser.getUserName());
+	                    sb.append("/");
+	                    sb.append(message.getTeamid());
+	                    sb.append("/");
+	                    sb.append("</a>");
+	                }
+	
+	                //邮件信息
+	                MimeMessage mimeMessage = mailSender.createMimeMessage();
+	                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+	                helper.setFrom(fromEmail);
+	                helper.setTo(message.getAddressee());
+	                helper.setSubject("BioIDE");
+	                helper.setText(sb.toString(), true);
+	
+	                //发送邮件
+	                mailSender.send(mimeMessage);
+	
+	                if(thisLanguage.equals("zh"))
+	                    sendMsg="发送成功";
+	                else if(thisLanguage.equals("en"))
+	                    sendMsg="Send Success";
+	                else
+	                    sendMsg="Send Success";
+	            }catch(Exception e){
+	                if(thisLanguage.equals("zh"))
+	                    sendMsg="邮件发送失败";
+	                else if(thisLanguage.equals("en"))
+	                    sendMsg="Send email failed";
+	                else
+	                    sendMsg="Send email failed";
+	            }
+            }else{
+	                if(thisLanguage.equals("zh"))
+	                    sendMsg="该邮箱没有注册";
+	                else if(thisLanguage.equals("en"))
+	                    sendMsg="This email is not registered";
+	                else
+	                    sendMsg="This email is not registered";
+	        }
+        return sendMsg;
+    }
+    
+    /**
+     * 发送邮件
+     * @param request
+     * @param response
+     * @return
+     */
+    public String sendEmail(HttpServletRequest request, HttpServletResponse response, Message message) {
+    	String thisLanguage=localeService.getLanguage(request,response);
+        String sendMsg="error";
+            //根据邮箱判断用户是否存在(只能向已有用户发出邀请)
+            User thisUser= userRepository.findOneByEmail(message.getAddressee());
+            if(thisUser!=null){
+	            try{
+	                //base_url
+	                String contextPath=request.getContextPath();
+	                String base_url=request.getServerName().toString()+":"+request.getServerPort();
+	                if(contextPath!=null && contextPath.length()>0){
+	                    base_url=base_url+contextPath;
+	                }
+	                ///邮件的内容
+	                StringBuffer sb=new StringBuffer("AnimalSeeker<br/>");
+	                if(thisLanguage.equals("zh")){
+	                    sb.append("物种数据采集系统<br/>");
+	                    sb.append(message.getTitle() + "<br/>");
+	                }
+	                else if(thisLanguage.equals("en")){
+	                    sb.append("Recording lives around us, citizen science starts from here.<br/>");
+	                    sb.append(message.getTitle() + "<br/>");
+	                }
+	                else{
+	                    sb.append("Recording lives around us, citizen science starts from here.<br/>");
+	                    sb.append(message.getTitle() + "<br/>");
+	                }
+	
+	                //邮件信息
+	                MimeMessage mimeMessage = mailSender.createMimeMessage();
+	                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+	                helper.setFrom(fromEmail);				// 邮件发送人
+	                helper.setTo(message.getAddressee());	// 邮件接收人
+	                helper.setSubject("BioIDE");			// 邮件主题
+	                helper.setText(sb.toString() + message.getText(), true);
+	
+	                //发送邮件
+	                mailSender.send(mimeMessage);
+	
+	                if(thisLanguage.equals("zh"))
+	                    sendMsg="发送成功";
+	                else if(thisLanguage.equals("en"))
+	                    sendMsg="Send Success";
+	                else
+	                    sendMsg="Send Success";
+	            }catch(Exception e){
+	                if(thisLanguage.equals("zh"))
+	                    sendMsg="邮件发送失败";
+	                else if(thisLanguage.equals("en"))
+	                    sendMsg="Send email failed";
+	                else
+	                    sendMsg="Send email failed";
+	            }
+            }else{
+	                if(thisLanguage.equals("zh"))
+	                    sendMsg="该邮箱没有注册";
+	                else if(thisLanguage.equals("en"))
+	                    sendMsg="This email is not registered";
+	                else
+	                    sendMsg="This email is not registered";
+	        }
+        return sendMsg;
     }
 }

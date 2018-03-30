@@ -6,6 +6,7 @@ import org.big.entity.User;
 import org.big.service.MessageService;
 import org.big.service.TeamService;
 import org.big.service.UserService;
+import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,9 @@ public class SuperController {
     private UserService userService;
     @Autowired
     private MessageService messageService;
-
+    @Autowired
+    private UserTeamService userTeamService;
+    /********************** Team管理页 ***************************/
     /**
      *<b>Team管理页</b>
      *<p> 包含所有Team的信息列表、操作选项</p>
@@ -101,7 +104,23 @@ public class SuperController {
         this.teamService.removeOne(id);
         return "index";
     }
+    
+    /**
+     *<b>处理Team邀请 -- 托管MessageController</b>
+     *<p> Team邀请</p>
+     * @author WangTianshan (王天山)
+     * @param id 传入的Team实体的id
+     * @return java.lang.String
+     */
+/*    @RequestMapping(value="/team/invite/{id}", method = {RequestMethod.GET})
+    public String InviteTeam(@PathVariable String id) {
+        this.teamService.inviteOne(id);
+    	System.out.println("邀请TeamID：" + id);
+        return "message/compose";
+    }*/
 
+    
+    /********************** User管理页 ***************************/
     /**
      *<b>User管理页</b>
      *<p> 包含所有User的信息列表、操作选项</p>

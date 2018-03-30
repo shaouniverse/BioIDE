@@ -1,5 +1,10 @@
 package org.big.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.big.entity.Team;
+
 /**
  *<p><b>UserTeam的Service类接口</b></p>
  *<p> UserTeam的Service类接口，与UserTeam有关的业务逻辑方法</p>
@@ -20,4 +25,14 @@ public interface UserTeamService {
      * @return void
      */
     void saveOne(String userId,String teamId);
+    
+    /**
+     *<b>权限转让通知邮件</b>
+     *<p> 权限转让通知邮件</p>
+     * @author WangTianshan (王天山)
+     * @param userId User的id
+     * @param teamId Team的id
+     * @return void
+     */
+    String SendEmailTransPermissionAdvice(HttpServletRequest request, HttpServletResponse response, String email, Team team);
 }

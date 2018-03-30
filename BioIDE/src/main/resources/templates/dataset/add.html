@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Title:添加DataSet页面
+    Description：添加DataSet页面
+    Author：WangTianshan (王天山)
+    Created date: 2017/12/15 10:35
+    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
+    Version: Html5
+ -->
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title th:text="#{web_title}">AnimalSeeker 发现并记录你身边的小动物</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <!-- 引入css -->
+    <!-- basicsCss -->
+    <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
+</head>
+<body class="hold-transition skin-leaf fixed sidebar-collapse sidebar-mini">
+<!-- 主界面区 -->
+<div class="wrapper">
+    <!-- 引入Header -->
+    <header id="header" class="main-header">
+        <th:block th:replace="pageFrame/adminHeader :: copy"></th:block>
+    </header>
+    <!-- 引入左侧用户操作菜单-->
+    <th:block th:replace="pageFrame/leftMenu :: copy"></th:block>
+    <!-- 引入logoutModal -->
+    <th:block th:if="${not #lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}" th:replace="user/logoutModal :: copy"></th:block>
+    <!-- 显示区 -->
+    <div class="content-wrapper">
+        <!-- 内容区 -->
+        <section class="container content-header">
+            <h3>
+                <span th:text="#{navigation_dataset_add}">新建数据集</span><br/>
+                <small th:text="#{navigation_dataset_add_subtitle}">在这里您可以新建一个数据集来保存相关数据</small>
+            </h3>
+            <ol class="breadcrumb">
+                <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span th:text="#{mydata}">我的数据</span></a></li>
+                <li><a th:href="@{/user/dataset}" href="user"><i class="fa fa-cubes"></i> <span th:text="#{navigation_dataset}">数据集管理</span></a></li>
+                <li class="active"><i class="fa fa-plus"></i> <span th:text="#{navigation_dataset_add}">添加数据集</span></li>
+            </ol>
+        </section>
+        <!-- 内容区 -->
+        <section class="container content">
+            <div class="well">
+                <form id="thisForm" class="form-horizontal"
+                      th:action="@{/user/dataset/new}"
+                      method="post" th:object="${thisDataset}">
+                    <!-- 引入form -->
+                    <th:block th:replace="dataset/form :: copy"></th:block>
+                    <p></p>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="pull-right">
+                                <a class="btn btn-app" th:href="@{/user/dataset}" href="/user/dataset">
+                                    <i class="fa fa-chevron-left"></i> <span th:text="#{operation_cancel}">取消编辑</span>
+                                </a>
+                                <a class="btn btn-app" onclick="clearInput();">
+                                    <i class="fa fa-rotate-left"></i> <span th:text="#{operation_clear}">清空表单</span>
+                                </a>
+                                <button type="submit" class="btn btn-app">
+                                    <i class="fa fa-check"></i> <span th:text="#{operation_submit}">提交</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <th:block th:replace="pageFrame/basicsFooter :: copy"></th:block>
+    </footer>
+</div>
+<!-- 引入js -->
+<th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
+<script>
+    //清空表单
+    function clearInput() {
+        $('#thisForm')[0].reset();
+        $('#thisForm').data('bootstrapValidator')
+            .updateStatus('dsname', 'NOT_VALIDATED',null)
+            .updateStatus('dsabstraction', 'NOT_VALIDATED',null)
+            .validateField('dsname')
+            .validateField('dsabstraction');
+    };
+    //后端验证错误提示
+    $(document).ready(function () {
+        if($('#errorMsg').val()==""||$('#errorMsg').val()==null){
+        }
+        else{
+            layer.msg($('#errorMsg').val(), function(){
+            });
+        }
+    });
+</script>
+<!-- bootstrapValidator -->
+<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
+<th:block th:if="${#locale.getLanguage().equals('zh')}">
+    <script th:src="@{/plugins/bootstrapValidator/js/language/zh_CN.js}"></script>
+</th:block>
+<!-- page_script -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var warning_Illegal= [[#{warning_Illegal}]];
+    /*]]>*/
+</script>
+<script>
+    //前端验证错误提示
+    $(document).ready(function() {
+        //获取host
+        $("#base_url").val(window.location.host);
+        $('#thisForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon ',
+                invalid: 'glyphicon ',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                'dsname': {
+                    validators: {
+                        notEmpty: {
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a【】]+$/,
+                            message: warning_Illegal
+                        },
+                        stringLength: {
+                            min: 1,
+                            max: 30,
+                        },
+                    }
+                },
+                'dsabstraction': {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 100
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+            }
+        });
+    });
+</script>
+</body>
+</html>

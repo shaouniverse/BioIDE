@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Title:控制台首页
+    Description：控制台首页
+    Author：WangTianshan (王天山)
+    Created date: 2017/9/15 21:35
+    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
+    Version: Html5
+ -->
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title th:text="#{web_title}">AnimalSeeker 发现并记录你身边的小动物</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <!-- 引入css -->
+    <!-- Select2 4.0.3 -->
+    <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}" type="text/css"/>
+    <!-- basicsCss -->
+    <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
+    <!-- Bootstrap-table 1.10.1 -->
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-table/css/bootstrap-table.css}" type="text/css"/>
+</head>
+<body class="hold-transition skin-leaf fixed sidebar-collapse sidebar-mini">
+<!-- 主界面区 -->
+<div class="wrapper">
+    <!-- 引入Header -->
+    <header id="header" class="main-header">
+        <th:block th:replace="pageFrame/adminHeader :: copy"></th:block>
+    </header>
+    <!-- 引入左侧用户操作菜单-->
+    <th:block th:replace="pageFrame/leftMenu :: copy"></th:block>
+    <!-- 引入logoutModal -->
+    <th:block th:if="${not #lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}" th:replace="user/logoutModal :: copy"></th:block>
+    <!-- 显示区 -->
+    <div class="content-wrapper">
+        <!-- 内容区 -->
+        <section class="container content-header">
+            <h3>
+                <span th:text="#{navigation_dataset}">数据集管理</span><br/>
+                <small th:text="#{dataset_admin_subtitle}">在这里您可以对您的数据集进行管理</small>
+            </h3>
+            <ol class="breadcrumb">
+                <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span th:text="#{mydata}">我的数据</span></a></li>
+                <li class="active"><i class="fa fa-cubes"></i> <span th:text="#{navigation_dataset}">数据集管理</span></li>
+            </ol>
+        </section>
+        <!-- 内容区 -->
+        <section class="container content">
+            <div class="box box-default box-solid">
+                <!-- box-header -->
+                <div class="box-header with-border">
+                    <h3 class="box-title" th:text="#{operation}">操作</h3>
+                    <!-- box-tools -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- box-body -->
+                <div class="box-body">
+                    <a class="btn btn-app" th:href="@{/user/dataset/add}" href="/user/dataset/add">
+                        <i class="fa fa-plus"></i> <span th:text="#{operation_add}">ADD</span>
+                    </a>
+                    <a class="btn btn-app" onclick="editSelectObject('dataset');">
+                        <i class="fa fa-edit"></i> <span th:text="#{operation_edit}">EDIT</span>
+                    </a>
+                    <a class="btn btn-app" onclick="removeSelectObject('dataset');">
+                        <i class="fa fa-remove"></i> <span th:text="#{operation_remove}">REMOVE</span>
+                    </a>
+                </div>
+            </div>
+            <!-- table -->
+            <div class="table table-responsive">
+                <table
+                        id="results_table"
+                        data-classes="table table-hover table-condensed"
+                        data-toggle="table"
+                        th:attr="data-url=@{/user/dataset/rest/list}"
+                        data-pagination="true"
+                        data-side-pagination="server"
+                        data-page-list="[10, 20, 30, 50, 100]"
+                        data-search="true"
+                        data-show-columns="true"
+                        data-show-toggle="true"
+                        data-toolbar="#toolbar"
+                        data-show-export="false"
+                        data-show-refresh="true">
+                    <thead>
+                    <tr>
+                        <th data-field="select" data-align="center" data-sortable="false"></th>
+                        <th data-field="dsname" data-align="center" data-sortable="true" th:text="#{table_dsname}">数据集名称</th>
+                        <th data-field="dsabstraction" data-align="center" data-sortable="false" th:text="#{table_dsabstraction}">描述</th>
+                        <th data-field="dtime" data-align="center" data-sortable="true" th:text="#{table_dtime}">建立时间</th>
+                        <th data-field="edit" data-align="center" data-sortable="false" th:text="#{table_operation}">操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <th:block th:replace="pageFrame/basicsFooter :: copy"></th:block>
+    </footer>
+</div>
+<!-- 引入js -->
+<th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
+<!-- Bootstrap-table 1.10.1 -->
+<script th:src="@{/plugins/bootstrap-table/js/bootstrap-table.js}"></script>
+<th:block th:if="${#locale.getLanguage().equals('en')}">
+    <script th:src="@{/plugins/bootstrap-table/locale/bootstrap-table-en-US.js}"></script>
+</th:block>
+<th:block th:if="${#locale.getLanguage().equals('zh')}">
+    <script th:src="@{/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js}"></script>
+</th:block>
+<!-- page_script -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var warning_remove= [[#{warning_remove}]];
+    var warning_select= [[#{warning_select}]];
+    var warning_select_edit= [[#{warning_select_edit}]];
+    var warning_select_remove1= [[#{warning_select_remove1}]];
+    var warning_select_remove2= [[#{warning_select_remove2}]];
+    var warning_select_remove_ok1= [[#{warning_select_remove_ok1}]];
+    var warning_select_remove_ok2= [[#{warning_select_remove_ok2}]];
+    var warning_select_remove_ok3= [[#{warning_select_remove_ok3}]];
+    var warning_remove_ok= [[#{warning_remove_ok}]];
+    var warning_error= [[#{warning_error}]];
+    var warning_error2= [[#{warning_error2}]];
+    var warning_cancel= [[#{warning_cancel}]];
+    /*]]>*/
+</script>
+<script th:src="@{/js/tableScript.js}"></script>
+</body>
+</html>

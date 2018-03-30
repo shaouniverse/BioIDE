@@ -1,5 +1,6 @@
 package org.big.controller;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.big.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class ConsoleController {
     @Autowired
     private MessageService messageService;
     @Autowired
-    private org.apache.catalina.servlet4preview.http.HttpServletRequest request;
+    private HttpServletRequest request;
 
     /**
      *<b>默认页面</b>

@@ -1,5 +1,7 @@
 package org.big.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.big.entity.User;
 import org.big.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  *<p><b>User相关的Controller类</b></p>
@@ -69,6 +74,18 @@ public class UserController {
         this.userService.saveOne(thisUser);
         return "redirect:/user";
     }
-
+    
+    /**
+     *<b>选择邮件接收人</b>
+     *<p> 选择邮件接收人</p>
+     * @author BINZI
+     * @param 
+     * @return 
+     */
+    @RequestMapping("/data")
+    @ResponseBody
+    public JSON UData(HttpServletRequest request) {
+        return this.userService.findAllUser(request);
+    }
 
 }

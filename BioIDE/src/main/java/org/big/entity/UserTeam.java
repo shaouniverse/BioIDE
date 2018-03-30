@@ -12,7 +12,7 @@ import javax.persistence.*;
  * @since JDK 1.80_144
  */
 @Entity
-@Table(name = "user_team", schema = "biodata", catalog = "")
+@Table(name = "user_has_team", schema = "biodata")
 @IdClass(UserTeamPK.class)
 public class UserTeam {
 

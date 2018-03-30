@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Title:控制台首页
+    Description：控制台首页
+    Author：WangTianshan (王天山)
+    Created date: 2017/9/15 21:35
+    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
+    Version: Html5
+ -->
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title th:text="#{web_title}">AnimalSeeker 发现并记录你身边的小动物</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <!-- 引入css -->
+    <!-- basicsCss -->
+    <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
+    <link rel="stylesheet" th:href="@{/plugins/magnific-popup/magnific-popup.css}" href="css/banner.css"/>
+    <link rel="stylesheet" th:href="@{/plugins/salvattore/salvattore.css}" href="css/banner.css"/>
+    <link rel="stylesheet" th:href="@{/plugins/waterfall/waterfall.css}" href="css/waterfall.css"/>
+</head>
+<body class="hold-transition skin-leaf fixed sidebar-collapse sidebar-mini">
+<!-- 主界面区 -->
+<div class="wrapper">
+    <!-- 引入Header -->
+    <header id="header" class="main-header">
+        <th:block th:replace="pageFrame/adminHeader :: copy"></th:block>
+    </header>
+    <!-- 引入左侧用户操作菜单-->
+    <th:block th:replace="pageFrame/leftMenu :: copy"></th:block>
+    <!-- 引入logoutModal -->
+    <th:block th:replace="user/logoutModal :: copy"></th:block>
+    <!-- 显示区 -->
+    <div class="content-wrapper">
+        <!-- 内容区 -->
+        <section class="container content-header">
+            <h3>
+                <span th:text="#{navigation_dataset}">数据集管理</span><br/>
+                <small th:text="#{dataset_admin_subtitle}">在这里您可以对您的数据集进行管理</small>
+            </h3>
+            <ol class="breadcrumb">
+                <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span th:text="#{mydata}">我的数据</span></a></li>
+                <li><a th:href="@{/user/dataset}" href="user"><i class="fa fa-cubes"></i> <span th:text="#{navigation_dataset}">数据集管理</span></a></li>
+                <li class="active"><i class="fa fa-edit"></i> <span th:text="${thisDataset.dsname}">数据集</span></li>
+            </ol>
+        </section>
+        <section class="content container">
+            <form id="searchInfo" class="hidden"
+                  action="javascript:void(0);"
+                  method="post">
+                <input id="searchThisPage" class="hidden" th:value="${thisPage}" readonly="readonly"></input>
+            </form>
+
+            <div class="col-lg-4 col-md-4">
+                <dl class="dl-horizontal">
+                    <dt th:text="#{table_dsname}">数据集名称:</dt>
+                    <dd><span th:text="${thisDataset.dsname}"></span></dd>
+                    <dt th:text="#{table_dsabstraction}">数据集:</dt>
+                    <dd><span th:text="${thisDataset.dsabstraction}"></span></dd>
+                    <dt th:text="#{observation_records}">数据集:</dt>
+                    <dd><span th:text="${totalRecord}"></span><small th:if="${#locale.getLanguage().equals('zh')}">条</small></dd>
+                    <dt th:text="#{table_dtime}">时间:</dt>
+                    <dd><span th:text="${#dates.format(thisDataset.dtime, 'yyyy-MM-dd HH:mm:ss')}"></span></dd>
+                </dl>
+            </div>
+            <div class="col-lg-8 col-md-8">
+                <div id="fh5co-main">
+                    <div id="fh5co-board" data-columns>
+                        <div class="item">
+                            <div class="animate-box">
+                                <a th:href="@{/user/record/addNew/}+${thisDataset.id}" th:title="'添加新的'">
+                                    <img th:src="@{/img/add.jpg}" style="width: 100%;" alt="">
+                                </a>
+                            </div>
+                            <div class="fh5co-desc">
+                                <a th:href="@{/user/record/addNew/}+${thisDataset.id}">
+                                    <span th:text="#{record_add}">添加</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="item" th:each="record : ${recordList}">
+                            <div class="animate-box">
+                                <a th:if="${#lists.isEmpty(record.mediasById)}" th:href="@{/user/record/show/}+${record.id}" target="_blank">
+                                    <img th:if="${#lists.isEmpty(record.mediasById)}" th:src="@{/img/noimage.jpg}" style="width: 100%;" alt="">
+                                </a>
+                                <a th:if="${not #lists.isEmpty(record.mediasById)}" th:href="@{/user/record/show/}+${record.id}" target="_blank">
+                                    <img th:src="'upload/images/'+${record.mediasById[0].userByUserid.id}+'/mini/'+${record.mediasById[0].filename}" style="width: 100%;" alt="">
+                                </a>
+                            </div>
+                            <div class="fh5co-desc">
+                                <a th:href="@{/user/record/show/}+${record.id}" target="_blank">
+                                    <span th:text="${#dates.format(record.rdate, 'yyyy-MM-dd HH:mm:ss')}"></span><br/>
+                                    <span th:text="${record.locality}"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <div>
+        <nav aria-label="Page navigation" style="text-align: center">
+            <ul class="pagination">
+                <li th:if="${thisPage >= 30}">
+                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)-30}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:if="${(totalRecord/30)<5}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence(0,((totalRecord-1)/30))}">
+                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
+                </li>
+                <li th:if="${(totalRecord/30)>=5 and (thisPage)<(30*(totalRecord/30-4))}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence((thisPage/30),(thisPage/30)+4)}">
+                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
+                </li>
+                <li th:if="${(totalRecord/30)>=5 and (thisPage)>=(30*(totalRecord/30-4))}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence(((totalRecord-1)/30)-4,((totalRecord-1)/30))}">
+                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
+                </li>
+
+                <li th:if="${thisPage < (totalRecord-30)}">
+                    <a  th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)+30}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+</div>
+<footer>
+<th:block th:replace="pageFrame/basicsFooter :: copy"></th:block>
+</footer>
+</div>
+<!-- 引入js -->
+<th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
+<script th:src="@{/plugins/modernizr/modernizr-2.6.2.min.js}"></script>
+<script th:src="@{/plugins/waypoints/jquery.waypoints.min.js}"></script>
+<script th:src="@{/plugins/magnific-popup/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/plugins/salvattore/salvattore.min.js}"></script>
+<script th:src="@{/plugins/waterfall/waterfall.js}"></script>
+</body>
+</html>

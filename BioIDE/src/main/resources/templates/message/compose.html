@@ -17,13 +17,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
     <!-- 引入css -->
+    <!-- Select2 4.0.3 -->
+    <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}" type="text/css"/>    
     <span th:substituteby="pageFrame/basicsCss :: copy" />
 </head>
 <body class="hold-transition skin-dark fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
-    <header id="header" class="main-header">
-        <!-- 引入Header -->
+   <header id="header" class="main-header">
+       <!--  引入Header -->
         <span th:replace="pageFrame/basicsHeader :: copy" />
     </header>
     <!-- 引入 Left side column. contains the sidebar -->
@@ -72,13 +74,18 @@
                             <h3 class="box-title">Compose New Message</h3>
                         </div>
                         <div class="box-body">
-                            <form id="thisForm"
-                                  th:action="@{/console/message/send}"
-                                  method="post" th:object="${thisMessage}">
+                            <form id="thisForm" th:action="@{/console/message/send}" method="post" th:object="${thisMessage}">
+                                
+                                <input class="hidden" id="TeamID" name="TeamID" th:value="${thisMessage.teamid}" value="${thisMessage.teamid}">
                                 <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
+                                <!-- 可输可选下拉框 -->
                                 <div class="form-group">
-                                    <input class="form-control" th:field="*{addressee}" placeholder="To:">
-                                </div>
+									<label>请输入关键字：</label>
+					                <select class="form-control select2" id="udata" name="udata" style="width: 100%;">
+					                	<option value='' selected='selected'></option>
+					                </select>
+								</div>
+                                
                                 <div class="form-group">
                                     <input class="form-control" th:field="*{title}" placeholder="Title:">
                                 </div>
@@ -116,15 +123,92 @@
 <script th:src="@{/plugins/CKEditor5/classic/ckeditor.js}"></script>
 <!--<script th:src="@{/plugins/CKEditor4/ckeditor.js}"></script>-->
 <script>
-    // CKEditor5
     ClassicEditor
         .create( document.querySelector( '#editor' ) )
         .catch( error => {
         console.error( error );
     } );
 
-    // CKEditor4
-    //CKEDITOR.replace( 'editor' );
+</script>
+
+<script th:inline="javascript">
+    var all_udata= [[#{all_udata}]];
+</script>
+
+<script type="text/javascript">
+  //初始化插件语言变量
+  var datetimepickerLanguage="en";
+  var select2Language="en";
+  </script>
+  <!-- Select2 4.0.3 -->
+  <script th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
+    <th:block th:if="${#locale.getLanguage().equals('zh')}">
+        <script th:src="@{/plugins/select2/js/i18n/zh-CN.js}"></script>
+        <script type="text/javascript">
+            //语言变更
+            select2Language="zh-CN";
+        </script>
+    </th:block>
+<script>
+
+$(".select2").select2({
+});
+
+//拼接option
+function formatRepo (repo) {
+    if (repo.loading) return repo.text;
+    var markup = repo.full_name;
+    return markup;
+}
+
+//拼接option
+function formatRepoSelection (repo) {
+    return repo.full_name || repo.text;
+}
+
+//构造select2的方法
+function buildSelect2 (select_id,url) {
+	$("#"+select_id).select2({
+        language : select2Language,
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    find: params.term,
+                    page: params.page
+                };
+            },
+            processResults: function (data, params) {
+                params.page = params.page || 1;
+
+                return {
+                    results: data.items,
+                    pagination: {
+                        more: (params.page * 30) < data.total_count
+                    }
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function (markup) {
+        	return markup; 
+        	},
+        minimumInputLength: 0,
+        templateResult: formatRepo,
+        templateSelection: formatRepoSelection
+    });
+}
+
+//初始化所有select组件
+$(document).ready(function(){
+    //构造select2
+    buildSelect2 ("udata","user/data");
+    $("#udata").val();
+    $("#udata").prepend("<option value='' selected='selected'>"+ all_udata +"</option>");
+});
+
 </script>
 </body>
 </html>

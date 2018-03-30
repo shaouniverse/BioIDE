@@ -1,5 +1,6 @@
 package org.big.controller;
 
+import org.big.entity.Message;
 import org.big.entity.Team;
 import org.big.entity.User;
 import org.big.entity.UserDetail;
@@ -43,7 +44,10 @@ public class TeamController {
      * @return java.lang.String
      */
     @RequestMapping(value="", method = {RequestMethod.GET})
-    public String Index() {
+    public String Index(Model model) {
+    	Message thisMessage = new Message();
+    	thisMessage.setStatus(0);
+    	model.addAttribute("thisMessage", thisMessage);
         return "team/myTeam";
     }
 
@@ -115,12 +119,28 @@ public class TeamController {
      *<p> 将传入的实体删除</p>
      * @author WangTianshan (王天山)
      * @param id 传入的实体id
-     * @return java.lang.String
+     * @return java.lang.String      
      */
     @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
     public String Remove(@PathVariable String id) {
         this.teamService.removeOneByUser(id);
         return "index";
+    }
+    
+    /** 处理用户邀请结果
+     *<b>团队邀请</b>
+     *<p> 团队邀请通过UserId & TeamId</p>
+     * @author WangTianshan (王天山)
+     * @param id 传入的实体id
+     * @return java.lang.String 	/console/team/invite/{id}
+     */
+    @RequestMapping(value="/invite/{userName}/{teamid}", method = {RequestMethod.GET})
+    public String Invite(@PathVariable String userName, @PathVariable String teamid) {
+    	System.out.println("被邀请人：" + userName);
+    	System.out.println("邀请TeamID：" + teamid);
+    	// 用户接收邀请
+    	userTeamService.saveOne(userService.findOneByName(userName).getId(), teamid);
+    	return "redirect:/console/team";
     }
 
 }

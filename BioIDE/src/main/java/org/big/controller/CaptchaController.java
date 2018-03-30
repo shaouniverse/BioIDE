@@ -6,7 +6,6 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -17,7 +16,7 @@ import java.awt.image.BufferedImage;
  *<p><b>验证码相关的Controller类</b></p>
  *<p> 验证码相关的Controller</p>
  * @author WangTianshan (王天山)
- *<p>Created date: 2017/9/12 21:35</p>
+ *<p>Created date: 2017/11/1 14:19</p>
  *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
  * @version: 0.1
  * @since JDK 1.80_144
@@ -41,7 +40,7 @@ public class CaptchaController {
      * @return org.springframework.web.servlet.ModelAndView
      */
     @RequestMapping("/captchaImg")
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setDateHeader("Expires", 0);
         // Set standard HTTP/1.1 no-cache headers.
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -65,6 +64,6 @@ public class CaptchaController {
         } finally {
             out.close();
         }
-        return null;
+        //return null;
     }
 }

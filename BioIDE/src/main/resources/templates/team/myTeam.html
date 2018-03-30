@@ -64,6 +64,9 @@
                     <a class="btn btn-app" onclick="removeSelectObject('team');">
                         <i class="fa fa-remove"></i> REMOVE
                     </a>
+                    <a class="btn btn-app" onclick="inviteObject('team');">
+                        <i class="fa fa-user-plus"></i> INVITATION
+                    </a>
                 </div>
             </div>
             <!-- table -->
@@ -104,8 +107,7 @@
     <!-- Control Sidebar -->
     <span th:replace="pageFrame/basicsControl :: copy" />
     <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
+    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->

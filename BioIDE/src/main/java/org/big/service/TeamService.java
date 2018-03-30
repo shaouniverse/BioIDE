@@ -28,7 +28,7 @@ public interface TeamService {
     List<Team> selectTeamByUserId(String user_id);
 
     /**
-     *<b>根据id查找一个实体</b>
+     *<b>根据teamid查找一个Team实体</b>
      *<p> 据id查找一个实体</p>
      * @author WangTianshan (王天山)
      * @param ID 实体的id
@@ -117,4 +117,14 @@ public interface TeamService {
      * @return int
      */
     void removeMembersByTeamIdAndUserId(String teamId,String userId);
+    
+    /**
+     *<b>根据TeamId与UserIds完成团队负责人权限转换</b>
+     *<p> 根据TeamId与UserIds完成团队负责人权限转换</p>
+     * @author BINZI (王天山)
+     * @param teamId Team的ID
+     * @param userId User的ID
+     * @return int
+     */
+    void updateTeamInfoByLeader(String teamId, String userId);
 }

@@ -64,6 +64,9 @@
                     <a class="btn btn-app" onclick="removeSelectObject('team');">
                         <i class="fa fa-user-times"></i> REMOVE
                     </a>
+                    <a class="btn btn-app" onclick="inviteObject('team');">
+                        <i class="fa fa-user-plus"></i> INVITATION
+                    </a>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -74,7 +77,7 @@
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
                         th:attr="data-url=@{/super/team/rest/list}"
-                        data-pagination="true"
+                        data-pagination="true"	
                         data-side-pagination="server"
                         data-page-list="[10, 20, 30, 50, 100]"
                         data-search="true"

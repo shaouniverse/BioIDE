@@ -1,9 +1,11 @@
 package org.big.service;
 
-import com.alibaba.fastjson.JSON;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.big.entity.User;
 
-import javax.servlet.http.HttpServletRequest;
+import com.alibaba.fastjson.JSON;
 
 /**
  *<p><b>User的Service类接口</b></p>
@@ -62,6 +64,15 @@ public interface UserService {
     User findOneByName(String user_name);
 
     /**
+     *<b>根据email查找一个实体</b>
+     *<p> 据email查找一个实体</p>
+     * @author WangTianshan (王天山)
+     * @param email 实体的email
+     * @return org.big.entity.User
+     */
+    User findOneByEmail(String email);
+    
+    /**
      *<b>带分页排序的条件查询的Team成员列表</b>
      *<p> 带分页排序的条件查询的当前用户所能查看权限的Team成员列表</p>
      * @author WangTianshan (王天山)
@@ -69,4 +80,81 @@ public interface UserService {
      * @return com.alibaba.fastjson.JSON
      */
     JSON findbyTeamId(HttpServletRequest request);
+    
+    /**
+     *<b>改变实体状态</b>
+     *<p> 改变实体状态</p>
+     * @author WangTianshan (王天山)
+     * @param thisUser 实体
+     * @param status 状态代码
+     * @return void
+     */
+    void changeStatus(User thisUser,int status);
+    
+    /**
+     *<b>注册</b>
+     *<p> 注册</p>
+     * @author WangTianshan (王天山)
+     * @param newUser newUser
+     * @param request 页面请求
+     * @param response 页面响应
+     * @return java.lang.String
+     */
+    String registerNewOne(HttpServletRequest request, HttpServletResponse response, User newUser);
+    
+    /**
+     *<b>发送激活邮件</b>
+     *<p> 发送激活邮件</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @param response 页面响应
+     * @return java.lang.String
+     */
+    String sendActiveEmail(HttpServletRequest request, HttpServletResponse response);
+    
+    /**
+     *<b>激活用户</b>
+     *<p> 激活用户</p>
+     * @author WangTianshan (王天山)
+     * @param username 用户名
+     * @param mark 激活码
+     * @param request 页面请求
+     * @param response 页面响应
+     * @return java.lang.String
+     */
+    String activeUser(String userName, String mark,HttpServletRequest request, HttpServletResponse response);
+    
+    /**
+     *<b>发送密码找回邮件</b>
+     *<p> 发送密码找回邮件</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @param response 页面响应
+     * @return java.lang.String
+     */
+    String sendPasswordEmail(HttpServletRequest request, HttpServletResponse response);
+    
+    /**
+     *<b>发送密码找回邮件</b>
+     *<p> 发送密码找回邮件</p>
+     * @author WangTianshan (王天山)
+     * @return java.lang.String
+     */
+    Boolean canRestPassword(String username,String mark);
+
+    /**
+     *<b>重置密码</b>
+     *<p> 重置密码</p>
+     * @author WangTianshan (王天山)
+     * @return java.lang.String
+     */
+    Boolean restPassword(String username,String password);
+    
+    /**
+     *<b>查询所有用户</b>
+     *<p> 查询所有用户</p>
+     * @author BINZI (王天山)
+     * @return com.alibaba.fastjson.JSON
+     */
+    JSON findAllUser(HttpServletRequest request);
 }

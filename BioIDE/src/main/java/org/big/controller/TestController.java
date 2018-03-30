@@ -21,6 +21,6 @@ public class TestController {
     //test
     @RequestMapping(value="", method = {RequestMethod.GET})
     public String Test() {
-        return "test";
+        return "index";
     }
 }

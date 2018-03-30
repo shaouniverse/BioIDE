@@ -3,6 +3,7 @@ package org.big.config;
 
 import com.google.code.kaptcha.Constants;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.big.common.MD5Utils;
 import org.big.entity.UserDetail;
 import org.big.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             if(user == null){
                 throw new BadCredentialsException("没有该用户");
             }
-            if (!password.equals(user.getPassword())) {
+            if (!MD5Utils.MD532(password).equals(user.getPassword())) {
                 request.getSession().setAttribute("loginError","password");
                 throw new BadCredentialsException("密码错误");
             }

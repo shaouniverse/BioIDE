@@ -37,7 +37,7 @@ public class UserDetailService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
-        User user;
+        User user = null;
         try {
             user = userService.findOneByName(userName);
         } catch (Exception e) {
@@ -46,8 +46,7 @@ public class UserDetailService implements UserDetailsService {
         if(user == null){
             request.getSession().setAttribute("loginError","name");
             throw new UsernameNotFoundException("nameError");
-        }
-        else {
+        }else {
             try {
                 //List<Team> teams = teamService.selectTeamByUserId(user.getId());
                 //return new UserDetail(user, teams);

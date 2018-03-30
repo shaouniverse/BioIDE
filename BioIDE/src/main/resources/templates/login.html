@@ -12,7 +12,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title>BioIDE</title>
+    <title th:text="#{web_title}">BioIDE</title>
     <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
@@ -29,15 +29,19 @@
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
 
-        <form th:action="@{/login}" action="/go" method="post">
+        <form th:action="@{/login}" onkeydown="if(event.keyCode==13) return submitForm();" method="post">
+        	<div th:if="${not #lists.isEmpty(activeMsg)}" class="well well-sm" th:text="${activeMsg}"></div>
+            <!-- 用户名 -->
             <div class="form-group has-feedback">
                 <input id="username" name="username" class="form-control" placeholder="UserName">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
+            <!-- 密码 -->
             <div class="form-group has-feedback">
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
+            <!-- 验证码 -->
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="token" name="token" placeholder="Please input the token">
                 <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
@@ -49,21 +53,23 @@
                     </i>
                 </div>
             </div>
+            <!-- 错误提示 -->
             <p th:text="${login_error}"></p>
             <div th:if="${loginError} == 1" class="alert alert-warning alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4>错误提示</h4>
                 <p th:text="${loginErrorMsg}"></p>
             </div>
-
+			<!-- 登录 -->
             <div class="form-group pull-right">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
             </div>
         </form>
+        <!-- 表单下的链接 -->
         <div class="social-auth-links text-center">
             <p></p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-user-plus"></i> Register a new membership</a>
-            <a href="#" class="btn btn-block btn-social btn-bitbucket btn-flat"><i class="fa fa-key"></i> I forgot my password</a>
+            <a th:href="@{/register}" href="user/register.html" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-user-plus"></i> Register a new membership</a>
+            <a th:href="@{/password/forgot}" href="user/forget.html" class="btn btn-block btn-social btn-bitbucket btn-flat"><i class="fa fa-key"></i> I forgot my password</a>
         </div>
     </div>
 </div>

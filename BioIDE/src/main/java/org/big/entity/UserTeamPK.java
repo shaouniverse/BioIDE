@@ -28,7 +28,6 @@ public class UserTeamPK implements Serializable {
         this.userId = userId;
     }
 
-
     @Column(name = "team_id")
     @Id
     public String getTeamId() {

@@ -75,7 +75,7 @@ public class UserDetail extends User implements UserDetails {
     }
 
     @Override
-    public String getName() {
+    public String getNickname() {
         return super.getNickname();
     }
 }

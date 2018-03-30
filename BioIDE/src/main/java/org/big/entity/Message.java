@@ -26,8 +26,19 @@ public class Message {
     private Integer status;
     private String type;
     private String mark;
+    private String teamid;
+    
+    public Message(String id, String sender) {
+		super();
+		this.id = id;
+		this.sender = sender;
+	}
 
-    @Id
+	public Message() {
+		super();
+	}
+
+	@Id
     @Column(name = "id")
     public String getId() {
         return id;
@@ -116,8 +127,16 @@ public class Message {
     public void setMark(String mark) {
         this.mark = mark;
     }
+    
+	public String getTeamid() {
+		return teamid;
+	}
 
-    @Override
+	public void setTeamid(String teamid) {
+		this.teamid = teamid;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -133,6 +152,7 @@ public class Message {
         if (status != null ? !status.equals(message.status) : message.status != null) return false;
         if (type != null ? !type.equals(message.type) : message.type != null) return false;
         if (mark != null ? !mark.equals(message.mark) : message.mark != null) return false;
+        if (teamid != null ? !teamid.equals(message.teamid) : message.teamid != null) return false;
 
         return true;
     }
@@ -148,6 +168,15 @@ public class Message {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (mark != null ? mark.hashCode() : 0);
+        result = 31 * result + (teamid != null ? teamid.hashCode() : 0);
         return result;
     }
+
+	@Override
+	public String toString() {
+		return "Message [id=" + id + ", sender=" + sender + ", addressee=" + addressee + ", sendtime=" + sendtime
+				+ ", title=" + title + ", text=" + text + ", status=" + status + ", type=" + type + ", mark=" + mark
+				+ ", teamid=" + teamid + "]";
+	}
+    
 }

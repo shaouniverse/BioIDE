@@ -1,6 +1,10 @@
 package org.big.controller.rest;
 
-import com.alibaba.fastjson.JSON;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.big.entity.Team;
+import org.big.repository.UserRepository;
 import org.big.service.TeamService;
 import org.big.service.UserService;
 import org.big.service.UserTeamService;
@@ -11,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import com.alibaba.fastjson.JSON;
 
 
 /**
@@ -32,7 +36,10 @@ public class TeamRestController {
     private TeamService teamService;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserTeamService userTeamService;
+    @Autowired
+    private UserRepository userRepository;
     /**
      *<b>列表</b>
      *<p> 当前用户所能查看权限的列表</p>
@@ -121,6 +128,30 @@ public class TeamRestController {
             return true;
         }catch(Exception e){
             return false;
+        }
+    }
+    
+    /**
+     *<b>团队负责人授权</b>
+     *<p> 团队负责人授权</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return boolean
+     */
+    @RequestMapping(value="/transMember",method = {RequestMethod.POST})
+    public boolean TransMember(HttpServletRequest request, HttpServletResponse response) {
+    	String teamId=request.getParameter("teamId");
+        String userId=request.getParameter("userId");
+        Team team = this.teamService.findbyID(teamId);
+        try{
+        	this.teamService.updateTeamInfoByLeader(teamId, userId);
+        	String email = this.userRepository.findOneById(userId).getEmail();
+        	if (null != email && !"".contains(email)) {
+        		this.userTeamService.SendEmailTransPermissionAdvice(request, response, email, team);
+        	}
+        	return true;
+        }catch(Exception e){
+        	return false;
         }
     }
 }

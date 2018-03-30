@@ -85,7 +85,7 @@ public class SuperRestController {
             return false;
         }
     }
-
+// -------------------------------------------------------------------------------
     /**
      *<b>User列表</b>
      *<p> 所有User的检索列表</p>
@@ -109,8 +109,7 @@ public class SuperRestController {
     public boolean RemoveManyUser(@PathVariable String ids) {
         try{
             //获取id列表字符串
-            String [] idList;
-            idList = ids.split("￥");
+            String [] idList = ids.split("￥");
             for(int i=0;i<idList.length;i++){
                 this.userService.removeOne(idList[i]);
             }

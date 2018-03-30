@@ -2,8 +2,11 @@ package org.big.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import org.big.entity.User;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import com.alibaba.fastjson.JSON;
 
@@ -43,6 +46,9 @@ public interface UserService {
      * @param ID 实体的id
      * @return void
      */
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM User WHERE id = ?1")
     void removeOne(String ID);
 
     /**

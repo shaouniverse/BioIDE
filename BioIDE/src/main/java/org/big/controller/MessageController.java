@@ -69,7 +69,7 @@ public class MessageController {
      * @param model 初始化模型
      * @param id 实体的
      * @return java.lang.String
-     */ // 
+     */
     @RequestMapping(value="/read/{id}", method = {RequestMethod.GET})
     public String ReadMessage(Model model,@PathVariable String id, HttpServletRequest request) {
         Message thisMessage=this.messageService.findbyID(id);
@@ -83,9 +83,9 @@ public class MessageController {
     }
 
     /**
-     *<b>添加</b>
-     *<p> 添加新的实体的编辑的页面</p>
-     * @author WangTianshan (王天山)
+     *<b>团队邀请</b>
+     *<p> 根据选中团队的id发出团队邀请</p>
+     * @param id 发出邀请的TeamID
      * @param model 初始化模型
      * @return java.lang.String
      */
@@ -118,10 +118,10 @@ public class MessageController {
     }
     
     /**
-     *<b>保存</b>
-     *<p> 将传入的实体保存</p>
-     * @author WangTianshan (王天山)
-     * @param thisMessage 传入的实体id
+     *<b>发送团队邀请函</b>
+     *<p> 发送团队邀请函</p>
+     * @author BINZI
+     * @param model 初始化模型
      * @return java.lang.String
      */
     @RequestMapping(value="/send", method = {RequestMethod.POST})
@@ -141,15 +141,13 @@ public class MessageController {
         return "redirect:/console/message";
     }
     /**
-     * 处理超级管理员的团队邀请
+     * 处理团队邀请连接
      * @param userName
      * @param teamid
-     * @return
+     * @return java.lang.String
      */
     @RequestMapping(value="/invite/{userName}/{teamid}", method = {RequestMethod.GET})
     public String Invite(@PathVariable String userName, @PathVariable String teamid) {
-    	System.out.println("被邀请人：" + userName);
-    	System.out.println("邀请TeamID：" + teamid);
     	// 用户接收邀请
     	userTeamService.saveOne(userService.findOneByName(userName).getId(), teamid);
     	return "redirect:/console/team";

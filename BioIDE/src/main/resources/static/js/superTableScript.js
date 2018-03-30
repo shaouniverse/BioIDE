@@ -72,7 +72,8 @@ function editSelectObject(type){
 };
 //批量删除
 function removeSelectObject(type){
-    var number=0;
+    alert("RemoveSelectObject:" + type);
+	var number=0;
     var checkId="";
     $("input:checkbox[id^='sel']:checked").each(function(i){
         number=number+1;
@@ -117,32 +118,5 @@ function removeSelectObject(type){
                     time: 500, //0.5s后自动关闭
                 });
         }
-    }
-};
-
-function inviteThisObject(id,type) {
-    window.location.href="/console/message/compose/"+id;
-};
-
-//团队邀请
-/**
- * number：选中数量
- * checkId：选中Team的Id
- * type：team
- */
-function inviteObject(type){
-    var number=0;
-    var checkId="";
-    $("input:checkbox[id^='sel']:checked").each(function(i){
-        number=number+1;
-        checkId=$(this).attr('id');
-        checkId=checkId.substring(4);
-    });
-    if(number==0){			// 判断是否选中添加团队
-        alert("请选择数据");	// 未选中添加团队 -- 提示"请选择数据"
-    }else if(number>1){		// 选中多行 -- 提示"只能选择1条数据进行编辑"
-        alert("您选择了"+number+"条数据，只能选择1条数据进行编辑");
-    }else{
-        inviteThisObject(checkId,type);
     }
 };

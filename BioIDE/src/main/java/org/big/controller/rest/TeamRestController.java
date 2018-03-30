@@ -64,8 +64,7 @@ public class TeamRestController {
     public boolean RemoveMany(@PathVariable String ids) {
         try{
             //获取id列表字符串
-            String [] idList;
-            idList = ids.split("￥");
+            String [] idList = ids.split("￥");
             for(int i=0;i<idList.length;i++){
                 this.teamService.removeOne(idList[i]);
             }

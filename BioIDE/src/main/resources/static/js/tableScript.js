@@ -125,7 +125,6 @@ function transThisMember(teamId,userId) {	//
     }
 };
 
-
 //选择编辑
 function editSelectObject(type){
     var number=0;
@@ -195,14 +194,11 @@ function removeSelectObject(type){
     }
 };
 
-
+//团队邀请
 function inviteThisObject(id,type) {
     window.location.href="/console/message/compose/"+id;
 };
-//团队邀请
-/**
- * JS说明
- */
+
 function inviteObject(type){
     var number=0;
     var checkId="";

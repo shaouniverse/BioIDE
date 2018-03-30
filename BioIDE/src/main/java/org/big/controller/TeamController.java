@@ -127,20 +127,17 @@ public class TeamController {
         return "index";
     }
     
-    /** 处理用户邀请结果
+    /** 处理用户邀请连接
      *<b>团队邀请</b>
      *<p> 团队邀请通过UserId & TeamId</p>
-     * @author WangTianshan (王天山)
+     * @author BINZI
      * @param id 传入的实体id
-     * @return java.lang.String 	/console/team/invite/{id}
+     * @return java.lang.String 
      */
     @RequestMapping(value="/invite/{userName}/{teamid}", method = {RequestMethod.GET})
     public String Invite(@PathVariable String userName, @PathVariable String teamid) {
-    	System.out.println("被邀请人：" + userName);
-    	System.out.println("邀请TeamID：" + teamid);
     	// 用户接收邀请
     	userTeamService.saveOne(userService.findOneByName(userName).getId(), teamid);
     	return "redirect:/console/team";
     }
-
 }

@@ -98,11 +98,11 @@ public class UserServiceImpl implements UserService{
             String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
             String thisEdit=
                     "<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','user')\" >" +
-                            "<span class=\"glyphicon glyphicon-edit\"></span>" +
-                            "</a>" +
-                            "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','user')\" >" +
-                            "<span class=\"glyphicon glyphicon-remove\"></span>" +
-                            "</a>";
+                    	"<span class=\"glyphicon glyphicon-edit\"></span>" +
+                    "</a>" +
+                    "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','user')\" >" +
+                    	"<span class=\"glyphicon glyphicon-remove\"></span>" +
+                    "</a>";
             row.put("select",thisSelect);
             row.put("userName",thisList.get(i).getUserName());
             row.put("nickname",thisList.get(i).getNickname());

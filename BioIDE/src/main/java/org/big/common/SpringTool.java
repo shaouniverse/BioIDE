@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- *<p><b>获取SpringBeam</b></p>
+ *<p><b>获取SpringBean</b></p>
  *<p> 通过该类即可在普通工具类里获取spring管理的bean</p>
  * @author WangTianshan (王天山)
  *<p>Created date: 2017/9/30 21:35</p>
@@ -29,9 +29,6 @@ public final class SpringTool implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (SpringTool.applicationContext == null) {
             SpringTool.applicationContext = applicationContext;
-//            System.out.println(
-//                    "========ApplicationContext配置成功,在普通类可以通过调用ToolSpring.getAppContext()获取applicationContext对象,applicationContext="
-//                            + applicationContext + "========");
         }
     }
 

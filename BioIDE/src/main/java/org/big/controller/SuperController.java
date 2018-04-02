@@ -1,5 +1,6 @@
 package org.big.controller;
 
+import org.big.common.MD5Utils;
 import org.big.entity.Message;
 import org.big.entity.Team;
 import org.big.entity.User;
@@ -172,6 +173,7 @@ public class SuperController {
      */
     @RequestMapping(value="/user/save", method = {RequestMethod.POST})
     public String SaveUser(@ModelAttribute("thisUser") User thisUser) {
+    	thisUser.setPassword(MD5Utils.MD532(thisUser.getPassword()));
         this.userService.saveOne(thisUser);
         return "redirect:/super/user";
     }

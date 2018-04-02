@@ -18,16 +18,9 @@ import java.util.List;
  */
 public class UserDetail extends User implements UserDetails {
 
-    //private List<Team> teams;
-
     public UserDetail(User user){
         super(user);
-        //this.teams = teams;
     }
-//    public UserDetail(User user, List<Team> teams){
-//        super(user);
-//        this.teams = teams;
-//    }
 
 
     @Override

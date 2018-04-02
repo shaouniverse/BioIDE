@@ -74,8 +74,8 @@ public class MessageController {
     public String ReadMessage(Model model,@PathVariable String id, HttpServletRequest request) {
         Message thisMessage=this.messageService.findbyID(id);
         User thisSender=this.userService.findbyID(thisMessage.getSender());
-        this.messageService.changeStatus(thisMessage,1);
-        int unReadMessageNum=messageService.countStatus(0);
+        this.messageService.changeStatus(thisMessage,1); // 改变消息状态 -- 未读消息状态为0 | 已读消息状态为1
+        int unReadMessageNum=messageService.countStatus(0); // 根据状态统计未读消息数量
         request.getSession().setAttribute("unReadMessageNum",unReadMessageNum);
         model.addAttribute("thisMessage", thisMessage);
         model.addAttribute("thisSender", "From:"+thisSender.getNickname());

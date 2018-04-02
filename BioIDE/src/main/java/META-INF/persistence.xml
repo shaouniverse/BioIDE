@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="BioIDE">
+		<class>org.big.entity.Citation</class>
+		<class>org.big.entity.Dataset</class>
+		<class>org.big.entity.Datasource</class>
+		<class>org.big.entity.Description</class>
+		<class>org.big.entity.Descriptiontype</class>
+		<class>org.big.entity.Distributiondata</class>
+		<class>org.big.entity.FlywaySchemaHistory</class>
+		<class>org.big.entity.Geogroup</class>
+		<class>org.big.entity.Geoobject</class>
+		<class>org.big.entity.Keyitem</class>
+		<class>org.big.entity.License</class>
+		<class>org.big.entity.Molecular</class>
+		<class>org.big.entity.Multimedia</class>
+		<class>org.big.entity.Occurrence</class>
+		<class>org.big.entity.Phytree</class>
+		<class>org.big.entity.Protection</class>
+		<class>org.big.entity.Protectstandard</class>
+		<class>org.big.entity.Rank</class>
+		<class>org.big.entity.Ref</class>
+		<class>org.big.entity.Specimendata</class>
+		<class>org.big.entity.Taxaction</class>
+		<class>org.big.entity.Taxaset</class>
+		<class>org.big.entity.Taxkey</class>
+		<class>org.big.entity.Taxon</class>
+		<class>org.big.entity.TaxonTaxon</class>
+		<class>org.big.entity.Taxtree</class>
+		<class>org.big.entity.Traitdata</class>
+		<class>org.big.entity.Traitdescription</class>
+		<class>org.big.entity.Traitontology</class>
+		<class>org.big.entity.Traitset</class>
+		<class>org.big.entity.TraitsetHasTraitontology</class>
 	</persistence-unit>
 </persistence>

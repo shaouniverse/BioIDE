@@ -59,7 +59,16 @@
                 <div class="box-footer box-comments">
                     <div class="box-comment">
                         <div class="comment-text">
-                            确认加入团队信息Link
+                          	  确认加入团队信息Link
+                            <!-- 判断当前看信人身份 -- 收信人显示按钮 | 写信人不显示
+                            	后端放置身份标识到request域中，判断身份标识 -- 显示对应按钮
+                            <body>
+							    <div th:if="${age} > 20"> 大于 20 </div>
+							    <div th:unless="${age} > 20"> 小于 20 </div>
+							</body>
+                             -->
+                            <button type="button" class="btn btn-primary" id="Accept" name="Accept"> Accept</button>
+                            <button type="button" class="btn btn-primary" name="Refuse"> Refuse</button>
                         </div>
                     </div>
                 </div>
@@ -75,8 +84,7 @@
     </footer>
     <!-- Control Sidebar -->
     <span th:replace="pageFrame/basicsControl :: copy" />
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
+    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->

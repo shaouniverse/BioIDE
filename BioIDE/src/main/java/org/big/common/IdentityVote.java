@@ -17,7 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @since JDK 1.80_144
  */
 public class IdentityVote {
-
+	// 获取SpringBean
     TeamServiceImpl teamServiceImpl = (TeamServiceImpl) SpringTool.getBean("teamServiceImpl");
     public UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -53,15 +53,15 @@ public class IdentityVote {
         for (GrantedAuthority grantedAuthority : thisUser.getAuthorities()) {
             if(grantedAuthority.getAuthority().equals("ROLE_SUPER")){
                 return true;
-            }
-            else if(grantedAuthority.getAuthority().equals("ROLE_USER")){
-                if (thisTeam.getLeader().equals(thisUser.getId()))
+            }else if(grantedAuthority.getAuthority().equals("ROLE_USER")){
+                if (thisTeam.getLeader().equals(thisUser.getId())){
                     return true;
-                else
+                }else{
                     return false;
-            }
-            else
+                }
+            }else{
                 return false;
+            }
         }
         return false;
     }

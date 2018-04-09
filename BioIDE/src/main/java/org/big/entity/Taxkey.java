@@ -4,13 +4,17 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
- * The persistent class for the taxkey database table.
- * 
+ *<p><b>Taxkey的Entity类</b></p>
+ *<p> Taxkey的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Taxkey.findAll", query="SELECT t FROM Taxkey t")
+@Table(name = "taxkey", schema = "biodata")
 public class Taxkey implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -85,6 +89,55 @@ public class Taxkey implements Serializable {
 
 	public void setTaxon(Taxon taxon) {
 		this.taxon = taxon;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((abstraction == null) ? 0 : abstraction.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((keyitems == null) ? 0 : keyitems.hashCode());
+		result = prime * result + ((keytitle == null) ? 0 : keytitle.hashCode());
+		result = prime * result + ((taxon == null) ? 0 : taxon.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Taxkey other = (Taxkey) obj;
+		if (abstraction == null) {
+			if (other.abstraction != null)
+				return false;
+		} else if (!abstraction.equals(other.abstraction))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (keyitems == null) {
+			if (other.keyitems != null)
+				return false;
+		} else if (!keyitems.equals(other.keyitems))
+			return false;
+		if (keytitle == null) {
+			if (other.keytitle != null)
+				return false;
+		} else if (!keytitle.equals(other.keytitle))
+			return false;
+		if (taxon == null) {
+			if (other.taxon != null)
+				return false;
+		} else if (!taxon.equals(other.taxon))
+			return false;
+		return true;
 	}
 
 }

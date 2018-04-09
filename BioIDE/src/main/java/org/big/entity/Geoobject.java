@@ -2,16 +2,26 @@ package org.big.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.big.common.StringJsonUserType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 import java.util.List;
 
-
 /**
- * The persistent class for the geoobject database table.
- * 
+ *<p><b>Geoobject的Entity类</b></p>
+ *<p> Geoobject的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Geoobject.findAll", query="SELECT g FROM Geoobject g")
+@Table(name = "geoobject", schema = "biodata")
+@TypeDef( name= "StringJsonUserType", typeClass = StringJsonUserType.class)
 public class Geoobject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,8 +35,8 @@ public class Geoobject implements Serializable {
 	private String cngeoname;
 
 	private String engeoname;
-
-	private Object geodata;
+	@Type(type = "StringJsonUserType")
+	private String geodata;
 
 	private String geotype;
 
@@ -37,7 +47,8 @@ public class Geoobject implements Serializable {
 
 	private String pid;
 
-	private Object relation;
+	@Type(type = "StringJsonUserType")
+	private String relation;
 
 	private int status;
 
@@ -99,11 +110,11 @@ public class Geoobject implements Serializable {
 		this.engeoname = engeoname;
 	}
 
-	public Object getGeodata() {
+	public String getGeodata() {
 		return this.geodata;
 	}
 
-	public void setGeodata(Object geodata) {
+	public void setGeodata(String geodata) {
 		this.geodata = geodata;
 	}
 
@@ -139,11 +150,11 @@ public class Geoobject implements Serializable {
 		this.pid = pid;
 	}
 
-	public Object getRelation() {
+	public String getRelation() {
 		return this.relation;
 	}
 
-	public void setRelation(Object relation) {
+	public void setRelation(String relation) {
 		this.relation = relation;
 	}
 
@@ -207,6 +218,118 @@ public class Geoobject implements Serializable {
 
 	public void setGeogroup(Geogroup geogroup) {
 		this.geogroup = geogroup;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(centerx);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(centery);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((cngeoname == null) ? 0 : cngeoname.hashCode());
+		result = prime * result + ((distributiondata == null) ? 0 : distributiondata.hashCode());
+		result = prime * result + ((engeoname == null) ? 0 : engeoname.hashCode());
+		result = prime * result + ((geodata == null) ? 0 : geodata.hashCode());
+		result = prime * result + ((geogroup == null) ? 0 : geogroup.hashCode());
+		result = prime * result + ((geotype == null) ? 0 : geotype.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((inputer == null) ? 0 : inputer.hashCode());
+		result = prime * result + ((inputtime == null) ? 0 : inputtime.hashCode());
+		result = prime * result + ((pid == null) ? 0 : pid.hashCode());
+		result = prime * result + ((relation == null) ? 0 : relation.hashCode());
+		result = prime * result + status;
+		result = prime * result + ((synchdate == null) ? 0 : synchdate.hashCode());
+		result = prime * result + synchstatus;
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Geoobject other = (Geoobject) obj;
+		if (Double.doubleToLongBits(centerx) != Double.doubleToLongBits(other.centerx))
+			return false;
+		if (Double.doubleToLongBits(centery) != Double.doubleToLongBits(other.centery))
+			return false;
+		if (cngeoname == null) {
+			if (other.cngeoname != null)
+				return false;
+		} else if (!cngeoname.equals(other.cngeoname))
+			return false;
+		if (distributiondata == null) {
+			if (other.distributiondata != null)
+				return false;
+		} else if (!distributiondata.equals(other.distributiondata))
+			return false;
+		if (engeoname == null) {
+			if (other.engeoname != null)
+				return false;
+		} else if (!engeoname.equals(other.engeoname))
+			return false;
+		if (geodata == null) {
+			if (other.geodata != null)
+				return false;
+		} else if (!geodata.equals(other.geodata))
+			return false;
+		if (geogroup == null) {
+			if (other.geogroup != null)
+				return false;
+		} else if (!geogroup.equals(other.geogroup))
+			return false;
+		if (geotype == null) {
+			if (other.geotype != null)
+				return false;
+		} else if (!geotype.equals(other.geotype))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (inputer == null) {
+			if (other.inputer != null)
+				return false;
+		} else if (!inputer.equals(other.inputer))
+			return false;
+		if (inputtime == null) {
+			if (other.inputtime != null)
+				return false;
+		} else if (!inputtime.equals(other.inputtime))
+			return false;
+		if (pid == null) {
+			if (other.pid != null)
+				return false;
+		} else if (!pid.equals(other.pid))
+			return false;
+		if (relation == null) {
+			if (other.relation != null)
+				return false;
+		} else if (!relation.equals(other.relation))
+			return false;
+		if (status != other.status)
+			return false;
+		if (synchdate == null) {
+			if (other.synchdate != null)
+				return false;
+		} else if (!synchdate.equals(other.synchdate))
+			return false;
+		if (synchstatus != other.synchstatus)
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
 	}
 
 }

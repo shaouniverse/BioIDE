@@ -2,25 +2,36 @@ package org.big.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.big.common.StringJsonUserType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 import java.util.List;
 
-
 /**
- * The persistent class for the taxaset database table.
- * 
+ *<p><b>Taxaset的Entity类</b></p>
+ *<p> Taxaset的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Taxaset.findAll", query="SELECT t FROM Taxaset t")
+@Table(name = "taxaset", schema = "biodata")
+@TypeDef( name= "StringJsonUserType", typeClass = StringJsonUserType.class)
 public class Taxaset implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
+	@Type(type = "StringJsonUserType")
+	private String refsjson;
 
-	private Object refsjson;
-
-	private Object sourcejson;
+	@Type(type = "StringJsonUserType")
+	private String sourcejson;
 
 	private int status;
 
@@ -52,19 +63,19 @@ public class Taxaset implements Serializable {
 		this.id = id;
 	}
 
-	public Object getRefsjson() {
+	public String getRefsjson() {
 		return this.refsjson;
 	}
 
-	public void setRefsjson(Object refsjson) {
+	public void setRefsjson(String refsjson) {
 		this.refsjson = refsjson;
 	}
 
-	public Object getSourcejson() {
+	public String getSourcejson() {
 		return this.sourcejson;
 	}
 
-	public void setSourcejson(Object sourcejson) {
+	public void setSourcejson(String sourcejson) {
 		this.sourcejson = sourcejson;
 	}
 
@@ -136,6 +147,79 @@ public class Taxaset implements Serializable {
 		taxon.setTaxaset(null);
 
 		return taxon;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dataset == null) ? 0 : dataset.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((refsjson == null) ? 0 : refsjson.hashCode());
+		result = prime * result + ((sourcejson == null) ? 0 : sourcejson.hashCode());
+		result = prime * result + status;
+		result = prime * result + ((synchdate == null) ? 0 : synchdate.hashCode());
+		result = prime * result + synchstatus;
+		result = prime * result + ((taxons == null) ? 0 : taxons.hashCode());
+		result = prime * result + ((tsinfo == null) ? 0 : tsinfo.hashCode());
+		result = prime * result + ((tsname == null) ? 0 : tsname.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Taxaset other = (Taxaset) obj;
+		if (dataset == null) {
+			if (other.dataset != null)
+				return false;
+		} else if (!dataset.equals(other.dataset))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (refsjson == null) {
+			if (other.refsjson != null)
+				return false;
+		} else if (!refsjson.equals(other.refsjson))
+			return false;
+		if (sourcejson == null) {
+			if (other.sourcejson != null)
+				return false;
+		} else if (!sourcejson.equals(other.sourcejson))
+			return false;
+		if (status != other.status)
+			return false;
+		if (synchdate == null) {
+			if (other.synchdate != null)
+				return false;
+		} else if (!synchdate.equals(other.synchdate))
+			return false;
+		if (synchstatus != other.synchstatus)
+			return false;
+		if (taxons == null) {
+			if (other.taxons != null)
+				return false;
+		} else if (!taxons.equals(other.taxons))
+			return false;
+		if (tsinfo == null) {
+			if (other.tsinfo != null)
+				return false;
+		} else if (!tsinfo.equals(other.tsinfo))
+			return false;
+		if (tsname == null) {
+			if (other.tsname != null)
+				return false;
+		} else if (!tsname.equals(other.tsname))
+			return false;
+		return true;
 	}
 
 }

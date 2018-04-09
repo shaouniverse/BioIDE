@@ -2,15 +2,25 @@ package org.big.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.big.common.StringJsonUserType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 
-
 /**
- * The persistent class for the multimedia database table.
- * 
+ *<p><b>Multimedia的Entity类</b></p>
+ *<p> Multimedia的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Multimedia.findAll", query="SELECT m FROM Multimedia m")
+@Table(name = "multimedia", schema = "biodata")
+@TypeDef( name= "StringJsonUserType", typeClass = StringJsonUserType.class)
 public class Multimedia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -48,8 +58,8 @@ public class Multimedia implements Serializable {
 	private String path;
 
 	private String province;
-
-	private Object refjson;
+	@Type(type = "StringJsonUserType")
+	private String refjson;
 
 	private String rightsholder;
 
@@ -205,11 +215,11 @@ public class Multimedia implements Serializable {
 		this.province = province;
 	}
 
-	public Object getRefjson() {
+	public String getRefjson() {
 		return this.refjson;
 	}
 
-	public void setRefjson(Object refjson) {
+	public void setRefjson(String refjson) {
 		this.refjson = refjson;
 	}
 
@@ -283,6 +293,172 @@ public class Multimedia implements Serializable {
 
 	public void setTaxon(Taxon taxon) {
 		this.taxon = taxon;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((country == null) ? 0 : country.hashCode());
+		result = prime * result + ((county == null) ? 0 : county.hashCode());
+		result = prime * result + ((desid == null) ? 0 : desid.hashCode());
+		result = prime * result + ((disId == null) ? 0 : disId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((info == null) ? 0 : info.hashCode());
+		result = prime * result + ((inputer == null) ? 0 : inputer.hashCode());
+		result = prime * result + ((inputtime == null) ? 0 : inputtime.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(lat);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((license == null) ? 0 : license.hashCode());
+		result = prime * result + ((lisenceid == null) ? 0 : lisenceid.hashCode());
+		temp = Double.doubleToLongBits(lng);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((locality == null) ? 0 : locality.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((path == null) ? 0 : path.hashCode());
+		result = prime * result + ((province == null) ? 0 : province.hashCode());
+		result = prime * result + ((refjson == null) ? 0 : refjson.hashCode());
+		result = prime * result + ((rightsholder == null) ? 0 : rightsholder.hashCode());
+		result = prime * result + ((sourcesid == null) ? 0 : sourcesid.hashCode());
+		result = prime * result + ((sourcetext == null) ? 0 : sourcetext.hashCode());
+		result = prime * result + status;
+		result = prime * result + ((synchdate == null) ? 0 : synchdate.hashCode());
+		result = prime * result + synchstatus;
+		result = prime * result + ((taxon == null) ? 0 : taxon.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Multimedia other = (Multimedia) obj;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		} else if (!city.equals(other.city))
+			return false;
+		if (country == null) {
+			if (other.country != null)
+				return false;
+		} else if (!country.equals(other.country))
+			return false;
+		if (county == null) {
+			if (other.county != null)
+				return false;
+		} else if (!county.equals(other.county))
+			return false;
+		if (desid == null) {
+			if (other.desid != null)
+				return false;
+		} else if (!desid.equals(other.desid))
+			return false;
+		if (disId == null) {
+			if (other.disId != null)
+				return false;
+		} else if (!disId.equals(other.disId))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (info == null) {
+			if (other.info != null)
+				return false;
+		} else if (!info.equals(other.info))
+			return false;
+		if (inputer == null) {
+			if (other.inputer != null)
+				return false;
+		} else if (!inputer.equals(other.inputer))
+			return false;
+		if (inputtime == null) {
+			if (other.inputtime != null)
+				return false;
+		} else if (!inputtime.equals(other.inputtime))
+			return false;
+		if (Double.doubleToLongBits(lat) != Double.doubleToLongBits(other.lat))
+			return false;
+		if (license == null) {
+			if (other.license != null)
+				return false;
+		} else if (!license.equals(other.license))
+			return false;
+		if (lisenceid == null) {
+			if (other.lisenceid != null)
+				return false;
+		} else if (!lisenceid.equals(other.lisenceid))
+			return false;
+		if (Double.doubleToLongBits(lng) != Double.doubleToLongBits(other.lng))
+			return false;
+		if (locality == null) {
+			if (other.locality != null)
+				return false;
+		} else if (!locality.equals(other.locality))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (path == null) {
+			if (other.path != null)
+				return false;
+		} else if (!path.equals(other.path))
+			return false;
+		if (province == null) {
+			if (other.province != null)
+				return false;
+		} else if (!province.equals(other.province))
+			return false;
+		if (refjson == null) {
+			if (other.refjson != null)
+				return false;
+		} else if (!refjson.equals(other.refjson))
+			return false;
+		if (rightsholder == null) {
+			if (other.rightsholder != null)
+				return false;
+		} else if (!rightsholder.equals(other.rightsholder))
+			return false;
+		if (sourcesid == null) {
+			if (other.sourcesid != null)
+				return false;
+		} else if (!sourcesid.equals(other.sourcesid))
+			return false;
+		if (sourcetext == null) {
+			if (other.sourcetext != null)
+				return false;
+		} else if (!sourcetext.equals(other.sourcetext))
+			return false;
+		if (status != other.status)
+			return false;
+		if (synchdate == null) {
+			if (other.synchdate != null)
+				return false;
+		} else if (!synchdate.equals(other.synchdate))
+			return false;
+		if (synchstatus != other.synchstatus)
+			return false;
+		if (taxon == null) {
+			if (other.taxon != null)
+				return false;
+		} else if (!taxon.equals(other.taxon))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
 	}
 
 }

@@ -15,6 +15,7 @@ import java.sql.Types;
 import java.util.Objects;
 
 /**
+ * Hibernate 映射数据库中Json字段的解决方案 -- Hibernate端处理
  *<p><b>自定义JSON类</b></p>
  *<p> 用于SpringDataJPA的拓展</p>
  * @author WangTianshan (王天山)

@@ -3,13 +3,17 @@ package org.big.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
- * The persistent class for the keyitem database table.
- * 
+ *<p><b>Keyitem的Entity类</b></p>
+ *<p> Keyitem的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Keyitem.findAll", query="SELECT k FROM Keyitem k")
+@Table(name = "keyitem", schema = "biodata")
 public class Keyitem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -107,6 +111,70 @@ public class Keyitem implements Serializable {
 
 	public void setTaxkey(Taxkey taxkey) {
 		this.taxkey = taxkey;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + branchid;
+		result = prime * result + ((featureimgjson == null) ? 0 : featureimgjson.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + innerorder;
+		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result + orderid;
+		result = prime * result + ((pid == null) ? 0 : pid.hashCode());
+		result = prime * result + ((taxkey == null) ? 0 : taxkey.hashCode());
+		result = prime * result + ((taxonid == null) ? 0 : taxonid.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Keyitem other = (Keyitem) obj;
+		if (branchid != other.branchid)
+			return false;
+		if (featureimgjson == null) {
+			if (other.featureimgjson != null)
+				return false;
+		} else if (!featureimgjson.equals(other.featureimgjson))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (innerorder != other.innerorder)
+			return false;
+		if (item == null) {
+			if (other.item != null)
+				return false;
+		} else if (!item.equals(other.item))
+			return false;
+		if (orderid != other.orderid)
+			return false;
+		if (pid == null) {
+			if (other.pid != null)
+				return false;
+		} else if (!pid.equals(other.pid))
+			return false;
+		if (taxkey == null) {
+			if (other.taxkey != null)
+				return false;
+		} else if (!taxkey.equals(other.taxkey))
+			return false;
+		if (taxonid == null) {
+			if (other.taxonid != null)
+				return false;
+		} else if (!taxonid.equals(other.taxonid))
+			return false;
+		return true;
 	}
 
 }

@@ -2,15 +2,20 @@ package org.big.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
-
 /**
- * The persistent class for the rank database table.
- * 
+ *<p><b>Rank的Entity类</b></p>
+ *<p> Rank的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Rank.findAll", query="SELECT r FROM Rank r")
+@Table(name = "rank", schema = "biodata")
 public class Rank implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -72,6 +77,46 @@ public class Rank implements Serializable {
 		taxon.setRank(null);
 
 		return taxon;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((chname == null) ? 0 : chname.hashCode());
+		result = prime * result + ((enname == null) ? 0 : enname.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((taxons == null) ? 0 : taxons.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rank other = (Rank) obj;
+		if (chname == null) {
+			if (other.chname != null)
+				return false;
+		} else if (!chname.equals(other.chname))
+			return false;
+		if (enname == null) {
+			if (other.enname != null)
+				return false;
+		} else if (!enname.equals(other.enname))
+			return false;
+		if (id != other.id)
+			return false;
+		if (taxons == null) {
+			if (other.taxons != null)
+				return false;
+		} else if (!taxons.equals(other.taxons))
+			return false;
+		return true;
 	}
 
 }

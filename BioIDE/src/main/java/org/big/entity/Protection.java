@@ -2,15 +2,25 @@ package org.big.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.big.common.StringJsonUserType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 
-
 /**
- * The persistent class for the protection database table.
- * 
+ *<p><b>Protection的Entity类</b></p>
+ *<p> Protection的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Protection.findAll", query="SELECT p FROM Protection p")
+@Table(name = "protection", schema = "biodata")
+@TypeDef( name= "StringJsonUserType", typeClass = StringJsonUserType.class)
 public class Protection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,8 +35,8 @@ public class Protection implements Serializable {
 	private String proassessment;
 
 	private String protlevel;
-
-	private Object refjson;
+	@Type(type = "StringJsonUserType")
+	private String refjson;
 
 	private String sourcesid;
 
@@ -88,11 +98,11 @@ public class Protection implements Serializable {
 		this.protlevel = protlevel;
 	}
 
-	public Object getRefjson() {
+	public String getRefjson() {
 		return this.refjson;
 	}
 
-	public void setRefjson(Object refjson) {
+	public void setRefjson(String refjson) {
 		this.refjson = refjson;
 	}
 
@@ -142,6 +152,91 @@ public class Protection implements Serializable {
 
 	public void setTaxon(Taxon taxon) {
 		this.taxon = taxon;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((inputer == null) ? 0 : inputer.hashCode());
+		result = prime * result + ((inputtime == null) ? 0 : inputtime.hashCode());
+		result = prime * result + ((proassessment == null) ? 0 : proassessment.hashCode());
+		result = prime * result + ((protectstandard == null) ? 0 : protectstandard.hashCode());
+		result = prime * result + ((protlevel == null) ? 0 : protlevel.hashCode());
+		result = prime * result + ((refjson == null) ? 0 : refjson.hashCode());
+		result = prime * result + ((sourcesid == null) ? 0 : sourcesid.hashCode());
+		result = prime * result + status;
+		result = prime * result + ((synchdate == null) ? 0 : synchdate.hashCode());
+		result = prime * result + synchstatus;
+		result = prime * result + ((taxon == null) ? 0 : taxon.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Protection other = (Protection) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (inputer == null) {
+			if (other.inputer != null)
+				return false;
+		} else if (!inputer.equals(other.inputer))
+			return false;
+		if (inputtime == null) {
+			if (other.inputtime != null)
+				return false;
+		} else if (!inputtime.equals(other.inputtime))
+			return false;
+		if (proassessment == null) {
+			if (other.proassessment != null)
+				return false;
+		} else if (!proassessment.equals(other.proassessment))
+			return false;
+		if (protectstandard == null) {
+			if (other.protectstandard != null)
+				return false;
+		} else if (!protectstandard.equals(other.protectstandard))
+			return false;
+		if (protlevel == null) {
+			if (other.protlevel != null)
+				return false;
+		} else if (!protlevel.equals(other.protlevel))
+			return false;
+		if (refjson == null) {
+			if (other.refjson != null)
+				return false;
+		} else if (!refjson.equals(other.refjson))
+			return false;
+		if (sourcesid == null) {
+			if (other.sourcesid != null)
+				return false;
+		} else if (!sourcesid.equals(other.sourcesid))
+			return false;
+		if (status != other.status)
+			return false;
+		if (synchdate == null) {
+			if (other.synchdate != null)
+				return false;
+		} else if (!synchdate.equals(other.synchdate))
+			return false;
+		if (synchstatus != other.synchstatus)
+			return false;
+		if (taxon == null) {
+			if (other.taxon != null)
+				return false;
+		} else if (!taxon.equals(other.taxon))
+			return false;
+		return true;
 	}
 
 }

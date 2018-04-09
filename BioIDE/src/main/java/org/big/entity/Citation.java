@@ -1,16 +1,31 @@
 package org.big.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.big.common.StringJsonUserType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 /**
- * The persistent class for the citation database table.
- * 
+ *<p><b>Citation的Entity类</b></p>
+ *<p> Citation的Entity类</p>
+ * @author BINZI
+ *<p>Created date: 2018/4/8 17:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
  */
 @Entity
-@NamedQuery(name="Citation.findAll", query="SELECT c FROM Citation c")
+@Table(name = "citation", schema = "biodata")
+@TypeDef( name= "StringJsonUserType", typeClass = StringJsonUserType.class)
 public class Citation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,12 +42,13 @@ public class Citation implements Serializable {
 	private Date inputtime;
 
 	private int nametype;
-
-	private Object refjson;
+	@Type(type = "StringJsonUserType")
+	private String refjson;
 
 	private String sciname;
 
-	private Object shortrefs;
+	@Type(type = "StringJsonUserType")
+	private String shortrefs;
 
 	private String sourcesid;
 
@@ -98,11 +114,11 @@ public class Citation implements Serializable {
 		this.nametype = nametype;
 	}
 
-	public Object getRefjson() {
+	public String getRefjson() {
 		return this.refjson;
 	}
 
-	public void setRefjson(Object refjson) {
+	public void setRefjson(String refjson) {
 		this.refjson = refjson;
 	}
 
@@ -114,11 +130,11 @@ public class Citation implements Serializable {
 		this.sciname = sciname;
 	}
 
-	public Object getShortrefs() {
+	public String getShortrefs() {
 		return this.shortrefs;
 	}
 
-	public void setShortrefs(Object shortrefs) {
+	public void setShortrefs(String shortrefs) {
 		this.shortrefs = shortrefs;
 	}
 
@@ -161,5 +177,7 @@ public class Citation implements Serializable {
 	public void setTaxon(Taxon taxon) {
 		this.taxon = taxon;
 	}
+	
+	
 
 }

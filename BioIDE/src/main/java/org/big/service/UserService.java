@@ -68,6 +68,14 @@ public interface UserService {
      * @return org.big.entity.User
      */
     User findOneByName(String user_name);
+    /**
+     *<b>根据nickname查找一个实体</b>
+     *<p> 据nickname查找一个实体</p>
+     * @author BINZI
+     * @param nickname 实体的nickname
+     * @return org.big.entity.User
+     */
+    User findOneByNickName(String nickname);
 
     /**
      *<b>根据email查找一个实体</b>

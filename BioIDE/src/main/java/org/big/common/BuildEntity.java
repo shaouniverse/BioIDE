@@ -37,7 +37,7 @@ public class BuildEntity {
     }
     public static String buildUdataString(Object obj){
         Object[] objs = (Object[]) obj;
-        return (String)objs[0]+" "+(String)objs[1];
+        return (String)objs[0]+"<"+(String)objs[1]+">";
     }
     public static String buildUdataNameString(Object obj){
         Object[] objs = (Object[]) obj;

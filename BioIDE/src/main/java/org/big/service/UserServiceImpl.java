@@ -148,6 +148,11 @@ public class UserServiceImpl implements UserService{
     public User findOneByName(String user_name) {
         return this.userRepository.findOneByUserName(user_name);
     }
+    
+    @Override
+    public User findOneByNickName(String nickname) {
+        return this.userRepository.findOneByNickname(nickname);
+    }
 
     @Override
     public User findOneByEmail(String email) {
@@ -200,8 +205,6 @@ public class UserServiceImpl implements UserService{
             items.add(row);
         }
         thisSelect.put("items",items);
-        System.out.println("items:" + items.toJSONString());
-        System.out.println("thisSelect:" + thisSelect.toJSONString());
         return thisSelect;
     }
     

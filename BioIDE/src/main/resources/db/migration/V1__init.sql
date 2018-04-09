@@ -10,10 +10,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema biodata
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema biodata
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `biodata` DEFAULT CHARACTER SET utf8 ;
 USE `biodata` ;
 
@@ -28,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `biodata`.`team` (
   `adddate` DATETIME NULL COMMENT '添加时间',
   PRIMARY KEY (`id`))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- -----------------------------------------------------
 -- Table `biodata`.`dataset`
@@ -53,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `biodata`.`dataset` (
     REFERENCES `biodata`.`team` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  INDEX `fk_dataset_user1_idx` (`userid` ASC),
   CONSTRAINT `fk_dataset_user1`
     FOREIGN KEY (`userid`)
     REFERENCES `biodata`.`user` (`id`)

@@ -61,6 +61,15 @@ public interface UserRepository extends BaseRepository<User, String> {
      */
     
     User findOneByUserName(String name);
+    /**
+     *<b>根据User的UserName查询一个符合条件的User</b>
+     *<p> 根据User的UserName查询一个符合条件的User</p>
+     * @author WangTianshan (王天山)
+     * @param name 团队name
+     * @return org.springframework.data.domain.Page<org.big.entity.User>
+     */
+    
+    User findOneByNickname(String name);
 
     /**
      *<b>带分页排序的条件查询的Team成员列表</b>

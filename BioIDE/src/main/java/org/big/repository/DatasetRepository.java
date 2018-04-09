@@ -72,11 +72,9 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
     )
     Page<Dataset> searchMyDsname(String findText, String userId, Pageable pageable);
 
-    
-    // -----------------------------------------------------------------------
     /**
-     *<b>根据User的Username查询一个符合条件的User</b>
-     *<p> 根据User的Username查询一个符合条件的User</p>
+     *<b>根据id查询一个符合条件的Dataset</b>
+     *<p> 根据id查询一个符合条件的Dataset</p>
      * @author BINZI 
      * @param id id
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
@@ -84,14 +82,14 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
     Dataset findOneById(int id);
 
     /**
-     *<b>根据User的Username查询一个符合条件的User</b>
-     *<p> 根据User的Username查询一个符合条件的User</p>
+     *<b>根据Dsabstract & User查询一个符合条件的Dataset</b>
+     *<p> 根据Dsabstract & User查询一个符合条件的Dataset</p>
      * @author BINZI 
-     * @param dsabstraction 备注
+     * @param dsabstract 备注
      * @param thisUser 当前用户
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
-    Dataset findOneByDsabstractAndUser(String dsabstraction,User thisUser);
+    Dataset findOneByDsabstractAndUser(String dsabstract,User thisUser);
 
     /**
      *<b>根据Dataset的Mark查询一个符合条件的Dataset</b>

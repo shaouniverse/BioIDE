@@ -13,10 +13,8 @@ import java.io.Serializable;
  * @since JDK 1.80_144
  */
 public class UserTeamPK implements Serializable {
-
     private String userId;
     private String teamId;
-
 
     @Column(name = "user_id")
     @Id
@@ -24,7 +22,7 @@ public class UserTeamPK implements Serializable {
         return userId;
     }
 
-    public void setUserId(String userId) {
+	public void setUserId(String userId) {
         this.userId = userId;
     }
 

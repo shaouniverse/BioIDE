@@ -28,9 +28,9 @@
 <!-- 主界面区 -->
 <div class="wrapper">
     <!-- 引入Header -->
-    <header id="header" class="main-header">
+<!--     <header id="header" class="main-header">
         <th:block th:replace="pageFrame/adminHeader :: copy"></th:block>
-    </header>
+    </header> -->
     <!-- 引入左侧用户操作菜单-->
     <th:block th:replace="pageFrame/leftMenu :: copy"></th:block>
     <!-- 引入logoutModal -->
@@ -93,8 +93,8 @@
                     <tr>
                         <th data-field="select" data-align="center" data-sortable="false"></th>
                         <th data-field="dsname" data-align="center" data-sortable="true" th:text="#{table_dsname}">数据集名称</th>
-                        <th data-field="dsabstraction" data-align="center" data-sortable="false" th:text="#{table_dsabstraction}">描述</th>
-                        <th data-field="dtime" data-align="center" data-sortable="true" th:text="#{table_dtime}">建立时间</th>
+                        <th data-field="dsabstract" data-align="center" data-sortable="false" th:text="#{table_dsabstraction}">描述</th>
+                        <th data-field="createdDate" data-align="center" data-sortable="true" th:text="#{table_dtime}">建立时间</th>
                         <th data-field="edit" data-align="center" data-sortable="false" th:text="#{table_operation}">操作</th>
                     </tr>
                     </thead>

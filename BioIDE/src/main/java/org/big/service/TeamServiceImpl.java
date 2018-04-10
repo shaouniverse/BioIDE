@@ -239,7 +239,7 @@ public class TeamServiceImpl implements TeamService  {
 	@Override
 	public void updateTeamInfoByLeader(String teamId, String userId) {
 		String name = this.userRepository.findOneById(userId).getUserName();
-		if (null != name && !"".contains(name)) {
+		if (null != name && !"".equals(name)) {
 			// 修改Team表的name & leader字段
 			this.userTeamRepository.updateTeamInfoByLeader(name, userId, teamId);
 		}

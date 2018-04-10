@@ -25,7 +25,7 @@ public class DatasetServiceImpl implements DatasetService {
 	
 	@Override
 	public JSON findbyInfo(HttpServletRequest request) {
-        JSON json= null;
+        JSON json = null;
         String searchText=request.getParameter("search");
         if(searchText==null || searchText.length()<=0){
             searchText="";
@@ -37,7 +37,7 @@ public class DatasetServiceImpl implements DatasetService {
         sort=request.getParameter("sort");
         order=request.getParameter("order");
         if(sort==null || sort.length()<=0){
-            sort="dtime";
+            sort="createdDate";
         }
         if(order==null || order.length()<=0){
             order="desc";
@@ -52,13 +52,12 @@ public class DatasetServiceImpl implements DatasetService {
             JSONObject row= new JSONObject();
             String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
             String thisEdit=
-                            "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
-                            "<span class=\"glyphicon glyphicon-remove\"></span>" +
-                            "</a>"+
-                            "&nbsp;"+
-                            "<a class=\"table-edit-icon\" onclick=\"deleteThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
-                            "<span class=\"fa fa-trash\"></span>" +
-                            "</a>";
+            	"<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
+                	"<span class=\"glyphicon glyphicon-remove\"></span>" +
+                "</a>"+ "&nbsp;"+
+                "<a class=\"table-edit-icon\" onclick=\"deleteThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
+                	"<span class=\"fa fa-trash\"></span>" +
+            	"</a>";
             row.put("select",thisSelect);
             row.put("userByUserid.id",thisList.get(i).getUser().getNickname());
 //            String coverimgPath=

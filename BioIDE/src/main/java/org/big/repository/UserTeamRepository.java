@@ -46,8 +46,8 @@ public interface UserTeamRepository extends BaseRepository<UserTeam, String> {
     void deleteMembersByTeamIdAndUserId(String teamId,String userId);
 
     /**
-     *<b>根据TeamId与UserIds完成团队负责人权限转换 -- team表</b>
-     *<p> 根据TeamId与UserIds完成团队负责人权限转换</p>
+     *<b>根据TeamId与UserId完成团队负责人权限转换 -- team表</b>
+     *<p> 根据TeamId与UserId完成团队负责人权限转换</p>
      * @author BINZI
      * @param teamId Team的ID
      * @param userId User的ID
@@ -57,4 +57,5 @@ public interface UserTeamRepository extends BaseRepository<UserTeam, String> {
     @Transactional
     @Query("UPDATE Team SET name=?1, leader=?2 WHERE id =?3")
 	void updateTeamInfoByLeader(String username, String userId, String teamId);
+  
 }

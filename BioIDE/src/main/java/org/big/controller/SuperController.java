@@ -106,21 +106,6 @@ public class SuperController {
         return "index";
     }
     
-    /**
-     *<b>处理Team邀请 -- 托管MessageController</b>
-     *<p> Team邀请</p>
-     * @author WangTianshan (王天山)
-     * @param id 传入的Team实体的id
-     * @return java.lang.String
-     */
-/*    @RequestMapping(value="/team/invite/{id}", method = {RequestMethod.GET})
-    public String InviteTeam(@PathVariable String id) {
-        this.teamService.inviteOne(id);
-    	System.out.println("邀请TeamID：" + id);
-        return "message/compose";
-    }*/
-
-    
     /********************** User管理页 ***************************/
     /**
      *<b>User管理页</b>
@@ -191,6 +176,7 @@ public class SuperController {
         return "index";
     }
 
+    /********************** Message管理页 ***************************/
     /**
      *<b>Message管理页</b>
      *<p> 包含所有Message的信息列表、操作选项</p>

@@ -157,4 +157,89 @@ public class Dataset implements Serializable {
 		this.user = user;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
+		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
+		result = prime * result + ((dsabstract == null) ? 0 : dsabstract.hashCode());
+		result = prime * result + ((dsname == null) ? 0 : dsname.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lisenceid == null) ? 0 : lisenceid.hashCode());
+		result = prime * result + ((mark == null) ? 0 : mark.hashCode());
+		result = prime * result + status;
+		result = prime * result + ((synchdate == null) ? 0 : synchdate.hashCode());
+		result = prime * result + synchstatus;
+		result = prime * result + ((team == null) ? 0 : team.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Dataset other = (Dataset) obj;
+		if (createdDate == null) {
+			if (other.createdDate != null)
+				return false;
+		} else if (!createdDate.equals(other.createdDate))
+			return false;
+		if (creator == null) {
+			if (other.creator != null)
+				return false;
+		} else if (!creator.equals(other.creator))
+			return false;
+		if (dsabstract == null) {
+			if (other.dsabstract != null)
+				return false;
+		} else if (!dsabstract.equals(other.dsabstract))
+			return false;
+		if (dsname == null) {
+			if (other.dsname != null)
+				return false;
+		} else if (!dsname.equals(other.dsname))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (lisenceid == null) {
+			if (other.lisenceid != null)
+				return false;
+		} else if (!lisenceid.equals(other.lisenceid))
+			return false;
+		if (mark == null) {
+			if (other.mark != null)
+				return false;
+		} else if (!mark.equals(other.mark))
+			return false;
+		if (status != other.status)
+			return false;
+		if (synchdate == null) {
+			if (other.synchdate != null)
+				return false;
+		} else if (!synchdate.equals(other.synchdate))
+			return false;
+		if (synchstatus != other.synchstatus)
+			return false;
+		if (team == null) {
+			if (other.team != null)
+				return false;
+		} else if (!team.equals(other.team))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
 }

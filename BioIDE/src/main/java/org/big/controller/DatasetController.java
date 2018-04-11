@@ -1,10 +1,19 @@
 package org.big.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.big.entity.Dataset;
 import org.big.service.DatasetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,5 +71,90 @@ public class DatasetController {
         Dataset thisDataset=this.datasetService.findbyID(id);
         model.addAttribute("thisDataset", thisDataset);
         return "dataset/edit";
+    }
+    
+    /**
+     *<b>Dataset详情</b>
+     *<p> 对已有的Dataset进行详情查看管理</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @param id 被编辑Dataset实体id
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/show/{id}", method = {RequestMethod.GET})
+    public String Show(Model model,@PathVariable int id,HttpServletRequest request) {
+        Dataset thisDataset=this.datasetService.findbyID(id);
+        model.addAttribute("thisDataset", thisDataset);
+        // Page<Record> recordList=recordService.searchInfoByDataset(id,request);
+        // model.addAttribute("recordList", recordList);
+        // model.addAttribute("totalRecord", recordList.getTotalElements());
+        int offset_serch=0;
+        try{
+            offset_serch=Integer.parseInt(request.getParameter("offset"));
+        }
+        catch (Exception e){
+
+        }
+        model.addAttribute("thisPage", offset_serch);
+        return "dataset/show";
+    }
+    
+    /**
+     *<b>添加新的Dataset</b>
+     *<p> 添加新的Dataset实体保存</p>
+     * @author BINZI
+     * @param thisDataset 传入的Dataset实体
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/new", method = {RequestMethod.POST})
+    public String Add(@ModelAttribute("thisDataset") @Valid Dataset thisDataset,BindingResult result,Model model) {
+        if (result.hasErrors()) {
+            List<ObjectError> list = result.getAllErrors();
+            String errorMsg="";
+            for (ObjectError error : list) {
+                errorMsg=errorMsg+error.getDefaultMessage()+";";
+            }
+            model.addAttribute("thisDataset", thisDataset);
+            model.addAttribute("errorMsg", errorMsg);
+            return "dataset/add";
+        }
+        this.datasetService.saveOne(thisDataset);
+        return "redirect:/console/dataset";
+    }
+    
+    /**
+     *<b>保存Dataset</b>
+     *<p> 将传入的Dataset实体保存</p>
+     * @author BINZI
+     * @param thisDataset 传入的Dataset实体
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/save", method = {RequestMethod.POST})
+    public String Save(@ModelAttribute("thisDataset") @Valid Dataset thisDataset,BindingResult result,Model model) {
+        if (result.hasErrors()) {
+            List<ObjectError> list = result.getAllErrors();
+            String errorMsg="";
+            for (ObjectError error : list) {
+                errorMsg=errorMsg+error.getDefaultMessage()+";";
+            }
+            model.addAttribute("thisDataset", thisDataset);
+            model.addAttribute("errorMsg", errorMsg);
+            return "dataset/edit";
+        }
+        this.datasetService.saveOne(thisDataset);
+        return "redirect:/user/dataset";
+    }
+
+    /**
+     *<b>删除Dataset</b>
+     *<p> 将传入的Dataset实体删除</p>
+     * @author BINZI
+     * @param id 传入的Dataset实体的id
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
+    public String Remove(@PathVariable int id) {
+        this.datasetService.removeOne(id);
+        return "index";
     }
 }

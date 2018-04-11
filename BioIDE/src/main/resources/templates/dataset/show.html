@@ -61,8 +61,10 @@
                     <dd><span th:text="${thisDataset.dsname}"></span></dd>
                     <dt th:text="#{table_dsabstraction}">数据集:</dt>
                     <dd><span th:text="${thisDataset.dsabstraction}"></span></dd>
+                    <!-- 
                     <dt th:text="#{observation_records}">数据集:</dt>
                     <dd><span th:text="${totalRecord}"></span><small th:if="${#locale.getLanguage().equals('zh')}">条</small></dd>
+                     -->
                     <dt th:text="#{table_dtime}">时间:</dt>
                     <dd><span th:text="${#dates.format(thisDataset.dtime, 'yyyy-MM-dd HH:mm:ss')}"></span></dd>
                 </dl>
@@ -82,7 +84,9 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="item" th:each="record : ${recordList}">
+                        
+					<!--                        
+						<div class="item" th:each="record : ${recordList}">
                             <div class="animate-box">
                                 <a th:if="${#lists.isEmpty(record.mediasById)}" th:href="@{/user/record/show/}+${record.id}" target="_blank">
                                     <img th:if="${#lists.isEmpty(record.mediasById)}" th:src="@{/img/noimage.jpg}" style="width: 100%;" alt="">
@@ -97,7 +101,9 @@
                                     <span th:text="${record.locality}"></span>
                                 </a>
                             </div>
-                        </div>
+                        </div> 
+                      -->
+                        
                     </div>
                 </div>
             </div>

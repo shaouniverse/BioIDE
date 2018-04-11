@@ -99,7 +99,7 @@
                     </li>
                     <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队</span></a></li>
                 <!-- 管理员操作选项 -->
-                <li sec:authorize="hasRole('ROLE_SUPER')" class="header">管理员操作选项</li>
+                	<li sec:authorize="hasRole('ROLE_SUPER')" class="header">管理员操作选项</li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/user}" href="user"><i class="fa fa-user"></i> <span> 用户管理</span></a></li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/team}" href="team"><i class="fa fa-users"></i> <span> 团队管理</span></a></li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/message}" href="user"><i class="fa fa-envelope"></i> <span> 消息管理</span></a></li>

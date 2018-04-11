@@ -3,8 +3,8 @@
 <!--
     Title:控制台首页
     Description：控制台首页
-    Author：WangTianshan (王天山)
-    Created date: 2017/9/15 21:35
+    Author：BINZI
+    Created date: 2018/04/11 14:51
     Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
     Version: Html5
  -->
@@ -12,27 +12,26 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title th:text="#{web_title}">AnimalSeeker 发现并记录你身边的小动物</title>
+    <title th:text="#{web_title}">BioIDE</title>
     <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
-    <!-- 引入css -->
     <!-- Select2 4.0.3 -->
     <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}" type="text/css"/>
-    <!-- basicsCss -->
+    <!-- 引入css -->
     <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
     <!-- Bootstrap-table 1.10.1 -->
     <link rel="stylesheet" th:href="@{/plugins/bootstrap-table/css/bootstrap-table.css}" type="text/css"/>
 </head>
-<body class="hold-transition skin-leaf fixed sidebar-collapse sidebar-mini">
+<body class="hold-transition skin-dark fixed sidebar-mini">
 <!-- 主界面区 -->
 <div class="wrapper">
     <!-- 引入Header -->
-<!--     <header id="header" class="main-header">
-        <th:block th:replace="pageFrame/adminHeader :: copy"></th:block>
-    </header> -->
+	<header id="header" class="main-header">
+        <th:block th:replace="pageFrame/basicsHeader :: copy"></th:block>
+    </header>
     <!-- 引入左侧用户操作菜单-->
-    <th:block th:replace="pageFrame/leftMenu :: copy"></th:block>
+    <th:block th:replace="pageFrame/basicsMenu :: copy"></th:block>
     <!-- 引入logoutModal -->
     <th:block th:if="${not #lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}" th:replace="user/logoutModal :: copy"></th:block>
     <!-- 显示区 -->
@@ -62,7 +61,7 @@
                 </div>
                 <!-- box-body -->
                 <div class="box-body">
-                    <a class="btn btn-app" th:href="@{/user/dataset/add}" href="/user/dataset/add">
+                    <a class="btn btn-app" th:href="@{/console/dataset/add}" href="/">
                         <i class="fa fa-plus"></i> <span th:text="#{operation_add}">ADD</span>
                     </a>
                     <a class="btn btn-app" onclick="editSelectObject('dataset');">
@@ -79,7 +78,7 @@
                         id="results_table"
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
-                        th:attr="data-url=@{/user/dataset/rest/list}"
+                        th:attr="data-url=@{/console/dataset/rest/list}"
                         data-pagination="true"
                         data-side-pagination="server"
                         data-page-list="[10, 20, 30, 50, 100]"

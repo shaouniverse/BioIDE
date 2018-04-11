@@ -3,8 +3,10 @@ package org.big.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.big.entity.User;
+import org.big.entity.UserDetail;
 import org.big.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -88,4 +90,33 @@ public class UserController {
         return this.userService.findAllUser(request);
     }
 
+    /**
+     *<b>我的数据中心</b>
+     *<p> 我的数据中心</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/info", method = {RequestMethod.GET})
+    public String Info(Model model) {
+        //获取当前登录用户
+        model.addAttribute("thisUser", (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return "user/info";
+    }
+
+    /**
+     *<b>我的个人中心</b>
+     *<p> 我的个人中心</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/myinfo", method = {RequestMethod.GET})
+    public String MyInfo(Model model) {
+        //获取当前登录用户
+        User thisUser=(UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("thisUser",this.userService.findbyID(thisUser.getId()));
+        return "user/myinfo";
+    }
+    
 }

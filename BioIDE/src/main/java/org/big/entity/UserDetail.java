@@ -5,7 +5,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  *<p><b>UserDetail的Entity类</b></p>
@@ -18,7 +17,9 @@ import java.util.List;
  */
 public class UserDetail extends User implements UserDetails {
 
-    public UserDetail(User user){
+	private static final long serialVersionUID = 7349031122214065665L;
+
+	public UserDetail(User user){
         super(user);
     }
 

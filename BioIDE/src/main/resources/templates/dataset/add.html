@@ -3,8 +3,8 @@
 <!--
     Title:添加DataSet页面
     Description：添加DataSet页面
-    Author：WangTianshan (王天山)
-    Created date: 2017/12/15 10:35
+    Author：BINZI
+    Created date: 2018/04/11 14:51
     Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
     Version: Html5
  -->
@@ -12,23 +12,23 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title th:text="#{web_title}">AnimalSeeker 发现并记录你身边的小动物</title>
+    <title th:text="#{web_title}">BioIDE</title>
     <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
     <!-- 引入css -->
-    <!-- basicsCss -->
     <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
 </head>
-<body class="hold-transition skin-leaf fixed sidebar-collapse sidebar-mini">
+
+<body class="hold-transition skin-dark fixed sidebar-mini">
 <!-- 主界面区 -->
 <div class="wrapper">
     <!-- 引入Header -->
     <header id="header" class="main-header">
-        <th:block th:replace="pageFrame/adminHeader :: copy"></th:block>
-    </header>
+        <th:block th:replace="pageFrame/basicsHeader :: copy"></th:block>
+    </header> 
     <!-- 引入左侧用户操作菜单-->
-    <th:block th:replace="pageFrame/leftMenu :: copy"></th:block>
+    <th:block th:replace="pageFrame/basicsMenu :: copy"></th:block>
     <!-- 引入logoutModal -->
     <th:block th:if="${not #lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}" th:replace="user/logoutModal :: copy"></th:block>
     <!-- 显示区 -->
@@ -41,23 +41,21 @@
             </h3>
             <ol class="breadcrumb">
                 <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span th:text="#{mydata}">我的数据</span></a></li>
-                <li><a th:href="@{/user/dataset}" href="user"><i class="fa fa-cubes"></i> <span th:text="#{navigation_dataset}">数据集管理</span></a></li>
+                <li><a th:href="@{/console/dataset}" href="user"><i class="fa fa-cubes"></i> <span th:text="#{navigation_dataset}">数据集管理</span></a></li>
                 <li class="active"><i class="fa fa-plus"></i> <span th:text="#{navigation_dataset_add}">添加数据集</span></li>
             </ol>
         </section>
         <!-- 内容区 -->
         <section class="container content">
             <div class="well">
-                <form id="thisForm" class="form-horizontal"
-                      th:action="@{/user/dataset/new}"
-                      method="post" th:object="${thisDataset}">
+                <form id="thisForm" class="form-horizontal" th:action="@{/console/dataset/new}" method="post" th:object="${thisDataset}">
                     <!-- 引入form -->
                     <th:block th:replace="dataset/form :: copy"></th:block>
                     <p></p>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">
-                                <a class="btn btn-app" th:href="@{/user/dataset}" href="/user/dataset">
+                                <a class="btn btn-app" th:href="@{/console/dataset}" href="/console/dataset">
                                     <i class="fa fa-chevron-left"></i> <span th:text="#{operation_cancel}">取消编辑</span>
                                 </a>
                                 <a class="btn btn-app" onclick="clearInput();">
@@ -85,9 +83,9 @@
         $('#thisForm')[0].reset();
         $('#thisForm').data('bootstrapValidator')
             .updateStatus('dsname', 'NOT_VALIDATED',null)
-            .updateStatus('dsabstraction', 'NOT_VALIDATED',null)
+            .updateStatus('dsabstract', 'NOT_VALIDATED',null)
             .validateField('dsname')
-            .validateField('dsabstraction');
+            .validateField('dsabstract');
     };
     //后端验证错误提示
     $(document).ready(function () {
@@ -137,7 +135,7 @@
                         },
                     }
                 },
-                'dsabstraction': {
+                'dsabstract': {
                     validators: {
                         stringLength: {
                             min: 0,

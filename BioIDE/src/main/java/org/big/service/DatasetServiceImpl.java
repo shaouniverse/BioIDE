@@ -1,8 +1,10 @@
 package org.big.service;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -140,7 +142,7 @@ public class DatasetServiceImpl implements DatasetService {
             JSONObject row= new JSONObject();
             String thisSelect="";
             String thisEdit="";
-            //判断是否未默认数据集
+            //判断是否为默认数据集
             if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
                 thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisPage.getContent().get(i).getId()+"' />";
                 thisEdit=
@@ -185,17 +187,42 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public void saveOne(Dataset thisDataset) {
-
+		
 	}
+	/**
+	  `id` 
+	  `dsname` '数据集名称',
+	  `dsabstract` '数据集简介',
+	 // `lisenceid` VARCHAR(50) NULL COMMENT '共享协议id，外联共享协议表',
+	  `createdDate` '添加日期',
+	  `creator` VARCHAR(50) NULL COMMENT '创建人',
+	  `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步',
+	  `synchdate` DATETIME NULL COMMENT '最后同步日期',
+	  `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
+	  `mark` varchar(255) DEFAULT NULL, -- 新增
+	  `teamid` VARCHAR(50) NOT NULL COMMENT '所属团队的ID', -- 修改(俩teamid)
+	  `userid` VARCHAR(50) NOT NULL COMMENT '所属用户的ID', -- 新增
+	 * 
+	 * 
+	 */
 
 	@Override
 	public void addOne(Dataset thisDataset) {
-
+		thisDataset.setId(UUID.randomUUID().toString());						// 数据集ID(数据及名称及描述)
+		thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));	// 创建日期
+		//获取当前登录用户
+		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		thisDataset.setCreator(thisUser.getUserName());								// 创建人 -- 当前数据集的负责人
+		thisDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));	// 最后同步日期
+		thisDataset.setMark(UUID.randomUUID().toString());
+		thisDataset.setUser(thisUser);
+        this.datasetRepository.save(thisDataset);
 	}
 
 	@Override
-	public Boolean removeOne(int ID) {
-		return null;
+	public Boolean removeOne(String ID) {
+		this.datasetRepository.deleteById(ID);
+		return true;
 	}
 
 	@Override
@@ -220,7 +247,25 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public JSON newOne(Dataset thisDataset) {
-		return null;
+		JSONObject thisResult=new JSONObject();
+        try{
+            // thisDataset.setDtime(new Timestamp(System.currentTimeMillis()));
+            thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+            thisDataset.setStatus((byte) 1);
+            String mark=UUID.randomUUID().toString();
+            thisDataset.setMark(mark);
+            //获取当前登录用户
+            UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            thisDataset.setCreator(thisUser.getId());
+            this.datasetRepository.save(thisDataset);
+            thisResult.put("result",true);
+            thisResult.put("newId",this.datasetRepository.findOneByMark(mark).getId());
+            thisResult.put("newDsname",this.datasetRepository.findOneByMark(mark).getDsname());
+        }
+        catch (Exception e){
+            thisResult.put("result",false);
+        }
+        return thisResult;
 	}
 
 }

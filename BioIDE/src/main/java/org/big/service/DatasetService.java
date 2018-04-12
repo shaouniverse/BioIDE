@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  *<p><b>Dataset的Service类接口</b></p>
  *<p> Dataset的Service类接口，与Dataset有关的业务逻辑方法</p>
- * @author BINZI (王天山)
+ * @author BINZI
  *<p>Created date: 2018/04/09 17:22</p>
  *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
  * @version: 0.1
@@ -67,7 +67,7 @@ public interface DatasetService {
      * @param ID 实体的id
      * @return void
      */
-    Boolean removeOne(int ID);
+    Boolean removeOne(String ID);
 
     /**
      *<b>根据id物理删除一个实体</b>

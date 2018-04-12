@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *<p><b>Dataset的DAO类接口</b></p>
- *<p> Dataset的DAO类接口，与User有关的持久化操作方法</p>
+ *<p> Dataset的DAO类接口，与Dataset有关的持久化操作方法</p>
  * @author BINZI
  *<p>Created date: 2018/04/09 16:25</p>
  *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
@@ -92,4 +92,5 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
     Dataset findOneByMark(String mark);
+    
 }

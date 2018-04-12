@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `biodata`.`dataset` (
   `synchdate` DATETIME NULL COMMENT '最后同步日期',
   `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
   `mark` varchar(255) DEFAULT NULL, -- 新增
-  `teamid` VARCHAR(50) NOT NULL COMMENT '所属团队的ID', -- 修改(俩teamid)
+  `teamid` VARCHAR(50) NULL COMMENT '所属团队的ID', -- 修改(俩teamid)
   `userid` VARCHAR(50) NOT NULL COMMENT '所属用户的ID', -- 新增
   PRIMARY KEY (`id`),
   INDEX `fk_dataset_team1_idx` (`teamid` ASC),
@@ -616,8 +616,8 @@ CREATE TABLE IF NOT EXISTS `biodata`.`user` (
   `score` int(11) DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
   `uploadnum` int(11) DEFAULT NULL,
-  `resetmark` varchar(255) DEFAULT NULL,
-  `resettime` datetime DEFAULT NULL,
+  `resetmark` varchar(255) DEFAULT NULL,	-- 新增
+  `resettime` datetime DEFAULT NULL,		-- 新增   `profilePicture` varchar(255) DEFAULT NULL,		-- 新增
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`user_name` ASC))
 ENGINE = InnoDB

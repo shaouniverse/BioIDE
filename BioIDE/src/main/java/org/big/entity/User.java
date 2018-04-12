@@ -49,7 +49,6 @@ public class User implements Serializable {
     
     private String resetmark;
     
-    private String profilePicture;
     
 	/** 保留默认无参构造 */
     public User() {
@@ -266,14 +265,6 @@ public class User implements Serializable {
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}*/
-	
-	public String getProfilePicture() {
-		return profilePicture;
-	}
-	
-	public void setProfilePicture(String profilePicture) {
-		this.profilePicture = profilePicture;
-	}
 
 	@Override
     public boolean equals(Object o) {
@@ -301,7 +292,6 @@ public class User implements Serializable {
         if (mark != null ? !mark.equals(user.mark) : user.mark != null) return false;
         if (resetmark != null ? !resetmark.equals(user.resetmark) : user.resetmark != null) return false;
         if (resettime != null ? !resettime.equals(user.resettime) : user.resettime != null) return false;
-        if (profilePicture != null ? !profilePicture.equals(user.profilePicture) : user.profilePicture != null) return false;
         /*if (teams != null ? !teams.equals(user.teams) : user.teams != null) return false;*/
         return true;
     }
@@ -328,7 +318,6 @@ public class User implements Serializable {
         result = 31 * result + (mark != null ? mark.hashCode() : 0);
         result = 31 * result + (resetmark != null ? resetmark.hashCode() : 0);
         result = 31 * result + (resettime != null ? resettime.hashCode() : 0);
-        result = 31 * result + (profilePicture != null ? profilePicture.hashCode() : 0);
         /*result = 31 * result + ((teams != null) ? teams.hashCode() : 0);*/
         return result;
     }

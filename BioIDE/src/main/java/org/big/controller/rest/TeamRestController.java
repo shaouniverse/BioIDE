@@ -50,7 +50,6 @@ public class TeamRestController {
     @RequestMapping("/list")
     public JSON List(HttpServletRequest request) {
         return this.teamService.findbyUser(request);
-        //return this.teamService.findbyInfo(request);
     }
 
     /**

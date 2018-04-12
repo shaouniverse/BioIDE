@@ -66,12 +66,12 @@ public class DatasetController {
      * @param id 被编辑Dataset实体id
      * @return java.lang.String
      */
-    @RequestMapping(value="/edit/{id}", method = {RequestMethod.GET})
+/*    @RequestMapping(value="/edit/{id}", method = {RequestMethod.GET})
     public String Edit(Model model,@PathVariable int id) {
         Dataset thisDataset=this.datasetService.findbyID(id);
         model.addAttribute("thisDataset", thisDataset);
         return "dataset/edit";
-    }
+    }*/
     
     /**
      *<b>Dataset详情</b>
@@ -118,7 +118,8 @@ public class DatasetController {
             model.addAttribute("errorMsg", errorMsg);
             return "dataset/add";
         }
-        this.datasetService.saveOne(thisDataset);
+        this.datasetService.addOne(thisDataset);
+        System.out.println(thisDataset.getCreator() + "\t" + thisDataset.getDsname() + "\t" + thisDataset.getDsabstract() + "\t" + thisDataset.getId());
         return "redirect:/console/dataset";
     }
     
@@ -152,9 +153,9 @@ public class DatasetController {
      * @param id 传入的Dataset实体的id
      * @return java.lang.String
      */
-    @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
-    public String Remove(@PathVariable int id) {
+/*    @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
+    public String Remove(@PathVariable String id) {
         this.datasetService.removeOne(id);
         return "index";
-    }
+    }*/
 }

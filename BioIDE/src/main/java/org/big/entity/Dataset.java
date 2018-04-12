@@ -61,14 +61,6 @@ public class Dataset implements Serializable {
 		this.id = id;
 	}
 
-/*	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-*/
 	public Date getCreatedDate() {
 		return this.createdDate;
 	}

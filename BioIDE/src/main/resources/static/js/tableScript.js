@@ -11,11 +11,11 @@ function clearInput() {
 function resetFrom() {
     $('#thisForm')[0].reset();
 };
-// 修改团队
+// 修改type
 function editThisObject(id,type) {
     window.location.href="/console/"+type+"/edit/"+id;
 };
-// 删除团队
+// 删除type
 function removeThisObject(id,type) {
     var r=confirm("remove?");
     if (r==true)

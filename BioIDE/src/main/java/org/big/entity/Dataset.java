@@ -20,6 +20,7 @@ public class Dataset implements Serializable {
 
 	@Id
 	private String id;
+
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
 
@@ -40,15 +41,11 @@ public class Dataset implements Serializable {
 
 	private int synchstatus;
 
-	//bi-directional many-to-one association to Team
-	@ManyToOne
-	@JoinColumn(name="teamid")
-	private Team team;
+	private String teamid;
 
-	//bi-directional many-to-one association to User
+	// bi-directional many-to-one association to Team
 	@ManyToOne
-	@JoinColumn(name="userid")
-	private User user;
+	private Team team;
 
 	public Dataset() {
 	}
@@ -133,20 +130,20 @@ public class Dataset implements Serializable {
 		this.synchstatus = synchstatus;
 	}
 
+	public String getTeamid() {
+		return this.teamid;
+	}
+
+	public void setTeamid(String teamid) {
+		this.teamid = teamid;
+	}
+
 	public Team getTeam() {
 		return this.team;
 	}
 
 	public void setTeam(Team team) {
 		this.team = team;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	@Override
@@ -164,7 +161,7 @@ public class Dataset implements Serializable {
 		result = prime * result + ((synchdate == null) ? 0 : synchdate.hashCode());
 		result = prime * result + synchstatus;
 		result = prime * result + ((team == null) ? 0 : team.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((teamid == null) ? 0 : teamid.hashCode());
 		return result;
 	}
 
@@ -226,10 +223,10 @@ public class Dataset implements Serializable {
 				return false;
 		} else if (!team.equals(other.team))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (teamid == null) {
+			if (other.teamid != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!teamid.equals(other.teamid))
 			return false;
 		return true;
 	}

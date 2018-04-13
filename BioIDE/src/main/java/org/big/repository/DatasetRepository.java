@@ -28,10 +28,10 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
 	// 根据dsname & dsabstract & createdDate 模糊 | 排序 | 条件 | 分页查询
-    @Query(value = "select d from Dataset d "
+   @Query(value = "select d from Dataset d "
     		+ "where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%)"
     )
-    Page<Dataset> searchInfo(String findText, Pageable pageable);
+   Page<Dataset> searchInfo(String findText, Pageable pageable);
 
     /**
      *<b>带分页排序的条件查询（当前用户）</b>
@@ -47,7 +47,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
             + "d.dsname like %?1% "
             + "or d.dsabstract like %?1% "
             + "or d.createdDate like %?1%)"
-            + "and d.user.id = ?2 "
+            + "and d.creator = ?2 "
             + "and d.status = 1"
     )
     Page<Dataset> searchMyInfo(String findText, String userId, Pageable pageable);
@@ -61,7 +61,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
     // 根据dsname & user.id & status 模糊 | 排序 | 条件 | 分页查询
-    @Query(value = "select d from Dataset d where (d.dsname like %?1%) and d.user.id = ?2 and d.status = 1"
+    @Query(value = "select d from Dataset d where (d.dsname like %?1%) and d.creator = ?2 and d.status = 1"
     )
     Page<Dataset> searchMyDsname(String findText, String userId, Pageable pageable);
 
@@ -73,16 +73,6 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
     Dataset findOneById(int id);
-
-    /**
-     *<b>根据Dsabstract & User查询一个符合条件的Dataset</b>
-     *<p> 根据Dsabstract & User查询一个符合条件的Dataset</p>
-     * @author BINZI 
-     * @param dsabstract 备注
-     * @param thisUser 当前用户
-     * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
-     */
-    Dataset findOneByDsabstractAndUser(String dsabstract,User thisUser);
 
     /**
      *<b>根据Dataset的Mark查询一个符合条件的Dataset</b>

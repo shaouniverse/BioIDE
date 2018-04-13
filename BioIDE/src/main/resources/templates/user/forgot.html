@@ -36,25 +36,24 @@
         <section class="content">
             <div class="register-box">
                 <div class="register-logo">
-                    BioIDE
-                    <p><h4 th:text="#{abstract_title}">物种数据采集系统</h4></p>
+                    Bio<b>IDE</b>
                 </div>
                 <div th:if="${#lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}" class="register-box-body">
-                    <p class="login-box-msg" th:text="#{forgot_password}">forgot_password</p>
+                    <p class="login-box-msg">忘记密码</p>
                     <form id="forgot_form" th:action="@{/password/sendEmail}" action="password/sendEmail" method="post">
                         <input id="errorMsg" th:value="${errorMsg}" class="hidden" readonly="readonly"></input>
                         <div class="form-group has-feedback">
-                            <input id="email" name="email" type="text" class="form-control" placeholder="Email" th:value="${email}" th:attr="placeholder=#{register_email}">
+                            <input id="email" name="email" type="text" class="form-control" placeholder="邮箱，用来激活和找回密码" th:value="${email}">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control" id="r_token" name="token" th:value="${token}" th:attr="placeholder=#{token}" placeholder="Please input the token">
+                            <input type="text" class="form-control" id="r_token" name="token" th:value="${token}" placeholder="请输入下方的验证码">
                             <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
                             <p></p>
                             <div>
                                 <i>
                                     <img style="height:32px;" id="codeImg_register" th:src="@{/captchaImg}" />
-                                    <a th:text="#{change_token}" href="javascript:void(0);" onclick="reImg();">看不清，换一张</a>
+                                    <a href="javascript:void(0);" onclick="reImg();">看不清，换一张</a>
                                 </i>
                             </div>
                         </div>
@@ -96,7 +95,7 @@
 </script>
 <script>
     function reImg(){
-        var src='captchaImg.jpg?code='+Math.random();
+        var src='captchaImg?code='+Math.random();
         document.getElementById('codeImg').src = src;
         document.getElementById('codeImg_register').src = src;
     };

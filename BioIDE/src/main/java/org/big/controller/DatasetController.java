@@ -66,12 +66,12 @@ public class DatasetController {
      * @param id 被编辑Dataset实体id
      * @return java.lang.String
      */
-/*    @RequestMapping(value="/edit/{id}", method = {RequestMethod.GET})
+    @RequestMapping(value="/edit/{id}", method = {RequestMethod.GET})
     public String Edit(Model model,@PathVariable int id) {
         Dataset thisDataset=this.datasetService.findbyID(id);
         model.addAttribute("thisDataset", thisDataset);
         return "dataset/edit";
-    }*/
+    }
     
     /**
      *<b>Dataset详情</b>

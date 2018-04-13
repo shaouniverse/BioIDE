@@ -10,6 +10,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema biodata
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema biodata
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `biodata` DEFAULT CHARACTER SET utf8 ;
 USE `biodata` ;
 
@@ -20,10 +24,10 @@ CREATE TABLE IF NOT EXISTS `biodata`.`team` (
   `id` VARCHAR(50) NOT NULL COMMENT 'UUID',
   `name` VARCHAR(100) NULL COMMENT '团队名称',
   `leader` VARCHAR(50) NOT NULL COMMENT '团队负责人（有添加和移除团队成员的权限）',
-  `note` text COMMENT '备注说明',
   `adddate` DATETIME NULL COMMENT '添加时间',
   PRIMARY KEY (`id`))
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `biodata`.`dataset`
@@ -34,27 +38,19 @@ CREATE TABLE IF NOT EXISTS `biodata`.`dataset` (
   `dsabstract` VARCHAR(1000) NULL COMMENT '数据集简介',
   `lisenceid` VARCHAR(50) NULL COMMENT '共享协议id，外联共享协议表',
   `createdDate` DATE NULL COMMENT '添加日期',
+  `teamid` VARCHAR(50) NULL COMMENT '所属团队的ID',
   `creator` VARCHAR(50) NULL COMMENT '创建人',
+  `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
   `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步',
   `synchdate` DATETIME NULL COMMENT '最后同步日期',
-  `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
-  `mark` varchar(255) DEFAULT NULL, -- 新增
-  `teamid` VARCHAR(50) NULL COMMENT '所属团队的ID', -- 修改(俩teamid)
-  `userid` VARCHAR(50) NOT NULL COMMENT '所属用户的ID', -- 新增
+  `team_id` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_dataset_team1_idx` (`teamid` ASC),
+  INDEX `fk_dataset_team1_idx` (`team_id` ASC),
   CONSTRAINT `fk_dataset_team1`
-    FOREIGN KEY (`teamid`)
+    FOREIGN KEY (`team_id`)
     REFERENCES `biodata`.`team` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  INDEX `fk_dataset_user1_idx` (`userid` ASC),
-  CONSTRAINT `fk_dataset_user1`
-    FOREIGN KEY (`userid`)
-    REFERENCES `biodata`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-    )
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 COMMENT = '数据集';
 
@@ -277,34 +273,6 @@ CREATE TABLE IF NOT EXISTS `biodata`.`distributiondata` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 COMMENT = '分布信息';
-
-CREATE TABLE IF NOT EXISTS `biodata`.`memberllog` (
-  `id` varchar(50) NOT NULL,
-  `teamid` varchar(50) DEFAULT NULL,
-  `initiator` varchar(50) DEFAULT NULL COMMENT '发起者',
-  `operator` varchar(50) DEFAULT NULL COMMENT '操作者',
-  `starttime` datetime DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `endtime` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `biodata`.`message` (
-  `id` varchar(50) NOT NULL,
-  `sender` varchar(50) DEFAULT NULL,
-  `addressee` varchar(50) DEFAULT NULL,
-  `sendtime` datetime DEFAULT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `text` text,
-  `status` int(11) DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
-  `mark` varchar(100) DEFAULT NULL,
-  `teamid` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-insert  into `message`(`id`,`sender`,`addressee`,`sendtime`,`title`,`text`,`status`,`type`,`mark`,`teamid`) values ('0','0','0a','2017-09-11 10:09:17','aaa','aaaaaaa',1,'information',NULL,NULL),('045e221c-b021-4c8f-bbfd-00719247758d','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:16:09','BINZI','BINZI<p>&nbsp;</p><p>&nbsp;</p>',0,'information',NULL,NULL),('1','0a','0','2017-09-11 10:09:43','sss','ssssss',1,'information',NULL,NULL),('1249d345-33d0-4d0b-9613-23599b6fd18d','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:24:08','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('13656ce9-e87b-4367-bb2b-7292974d5ed2','0a','d074c7a1-7b7f-40f1-9dbf-5482a2790219','2017-10-18 11:31:14','ta5','<p>ta5ta5</p><p>&nbsp;</p>',1,'information',NULL,NULL),('14e4be74-9dc0-4883-8f1b-3b539dd90df9','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:02:28','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,NULL),('162b0e23-f78f-4e05-ab51-36ea1cb91ab6','0a','0','2017-10-10 16:57:43','test1','<p><strong>ttt</strong></p><p><i>ertert</i></p><p>ertertert</p><ul><li>errrrrrrrrrrrrrrrrrrrrrrrrrrrrr</li></ul>',0,'information',NULL,NULL),('1feb25e9-dfe7-43a5-87f5-60afdde796c4','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:18:06','BINZI','<p>BINZI</p>',0,'information',NULL,NULL),('21e6dc56-33d9-4357-bb5d-874b0ac3d667','0a','d074c7a1-7b7f-40f1-9dbf-5482a2790219','2017-10-11 14:28:08','asd','<p>dsa</p><p>&nbsp;</p>',1,'information',NULL,NULL),('27ed4b4e-7db0-4465-95ee-df0ad812d0b8','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 14:13:40','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('2a5f7ed0-2c35-4a11-beb6-0fb72ee17acb','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:26:26','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,NULL),('2ad39bc4-a682-4d81-ab72-b96f6eafa80b','c7c5ae4d-2354-403c-a3f3-1983a633f457',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('2b4a133d-b629-4d2e-bb40-4270320ca260','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:03:10','BINZI团队邀请函','<p>团队邀请</p>',0,'information',NULL,NULL),('31173e52-12bb-4fe9-9163-0c9516374690','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 16:31:11','BINZI','<p>BINZI....</p><p>&nbsp;</p>',0,'information',NULL,''),('439c8879-ffdb-47aa-8cd0-9cbb3dc99547','c7c5ae4d-2354-403c-a3f3-1983a633f457','13203755135@163.com','2018-03-16 16:27:06','BINZI','<p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('43f42f5c-0d6f-4a46-9cb5-844a6f023c80','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-19 15:39:09','BINZI邀请函','<p>&nbsp;</p><p>邀请函</p><p>&nbsp;</p>',0,'information',NULL,'9f7e755c-e026-4a7e-be59-3b4e661d726a'),('4441807f-d991-4801-9908-b2fd5d5f571b','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-15 17:11:17','BINZI','<p>a letter</p>',0,'information',NULL,NULL),('448e90eb-a434-49c5-8143-b7566ff2f78e','0a','d074c7a1-7b7f-40f1-9dbf-5482a2790219','2017-10-18 10:28:34','ta1','<p>ta1</p><p>&nbsp;</p>',1,'information',NULL,NULL),('4666166e-ea14-48ae-88e5-81d34d1f09ec','d074c7a1-7b7f-40f1-9dbf-5482a2790219','0','2017-10-11 10:20:24','678','<p>876</p><p>&nbsp;</p>',0,'information',NULL,NULL),('47f202f8-c166-469d-94da-3b781b868e8e','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:32:11','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('48af6102-d3f4-458d-971c-a11689015f39','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:07:24','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('50d011be-5308-4f12-935a-5b571478106e','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:04:49','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('57712bf7-c230-4186-92cd-35083cc6240a','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:32:03','BINZI','<p>BINZI</p><p>&nbsp;</p>',0,'information',NULL,NULL),('58d072ad-7ad9-4627-9445-7b184bd8698e','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-19 15:35:42','BINZI邀请函','<p>&nbsp;</p><p>邀请DAHUI</p>',0,'information',NULL,'9f7e755c-e026-4a7e-be59-3b4e661d726a'),('60399669-d49d-428c-9b2e-710a348c3a1f','0a','d074c7a1-7b7f-40f1-9dbf-5482a2790219','2017-10-11 22:38:38','sad','<p>&nbsp;</p><p>asdsad</p>',1,'information',NULL,NULL),('608ad77f-c7fb-43d3-94bd-4c9c51868af3','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:20:44','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('6be0dda3-718c-42fa-867c-e667711f32f5','d074c7a1-7b7f-40f1-9dbf-5482a2790219','0a','2017-10-11 14:23:26','333','<p>&nbsp;</p><p>123</p>',1,'information',NULL,NULL),('6c0a8b02-eb60-49bf-8baf-e143de8463d3','0a','d074c7a1-7b7f-40f1-9dbf-5482a2790219','2017-10-18 10:29:37','ta3','<p>&nbsp;</p><p>ta3</p>',1,'information',NULL,NULL),('6c8320bb-3d89-42b8-ac76-5abcc0b49d22','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-15 17:13:17','BINZI','BINZI<p>&nbsp;</p>',0,'information',NULL,NULL),('763a4beb-c70a-4003-a1a7-97db17094a5e','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:25:46','BINZI','<p>BINZIBINZI</p><p>&nbsp;</p>',0,'information',NULL,''),('8e90cdf8-cc26-4e65-bd6f-2123dbd0ba69','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-19 09:33:53','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('918815ac-d92b-4cd0-a880-5d9fad989e26','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:56:15','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,NULL),('950cb7c9-7b0f-4958-8d74-80a3a389c075','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:26:29','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,''),('9aa38741-c48e-4f7a-a2fb-8e6d1d11b681','d074c7a1-7b7f-40f1-9dbf-5482a2790219','d074c7a1-7b7f-40f1-9dbf-5482a2790219','2017-10-11 14:23:39','aaa','<p>&nbsp;</p><p>aaa</p>',1,'information',NULL,NULL),('9f7e755c-e026-4a7e-be59-3b4e661d726a','c7c5ae4d-2354-403c-a3f3-1983a633f457',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'9f7e755c-e026-4a7e-be59-3b4e661d726a'),('b109ec98-8b05-4644-ab44-e3bc68ca4b0b','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:10:18','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('c1a93156-c609-4a98-bfd4-b556066abaa4','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-19 11:05:56','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,'2ad39bc4-a682-4d81-ab72-b96f6eafa80b'),('cb21e767-5afa-4bbc-919d-dffb84e9575e','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:44:42','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,NULL),('cf9a1eef-b6d4-4f44-ae46-43aa8079adcb','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:46:14','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,NULL),('d386ec6d-fadc-46d8-abaa-3d000e0353d5','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:11:23','BINZI邀请函','<p>&nbsp;</p><p>邀请DAHUI</p>',0,'information',NULL,NULL),('d9d55b70-27fb-45bd-93a9-dc3344ab584e','0a','0','2017-10-11 10:50:09','345','<p>&nbsp;</p><p>543</p>',0,'information',NULL,NULL),('e3f5ed2d-74e0-4849-93e6-09146a56ea25','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 11:23:02','BINZI','<p>BINZI</p><p>&nbsp;</p><p>&nbsp;</p>',0,'information',NULL,''),('e9c35f0f-6ff7-439c-b548-13b8d4e45c03','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:21:33','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,NULL),('ed1a516e-29f4-484a-8fdc-6ce70d4522ea','0a','d074c7a1-7b7f-40f1-9dbf-5482a2790219','2017-10-18 10:29:27','ta2','<p>ta2</p><p>&nbsp;</p>',1,'information',NULL,NULL),('f3a3cab0-d95e-4fea-afc3-7bce47d122e3','c7c5ae4d-2354-403c-a3f3-1983a633f457','13126863899@163.com','2018-03-16 10:59:29','BINZI','<p>&nbsp;</p><p>BINZI</p>',0,'information',NULL,NULL);
 
 
 -- -----------------------------------------------------
@@ -599,25 +567,13 @@ COMMENT = '文献';
 -- Table `biodata`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biodata`.`user` (
-  `id` varchar(50) NOT NULL COMMENT 'UUID',
-  `user_name` varchar(100) NOT NULL COMMENT '用户的账户名',
-  `password` varchar(45) NOT NULL COMMENT '密码，MD5加密',
-  `email` varchar(100) NOT NULL COMMENT '注册邮箱',
-  `nickname` varchar(45) DEFAULT NULL,
-  `phone` varchar(45) DEFAULT NULL COMMENT '手机号',
-  `role` varchar(45) DEFAULT NULL COMMENT '角色标识,预留字段，可扩展',
-  `adddate` datetime DEFAULT NULL COMMENT '注册/添加时间',
-  `avatar` varchar(255) DEFAULT NULL,
-  `dtime` datetime DEFAULT NULL,
-  `idnum` int(11) DEFAULT NULL,
-  `level` int(11) DEFAULT NULL,
-  `mark` varchar(255) DEFAULT NULL,
-  `mobile` varchar(255) DEFAULT NULL,
-  `score` int(11) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL,
-  `uploadnum` int(11) DEFAULT NULL,
-  `resetmark` varchar(255) DEFAULT NULL,	-- 新增
-  `resettime` datetime DEFAULT NULL,		-- 新增   `profilePicture` varchar(255) DEFAULT NULL,		-- 新增
+  `id` VARCHAR(50) NOT NULL COMMENT 'UUID',
+  `user_name` VARCHAR(100) NOT NULL COMMENT '用户的账户名',
+  `password` VARCHAR(45) NOT NULL COMMENT '密码，MD5加密',
+  `email` VARCHAR(100) NOT NULL COMMENT '注册邮箱',
+  `phone` VARCHAR(45) NULL COMMENT '手机号',
+  `role` VARCHAR(50) NULL COMMENT '角色标识,预留字段，可扩展',
+  `adddate` DATETIME NULL COMMENT '注册/添加时间',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`user_name` ASC))
 ENGINE = InnoDB
@@ -755,7 +711,7 @@ ENGINE = InnoDB;
 -- Table `biodata`.`taxon_taxon`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biodata`.`taxon_taxon` (
-  `id` VARCHAR(50) NOT NULL COMMENT 'taxon1的 ID',
+  `taxon` VARCHAR(50) NOT NULL COMMENT 'taxon1的 ID',
   `relationship` JSON NOT NULL COMMENT '关系：\n0.与B无关; \n1.A包含B; \n2.A被B包含；\n3.A与B有重合的部分；\n4.A等价于B',
   `sourcesid` VARCHAR(50) NULL COMMENT '数据源的id',
   `refjson` VARCHAR(50) NULL COMMENT '相关参考文献的json数组',
@@ -763,8 +719,7 @@ CREATE TABLE IF NOT EXISTS `biodata`.`taxon_taxon` (
   `inputer` VARCHAR(50) NULL COMMENT '添加人的id,外链user表',
   `inputtime` DATETIME NULL COMMENT '添加时间',
   `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步\n',
-  `synchtime` DATETIME NULL COMMENT '最后同步时间',
-  PRIMARY KEY (`id`))
+  `synchtime` DATETIME NULL COMMENT '最后同步时间')
 ENGINE = InnoDB;
 
 
@@ -799,9 +754,9 @@ COMMENT = '术语组合描述表';
 
 
 -- -----------------------------------------------------
--- Table `biodata`.`commonname`
+-- Table `biodata`.`commoname`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biodata`.`commonname` (
+CREATE TABLE IF NOT EXISTS `biodata`.`commoname` (
   `id` VARCHAR(50) NOT NULL COMMENT 'UUID',
   `commonname` VARCHAR(200) NULL COMMENT '俗名',
   `language` VARCHAR(100) NULL COMMENT '所属语言',
@@ -814,8 +769,8 @@ CREATE TABLE IF NOT EXISTS `biodata`.`commonname` (
   `synchdate` DATETIME NULL COMMENT '最后同步日期',
   `taxon_id` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_commonname_taxon1_idx` (`taxon_id` ASC),
-  CONSTRAINT `fk_commonname_taxon1`
+  INDEX `fk_commoname_taxon1_idx` (`taxon_id` ASC),
+  CONSTRAINT `fk_commoname_taxon1`
     FOREIGN KEY (`taxon_id`)
     REFERENCES `biodata`.`taxon` (`id`)
     ON DELETE NO ACTION

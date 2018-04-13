@@ -321,5 +321,4 @@ public class User implements Serializable {
         /*result = 31 * result + ((teams != null) ? teams.hashCode() : 0);*/
         return result;
     }
-
 }

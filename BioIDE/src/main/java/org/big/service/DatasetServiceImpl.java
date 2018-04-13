@@ -64,7 +64,7 @@ public class DatasetServiceImpl implements DatasetService {
                 	"<span class=\"fa fa-trash\"></span>" +
             	"</a>";
             row.put("select",thisSelect);
-            row.put("user.id",thisList.get(i).getUser().getNickname());
+//            row.put("user.id",thisList.get(i).getUser().getNickname());
 //            String coverimgPath=
 //                    "<img class=\"maxWidth400\" src=\""+thisList.get(i).getCoverimg()+"\" alt=\""+thisList.get(i).getCoverimg()+"\" />";
             row.put("dsname",thisList.get(i).getDsname());
@@ -190,20 +190,17 @@ public class DatasetServiceImpl implements DatasetService {
 		
 	}
 	/**
-	  `id` 
-	  `dsname` '数据集名称',
-	  `dsabstract` '数据集简介',
-	 // `lisenceid` VARCHAR(50) NULL COMMENT '共享协议id，外联共享协议表',
-	  `createdDate` '添加日期',
+	  `id` VARCHAR(50) NOT NULL,
+	  `dsname` VARCHAR(50) NULL COMMENT '数据集名称',
+	  `dsabstract` VARCHAR(1000) NULL COMMENT '数据集简介',
+	  		`lisenceid` VARCHAR(50) NULL COMMENT '共享协议id，外联共享协议表',
+	  `createdDate` DATE NULL COMMENT '添加日期',
+	  `teamid` VARCHAR(50) NULL COMMENT '所属团队的ID',
 	  `creator` VARCHAR(50) NULL COMMENT '创建人',
+	  `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
 	  `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步',
 	  `synchdate` DATETIME NULL COMMENT '最后同步日期',
-	  `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
-	  `mark` varchar(255) DEFAULT NULL, -- 新增
-	  `teamid` VARCHAR(50) NOT NULL COMMENT '所属团队的ID', -- 修改(俩teamid)
-	  `userid` VARCHAR(50) NOT NULL COMMENT '所属用户的ID', -- 新增
-	 * 
-	 * 
+      `team_id` VARCHAR(50) NOT NULL,
 	 */
 
 	@Override
@@ -215,7 +212,7 @@ public class DatasetServiceImpl implements DatasetService {
 		thisDataset.setCreator(thisUser.getUserName());								// 创建人 -- 当前数据集的负责人
 		thisDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));	// 最后同步日期
 		thisDataset.setMark(UUID.randomUUID().toString());
-		thisDataset.setUser(thisUser);
+		/*thisDataset.setUser(thisUser);*/
         this.datasetRepository.save(thisDataset);
 	}
 

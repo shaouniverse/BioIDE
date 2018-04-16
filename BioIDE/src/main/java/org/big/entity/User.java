@@ -49,7 +49,17 @@ public class User implements Serializable {
     
     private String resetmark;
     
+    private String profilePicture;
     
+    
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
 	/** 保留默认无参构造 */
     public User() {
     }

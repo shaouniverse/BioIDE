@@ -8,15 +8,18 @@
     Version: Html5
  -->
 <th:block th:fragment="copy" >
+
     <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
     <input class="hidden" th:field="*{id}" readonly="readonly"></input>
-    <input class="hidden" th:field="*{status}" readonly="readonly"></input>
-    <input class="hidden" th:field="*{mark}" readonly="readonly"></input>
-    <input class="hidden" th:field="*{user.id}" readonly="readonly"></input>
     <input id="errorMsg" class="hidden" th:value="${errorMsg}" readonly="readonly"></input>
     <div th:if="${not #strings.isEmpty(thisDataset.createdDate)}">
         <input class="hidden" th:field="*{createdDate}" readonly="readonly"></input>
     </div>
+    <input class="hidden" th:field="*{creator}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{status}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{mark}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{team.id}" readonly="readonly"></input>
+ 
     <div class="form-group">
         <label for="dsname" class="col-sm-2 control-label" th:text="#{table_dsname}">数据集名称:</label>
         <div class="col-sm-10 col-md-10">

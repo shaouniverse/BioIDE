@@ -154,11 +154,8 @@ public class DatasetServiceImpl implements DatasetService {
                         "</a>";
             }
             row.put("select",thisSelect);
-           // String coverimgPath= "<img class=\"maxWidth400\" src=\""+thisPage.getContent().get(i).getCoverimg()+"\" alt=\""+thisPage.getContent().get(i).getCoverimg()+"\" />";
             row.put("dsname","<a href=\"console/dataset/show/"+thisPage.getContent().get(i).getId()+"\">"+thisPage.getContent().get(i).getDsname()+"</a>");
             row.put("dsabstract",thisPage.getContent().get(i).getDsabstract());
-           // row.put("num",thisPage.getContent().get(i).getNum());
-           // row.put("coverimg",coverimgPath);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String addTime="";
             // String updateTime="";
@@ -190,9 +187,6 @@ public class DatasetServiceImpl implements DatasetService {
 		
 	}
 	/**
-	  `id` VARCHAR(50) NOT NULL,
-	  `dsname` VARCHAR(50) NULL COMMENT '数据集名称',
-	  `dsabstract` VARCHAR(1000) NULL COMMENT '数据集简介',
 	  		`lisenceid` VARCHAR(50) NULL COMMENT '共享协议id，外联共享协议表',
 	  `createdDate` DATE NULL COMMENT '添加日期',
 	  `teamid` VARCHAR(50) NULL COMMENT '所属团队的ID',
@@ -210,9 +204,10 @@ public class DatasetServiceImpl implements DatasetService {
 		//获取当前登录用户
 		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		thisDataset.setCreator(thisUser.getUserName());								// 创建人 -- 当前数据集的负责人
+		thisDataset.setStatus(1);
+		thisDataset.setSynchstatus(0);
 		thisDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));	// 最后同步日期
 		thisDataset.setMark(UUID.randomUUID().toString());
-		/*thisDataset.setUser(thisUser);*/
         this.datasetRepository.save(thisDataset);
 	}
 

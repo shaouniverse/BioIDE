@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.big.entity.Dataset;
 import org.big.service.DatasetService;
+import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class DatasetController {
 	@Autowired
     private DatasetService datasetService;
-	
+	@Autowired
+	private TeamService teamService;
 	/**
      *<b>Dataset管理页</b>
      *<p> 包含所有Dataset的信息列表、操作选项</p>
@@ -118,6 +120,7 @@ public class DatasetController {
             model.addAttribute("errorMsg", errorMsg);
             return "dataset/add";
         }
+        thisDataset.setTeam(teamService.findbyID("2786c4df-6b16-4212-a611-369de7b82614"));
         this.datasetService.addOne(thisDataset);
         System.out.println(thisDataset.getCreator() + "\t" + thisDataset.getDsname() + "\t" + thisDataset.getDsabstract() + "\t" + thisDataset.getId());
         return "redirect:/console/dataset";

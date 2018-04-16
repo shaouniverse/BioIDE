@@ -73,6 +73,7 @@
                 <ul id="myTabs" class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#info" id="home-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="true">基本信息</a></li>
                     <li role="presentation" class=""><a href="#members" role="tab" id="profile-tab" data-toggle="tab" aria-controls="members" aria-expanded="false">成员信息</a></li>
+                    <li role="presentation" class=""><a href="#dataset" role="dataset-tab" id="dataset-tab" data-toggle="tab" aria-controls="dataset" aria-expanded="false">数据集</a></li>
                 </ul>
                 <div class="box-footer">
                     <div id="myTabContent" class="tab-content">
@@ -83,6 +84,65 @@
                                 <li class="list-group-item"><b>团队简介：</b><span th:text ="${thisTeam.note}"></span></li>
                             </ul>
                         </div>
+                        
+                        <div role="tabpanel" class="tab-pane fade" id="dataset" aria-labelledby="dataset-tab">
+                            <ul class="list-group">
+							   <!-- 内容区 -->
+							   <section class="container content">
+							       <div class="box box-default box-solid">
+							           <!-- box-header -->
+							           <div class="box-header with-border">
+							               <h3 class="box-title">操作</h3>
+							               <!-- box-tools -->
+							               <div class="box-tools pull-right">
+							                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+							                   </button>
+							               </div>
+							           </div>
+							           <!-- box-body -->
+							           <div class="box-body">
+							               <a class="btn btn-app" th:href="@{/console/dataset/add}" href="/">
+							                   <i class="fa fa-plus"></i> <span>ADD</span>
+							               </a>
+							               <a class="btn btn-app" onclick="editSelectObject('dataset');">
+							                   <i class="fa fa-edit"></i> <span>EDIT</span>
+							               </a>
+							               <a class="btn btn-app" onclick="removeSelectObject('dataset');">
+							                   <i class="fa fa-remove"></i> <span>REMOVE</span>
+							               </a>
+							           </div>
+							       </div>
+							       <!-- table -->
+							       <div class="table table-responsive">
+							           <table
+							                   id="results_table"
+							                   data-classes="table table-hover table-condensed"
+							                   data-toggle="table"
+							                   th:attr="data-url=@{/console/dataset/rest/list}"
+							                   data-pagination="true"
+							                   data-side-pagination="server"
+							                   data-page-list="[10, 20, 30, 50, 100]"
+							                   data-search="true"
+							                   data-show-columns="true"
+							                   data-show-toggle="true"
+							                   data-toolbar="#toolbar"
+							                   data-show-export="false"
+							                   data-show-refresh="true">
+							               <thead>
+							               <tr>
+							                   <th data-field="select" data-align="center" data-sortable="false"></th>
+							                   <th data-field="dsname" data-align="center" data-sortable="true">数据集名称</th>
+							                   <th data-field="dsabstract" data-align="center" data-sortable="false">描述</th>
+							                   <th data-field="createdDate" data-align="center" data-sortable="true">建立时间</th>
+							                   <th data-field="edit" data-align="center" data-sortable="false">操作</th>
+							               </tr>
+							               </thead>
+							           </table>
+							       </div>
+							   </section>
+                            </ul>
+                        </div>
+                        
                         <div role="tabpanel" class="tab-pane fade" id="members" aria-labelledby="profile-tab">
                             <ul class="list-group">
                                 <li class="list-group-item"><b>团队成员数量：</b><span th:text ="${members}"></span></li>

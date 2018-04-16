@@ -41,8 +41,6 @@ public class Dataset implements Serializable {
 
 	private int synchstatus;
 
-	private String teamid;
-
 	// bi-directional many-to-one association to Team
 	@ManyToOne
 	private Team team;
@@ -50,101 +48,138 @@ public class Dataset implements Serializable {
 	public Dataset() {
 	}
 
+
+
 	public String getId() {
-		return this.id;
+		return id;
 	}
+
+
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
+
+
 	public Date getCreatedDate() {
-		return this.createdDate;
+		return createdDate;
 	}
+
+
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
+
+
 	public String getCreator() {
-		return this.creator;
+		return creator;
 	}
+
+
 
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
 
+
+
 	public String getDsabstract() {
-		return this.dsabstract;
+		return dsabstract;
 	}
+
+
 
 	public void setDsabstract(String dsabstract) {
 		this.dsabstract = dsabstract;
 	}
 
+
+
 	public String getDsname() {
-		return this.dsname;
+		return dsname;
 	}
+
+
 
 	public void setDsname(String dsname) {
 		this.dsname = dsname;
 	}
 
+
+
 	public String getLisenceid() {
-		return this.lisenceid;
+		return lisenceid;
 	}
+
+
 
 	public void setLisenceid(String lisenceid) {
 		this.lisenceid = lisenceid;
 	}
 
+
+
 	public String getMark() {
-		return this.mark;
+		return mark;
 	}
+
+
 
 	public void setMark(String mark) {
 		this.mark = mark;
 	}
 
+
+
 	public int getStatus() {
-		return this.status;
+		return status;
 	}
+
+
 
 	public void setStatus(int status) {
 		this.status = status;
 	}
 
+
+
 	public Date getSynchdate() {
-		return this.synchdate;
+		return synchdate;
 	}
+
+
 
 	public void setSynchdate(Date synchdate) {
 		this.synchdate = synchdate;
 	}
 
+
+
 	public int getSynchstatus() {
-		return this.synchstatus;
+		return synchstatus;
 	}
+
+
 
 	public void setSynchstatus(int synchstatus) {
 		this.synchstatus = synchstatus;
 	}
 
-	public String getTeamid() {
-		return this.teamid;
-	}
-
-	public void setTeamid(String teamid) {
-		this.teamid = teamid;
-	}
 
 	public Team getTeam() {
-		return this.team;
+		return team;
 	}
+
+
 
 	public void setTeam(Team team) {
 		this.team = team;
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -161,7 +196,6 @@ public class Dataset implements Serializable {
 		result = prime * result + ((synchdate == null) ? 0 : synchdate.hashCode());
 		result = prime * result + synchstatus;
 		result = prime * result + ((team == null) ? 0 : team.hashCode());
-		result = prime * result + ((teamid == null) ? 0 : teamid.hashCode());
 		return result;
 	}
 
@@ -222,11 +256,6 @@ public class Dataset implements Serializable {
 			if (other.team != null)
 				return false;
 		} else if (!team.equals(other.team))
-			return false;
-		if (teamid == null) {
-			if (other.teamid != null)
-				return false;
-		} else if (!teamid.equals(other.teamid))
 			return false;
 		return true;
 	}

@@ -39,8 +39,8 @@
         <!-- 内容区 -->
         <section class="container content-header">
             <h3>
-                <span th:text="#{navigation_dataset}">数据集管理</span><br/>
-                <small th:text="#{dataset_admin_subtitle}">在这里您可以对您的数据集进行管理</small>
+                <span>数据集管理</span><br/>
+                <small>在这里您可以对您的数据集进行管理</small>
             </h3>
             <ol class="breadcrumb">
                 <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i>我的数据</span></a></li>
@@ -52,7 +52,7 @@
             <div class="box box-default box-solid">
                 <!-- box-header -->
                 <div class="box-header with-border">
-                    <h3 class="box-title" th:text="#{operation}">操作</h3>
+                    <h3 class="box-title">操作</h3>
                     <!-- box-tools -->
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -62,13 +62,13 @@
                 <!-- box-body -->
                 <div class="box-body">
                     <a class="btn btn-app" th:href="@{/console/dataset/add}" href="/">
-                        <i class="fa fa-plus"></i> <span th:text="#{operation_add}">ADD</span>
+                        <i class="fa fa-plus"></i> <span>ADD</span>
                     </a>
                     <a class="btn btn-app" onclick="editSelectObject('dataset');">
-                        <i class="fa fa-edit"></i> <span th:text="#{operation_edit}">EDIT</span>
+                        <i class="fa fa-edit"></i> <span>EDIT</span>
                     </a>
                     <a class="btn btn-app" onclick="removeSelectObject('dataset');">
-                        <i class="fa fa-remove"></i> <span th:text="#{operation_remove}">REMOVE</span>
+                        <i class="fa fa-remove"></i> <span>REMOVE</span>
                     </a>
                 </div>
             </div>
@@ -91,10 +91,10 @@
                     <thead>
                     <tr>
                         <th data-field="select" data-align="center" data-sortable="false"></th>
-                        <th data-field="dsname" data-align="center" data-sortable="true" th:text="#{table_dsname}">数据集名称</th>
-                        <th data-field="dsabstract" data-align="center" data-sortable="false" th:text="#{table_dsabstraction}">描述</th>
-                        <th data-field="createdDate" data-align="center" data-sortable="true" th:text="#{table_dtime}">建立时间</th>
-                        <th data-field="edit" data-align="center" data-sortable="false" th:text="#{table_operation}">操作</th>
+                        <th data-field="dsname" data-align="center" data-sortable="true">数据集名称</th>
+                        <th data-field="dsabstract" data-align="center" data-sortable="false">描述</th>
+                        <th data-field="createdDate" data-align="center" data-sortable="true">建立时间</th>
+                        <th data-field="edit" data-align="center" data-sortable="false">操作</th>
                     </tr>
                     </thead>
                 </table>

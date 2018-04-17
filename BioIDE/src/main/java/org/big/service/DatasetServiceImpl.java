@@ -136,29 +136,32 @@ public class DatasetServiceImpl implements DatasetService {
         //获取当前登录用户
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Page<Dataset> thisPage=this.datasetRepository.searchMyInfo(searchText,thisUser.getId(),QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        List<Dataset> thisList=new ArrayList<>();
+        
+        thisList=thisPage.getContent();
         thisTable.put("total",thisPage.getTotalElements());
 
-        for(int i=0;i<thisPage.getContent().size();i++){
+        for(int i=0;i<thisList.size();i++){
             JSONObject row= new JSONObject();
             String thisSelect="";
             String thisEdit="";
             //判断是否为默认数据集
-            if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
-                thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisPage.getContent().get(i).getId()+"' />";
+           // if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
+                thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
                 thisEdit=
-                        "<a class=\"table-edit-icon\" onclick=\"editThisObject('"+thisPage.getContent().get(i).getId()+"','dataset')\" >" +
+                        "<a class=\"table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
                         	"<span class=\"glyphicon glyphicon-edit\"></span>" +
                         "</a>" + "&nbsp;"+
-                        "<a class=\"table-edit-icon\" onclick=\"removeThisObject('"+thisPage.getContent().get(i).getId()+"','dataset')\" >" +
+                        "<a class=\"table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
                         	"<span class=\"glyphicon glyphicon-remove\"></span>" +
                         "</a>";
-            }
+         //   }
             row.put("select",thisSelect);
             row.put("dsname","<a href=\"console/dataset/show/"+thisPage.getContent().get(i).getId()+"\">"+thisPage.getContent().get(i).getDsname()+"</a>");
             row.put("dsabstract",thisPage.getContent().get(i).getDsabstract());
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String addTime="";
-            // String updateTime="";
+            // String updateTiDme="";
             try {
                 addTime=formatter.format(thisPage.getContent().get(i).getCreatedDate());
             } catch (Exception e) {
@@ -184,18 +187,13 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public void saveOne(Dataset thisDataset) {
-		
+		thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+		thisDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));
+		if (thisDataset.getDsabstract().equals("Default")) {
+			thisDataset.setDsabstract("default");
+		}
+		this.datasetRepository.save(thisDataset);
 	}
-	/**
-	  		`lisenceid` VARCHAR(50) NULL COMMENT '共享协议id，外联共享协议表',
-	  `createdDate` DATE NULL COMMENT '添加日期',
-	  `teamid` VARCHAR(50) NULL COMMENT '所属团队的ID',
-	  `creator` VARCHAR(50) NULL COMMENT '创建人',
-	  `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
-	  `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步',
-	  `synchdate` DATETIME NULL COMMENT '最后同步日期',
-      `team_id` VARCHAR(50) NOT NULL,
-	 */
 
 	@Override
 	public void addOne(Dataset thisDataset) {
@@ -203,7 +201,7 @@ public class DatasetServiceImpl implements DatasetService {
 		thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));	// 创建日期
 		//获取当前登录用户
 		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		thisDataset.setCreator(thisUser.getUserName());								// 创建人 -- 当前数据集的负责人
+		thisDataset.setCreator(thisUser.getId());								// 创建人 -- 当前数据集的负责人
 		thisDataset.setStatus(1);
 		thisDataset.setSynchstatus(0);
 		thisDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));	// 最后同步日期
@@ -213,7 +211,11 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public Boolean removeOne(String ID) {
-		this.datasetRepository.deleteById(ID);
+		System.out.println("ServiceImplID:" + ID);
+		Dataset thisDataset = datasetRepository.findOneById(ID);
+		System.out.println("UserID:" + thisDataset.getCreator() + "\t" + "DatasetID:" + thisDataset.getId() + "\t" + "TeamID:" + thisDataset.getTeam().getId());
+		thisDataset.setStatus(0);
+		this.datasetRepository.save(thisDataset);
 		return true;
 	}
 
@@ -223,8 +225,8 @@ public class DatasetServiceImpl implements DatasetService {
 	}
 
 	@Override
-	public Dataset findbyID(int ID) {
-		return null;
+	public Dataset findbyID(String ID) {
+		return this.datasetRepository.getOne(ID);
 	}
 
 	@Override

@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `biodata`.`dataset` (
   `dsname` VARCHAR(50) NULL COMMENT '数据集名称',
   `dsabstract` VARCHAR(1000) NULL COMMENT '数据集简介',
   `lisenceid` VARCHAR(50) NULL COMMENT '共享协议id，外联共享协议表',
-  `createdDate` DATE NULL COMMENT '添加日期',
+  `createdDate` DATETIME NULL COMMENT '添加日期',
   `creator` VARCHAR(50) NULL COMMENT '创建人',
   `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
   `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步',

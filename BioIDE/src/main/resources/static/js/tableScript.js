@@ -17,30 +17,33 @@ function editThisObject(id,type) {
 };
 // 删除type
 function removeThisObject(id,type) {
-    var r=confirm("remove?");
-    if (r==true)
-    {
+    alert("ID:" + id + "\t" + "Type:" + type)
+	var r=confirm("remove?");
+    if (r==true){
         $.get("/console/"+type+"/rest/remove/"+id,
             {},
             function(data,status){
-                if(status){
-                    if(data){
+                alert("Num1:" + data);
+                alert("Num2:" + status);
+            	if(status){
+                    if(true){
                         layer.msg('删除成功',
                             {
                                 time: 500, //1.5s后自动关闭
                             },
                             function(){
-                            //window.location.reload();//刷新当前页面.
                             $('[name="refresh"]').click();//刷新当前页面.
                         });
                     }
                     else{
                         layer.msg('操作失败', function(){
+                        	alert(1);
                         });
                     }
                 }
                 else{
                     layer.msg('操作失败', function(){
+                    	alert(2);
                     });
                 }
             });
@@ -166,6 +169,7 @@ function removeSelectObject(type){
                 }
                 else{
                     ids=ids+"￥"+checkId;
+                    alert(ids);
                 }
             });
             $.ajax({
@@ -177,7 +181,6 @@ function removeSelectObject(type){
                             time: 500, //1.5s后自动关闭
                         },
                         function(){
-                            //window.location.reload();//刷新当前页面.
                             $('[name="refresh"]').click();//刷新当前页面.
                         });
                 },

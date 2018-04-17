@@ -148,12 +148,14 @@ public class TeamServiceImpl implements TeamService  {
         }
         JSONObject thisTable= new JSONObject();
         JSONArray rows = new JSONArray();
+        
         Page<Object> thisPage=this.teamRepository.searchInfoByUser(searchText,thisUser.getId(),QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
         List<Object> thisList=new ArrayList<>();
+        
         thisList=thisPage.getContent();
         thisTable.put("total",thisPage.getTotalElements());
         for(int i=0;i<thisList.size();i++){
-            JSONObject row= new JSONObject();
+            JSONObject row = new JSONObject();
             Team thisTeam= BuildEntity.buildTeam(thisList.get(i));
             String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisTeam.getId()+"' />";
             String thisEdit=

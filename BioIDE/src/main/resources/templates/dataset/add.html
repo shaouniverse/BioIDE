@@ -36,13 +36,13 @@
         <!-- 内容区 -->
         <section class="container content-header">
             <h3>
-                <span th:text="#{navigation_dataset_add}">新建数据集</span><br/>
-                <small th:text="#{navigation_dataset_add_subtitle}">在这里您可以新建一个数据集来保存相关数据</small>
+                <span>新建数据集</span><br/>
+                <small>在这里您可以新建一个数据集来保存相关数据</small>
             </h3>
             <ol class="breadcrumb">
-                <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span th:text="#{mydata}">我的数据</span></a></li>
-                <li><a th:href="@{/console/dataset}" href="user"><i class="fa fa-cubes"></i> <span th:text="#{navigation_dataset}">数据集管理</span></a></li>
-                <li class="active"><i class="fa fa-plus"></i> <span th:text="#{navigation_dataset_add}">添加数据集</span></li>
+                <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span>我的数据</span></a></li>
+                <li><a th:href="@{/console/dataset}" href="user"><i class="fa fa-cubes"></i> <span>数据集管理</span></a></li>
+                <li class="active"><i class="fa fa-plus"></i> <span>添加数据集</span></li>
             </ol>
         </section>
         <!-- 内容区 -->
@@ -56,13 +56,13 @@
                         <div class="col-sm-12">
                             <div class="pull-right">
                                 <a class="btn btn-app" th:href="@{/console/dataset}" href="/console/dataset">
-                                    <i class="fa fa-chevron-left"></i> <span th:text="#{operation_cancel}">取消编辑</span>
+                                    <i class="fa fa-chevron-left"></i> <span>取消编辑</span>
                                 </a>
                                 <a class="btn btn-app" onclick="clearInput();">
-                                    <i class="fa fa-rotate-left"></i> <span th:text="#{operation_clear}">清空表单</span>
+                                    <i class="fa fa-rotate-left"></i> <span>清空表单</span>
                                 </a>
                                 <button type="submit" class="btn btn-app">
-                                    <i class="fa fa-check"></i> <span th:text="#{operation_submit}">提交</span>
+                                    <i class="fa fa-check"></i> <span>提交</span>
                                 </button>
                             </div>
                         </div>

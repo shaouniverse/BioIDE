@@ -85,7 +85,7 @@ public interface DatasetService {
      * @param ID 实体的id
      * @return org.big.entity.Dataset
      */
-    Dataset findbyID(int ID);
+    Dataset findbyID(String ID);
 
     /**
      *<b>根据dsabstraction查找一个实体</b>

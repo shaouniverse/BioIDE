@@ -43,15 +43,9 @@ public interface TeamRepository extends BaseRepository<Team, String> {
      * @param pageable 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Team>
      */
-    @Query(value = "select t from Team t" +
-            " where (" +
-            "t.name like %?1% " +
-            "or t.leader like %?1%)"
+    @Query(value = "select t from Team t where (t.name like %?1% or t.leader like %?1%)"
     )
-    Page<Team> searchInfo(
-            String findText,
-            Pageable pageable
-    );
+    Page<Team> searchInfo(String findText, Pageable pageable);
 
     /**
      *<b>带分页排序的条件查询(仅显示所属的团队)</b>
@@ -80,11 +74,7 @@ public interface TeamRepository extends BaseRepository<Team, String> {
             "t.name LIKE %?1% " +
             "OR u.userName LIKE %?1%)"
     )
-    Page<Object> searchInfoByUser(
-            String findText,
-            String user_id,
-            Pageable pageable
-    );
+    Page<Object> searchInfoByUser(String findText, String user_id, Pageable pageable);
 
     /**
      *<b>根据Team的name查询一个符合条件的Team</b>

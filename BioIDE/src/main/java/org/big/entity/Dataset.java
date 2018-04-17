@@ -21,7 +21,7 @@ public class Dataset implements Serializable {
 	@Id
 	private String id;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
 	private String creator;

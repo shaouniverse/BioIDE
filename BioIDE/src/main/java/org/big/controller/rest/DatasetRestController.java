@@ -29,6 +29,7 @@ public class DatasetRestController {
      */
     @RequestMapping("/list")
     public JSON DataSetList(HttpServletRequest request) {
+    	System.out.println(this.datasetService.findMybyInfo(request).toJSONString());
         return this.datasetService.findMybyInfo(request);
     }
     
@@ -51,22 +52,22 @@ public class DatasetRestController {
      * @param ids Media id序列，用"￥"分隔
      * @return boolean
      */
-    @RequestMapping(value="/removeMany/{ids}",method = {RequestMethod.GET})
-    public int RemoveManyDataset(@PathVariable String ids) {
-        try{
-            //获取id列表字符串
-            String [] idList;
-            idList = ids.split("￥");
-            int isRemove=0;
-            for(int i=0;i<idList.length;i++){
-                if(this.datasetService.removeOne(idList[i]))
-                    isRemove=isRemove+1;
-            }
-            return isRemove;
-        }catch(Exception e){
-            return -1;
-        }
-    }
+	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
+	public int RemoveManyDataset(@PathVariable String ids) {
+		try {
+			// 获取id列表字符串
+			String[] idList = ids.split("￥");
+			int isRemove = 0;
+			for (int i = 0; i < idList.length; i++) {
+				if (this.datasetService.removeOne(idList[i])){
+					isRemove = isRemove + 1;
+				}
+			}
+			return isRemove;
+		} catch (Exception e) {
+			return -1;
+		}
+	}
 
     /**
      *<b>删除单个Dataset</b>
@@ -75,9 +76,10 @@ public class DatasetRestController {
      * @param id Media id
      * @return boolean
      */
-    @RequestMapping(value="/remove/{id}",method = {RequestMethod.GET})
+    @RequestMapping(value="/remove/{id}",method = RequestMethod.GET)
     public boolean RemoveDataset(@PathVariable String id) {
-        try{
+    	try{
+    		System.out.println("Rsl:" + this.datasetService.removeOne(id));
             return this.datasetService.removeOne(id);
         }catch(Exception e){
             return false;

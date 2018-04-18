@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.big.common.QueryTool;
 import org.big.entity.Dataset;
+import org.big.entity.Team;
 import org.big.entity.User;
 import org.big.entity.UserDetail;
 import org.big.repository.DatasetRepository;
@@ -64,13 +65,8 @@ public class DatasetServiceImpl implements DatasetService {
                 	"<span class=\"fa fa-trash\"></span>" +
             	"</a>";
             row.put("select",thisSelect);
-//            row.put("user.id",thisList.get(i).getUser().getNickname());
-//            String coverimgPath=
-//                    "<img class=\"maxWidth400\" src=\""+thisList.get(i).getCoverimg()+"\" alt=\""+thisList.get(i).getCoverimg()+"\" />";
             row.put("dsname",thisList.get(i).getDsname());
             row.put("dsabstract",thisList.get(i).getDsabstract());
-//            row.put("num",thisList.get(i).getNum());
-//            row.put("coverimg",coverimgPath);
             String thisStatus="";
             switch(thisList.get(i).getStatus())
             {
@@ -90,18 +86,12 @@ public class DatasetServiceImpl implements DatasetService {
             row.put("status",thisStatus);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String addTime="";  	// 添加时间
-            // String updateTime="";	// 修改时间
             try {
                 addTime=formatter.format(thisPage.getContent().get(i).getCreatedDate());
             } catch (Exception e) {
             }
             
-            /*try {
-                updateTime=formatter.format(thisList.get(i).getDtimeupdate());
-            } catch (Exception e) {
-            }*/
             row.put("createdDate",addTime);
-            // row.put("dtimeupdate",updateTime);
             row.put("edit",thisEdit);
             rows.add(i,row);
         }
@@ -146,7 +136,7 @@ public class DatasetServiceImpl implements DatasetService {
             String thisSelect="";
             String thisEdit="";
             //判断是否为默认数据集
-           // if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
+            if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
                 thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
                 thisEdit=
                         "<a class=\"table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
@@ -155,7 +145,7 @@ public class DatasetServiceImpl implements DatasetService {
                         "<a class=\"table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
                         	"<span class=\"glyphicon glyphicon-remove\"></span>" +
                         "</a>";
-         //   }
+            }
             row.put("select",thisSelect);
             row.put("dsname","<a href=\"console/dataset/show/"+thisPage.getContent().get(i).getId()+"\">"+thisPage.getContent().get(i).getDsname()+"</a>");
             row.put("dsabstract",thisPage.getContent().get(i).getDsabstract());
@@ -182,7 +172,47 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public JSON findMybySelect(HttpServletRequest request) {
-		return null;
+		String findText = request.getParameter("find");
+		if (findText == null || findText.length() <= 0) {
+			findText = "";
+		}
+		int findPage = 1;
+		try {
+			findPage = Integer.valueOf(request.getParameter("page"));
+		} catch (Exception e) {
+		}
+		int limit_serch = 30;
+		int offset_serch = (findPage - 1) * 30;
+		String sort = "dtime";
+		String order = "asc";
+		JSONObject thisSelect = new JSONObject();
+		JSONArray items = new JSONArray();
+		List<Dataset> thisList = new ArrayList<>();
+		// 获取当前登录用户
+		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Page<Dataset> thisPage = this.datasetRepository.searchMyDsname(findText, thisUser.getId(), QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
+		thisSelect.put("total_count", thisPage.getTotalElements());
+		Boolean incompleteResulte = true;
+		if ((thisPage.getTotalElements() / 30) > findPage)
+			incompleteResulte = false;
+		thisSelect.put("incompleteResulte", incompleteResulte);
+		thisList = thisPage.getContent();
+		if (findPage == 1) {
+			JSONObject row = new JSONObject();
+			row.put("id", "addNew");
+			row.put("full_name", "新建一个数据集");
+			items.add(row);
+		}
+		for (int i = 0; i < thisList.size(); i++) {
+			JSONObject row = new JSONObject();
+			String thisId = thisList.get(i).getId();
+			String thisName = thisList.get(i).getDsname();
+			row.put("id", thisId);
+			row.put("full_name", thisName);
+			items.add(row);
+		}
+		thisSelect.put("items", items);
+		return thisSelect;
 	}
 
 	@Override
@@ -211,17 +241,25 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public Boolean removeOne(String ID) {
-		System.out.println("ServiceImplID:" + ID);
-		Dataset thisDataset = datasetRepository.findOneById(ID);
-		System.out.println("UserID:" + thisDataset.getCreator() + "\t" + "DatasetID:" + thisDataset.getId() + "\t" + "TeamID:" + thisDataset.getTeam().getId());
-		thisDataset.setStatus(0);
-		this.datasetRepository.save(thisDataset);
-		return true;
+		Dataset thisDataset=datasetRepository.findOneById(ID);
+		// System.out.println("ServiceImplID:" + ID);
+        if(!thisDataset.getDsabstract().equals("Default")){ // 判断当前数据集 -- 不是默认数据集 -- 则执行if语句 -- 逻辑作废当前dataset
+            thisDataset.setStatus(0);
+            this.datasetRepository.save(thisDataset);
+            // System.out.println("UserID:" + thisDataset.getCreator() + "\t" + "DatasetID:" + thisDataset.getId() + "\t" + "TeamID:" + thisDataset.getTeam().getId());
+            return true;
+        }
+        return false;
 	}
 
 	@Override
-	public Boolean deleteOne(HttpServletRequest request, int ID) {
-		return null;
+	public Boolean deleteOne(HttpServletRequest request, String ID) {
+		Dataset thisDataset=datasetRepository.findOneById(ID);
+        if(!thisDataset.getDsabstract().equals("Default")){ // 判断当前数据集 -- 不是默认数据集 -- 则执行if语句 -- 物理删除当前dataset
+            this.datasetRepository.delete(thisDataset);
+            return true;
+        }
+        return false;
 	}
 
 	@Override
@@ -230,8 +268,8 @@ public class DatasetServiceImpl implements DatasetService {
 	}
 
 	@Override
-	public Dataset findOneByDsabstractAndUser(String dsabstract, User thisUser) {
-		return null;
+	public Dataset findOneByDsabstractAndTeam(String dsabstraction, Team thisTeam) {
+		return this.datasetRepository.findOneByDsabstractAndTeam(dsabstraction, thisTeam);
 	}
 
 	@Override
@@ -243,7 +281,6 @@ public class DatasetServiceImpl implements DatasetService {
 	public JSON newOne(Dataset thisDataset) {
 		JSONObject thisResult=new JSONObject();
         try{
-            // thisDataset.setDtime(new Timestamp(System.currentTimeMillis()));
             thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
             thisDataset.setStatus((byte) 1);
             String mark=UUID.randomUUID().toString();

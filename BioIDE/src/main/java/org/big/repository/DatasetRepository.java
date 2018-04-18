@@ -1,6 +1,7 @@
 package org.big.repository;
 
 import org.big.entity.Dataset;
+import org.big.entity.Team;
 import org.big.entity.User;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
@@ -68,6 +69,16 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      */
     Dataset findOneById(String id);
 
+    /**
+     *<b>根据Team的name查询一个符合条件的Team</b>
+     *<p> 根据Team的name查询一个符合条件的Team</p>
+     * @author BINZI
+     * @param dsabstraction 备注
+     * @param thisUser 当前用户
+     * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
+     */
+    Dataset findOneByDsabstractAndTeam(String dsabstract,Team thisTeam);
+    
     /**
      *<b>根据Dataset的Mark查询一个符合条件的Dataset</b>
      *<p> 根据Dataset的Mark查询一个符合条件的Dataset</p>

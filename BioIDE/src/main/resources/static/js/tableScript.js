@@ -26,7 +26,7 @@ function removeThisObject(id,type) {
                 alert("Num1:" + data);
                 alert("Num2:" + status);
             	if(status){
-                    if(true){
+                    if(data){
                         layer.msg('删除成功',
                             {
                                 time: 500, //1.5s后自动关闭
@@ -169,7 +169,6 @@ function removeSelectObject(type){
                 }
                 else{
                     ids=ids+"￥"+checkId;
-                    alert(ids);
                 }
             });
             $.ajax({

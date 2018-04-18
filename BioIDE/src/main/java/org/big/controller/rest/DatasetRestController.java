@@ -29,7 +29,6 @@ public class DatasetRestController {
      */
     @RequestMapping("/list")
     public JSON DataSetList(HttpServletRequest request) {
-    	System.out.println(this.datasetService.findMybyInfo(request).toJSONString());
         return this.datasetService.findMybyInfo(request);
     }
     
@@ -76,11 +75,14 @@ public class DatasetRestController {
      * @param id Media id
      * @return boolean
      */
-    @RequestMapping(value="/remove/{id}",method = RequestMethod.GET)
+	// /console/dataset/rest/remove/id
+    @RequestMapping(value="/remove/{id}", method = RequestMethod.GET)
     public boolean RemoveDataset(@PathVariable String id) {
+    	System.out.println("REST:" + id);
     	try{
-    		System.out.println("Rsl:" + this.datasetService.removeOne(id));
-            return this.datasetService.removeOne(id);
+    		// System.out.println("Rsl:" + this.datasetService.removeOne(id));
+    		Boolean rsl = this.datasetService.removeOne(id);
+            return rsl;
         }catch(Exception e){
             return false;
         }

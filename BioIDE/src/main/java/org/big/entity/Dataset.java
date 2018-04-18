@@ -40,7 +40,7 @@ public class Dataset implements Serializable {
 	private Date synchdate;
 
 	private int synchstatus;
-
+	
 	// bi-directional many-to-one association to Team
 	@ManyToOne
 	private Team team;

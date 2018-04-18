@@ -44,7 +44,7 @@
             </h3>
             <ol class="breadcrumb">
                 <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span>我的数据</span></a></li>
-                <li><a th:href="@{/user/dataset}" href="user"><i class="fa fa-cubes"></i> <span>数据集管理</span></a></li>
+                <li><a th:href="@{/console/dataset}" href="/"><i class="fa fa-cubes"></i> <span>数据集管理</span></a></li>
                 <li class="active"><i class="fa fa-edit"></i> <span>数据集</span></li>
             </ol>
         </section>
@@ -56,32 +56,28 @@
             <div class="col-lg-4 col-md-4">
                 <dl class="dl-horizontal">
                     <dt>数据集名称:</dt>
-                    <dd><span></span></dd>
-                    <dt>数据集:</dt>
-                    <dd><span></span></dd>
-                    <!-- 
-                    <dt th:text="#{observation_records}">数据集:</dt>
-                    <dd><span th:text="${totalRecord}"></span><small th:if="${#locale.getLanguage().equals('zh')}">条</small></dd>
-                     -->
-                    <dt>时间:</dt>
+                    <dd><span th:text="${thisDataset.dsname}"></span></dd>
+                    <dt>数据集描述:</dt>
+                    <dd><span th:text="${thisDataset.dsabstract}"></span></dd>
+                    <dt>创建时间:</dt>
                     <dd><span th:text="${#dates.format(thisDataset.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span></dd>
                 </dl>
             </div>
-<!--             <div class="col-lg-8 col-md-8">
-                <div id="fh5co-main">
+             <div class="col-lg-8 col-md-8">
+                 <div id="fh5co-main">
                     <div id="fh5co-board" data-columns>
                         <div class="item">
                             <div class="animate-box">
-                                <a th:href="@{/user/record/addNew/}+${thisDataset.id}" th:title="'添加新的'">
+                                <a th:href="@{/user/record/addNew/} + ${thisDataset.id}" th:title="'添加新的'">
                                     <img th:src="@{/img/add.jpg}" style="width: 100%;" alt="">
                                 </a>
                             </div>
                             <div class="fh5co-desc">
-                                <a th:href="@{/user/record/addNew/}+${thisDataset.id}">
+                                <a th:href="@{/user/record/addNew/} + ${thisDataset.id}">
                                     <span>添加</span>
                                 </a>
                             </div>
-                        </div> -->
+                        </div>
                         
 					<!--                        
 						<div class="item" th:each="record : ${recordList}">
@@ -106,32 +102,32 @@
                 </div>
             </div>
         </section>
-    <div>
+   <!--  <div>
         <nav aria-label="Page navigation" style="text-align: center">
             <ul class="pagination">
                 <li th:if="${thisPage >= 30}">
-                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)-30}" aria-label="Previous">
+                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)-30}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li th:if="${(totalRecord/30)<5}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence(0,((totalRecord-1)/30))}">
-                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
+                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
                 </li>
                 <li th:if="${(totalRecord/30)>=5 and (thisPage)<(30*(totalRecord/30-4))}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence((thisPage/30),(thisPage/30)+4)}">
-                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
+                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
                 </li>
                 <li th:if="${(totalRecord/30)>=5 and (thisPage)>=(30*(totalRecord/30-4))}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence(((totalRecord-1)/30)-4,((totalRecord-1)/30))}">
-                    <a th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
+                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
                 </li>
 
                 <li th:if="${thisPage < (totalRecord-30)}">
-                    <a  th:href="@{/user/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)+30}" aria-label="Next">
+                    <a  th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)+30}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
-    </div>
+    </div> -->
 </section>
 </div>
 <footer>

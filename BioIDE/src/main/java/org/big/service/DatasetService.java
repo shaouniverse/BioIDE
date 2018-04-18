@@ -1,6 +1,7 @@
 package org.big.service;
 import com.alibaba.fastjson.JSON;
 import org.big.entity.Dataset;
+import org.big.entity.Team;
 import org.big.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,8 +62,8 @@ public interface DatasetService {
     void addOne(Dataset thisDataset);
 
     /**
-     *<b>根据id删除一个实体</b>
-     *<p> 据id删除一个实体</p>
+     *<b>根据id逻辑删除一个实体</b>
+     *<p> 据id逻辑删除一个实体</p>
      * @author BINZI
      * @param ID 实体的id
      * @return void
@@ -76,7 +77,7 @@ public interface DatasetService {
      * @param ID 实体的id
      * @return void
      */
-    Boolean deleteOne(HttpServletRequest request,int ID);
+    Boolean deleteOne(HttpServletRequest request,String ID);
 
     /**
      *<b>根据id查找一个实体</b>
@@ -95,7 +96,7 @@ public interface DatasetService {
      * @param thisUser
      * @return org.big.entity.Dataset
      */
-    Dataset findOneByDsabstractAndUser(String dsabstraction,User thisUser);
+    Dataset findOneByDsabstractAndTeam(String dsabstraction,Team thisTeam);
 
     /**
      *<b>查找默认的那个实体</b>

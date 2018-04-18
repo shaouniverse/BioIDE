@@ -18,7 +18,9 @@ import org.big.common.BuildEntity;
 import org.big.common.IdentityVote;
 import org.big.common.MD5Utils;
 import org.big.common.QueryTool;
+import org.big.entity.Dataset;
 import org.big.entity.User;
+import org.big.repository.DatasetRepository;
 import org.big.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +51,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private TeamService teamRepository;
+    private TeamService teamService;
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
@@ -58,6 +60,8 @@ public class UserServiceImpl implements UserService{
     private String fromEmail;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private DatasetRepository datasetRepository;
     
     @Override
     @Transactional
@@ -258,7 +262,7 @@ public class UserServiceImpl implements UserService{
             row.put("email",thisList.get(i).getEmail());
             // -- 团队角色 -- 
             String role="成员";
-            if(this.teamRepository.findbyID(teamId).getLeader().equals(thisList.get(i).getId())){
+            if(this.teamService.findbyID(teamId).getLeader().equals(thisList.get(i).getId())){
                 role="<span class=\"badge bg-light-blue\">负责人</span>";
             }
             row.put("role",role);
@@ -551,6 +555,18 @@ public class UserServiceImpl implements UserService{
                 //可正常激活
                 if(thisUser.getMark().equals(mark)){
                     //设置默认数据集
+                	Dataset newDataset= new Dataset();
+                	newDataset.setId(UUID.randomUUID().toString());
+                    newDataset.setCreator(thisUser.getId());
+                    newDataset.setDsname(thisUser.getUserName());
+                    newDataset.setDsabstract("Default");
+                    newDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+                    newDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));
+                    newDataset.setSynchstatus(0);
+                    newDataset.setStatus(1);
+                    newDataset.setMark(UUID.randomUUID().toString());
+         //           newDataset.setTeam(this.teamService.findbyID(ID));
+                    datasetRepository.save(newDataset);
                     //设置默认观测记录集
                     this.changeStatus(thisUser,1);
                     if(thisLanguage.equals("zh"))

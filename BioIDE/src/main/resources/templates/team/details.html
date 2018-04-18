@@ -101,7 +101,7 @@
 							           </div>
 							           <!-- box-body -->
 							           <div class="box-body">
-							               <a class="btn btn-app" th:href="@{/console/dataset/add}" href="/">
+							               <a class="btn btn-app" th:href="@{/console/dataset/add/} + ${thisTeam.id}" href="/">
 							                   <i class="fa fa-plus"></i> <span>ADD</span>
 							               </a>
 							               <a class="btn btn-app" onclick="editSelectObject('dataset');">

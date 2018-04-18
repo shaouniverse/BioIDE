@@ -9,7 +9,6 @@ import org.big.entity.Dataset;
 import org.big.service.DatasetService;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,9 +56,25 @@ public class DatasetController {
 	public String Add(Model model) {
 		Dataset thisDataset = new Dataset();
 		model.addAttribute("thisDataset", thisDataset);
+		System.out.println("无Team");
 		return "dataset/add";
 	}
-
+	
+	/**
+     *<b>在指定用户组下添加Dataset</b>
+     *<p> 添加新的Dataset的编辑的页面</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
+	@RequestMapping(value = "/add/{id}", method = { RequestMethod.GET })
+	public String AddDatasetForTeam(Model model, @PathVariable String id) {
+		Dataset thisDataset = new Dataset();
+		thisDataset.setTeam(this.teamService.findbyID(id));
+		model.addAttribute("thisDataset", thisDataset);
+		System.out.println("有Team");
+		return "dataset/add";
+	}
     /**
      *<b>编辑Dataset</b>
      *<p> 对已有的Dataset进行编辑的页面</p>
@@ -87,10 +102,6 @@ public class DatasetController {
 	public String Show(Model model, @PathVariable String id, HttpServletRequest request) {
 		Dataset thisDataset = this.datasetService.findbyID(id);
 		model.addAttribute("thisDataset", thisDataset);
-		// Page<Record>
-		// recordList=recordService.searchInfoByDataset(id,request);
-		// model.addAttribute("recordList", recordList);
-		// model.addAttribute("totalRecord", recordList.getTotalElements());
 		int offset_serch = 0;
 		try {
 			offset_serch = Integer.parseInt(request.getParameter("offset"));
@@ -108,7 +119,7 @@ public class DatasetController {
      * @param thisDataset 传入的Dataset实体
      * @return java.lang.String
      */
-	@RequestMapping(value = "/new", method = { RequestMethod.POST })
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String Add(@ModelAttribute("thisDataset") @Valid Dataset thisDataset, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
@@ -120,7 +131,8 @@ public class DatasetController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "dataset/add";
 		}
-		thisDataset.setTeam(teamService.findbyID("d7dbb28a-cf78-438e-b56a-0d174f5bda34"));
+		System.out.println("目标TeamID:" + thisDataset.getTeam().getId());
+		//thisDataset.setTeam(teamService.findbyID("d7dbb28a-cf78-438e-b56a-0d174f5bda34"));
 		this.datasetService.addOne(thisDataset);
 		return "redirect:/console/dataset";
 	}
@@ -155,9 +167,9 @@ public class DatasetController {
      * @param id 传入的Dataset实体的id
      * @return java.lang.String
      */
-/*    @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
+    @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
     public String Remove(@PathVariable String id) {
         this.datasetService.removeOne(id);
         return "index";
-    }*/
+    }
 }

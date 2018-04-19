@@ -12,9 +12,9 @@ import javax.transaction.Transactional;
 import org.big.common.QueryTool;
 import org.big.entity.Dataset;
 import org.big.entity.Team;
-import org.big.entity.User;
 import org.big.entity.UserDetail;
 import org.big.repository.DatasetRepository;
+import org.big.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +28,8 @@ import com.alibaba.fastjson.JSONObject;
 public class DatasetServiceImpl implements DatasetService {
 	@Autowired
 	private DatasetRepository datasetRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Override
 	public JSON findbyInfo(HttpServletRequest request) {
@@ -67,6 +69,7 @@ public class DatasetServiceImpl implements DatasetService {
             row.put("select",thisSelect);
             row.put("dsname",thisList.get(i).getDsname());
             row.put("dsabstract",thisList.get(i).getDsabstract());
+            row.put("creator",thisList.get(i).getCreator());
             String thisStatus="";
             switch(thisList.get(i).getStatus())
             {
@@ -151,17 +154,11 @@ public class DatasetServiceImpl implements DatasetService {
             row.put("dsabstract",thisPage.getContent().get(i).getDsabstract());
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String addTime="";
-            // String updateTiDme="";
             try {
                 addTime=formatter.format(thisPage.getContent().get(i).getCreatedDate());
             } catch (Exception e) {
             }
-           /* try {
-                updateTime=formatter.format(thisPage.getContent().get(i).getDtimeupdate());
-            } catch (Exception e) {
-            }*/
             row.put("createdDate",addTime);
-            // row.put("dtimeupdate",updateTime);
             row.put("edit",thisEdit);
             rows.add(i,row);
         }
@@ -242,7 +239,7 @@ public class DatasetServiceImpl implements DatasetService {
 	@Override
 	public Boolean removeOne(String ID) {
 		Dataset thisDataset=datasetRepository.findOneById(ID);
-		// System.out.println("ServiceImplID:" + ID);
+//		System.out.println("ServiceImplID:" + ID);
         if(!thisDataset.getDsabstract().equals("Default")){ // 判断当前数据集 -- 不是默认数据集 -- 则执行if语句 -- 逻辑作废当前dataset
             thisDataset.setStatus(0);
             this.datasetRepository.save(thisDataset);

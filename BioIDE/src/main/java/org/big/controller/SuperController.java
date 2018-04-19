@@ -1,9 +1,15 @@
 package org.big.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.big.common.MD5Utils;
+import org.big.entity.Dataset;
 import org.big.entity.Message;
 import org.big.entity.Team;
 import org.big.entity.User;
+import org.big.service.DatasetService;
 import org.big.service.MessageService;
 import org.big.service.TeamService;
 import org.big.service.UserService;
@@ -11,6 +17,8 @@ import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +46,8 @@ public class SuperController {
     private MessageService messageService;
     @Autowired
     private UserTeamService userTeamService;
+    @Autowired
+    private DatasetService datasetService;
     /********************** Team管理页 ***************************/
     /**
      *<b>Team管理页</b>
@@ -205,4 +215,87 @@ public class SuperController {
         model.addAttribute("thisSender", "From:"+thisSender.getNickname());
         return "message/read_admin";
     }
+    /********************** Dataset管理页 ***************************/
+    /**
+     *<b>User管理页</b>
+     *<p> 包含所有User的信息列表、操作选项</p>
+     * @author WangTianshan (王天山)
+     * @param
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/dataset", method = RequestMethod.GET)
+    public String ViewDataset() {
+        return "dataset/index_admin";
+    }
+    
+    /**
+     *<b>添加Dataset</b>
+     *<p> 添加新的Dataset的编辑的页面</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
+	@RequestMapping(value = "/dataset/add", method = RequestMethod.GET)
+	public String Add(Model model) {
+		Dataset thisDataset = new Dataset();
+		model.addAttribute("thisDataset", thisDataset);
+		System.out.println("无Team");
+		return "dataset/add";
+	}
+    
+    /**
+     *<b>在指定用户组下添加Dataset</b>
+     *<p> 添加新的Dataset的编辑的页面</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */ 
+    // /super/dataset/add/TeamID
+	@RequestMapping(value = "/dataset/add/{id}", method = { RequestMethod.GET })
+	public String AddDatasetForTeam(Model model, @PathVariable String id) {
+		Dataset thisDataset = new Dataset();
+		thisDataset.setTeam(this.teamService.findbyID(id));
+		model.addAttribute("thisDataset", thisDataset);
+		System.out.println("有Team");
+		return "dataset/add";
+	}
+	
+	/**
+     *<b>编辑Dataset</b>
+     *<p> 对已有的Dataset进行编辑的页面</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @param id 被编辑Dataset实体id
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/dataset/edit/{id}", method = {RequestMethod.GET})
+    public String EditDataset(Model model, @PathVariable String id) {
+    	Dataset thisDataset = this.datasetService.findbyID(id);
+		model.addAttribute("thisDataset", thisDataset);
+		return "dataset/edit";
+    }
+
+    /**
+     *<b>保存Dataset</b>
+     *<p> 将传入的Dataset实体保存</p>
+     * @author BINZI
+     * @param thisDataset 传入的Dataset实体
+     * @return java.lang.String
+     */
+	@RequestMapping(value = "/dataset/save", method = { RequestMethod.POST })
+	public String Save(@ModelAttribute("thisDataset") @Valid Dataset thisDataset, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			String errorMsg = "";
+			for (ObjectError error : list) {
+				errorMsg = errorMsg + error.getDefaultMessage() + ";";
+			}
+			model.addAttribute("thisDataset", thisDataset);
+			model.addAttribute("errorMsg", errorMsg);
+			return "dataset/edit";
+		}
+		this.datasetService.saveOne(thisDataset);
+		return "redirect:/console/dataset";
+	}
+
 }

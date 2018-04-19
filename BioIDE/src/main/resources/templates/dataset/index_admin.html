@@ -4,7 +4,7 @@
     Title:控制台首页
     Description：控制台首页
     Author：BINZI
-    Created date: 2017/9/15 21:35
+    Created date: 2018/04/19 10:52
     Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
     Version: Html5
  -->
@@ -17,12 +17,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
     <!-- 引入css -->
-    <!-- Select2 4.0.3 -->
-    <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}" type="text/css"/>
-    <!-- basicsCss -->
     <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
-    <!-- Bootstrap-table 1.10.1 -->
-    <link rel="stylesheet" th:href="@{/plugins/bootstrap-table/css/bootstrap-table.css}" type="text/css"/>
 </head>
 <body class="hold-transition skin-dark fixed sidebar-mini">
 <!-- 主界面区 -->
@@ -33,8 +28,6 @@
     </header>
     <!-- 引入左侧用户操作菜单-->
     <th:block th:replace="pageFrame/basicsMenu :: copy"></th:block>
-    <!-- 引入logoutModal -->
-    <th:block th:if="${not #lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}" th:replace="user/logoutModal :: copy"></th:block>
     <!-- 显示区 -->
     <div class="content-wrapper">
         <!-- 内容区 -->
@@ -62,6 +55,9 @@
                 </div>
                 <!-- box-body -->
                 <div class="box-body">
+                	<a class="btn btn-app" th:href="@{/super/dataset/add}" href="/">
+                        <i class="fa fa-plus"></i> <span>ADD</span>
+                    </a>
                     <a class="btn btn-app" onclick="removeSelectObject('dataset');">
                         <i class="fa fa-user-times"></i> 批量删除
                     </a>
@@ -74,6 +70,7 @@
             <div class="table table-responsive">
                 <table
                         id="results_table"
+                        data-locale="zh-CN"
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
                         th:attr="data-url=@{/super/dataset/rest/list}"
@@ -85,17 +82,15 @@
                         data-show-toggle="true"
                         data-toolbar="#toolbar"
                         data-show-export="false"
-                        data-show-refresh="true">
+                        data-show-refresh="true"
+						data-export-types="['excel', 'txt']">
                     <thead>
                     <tr>
                         <th data-field="select" data-align="center" data-sortable="false"></th>
                         <th data-field="dsname" data-align="center" data-sortable="true">数据集名称</th>
                         <th data-field="dsabstract" data-align="center" data-sortable="false">描述</th>
-                        <th data-field="num" data-align="center" data-sortable="true">数量</th>
-                        <th data-field="coverimg" data-align="center" data-sortable="true">封面</th>
-                        <th data-field="userByUserid.id" data-align="center" data-sortable="true">所属用户</th>
+                        <th data-field="creator" data-align="center" data-sortable="true">所属用户</th>
                         <th data-field="status" data-align="center" data-sortable="true">状态</th>
-                        <th data-field="dtime" data-align="center" data-sortable="true">建立时间</th>
                         <th data-field="createdDate" data-align="center" data-sortable="true">更新时间</th>
                         <th data-field="edit" data-align="center" data-sortable="false">操作</th>
                     </tr>

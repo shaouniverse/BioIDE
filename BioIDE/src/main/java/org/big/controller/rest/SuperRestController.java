@@ -1,6 +1,8 @@
 package org.big.controller.rest;
 
 import com.alibaba.fastjson.JSON;
+
+import org.big.service.DatasetService;
 import org.big.service.MessageService;
 import org.big.service.TeamService;
 import org.big.service.UserService;
@@ -27,14 +29,15 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/super")
 public class SuperRestController {
-
+	@Autowired
+	private DatasetService datasetService;
     @Autowired
     private TeamService teamService;
     @Autowired
     private UserService userService;
     @Autowired
     private MessageService messageService;
-
+    
     /**
      *<b>Team列表</b>
      *<p> 所有Team的检索列表</p>
@@ -147,5 +150,58 @@ public class SuperRestController {
     public JSON MessageList(HttpServletRequest request) {
         return this.messageService.findbyInfo(request);
     }
+// -------------------------------------------------------------------------------
+    /**
+     *<b>Record列表</b>
+     *<p> 所有Dataset的检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+    @RequestMapping("/dataset/rest/list")
+    public JSON DatasetList(HttpServletRequest request) {
+        return this.datasetService.findbyInfo(request);
+    }
 
+    /**
+     *<b>删除多个Dataset</b>
+     *<p> 根据Dataset id序列一次性删除多个</p>
+     * @author BINZI
+     * @param ids Media id序列，用"￥"分隔
+     * @return boolean
+     */
+    @RequestMapping(value="/dataset/rest/removeMany/{ids}",method = {RequestMethod.GET})
+    public int RemoveManyDataset(@PathVariable String ids) {
+        System.out.println(ids);
+    	try{
+            //获取id列表字符串
+            String [] idList;
+            idList = ids.split("￥");
+            int isRemove=0;
+            for(int i=0;i<idList.length;i++){
+                if(this.datasetService.removeOne(idList[i])) { // false -- 走不到该方法
+                    isRemove=isRemove+1;
+                }
+            }
+            return isRemove;
+        }catch(Exception e){
+            return -1;
+        }
+    }
+
+    /**
+     *<b>删除单个Dataset</b>
+     *<p> 根据Dataset id删除单个</p>
+     * @author BINZI
+     * @param id Media id
+     * @return boolean
+     */
+    @RequestMapping(value="/dataset/rest/remove/{id}",method = {RequestMethod.GET})
+    public boolean RemoveDataset(@PathVariable String id) {
+        try{
+            return this.datasetService.removeOne(id);
+        }catch(Exception e){
+            return false;
+        }
+    }
 }

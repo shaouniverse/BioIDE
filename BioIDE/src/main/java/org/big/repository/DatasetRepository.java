@@ -44,7 +44,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      */
     // 根据dsname & dsabstract & createdDate & user.id & status 模糊 | 排序 | 条件 | 分页查询
     @Query(value = "select d from Dataset d" +
-            " where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%) and d.creator = ?2 and d.status = 1")
+            " where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%) and d.creator = ?2 and d.status = 1 and d.team = NUll")
     Page<Dataset> searchMyInfo(String findText, String userId, Pageable pageable);
 
     /**

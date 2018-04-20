@@ -133,12 +133,21 @@ public class DatasetServiceImpl implements DatasetService {
         
         thisList=thisPage.getContent();
         thisTable.put("total",thisPage.getTotalElements());
-
+        
         for(int i=0;i<thisList.size();i++){
-            JSONObject row= new JSONObject();
-            String thisSelect="";
-            String thisEdit="";
-            //判断是否为默认数据集
+        	JSONObject row= new JSONObject();
+        	String thisSelect="";
+        	String thisEdit="";
+        	// 判断teamId是否为空 -- 为空 -- 个人Dataset(列表显示：默认 + 个人创建)
+        	if (null == thisList.get(i).getTeam() || "".equals(thisList.get(i).getTeam())) {
+        		System.out.println("Team为空");
+			}else {
+				System.out.println("TeamId:" + thisList.get(i).getTeam().getId());
+			}
+        	
+            // 判断是否为默认数据集 -- 是默认数据集 -- 无法删改
+        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- false 是默认数据集
+        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- true 不是默认数据集
             if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
                 thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
                 thisEdit=

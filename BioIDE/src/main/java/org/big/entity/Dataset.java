@@ -48,6 +48,13 @@ public class Dataset implements Serializable {
 	public Dataset() {
 	}
 
+	@Override
+	public String toString() {
+		return "Dataset [id=" + id + ", createdDate=" + createdDate + ", creator=" + creator + ", dsabstract="
+				+ dsabstract + ", dsname=" + dsname + ", lisenceid=" + lisenceid + ", mark=" + mark + ", status="
+				+ status + ", synchdate=" + synchdate + ", synchstatus=" + synchstatus + ", team=" + team + "]";
+	}
+
 
 
 	public String getId() {

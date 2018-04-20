@@ -52,7 +52,7 @@ public class DatasetController {
      * @param model 初始化模型
      * @return java.lang.String
      */
-	@RequestMapping(value = "/add", method = { RequestMethod.GET })
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String Add(Model model) {
 		Dataset thisDataset = new Dataset();
 		model.addAttribute("thisDataset", thisDataset);
@@ -131,8 +131,10 @@ public class DatasetController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "dataset/add";
 		}
-		System.out.println("目标TeamID:" + thisDataset.getTeam().getId());
-		//thisDataset.setTeam(teamService.findbyID("d7dbb28a-cf78-438e-b56a-0d174f5bda34"));
+		//System.out.println("目标TeamID:" + );
+/*		if (null != thisDataset.getTeam() || !"".equals(thisDataset.getTeam())) {
+			thisDataset.setTeam(teamService.findbyID(thisDataset.getTeam().getId()));
+		}*/
 		this.datasetService.addOne(thisDataset);
 		return "redirect:/console/dataset";
 	}

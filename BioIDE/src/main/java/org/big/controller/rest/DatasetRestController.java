@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.big.entity.Dataset;
 import org.big.service.DatasetService;
+import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import com.alibaba.fastjson.JSON;
 public class DatasetRestController {
 	@Autowired
     private DatasetService datasetService;
+	@Autowired
+	private TeamService teamService;
 
     /**
      *<b>Dataset列表</b>
@@ -30,6 +33,11 @@ public class DatasetRestController {
     @RequestMapping("/list")
     public JSON DataSetList(HttpServletRequest request) {
         return this.datasetService.findMybyInfo(request);
+    }
+    
+    @RequestMapping("/list/{id}")
+    public JSON DataSetTeamList(HttpServletRequest request, @PathVariable String id) {
+    	return this.datasetService.findMyTeamDatasetbyTId(request, id);
     }
     
     /**

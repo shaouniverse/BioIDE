@@ -1,6 +1,8 @@
 package org.big.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -21,8 +23,7 @@ public class Dataset implements Serializable {
 	@Id
 	private String id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+	private Timestamp createdDate;
 
 	private String creator;
 
@@ -75,7 +76,7 @@ public class Dataset implements Serializable {
 
 
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 

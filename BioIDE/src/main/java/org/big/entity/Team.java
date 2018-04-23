@@ -25,7 +25,13 @@ public class Team {
 	private String leader;
 	private Timestamp adddate;
 	private String note;
-	/*private List<User> users;*/
+
+	@Override
+	public String toString() {
+		return "Team [id=" + id + ", name=" + name + ", leader=" + leader + ", adddate=" + adddate + ", note=" + note
+				+ "]";
+	}
+
 	/** 保留默认无参构造 */
 	public Team() {
 	}
@@ -88,15 +94,6 @@ public class Team {
 		this.note = note;
 	}
 	
-/*	@ManyToMany(mappedBy = "teams")*/
-/*	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}*/
-	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -110,8 +107,6 @@ public class Team {
 		if (name != null ? !name.equals(team.name) : team.name != null) return false;
 		if (leader != null ? !leader.equals(team.leader) : team.leader != null) return false;
 		if (adddate != null ? !adddate.equals(team.adddate) : team.adddate != null) return false;
-		//if (datasets != null ? !datasets.equals(team.datasets) : team.datasets != null) return false;
-		/*if (users != null ? !users.equals(team.users) : team.users != null) return false;*/
 		return true;
 	}
 
@@ -121,8 +116,6 @@ public class Team {
 		result = 31 * result + (name != null ? name.hashCode() : 0);
 		result = 31 * result + (leader != null ? leader.hashCode() : 0);
 		result = 31 * result + (adddate != null ? adddate.hashCode() : 0);
-		//result = 31 * result + (datasets != null ? datasets.hashCode() : 0);
-		/*result = 31 * result + ((users != null) ? users.hashCode() : 0);*/
 		return result;
 	}
 

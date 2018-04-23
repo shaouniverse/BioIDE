@@ -56,7 +56,6 @@ public class DatasetController {
 	public String Add(Model model) {
 		Dataset thisDataset = new Dataset();
 		model.addAttribute("thisDataset", thisDataset);
-		System.out.println("无Team");
 		return "dataset/add";
 	}
 	
@@ -72,7 +71,6 @@ public class DatasetController {
 		Dataset thisDataset = new Dataset();
 		thisDataset.setTeam(this.teamService.findbyID(id));
 		model.addAttribute("thisDataset", thisDataset);
-		System.out.println("有Team");
 		return "dataset/add";
 	}
     /**
@@ -120,7 +118,7 @@ public class DatasetController {
      * @return java.lang.String
      */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public String Add(@ModelAttribute("thisDataset") @Valid Dataset thisDataset, BindingResult result, Model model) {
+	public String Add(@ModelAttribute("thisDataset") @Valid Dataset thisDataset, BindingResult result, Model model, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
 			String errorMsg = "";
@@ -131,12 +129,14 @@ public class DatasetController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "dataset/add";
 		}
-		//System.out.println("目标TeamID:" + );
-/*		if (null != thisDataset.getTeam() || !"".equals(thisDataset.getTeam())) {
-			thisDataset.setTeam(teamService.findbyID(thisDataset.getTeam().getId()));
-		}*/
+		String base_url = request.getParameter("base_url");
+		if (base_url.contains("add/")) {
+			base_url = "http://localhost:8081/console/team/details/" + base_url.substring(42); // 用户组添加成功后 -- 目标URL
+		} else {
+			base_url = "http://localhost:8081/console/dataset";								   // 个人用户添加成功后 -- 目标URL
+		}
 		this.datasetService.addOne(thisDataset);
-		return "redirect:/console/dataset";
+		return "redirect:" + base_url;
 	}
     
     /**

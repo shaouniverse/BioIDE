@@ -49,6 +49,8 @@
         <section class="container content">
             <div class="well">
                 <form id="thisForm" class="form-horizontal" th:action="@{/console/dataset/new}" method="post" th:object="${thisDataset}">
+                    <div>
+                    </div>
                     <!-- 引入form -->
                     <th:block th:replace="dataset/form :: copy"></th:block>
                     <p></p>
@@ -112,7 +114,10 @@
     //前端验证错误提示
     $(document).ready(function() {
         //获取host
-        $("#base_url").val(window.location.host);
+        // http://localhost:8081/console/dataset/add
+	    // http://localhost:8081/console/dataset/add/541dbb01-0ab5-434e-a9f4-1a3df5351307
+		$("#base_url").val(window.location.href);
+	    // $("#base_url").val(window.location.host);
         $('#thisForm').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {

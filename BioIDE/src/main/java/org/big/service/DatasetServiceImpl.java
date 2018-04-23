@@ -138,16 +138,9 @@ public class DatasetServiceImpl implements DatasetService {
         	JSONObject row= new JSONObject();
         	String thisSelect="";
         	String thisEdit="";
-        	// 判断teamId是否为空 -- 为空 -- 个人Dataset(列表显示：默认 + 个人创建)
-        	if (null == thisList.get(i).getTeam() || "".equals(thisList.get(i).getTeam())) {
-        		System.out.println("Team为空");
-			}else {
-				System.out.println("TeamId:" + thisList.get(i).getTeam().getId());
-			}
-        	
             // 判断是否为默认数据集 -- 是默认数据集 -- 无法删改
-        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- false 是默认数据集
-        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- true 不是默认数据集
+        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- false 是默认数据集 -- 不拼装'操作'
+        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- true 不是默认数据集 -- 拼装操作
             if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
                 thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
                 thisEdit=
@@ -175,6 +168,75 @@ public class DatasetServiceImpl implements DatasetService {
         json=thisTable;
         return json;
 	}
+	
+	@Override
+    @Transactional
+	public JSON findMyTeamDatasetbyTId(HttpServletRequest request, String id) {
+		JSON json = null;
+        String searchText = request.getParameter("search");
+        if(searchText==null || searchText.length()<=0){
+            searchText="";
+        }
+        int limit_serch=Integer.parseInt(request.getParameter("limit"));
+        int offset_serch=Integer.parseInt(request.getParameter("offset"));
+        String sort="desc";
+        String order="date";
+        sort=request.getParameter("sort");
+        order=request.getParameter("order");
+        if(sort==null || sort.length()<=0){
+            sort="createdDate";
+        }
+        if(order==null || order.length()<=0){
+            order="desc";
+        }
+        JSONObject thisTable= new JSONObject();
+        JSONArray rows = new JSONArray();
+
+        //获取当前登录用户
+		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Page<Dataset> thisPage = this.datasetRepository.searchMyTeamDataInfo(searchText, thisUser.getId(),
+				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order), id);
+		List<Dataset> thisList = new ArrayList<>();
+ 
+        thisList=thisPage.getContent();
+        thisTable.put("total",thisPage.getTotalElements());
+        
+        for(int i=0;i<thisList.size();i++){
+        	JSONObject row= new JSONObject();
+        	String thisSelect="";
+        	String thisEdit="";
+            // 判断是否为默认数据集 -- 是默认数据集 -- 无法删改
+        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- false 是默认数据集 -- 不拼装'操作'
+        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- true 不是默认数据集 -- 拼装操作
+            if(!thisPage.getContent().get(i).getDsabstract().equals("Default")){
+                thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
+                thisEdit=
+                        "<a class=\"table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
+                        	"<span class=\"glyphicon glyphicon-edit\"></span>" +
+                        "</a>" + "&nbsp;"+
+                        "<a class=\"table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
+                        	"<span class=\"glyphicon glyphicon-remove\"></span>" +
+                        "</a>";
+            }
+            row.put("select",thisSelect);
+            row.put("dsname","<a href=\"console/dataset/show/"+thisPage.getContent().get(i).getId()+"\">"+thisPage.getContent().get(i).getDsname()+"</a>");
+            row.put("dsabstract",thisPage.getContent().get(i).getDsabstract());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String addTime="";
+            try {
+                addTime=formatter.format(thisPage.getContent().get(i).getCreatedDate());
+            } catch (Exception e) {
+            }
+            row.put("createdDate",addTime);
+            row.put("edit",thisEdit);
+            rows.add(i,row);
+        }
+        thisTable.put("rows",rows);
+        json=thisTable;
+        return json;
+	}
+	
+	
 
 	@Override
 	public JSON findMybySelect(HttpServletRequest request) {
@@ -260,7 +322,7 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public Boolean deleteOne(HttpServletRequest request, String ID) {
-		Dataset thisDataset=datasetRepository.findOneById(ID);
+		Dataset thisDataset = datasetRepository.findOneById(ID);
         if(!thisDataset.getDsabstract().equals("Default")){ // 判断当前数据集 -- 不是默认数据集 -- 则执行if语句 -- 物理删除当前dataset
             this.datasetRepository.delete(thisDataset);
             return true;

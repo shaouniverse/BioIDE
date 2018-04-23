@@ -14,7 +14,6 @@ import org.big.entity.Dataset;
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
 import org.big.repository.DatasetRepository;
-import org.big.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,10 +27,8 @@ import com.alibaba.fastjson.JSONObject;
 public class DatasetServiceImpl implements DatasetService {
 	@Autowired
 	private DatasetRepository datasetRepository;
-	@Autowired
-	private UserRepository userRepository;
 	
-	@Override
+	@Override  // 超级管理员 -- 数据集列表
 	public JSON findbyInfo(HttpServletRequest request) {
         JSON json = null;
         String searchText=request.getParameter("search");
@@ -308,13 +305,11 @@ public class DatasetServiceImpl implements DatasetService {
 	}
 
 	@Override
-	public Boolean removeOne(String ID) {
-		Dataset thisDataset=datasetRepository.findOneById(ID);
-//		System.out.println("ServiceImplID:" + ID);
+	public Boolean removeOne(String Id) {
+		Dataset thisDataset=datasetRepository.findOneById(Id);
         if(!thisDataset.getDsabstract().equals("Default")){ // 判断当前数据集 -- 不是默认数据集 -- 则执行if语句 -- 逻辑作废当前dataset
             thisDataset.setStatus(0);
             this.datasetRepository.save(thisDataset);
-            // System.out.println("UserID:" + thisDataset.getCreator() + "\t" + "DatasetID:" + thisDataset.getId() + "\t" + "TeamID:" + thisDataset.getTeam().getId());
             return true;
         }
         return false;
@@ -365,6 +360,17 @@ public class DatasetServiceImpl implements DatasetService {
             thisResult.put("result",false);
         }
         return thisResult;
+	}
+
+	@Override
+	public Boolean test(String str) {
+		Dataset thisDataset=datasetRepository.findOneById(str);
+        if(!thisDataset.getDsabstract().equals("Default")){ // 判断当前数据集 -- 不是默认数据集 -- 则执行if语句 -- 逻辑作废当前dataset
+            thisDataset.setStatus(0);
+            this.datasetRepository.save(thisDataset);
+            return true;
+        }
+        return false;
 	}
 
 }

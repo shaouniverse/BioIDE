@@ -2,7 +2,9 @@ package org.big.service;
 import com.alibaba.fastjson.JSON;
 import org.big.entity.Dataset;
 import org.big.entity.Team;
-import org.big.entity.User;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,17 +73,17 @@ public interface DatasetService {
     void addOne(Dataset thisDataset);
 
     /**
-     *<b>根据id逻辑删除一个实体</b>
-     *<p> 据id逻辑删除一个实体</p>
+     *<b>根据id 逻辑删除一个实体</b>
+     *<p> 据id 逻辑删除一个实体</p>
      * @author BINZI
      * @param ID 实体的id
      * @return void
      */
-    Boolean removeOne(String ID);
+    Boolean removeOne(String Id);
 
     /**
-     *<b>根据id物理删除一个实体</b>
-     *<p> 据id物理删除一个实体</p>
+     *<b>根据id 物理删除一个实体</b>
+     *<p> 据id 物理删除一个实体</p>
      * @author BINZI
      * @param ID 实体的id
      * @return void
@@ -123,4 +125,6 @@ public interface DatasetService {
      * @return java.lang.String
      */
     JSON newOne(Dataset thisDataset);
+    
+    Boolean test(String str);
 }

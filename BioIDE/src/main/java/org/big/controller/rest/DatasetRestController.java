@@ -59,13 +59,14 @@ public class DatasetRestController {
      * @param ids Media id序列，用"￥"分隔
      * @return boolean
      */
-	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
 	public int RemoveManyDataset(@PathVariable String ids) {
 		try {
 			// 获取id列表字符串
 			String[] idList = ids.split("￥");
 			int isRemove = 0;
 			for (int i = 0; i < idList.length; i++) {
+				Dataset findbyID = this.datasetService.findbyID(idList[i]);
 				if (this.datasetService.removeOne(idList[i])){
 					isRemove = isRemove + 1;
 				}
@@ -74,8 +75,20 @@ public class DatasetRestController {
 		} catch (Exception e) {
 			return -1;
 		}
-	}
+	}*/
 
+	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
+	public int RemoveManyDataset(@PathVariable String ids) {
+		String[] idList = ids.split("￥");
+		int isRemove = 0;
+		for (int i = 0; i < idList.length; i++) {
+			if (this.datasetService.test(idList[i])) {
+				isRemove = isRemove + 1;
+			}
+		}
+		return isRemove;
+	}
+    
     /**
      *<b>删除单个Dataset</b>
      *<p> 根据Dataset id删除单个</p>

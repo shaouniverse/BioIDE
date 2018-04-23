@@ -2,7 +2,6 @@ package org.big.repository;
 
 import org.big.entity.Dataset;
 import org.big.entity.Team;
-import org.big.entity.User;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +34,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
    Page<Dataset> searchInfo(String findText, Pageable pageable);
 
     /**
-     *<b>带分页排序的条件查询（当前用户）</b>
+     *<b>带分页排序的条件查询（当前用户的数据集）</b>
      *<p> 带分页排序的条件查询（当前用户）</p>
      * @author BINZI 
      * @param findText 条件关键词，这里是模糊匹配
@@ -47,6 +46,14 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
             " where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%) and d.creator = ?2 and d.status = 1 and d.team = NUll")
     Page<Dataset> searchMyInfo(String findText, String userId, Pageable pageable);
     
+    /**
+     *<b>带分页排序的条件查询（当前用户組下数据集）</b>
+     *<p> 带分页排序的条件查询（当前用户）</p>
+     * @author BINZI 
+     * @param findText 条件关键词，这里是模糊匹配
+     * @param pageable 分页排序方案实体
+     * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
+     */
     @Query(value = "select d from Dataset d" +
     		" where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%) and d.creator = ?2 and d.status = 1 and d.team.id = ?3")
     Page<Dataset> searchMyTeamDataInfo(String findText, String userId, Pageable pageable, String id);

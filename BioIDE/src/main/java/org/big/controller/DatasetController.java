@@ -171,7 +171,7 @@ public class DatasetController {
      */
     @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
     public String Remove(@PathVariable String id) {
-        this.datasetService.removeOne(id);
+        this.datasetService.logicRemove(id);
         return "index";
     }
 }

@@ -13,7 +13,6 @@ import org.big.service.DatasetService;
 import org.big.service.MessageService;
 import org.big.service.TeamService;
 import org.big.service.UserService;
-import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,8 +43,6 @@ public class SuperController {
     private UserService userService;
     @Autowired
     private MessageService messageService;
-    @Autowired
-    private UserTeamService userTeamService;
     @Autowired
     private DatasetService datasetService;
     /********************** Team管理页 ***************************/

@@ -164,7 +164,7 @@ public class SuperRestController {
     }
 
     /**
-     *<b>删除多个Dataset</b>
+     *<b>批量逻辑删除删除多个Dataset</b>
      *<p> 根据Dataset id序列一次性删除多个</p>
      * @author BINZI
      * @param ids Media id序列，用"￥"分隔
@@ -172,14 +172,12 @@ public class SuperRestController {
      */
     @RequestMapping(value="/dataset/rest/removeMany/{ids}",method = {RequestMethod.GET})
     public int RemoveManyDataset(@PathVariable String ids) {
-        System.out.println(ids);
     	try{
             //获取id列表字符串
-            String [] idList;
-            idList = ids.split("￥");
+            String[] idList = ids.split("￥");
             int isRemove=0;
             for(int i=0;i<idList.length;i++){
-                if(this.datasetService.removeOne(idList[i])) { // false -- 走不到该方法
+                if(this.datasetService.logicRemove(idList[i])) {
                     isRemove=isRemove+1;
                 }
             }
@@ -190,7 +188,7 @@ public class SuperRestController {
     }
 
     /**
-     *<b>删除单个Dataset</b>
+     *<b>逻辑删除单个Dataset</b>
      *<p> 根据Dataset id删除单个</p>
      * @author BINZI
      * @param id Media id
@@ -199,9 +197,49 @@ public class SuperRestController {
     @RequestMapping(value="/dataset/rest/remove/{id}",method = {RequestMethod.GET})
     public boolean RemoveDataset(@PathVariable String id) {
         try{
-            return this.datasetService.removeOne(id);
+            return this.datasetService.logicRemove(id);
         }catch(Exception e){
             return false;
         }
     }
+    
+    /**
+     *<b>物理删除多个Dataset</b>
+     *<p> 根据Dataset id序列一次性物理删除多个</p>
+     * @author WangTianshan (王天山)
+     * @param ids Media id序列，用"￥"分隔
+     * @return boolean
+     */
+    @RequestMapping(value="/dataset/rest/deleteMany/{ids}",method = {RequestMethod.GET})
+    public int DeleteManyDataset(HttpServletRequest request,@PathVariable String ids) {
+        try{
+            //获取id列表字符串
+            String [] idList = ids.split("￥");
+            int isRemove=0;
+            for(int i=0;i<idList.length;i++){
+                if(this.datasetService.deleteOne(request, (idList[i])))
+                    isRemove=isRemove+1;
+            }
+            return isRemove;
+        }catch(Exception e){
+            return -1;
+        }
+    }
+
+    /**
+     *<b>物理删除单个Dataset</b>
+     *<p> 根据Dataset id物理删除单个</p>
+     * @author WangTianshan (王天山)
+     * @param id Media id
+     * @return boolean
+     */
+    @RequestMapping(value="/dataset/rest/delete/{id}",method = {RequestMethod.GET})
+    public boolean DeleteDataset(HttpServletRequest request,@PathVariable String id) {
+        try{
+            return this.datasetService.deleteOne(request,id);
+        }catch(Exception e){
+            return false;
+        }
+    }
+    
 }

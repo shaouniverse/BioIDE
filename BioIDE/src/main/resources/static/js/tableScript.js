@@ -17,14 +17,14 @@ function editThisObject(id,type) {
 };
 // 删除type
 function removeThisObject(id,type) {
-    alert("ID:" + id + "\t" + "Type:" + type)
+    alert("ID: " + id + "\t" + "Type: " + type)
 	var r=confirm("remove?");
     if (r==true){
         $.get("/console/"+type+"/rest/remove/"+id,
             {},
             function(data,status){
-                alert("Num1:" + data);
-                alert("Num2:" + status);
+                alert("Num1: " + data);
+                alert("Num2: " + status);
             	if(status){
                     if(data){
                         layer.msg('删除成功',

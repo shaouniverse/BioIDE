@@ -56,7 +56,7 @@ public class TeamServiceImpl implements TeamService  {
     @Override
     @Transactional
     public JSON findbyInfo(HttpServletRequest request) {
-        String this_language="en";
+        String this_language="zh";
         Locale this_locale= LocaleContextHolder.getLocale();
         if(this_locale.getLanguage().equals("zh")){
             this_language="zh";

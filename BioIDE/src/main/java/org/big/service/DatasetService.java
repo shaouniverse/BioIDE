@@ -43,7 +43,7 @@ public interface DatasetService {
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-    JSON findMyTeamDatasetbyTId(HttpServletRequest request, String id);
+    JSON findMyTeamDatasetByTId(HttpServletRequest request, String id);
 
     /**
      *<b>带分页的条件查询（当前用户）</b>
@@ -79,7 +79,7 @@ public interface DatasetService {
      * @param ID 实体的id
      * @return void
      */
-    Boolean removeOne(String Id);
+    Boolean logicRemove(String Id);
 
     /**
      *<b>根据id 物理删除一个实体</b>
@@ -125,6 +125,4 @@ public interface DatasetService {
      * @return java.lang.String
      */
     JSON newOne(Dataset thisDataset);
-    
-    Boolean test(String str);
 }

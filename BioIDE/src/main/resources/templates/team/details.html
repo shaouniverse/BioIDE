@@ -30,9 +30,8 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                团队详情
-                <small>在这里您可以查看您所属团队的详细信息</small>
+            <h1> 团队详情
+                <small> 在这里您可以查看您所属团队的详细信息</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
@@ -71,21 +70,13 @@
                     </div>
                 </div>
                 <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#info" id="home-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="true">基本信息</a></li>
+                    <li role="presentation" class="active"><a href="#dataset" role="dataset-tab" id="dataset-tab" data-toggle="tab" aria-controls="dataset" aria-expanded="true">数据集</a></li>
+                    <li role="presentation" class=""><a href="#info" id="home-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="false">基本信息</a></li>
                     <li role="presentation" class=""><a href="#members" role="tab" id="profile-tab" data-toggle="tab" aria-controls="members" aria-expanded="false">成员信息</a></li>
-                    <li role="presentation" class=""><a href="#dataset" role="dataset-tab" id="dataset-tab" data-toggle="tab" aria-controls="dataset" aria-expanded="false">数据集</a></li>
                 </ul>
                 <div class="box-footer">
                     <div id="myTabContent" class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active in" id="info" aria-labelledby="home-tab">
-                            <ul class="list-group">
-                                <li class="list-group-item"><b>团队名：</b><span th:text ="${thisTeam.name}"></span></li>
-                                <li class="list-group-item"><b>创立时间：</b><span th:text ="${#calendars.format(thisTeam.adddate,'yyyy-MM-dd hh:mm:ss')}"></span></li>
-                                <li class="list-group-item"><b>团队简介：</b><span th:text ="${thisTeam.note}"></span></li>
-                            </ul>
-                        </div>
-                        
-                        <div role="tabpanel" class="tab-pane fade" id="dataset" aria-labelledby="dataset-tab">
+                        <div role="tabpanel" class="tab-pane fade active in" id="dataset" aria-labelledby="dataset-tab">
                             <ul class="list-group">
 							   <!-- 内容区 -->
 							   <section class="container content">
@@ -140,6 +131,14 @@
 							           </table>
 							       </div>
 							   </section>
+                            </ul>
+                        </div>
+                        
+                        <div role="tabpanel" class="tab-pane fade" id="info" aria-labelledby="home-tab">
+                            <ul class="list-group">
+                                <li class="list-group-item"><b>团队名：</b><span th:text ="${thisTeam.name}"></span></li>
+                                <li class="list-group-item"><b>创立时间：</b><span th:text ="${#calendars.format(thisTeam.adddate,'yyyy-MM-dd hh:mm:ss')}"></span></li>
+                                <li class="list-group-item"><b>团队简介：</b><span th:text ="${thisTeam.note}"></span></li>
                             </ul>
                         </div>
                         

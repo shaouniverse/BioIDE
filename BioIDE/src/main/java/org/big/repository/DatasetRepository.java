@@ -28,8 +28,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
 	// 根据dsname & dsabstract & createdDate 模糊 | 排序 | 条件 | 分页查询
-   @Query(value = "select d from Dataset d "
-    		+ "where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%)"
+   @Query(value = "select d from Dataset d where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%)"
     )
    Page<Dataset> searchInfo(String findText, Pageable pageable);
 
@@ -54,9 +53,8 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @param pageable 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
-    @Query(value = "select d from Dataset d" +
-    		" where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%) and d.creator = ?2 and d.status = 1 and d.team.id = ?3")
-    Page<Dataset> searchMyTeamDataInfo(String findText, String userId, Pageable pageable, String id);
+    @Query(value = "select d from Dataset d where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%) and d.status = 1 and d.team.id = ?2")
+    Page<Dataset> searchMyTeamDataInfo(String findText, Pageable pageable, String id);
 
     /**
      *<b>带分页排序的按dsname查询（当前用户）</b>

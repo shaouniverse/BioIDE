@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.big.entity.Dataset;
 import org.big.service.DatasetService;
-import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +19,6 @@ import com.alibaba.fastjson.JSON;
 public class DatasetRestController {
 	@Autowired
     private DatasetService datasetService;
-	@Autowired
-	private TeamService teamService;
 
     /**
      *<b>Dataset列表</b>
@@ -37,7 +34,7 @@ public class DatasetRestController {
     
     @RequestMapping("/list/{id}")
     public JSON DataSetTeamList(HttpServletRequest request, @PathVariable String id) {
-    	return this.datasetService.findMyTeamDatasetbyTId(request, id);
+    	return this.datasetService.findMyTeamDatasetByTId(request, id);
     }
     
     /**
@@ -59,15 +56,14 @@ public class DatasetRestController {
      * @param ids Media id序列，用"￥"分隔
      * @return boolean
      */
-	/*@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
+	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
 	public int RemoveManyDataset(@PathVariable String ids) {
 		try {
 			// 获取id列表字符串
 			String[] idList = ids.split("￥");
 			int isRemove = 0;
 			for (int i = 0; i < idList.length; i++) {
-				Dataset findbyID = this.datasetService.findbyID(idList[i]);
-				if (this.datasetService.removeOne(idList[i])){
+				if (this.datasetService.logicRemove(idList[i])){
 					isRemove = isRemove + 1;
 				}
 			}
@@ -75,18 +71,6 @@ public class DatasetRestController {
 		} catch (Exception e) {
 			return -1;
 		}
-	}*/
-
-	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
-	public int RemoveManyDataset(@PathVariable String ids) {
-		String[] idList = ids.split("￥");
-		int isRemove = 0;
-		for (int i = 0; i < idList.length; i++) {
-			if (this.datasetService.test(idList[i])) {
-				isRemove = isRemove + 1;
-			}
-		}
-		return isRemove;
 	}
     
     /**
@@ -99,10 +83,8 @@ public class DatasetRestController {
 	// /console/dataset/rest/remove/id
     @RequestMapping(value="/remove/{id}", method = RequestMethod.GET)
     public boolean RemoveDataset(@PathVariable String id) {
-    	System.out.println("REST:" + id);
     	try{
-    		// System.out.println("Rsl:" + this.datasetService.removeOne(id));
-    		Boolean rsl = this.datasetService.removeOne(id);
+    		Boolean rsl = this.datasetService.logicRemove(id);
             return rsl;
         }catch(Exception e){
             return false;

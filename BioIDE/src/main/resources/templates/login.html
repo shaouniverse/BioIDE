@@ -30,18 +30,21 @@
     <div class="login-box-body">
         <p class="login-box-msg">用户登录</p>
 
-        <form th:action="@{/login}" onkeydown="if(event.keyCode==13) return submitForm();" method="post">
+        <form id="login_form" th:action="@{/login}" onkeydown="if(event.keyCode==13) return submitForm();" method="post">
         	<div th:if="${not #lists.isEmpty(activeMsg)}" class="well well-sm" th:text="${activeMsg}"></div>
+            
             <!-- 用户名 -->
             <div class="form-group has-feedback">
                 <input id="username" name="username" class="form-control" placeholder="用户名">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
+           
             <!-- 密码 -->
             <div class="form-group has-feedback">
                 <input type="password" id="password" name="password" class="form-control" placeholder="密    码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
+           
             <!-- 验证码 -->
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="token" name="token" placeholder="输入下方验证码">

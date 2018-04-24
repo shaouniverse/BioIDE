@@ -300,14 +300,10 @@ public class UserServiceImpl implements UserService{
 		String thisLanguage=localeService.getLanguage(request,response);
         //Token判断
         if(request.getParameter("token").equals(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())){
-        	System.out.println("TOKEN1:" + request.getParameter("token"));
-        	System.out.println("TOKEN2:" + request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY).toString());
             //username判断
             if(this.findOneByName(newUser.getUserName())==null) {
-            	System.out.println("USERNAME:" + this.findOneByName(newUser.getUserName()));
                 //email判断
                 if (this.findOneByEmail(newUser.getEmail()) == null) {
-                	System.out.println("邮箱：" + this.findOneByEmail(newUser.getEmail()));
                     //设置用户信息
                     newUser.setStatus((byte)0);									// 注册用户状态默认为0 -- 未激活状态
                     newUser.setScore(0);
@@ -549,7 +545,6 @@ public class UserServiceImpl implements UserService{
         // http://localhost:8081/register/active/BINZI/ccbf732b-1880-4cca-b2f5-8b3566a987d2/
         User thisUser=this.findOneByName(userName);	
         if(thisUser!=null){
-        	System.out.println("待激活用户的状态:" + thisUser.getStatus());
             //有此用户
             if(thisUser.getStatus()==0){
                 //可正常激活

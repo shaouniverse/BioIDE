@@ -73,9 +73,6 @@ public class RegisterController {
     // http://localhost:8081/register/active/BINZI/437b1ebe-cd79-4979-a5ca-73071f6368a3/
     @RequestMapping(value="/active/{userName}/{mark}")
     public String active(Model model,HttpServletRequest request, HttpServletResponse response, @PathVariable("userName") String userName, @PathVariable("mark") String mark) {
-        System.out.println("激活用户：" + userName);
-    	System.out.println("激活码：" + mark);
-    	
     	String activeMsg = userService.activeUser(userName,mark,request,response);	//返回用户状态 -- 
         model.addAttribute("activeMsg", activeMsg);
         request.getSession().setAttribute("adminEmail",fromEmail);

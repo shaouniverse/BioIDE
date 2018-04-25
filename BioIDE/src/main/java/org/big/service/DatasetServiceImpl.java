@@ -57,7 +57,8 @@ public class DatasetServiceImpl implements DatasetService {
 		for (int i = 0; i < thisList.size(); i++) {
 			JSONObject row = new JSONObject();
 			String thisSelect = "<input type='checkbox' name='checkbox' id='sel_" + thisList.get(i).getId() + "' />";
-			String thisEdit =   	"<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
+			String thisEdit =   	
+				"<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
                 	"<span class=\"glyphicon glyphicon-remove\"></span>" +
                 "</a>"+ "&nbsp;"+
                 "<a class=\"table-edit-icon\" onclick=\"deleteThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +

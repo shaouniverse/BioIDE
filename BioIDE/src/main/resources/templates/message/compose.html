@@ -12,7 +12,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title>BioIDE</title>
+    <title>BioIDE&nbsp;物种数据采集系统</title>
     <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
@@ -75,29 +75,29 @@
                         </div>
                         <div class="box-body">
                             <form id="thisForm" th:action="@{/console/message/send}" method="post" th:object="${thisMessage}">
-                                
+                                <input id="errorMsg" th:value="${errorMsg}" class="hidden" readonly="readonly"></input>
                                 <input class="hidden" id="TeamID" name="TeamID" th:value="${thisMessage.teamid}" value="${thisMessage.teamid}">
                                 <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
                                 <!-- 可输可选下拉框 -->
                                 <div class="form-group">
-									<label>请输入关键字：</label>
+									<label>请输入Email：</label>
 					                <select class="form-control select2" id="udata" name="udata" style="width: 100%;">
 					                	<option value='' selected='selected'></option>
 					                </select>
 								</div>
                                 
                                 <div class="form-group">
-                                    <input class="form-control" th:field="*{title}" placeholder="Title:">
+                                    <input class="form-control" id="title" th:field="*{title}" placeholder="Title:">
                                 </div>
                                 <div class="form-group">
-                                <textarea id="editor"  th:field="*{text}" class="form-control" style="height: 300px">
-                                </textarea>
-                            </div>
+	                                <textarea class="form-control" id="text"  th:field="*{text}" style="height: 300px">
+	                                </textarea>
+	                            </div>
                             <div class="box-footer">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 发送</button>
                                 </div>
-                                <a onclick="clearInput();" type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</a>
+                                <a onclick="clearInput();" type="reset" class="btn btn-default"><i class="fa fa-times"></i> 清除</a>
                             </div>
                             </form>
                         </div>
@@ -122,13 +122,13 @@
 <script th:src="@{/js/superTableScript.js}"></script>
 <script th:src="@{/plugins/CKEditor5/classic/ckeditor.js}"></script>
 <!--<script th:src="@{/plugins/CKEditor4/ckeditor.js}"></script>-->
+
 <script>
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
+        .create( document.querySelector( '#text' ) )
         .catch( error => {
         console.error( error );
     } );
-
 </script>
 
 <script th:inline="javascript">
@@ -210,6 +210,56 @@ $(document).ready(function(){
     $("#udata").prepend("<option value='' selected='selected'>"+ all_udata +"</option>");
 });
 
+</script>
+<!-- bootstrapValidator -->
+<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
+<!-- page_script -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var warning_Illegal= [[#{warning_Illegal}]];
+    /*]]>*/
+</script>
+<script>
+    //前端验证错误提示
+    $(document).ready(function() {
+	    $("#base_url").val(window.location.host);
+        $('#thisForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon ',
+                invalid: 'glyphicon ',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                'title': {
+                    validators: {
+                        notEmpty: {
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a【】]+$/,
+                            message: warning_Illegal
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 30,
+                        },
+                    }
+                },
+                'text': {
+                    validators: {
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 100
+                        },
+                    }
+                },
+            }
+        });
+    });
 </script>
 </body>
 </html>

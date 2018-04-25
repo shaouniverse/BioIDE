@@ -20,6 +20,7 @@ import org.big.common.MD5Utils;
 import org.big.common.QueryTool;
 import org.big.entity.Dataset;
 import org.big.entity.User;
+import org.big.entity.UserDetail;
 import org.big.repository.DatasetRepository;
 import org.big.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -185,7 +187,8 @@ public class UserServiceImpl implements UserService{
         List<Object> thisList=new ArrayList<>();
         // 获取当前登录用户
         // 传入页码起始页、页面大小、排序字段和排序类型关键参数返回SpringData规定排序PageRequest类型
-        Page<Object> thisPage=this.userRepository.findUsersByNickNameAndEmail(findText,QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Page<Object> thisPage=this.userRepository.findUsersByEmail(findText, thisUser.getEmail(), QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
         thisSelect.put("total_count",thisPage.getTotalElements());	// 总记录数
         Boolean incompleteResulte=true;
         
@@ -253,10 +256,13 @@ public class UserServiceImpl implements UserService{
             String thisEdit=
                             "<a class=\"wts-table-edit-icon\" onclick=\"removeThisMember('"+teamId+"','"+thisList.get(i).getId()+"')\" >" +
                             	"<span class=\"glyphicon glyphicon-remove\"></span>" +
-                            "</a>" + 
+                            "</a> &nbsp;" + 
                             "<a class=\"wts-table-edit-icon\" onclick=\"transThisMember('"+teamId+"','"+thisList.get(i).getId()+"')\" >" +
                         		"<span class=\"glyphicon glyphicon-adjust\"></span>" +
-                            "</a>";
+                            "</a> &nbsp;" +
+				            "<a class=\"wts-table-edit-icon\" onclick=\"inviteThisObject('"+teamId+"','"+thisList.get(i).getId()+"')\" >" +
+				            	"<span class=\"glyphicon glyphicon-plus\"></span>" +
+				            "</a>";
             row.put("userName",thisList.get(i).getUserName());
             row.put("nickname",thisList.get(i).getNickname());
             row.put("email",thisList.get(i).getEmail());
@@ -433,7 +439,7 @@ public class UserServiceImpl implements UserService{
                             base_url=base_url+contextPath;
                         }
                         ///邮件的内容
-                        StringBuffer sb=new StringBuffer("AnimalSeeker<br/>");
+                        StringBuffer sb=new StringBuffer("BioIDE<br/>");
                         if(thisLanguage.equals("zh")){
                         	// http://localhost:8081/register/active/BINZI/ccbf732b-1880-4cca-b2f5-8b3566a987d2/
                             sb.append("物种数据采集系统<br/>");

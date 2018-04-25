@@ -131,9 +131,9 @@ public class DatasetController {
 		}
 		String base_url = request.getParameter("base_url");
 		if (base_url.contains("add/")) {
-			base_url = "http://localhost:8081/console/team/details/" + base_url.substring(42); // 用户组添加成功后 -- 目标URL
+			base_url = base_url.substring(0, 29) + "/team/details/" + base_url.substring(42); // 用户组添加成功后 -- 目标URL
 		} else {
-			base_url = "http://localhost:8081/console/dataset";								   // 个人用户添加成功后 -- 目标URL
+			base_url = base_url.substring(0, 29) + "/dataset";								  // 个人用户添加成功后 -- 目标URL
 		}
 		this.datasetService.addOne(thisDataset);
 		return "redirect:" + base_url;

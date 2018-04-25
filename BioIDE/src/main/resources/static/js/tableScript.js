@@ -17,14 +17,11 @@ function editThisObject(id,type) {
 };
 // 删除type
 function removeThisObject(id,type) {
-    alert("ID: " + id + "\t" + "Type: " + type)
 	var r=confirm("remove?");
     if (r==true){
         $.get("/console/"+type+"/rest/remove/"+id,
             {},
             function(data,status){
-                alert("Num1: " + data);
-                alert("Num2: " + status);
             	if(status){
                     if(data){
                         layer.msg('删除成功',
@@ -37,13 +34,11 @@ function removeThisObject(id,type) {
                     }
                     else{
                         layer.msg('操作失败', function(){
-                        	alert(1);
                         });
                     }
                 }
                 else{
                     layer.msg('操作失败', function(){
-                    	alert(2);
                     });
                 }
             });
@@ -197,11 +192,11 @@ function removeSelectObject(type){
 };
 
 //团队邀请
-function inviteThisObject(id,type) {
+function inviteThisObject(id) {
     window.location.href="/console/message/compose/"+id;
 };
 
-function inviteObject(type){
+function inviteObject(){
     var number=0;
     var checkId="";
     $("input:checkbox[id^='sel']:checked").each(function(i){
@@ -214,6 +209,6 @@ function inviteObject(type){
     }else if(number>1){		// 选中多行 -- 提示"只能选择1条数据进行编辑"
         alert("您选择了"+number+"条数据，只能选择1条数据进行编辑");
     }else{
-        inviteThisObject(checkId,type);
+        inviteThisObject(checkId);
     }
 };

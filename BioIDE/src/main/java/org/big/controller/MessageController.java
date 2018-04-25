@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -131,18 +132,11 @@ public class MessageController {
         if (null != request.getParameter("TeamID") && !"".equals(request.getAttribute("TeamID"))) {
         	thisMessage.setTeamid(request.getParameter("TeamID"));
 		}
-        /* 获取可填可选输入框Email，(无需)查询数据库？ | 判断邮箱非空非空串 -- 发送邀请函
-        String email = request.getParameter("Email");
-        if (null != email && !"".equals(email)) {
-			thisMessage.setAddressee(email);
-		}
-        */
         String udata = request.getParameter("udata");
         if (null != udata && !"".equals(udata)) {
         	String email = userService.findOneByNickName(udata).getEmail(); // null.Xxx -->空指针异常
         	thisMessage.setAddressee(email);
         }
-        System.out.println(thisMessage.toString());
         this.messageService.sendOne(thisMessage);
         return "redirect:/console/message";
     }

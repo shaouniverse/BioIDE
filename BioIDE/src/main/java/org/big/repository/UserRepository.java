@@ -103,8 +103,8 @@ public interface UserRepository extends BaseRepository<User, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.User>
      */
     @Query(value = "select distinct u.nickname, u.email from User u" +
-            " where (u.nickname like %?1% or u.email like %?1%) ")
-    Page<Object> findUsersByNickNameAndEmail(String findText, Pageable pageable);
+            " where (u.nickname like %?1% or u.email like %?1%) and u.email != ?2")
+    Page<Object> findUsersByEmail(String findText, String email, Pageable pageable);
     
     /**
      * 根据邮箱查user对象

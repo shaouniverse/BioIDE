@@ -23,19 +23,12 @@
 </head>
 <body class="hold-transition skin-leaf fixed layout-top-nav">
 <!-- Site wrapper -->
-<div class="">
-    <!-- <header id="header" class="main-header">
+<!-- Site wrapper -->
+<div class="wrapper">
+<!--     <header id="header" class="main-header">
         引入Header
         <span th:replace="pageFrame/basicsHeader :: copy" />
     </header> -->
-    <!-- 引入loginModal -->
-    <div th:if="${#lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}">
-        <span th:replace="user/loginModal :: copy" />
-    </div>
-    <!-- 引入logoutModal -->
-    <div th:if="${not #lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}">
-        <span th:replace="user/logoutModal :: copy" />
-    </div>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Main content -->
@@ -43,42 +36,42 @@
             <div class="register-box">
                 <div class="register-logo">
                     Bio<b>IDE</b>
-                    <p><h4 th:text="#{abstract_title}">物种数据采集系统</h4></p>
+                    <p><h4>物种数据采集系统</h4></p>
                 </div>
 
                 <div class="register-box-body">
-                    <p class="login-box-msg" th:text="#{register_success}">Register success</p>
+                    <p class="login-box-msg">注册成功</p>
                     <p>
                         <h4>
-                            <span th:text="#{register_success_text1}">您已注册成功，账号尚未激活，请去您填写的注册邮箱</span>
-                            （<b th:text="${session.registerEmail}"></b>）
-                            <span th:text="#{register_success_text2}">点击激活链接完成后续步骤。</span>
+                            <span>您已注册成功，账号尚未激活，请去您填写的注册邮箱</span>
+                            	（<b th:text="${session.registerEmail}"></b>）
+                            <span>点击激活链接完成后续步骤。</span>
                         </h4>
                     </p>
                     <p>
-                        <h4 th:text="#{register_success_text3}">如您未收到激活邮件，请把此网站的官方邮箱</h4>
+                        <h4>如您未收到激活邮件，请把此网站的官方邮箱</h4>
                             <h4>(<span th:text="${session.adminEmail}"></span>)</h4>
-                        <h4 th:text="#{register_success_text4}">加入白名单，防止被系统拦截。</h4>
+                        <h4>加入白名单，防止被系统拦截。</h4>
                     </p>
                     <div class="social-auth-links text-center">
                         <p>- OR -</p>
                         <form id="register_form" th:action="@{/register/new}" action="register/new" method="post">
                             <input class="hidden" type="text" th:value="${session.registerEmail}" id="email" name="email" readonly="readonly"></input>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" id="r_token" name="token" th:attr="placeholder=#{token}" placeholder="Please input the token">
+                                <input type="text" class="form-control" id="r_token" name="token" placeholder="请输入下方验证码">
                                 <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
                                 <p></p>
                                 <div>
                                     <i>
                                         <img style="height:32px;" id="codeImg_register" th:src="@{/captchaImg}" />
-                                        <a th:text="#{change_token}" href="javascript:void(0);" onclick="reImg();">看不清，换一张</a>
+                                        <a href="javascript:void(0);" onclick="reImg();">看不清，换一张</a>
                                     </i>
                                 </div>
                             </div>
                             <div class="row">
                             </div>
                         </form>
-                        <a href="javascript:void(0);" onclick="resendActiveEmail();" class="text-center dropdown-toggle" th:text="#{send_email}">重新发送激活邮件</a>
+                        <a href="javascript:void(0);" onclick="resendActiveEmail();" class="text-center dropdown-toggle">重新发送激活邮件</a>
                     </div>
                 </div>
             </div>

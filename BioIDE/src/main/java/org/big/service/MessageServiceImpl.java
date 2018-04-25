@@ -150,7 +150,7 @@ public class MessageServiceImpl implements MessageService{
     @Transactional
     public JSON findInfoByAddressee(HttpServletRequest request) {
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String this_language="en";
+        String this_language="zh";
         Locale this_locale= LocaleContextHolder.getLocale();
         if(this_locale.getLanguage().equals("zh")){
             this_language="zh";
@@ -335,15 +335,15 @@ public class MessageServiceImpl implements MessageService{
             thisMessage.setId(UUID.randomUUID().toString());
             thisMessage.setStatus(0); 				// 邮件状态
             thisMessage.setType("information");		// 邮件类型
-            // 通过用户名拿到用户ID，作为团队邀请人
+            // 通过用户名拿到用户ID，作为团队邀请人 -- 判断是普通信 | 邀请信
             thisMessage.setSendtime(new Timestamp(System.currentTimeMillis()));
             if (null != thisMessage.getTeamid() && !"".equals(thisMessage.getTeamid())) {
             	sendInviteEmail(request, response, thisMessage);
             }else {
 				sendEmail(request, response, thisMessage);
 			}
+            this.messageRepository.save(thisMessage);
         }
-        this.messageRepository.save(thisMessage);
     }
 
     @Override

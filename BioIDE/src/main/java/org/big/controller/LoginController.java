@@ -1,6 +1,7 @@
 package org.big.controller;
 
-import org.big.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
-    private UserService userService;
-    @Autowired
-    private org.apache.catalina.servlet4preview.http.HttpServletRequest request;
+    private HttpServletRequest request;
 
     /**
      *<b>登录页面</b>
@@ -31,8 +30,9 @@ public class LoginController {
      * @param model 初始化模型
      * @return java.lang.String
      */
-    @RequestMapping(value="", method = {RequestMethod.GET})
+    @RequestMapping(value="", method = RequestMethod.GET)
     public String login(Model model) {
+    	System.out.println("BINZI:" + request.getSession().getAttribute("username"));
         String loginErrorMsg="";
         try{
             if(request.getSession().getAttribute("loginError").equals("name")){

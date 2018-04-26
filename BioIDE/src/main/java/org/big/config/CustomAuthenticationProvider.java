@@ -49,6 +49,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String password = authentication.getCredentials().toString();
         // 下面是验证逻辑，验证通过则返回UsernamePasswordAuthenticationToken，
         // 否则，可直接抛出错误（AuthenticationException的子类，在登录验证不通过重定向至登录页时可通过session.SPRING_SECURITY_LAST_EXCEPTION.message获取具体错误提示信息）
+		// 验证当前登录用户状态
+		
 		request.getSession().setAttribute("loginError", "");
 		if (details.getToken()
 				.equalsIgnoreCase(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())) {

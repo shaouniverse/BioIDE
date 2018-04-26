@@ -37,14 +37,14 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
      * @param
      * @return java.lang.String
      */
-    public String getToken() {
-        return token;
-    }
+	public String getToken() {
+		return token;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append("; Token: ").append(this.getToken());
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString()).append("; Token: ").append(this.getToken());
+		return sb.toString();
+	}
 }

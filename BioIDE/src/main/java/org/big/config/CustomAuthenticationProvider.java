@@ -42,36 +42,35 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
      * @param authentication
      * @return org.springframework.security.core.Authentication
      */
-    @Override
-    public Authentication authenticate(Authentication authentication)
-            throws AuthenticationException {
-        CustomWebAuthenticationDetails details = (CustomWebAuthenticationDetails) authentication.getDetails();  // 如上面的介绍，这里通过authentication.getDetails()获取详细信息
-        String name=authentication.getName();
-        String password=authentication.getCredentials().toString();
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		CustomWebAuthenticationDetails details = (CustomWebAuthenticationDetails) authentication.getDetails(); // 如上面的介绍，这里通过authentication.getDetails()获取详细信息
+		String name = authentication.getName();
+		String password = authentication.getCredentials().toString();
         // 下面是验证逻辑，验证通过则返回UsernamePasswordAuthenticationToken，
         // 否则，可直接抛出错误（AuthenticationException的子类，在登录验证不通过重定向至登录页时可通过session.SPRING_SECURITY_LAST_EXCEPTION.message获取具体错误提示信息）
-        request.getSession().setAttribute("loginError","");
-        if (details.getToken().equalsIgnoreCase(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())) {
-            UserDetail user = (UserDetail) userService.loadUserByUsername(name);
-            if(user == null){
-                throw new BadCredentialsException("没有该用户");
-            }
-            if (!MD5Utils.MD532(password).equals(user.getPassword())) {
-                request.getSession().setAttribute("loginError","password");
-                throw new BadCredentialsException("密码错误");
-            }
-            Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-            return new UsernamePasswordAuthenticationToken(user, password, authorities);
-        }
-        else {
-            request.getSession().setAttribute("loginError","token");
-            throw new BadCredentialsException("验证码不正确");
-        }
-    }
+		request.getSession().setAttribute("loginError", "");
+		if (details.getToken()
+				.equalsIgnoreCase(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())) {
+			UserDetail user = (UserDetail) userService.loadUserByUsername(name);
+			if (user == null) {
+				throw new BadCredentialsException("没有该用户");
+			}
+			if (!MD5Utils.MD532(password).equals(user.getPassword())) {
+				request.getSession().setAttribute("loginError", "password");
+				throw new BadCredentialsException("密码错误");
+			}
+			Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+			return new UsernamePasswordAuthenticationToken(user, password, authorities);
+		} else {
+			request.getSession().setAttribute("loginError", "token");
+			throw new BadCredentialsException("验证码不正确");
+		}
+	}
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
-    }
+	@Override
+	public boolean supports(Class<?> authentication) {
+		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+	}
 
 }

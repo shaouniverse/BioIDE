@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServletRequest;
  * @since JDK 1.80_144
  */
 @Component
-public class CustomAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
+public class CustomAuthenticationDetailsSource
+		implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
 
-    @Override
-    public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
-        return new CustomWebAuthenticationDetails(context);
-    }
+	@Override
+	public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
+		return new CustomWebAuthenticationDetails(context);
+	}
 }

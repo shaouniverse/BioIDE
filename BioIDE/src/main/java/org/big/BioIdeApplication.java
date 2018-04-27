@@ -2,6 +2,10 @@ package org.big;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.wisely.highlight_spring4.ch1.aop.AopConfig;
+import com.wisely.highlight_spring4.ch1.aop.DemoMethodService;
 
 /**
  *<p><b>Spring boot的启动类</b></p>

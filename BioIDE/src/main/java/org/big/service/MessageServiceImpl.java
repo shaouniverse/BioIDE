@@ -146,93 +146,95 @@ public class MessageServiceImpl implements MessageService{
         return json;
     }
 
-    @Override
-    @Transactional
-    public JSON findInfoByAddressee(HttpServletRequest request) {
-        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String this_language="zh";
-        Locale this_locale= LocaleContextHolder.getLocale();
-        if(this_locale.getLanguage().equals("zh")){
-            this_language="zh";
-        }
-        if(this_locale.getLanguage().equals("en")){
-            this_language="en";
-        }
-        JSON json= null;
-        String searchText=request.getParameter("search");
-        if(searchText==null || searchText.length()<=0){
-            searchText="";
-        }
-        int limit_serch=Integer.parseInt(request.getParameter("limit"));
-        int offset_serch=Integer.parseInt(request.getParameter("offset"));
-        String sort="desc";
-        String order="date";
-        sort=request.getParameter("sort");
-        order=request.getParameter("order");
-        if(sort==null || sort.length()<=0){
-            sort="sendtime";
-        }
-        if(order==null || order.length()<=0){
-            order="desc";
-        }
-        JSONObject thisTable= new JSONObject();
-        JSONArray rows = new JSONArray();
-        List<Object> thisList=new ArrayList<>();
-        Page<Object> thisPage=this.messageRepository.searchInfoByAddressee(searchText,thisUser.getId(),QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
-        thisTable.put("total",thisPage.getTotalElements());
-        thisList=thisPage.getContent();
-        for(int i=0;i<thisList.size();i++){
-            JSONObject row= new JSONObject();
-            Message thisMessage= BuildEntity.buildMessage(thisList.get(i));
-            String title="<a target='_blank' href='console/message/read/"+thisMessage.getId()+"'>"+thisMessage.getTitle()+"</a>";
-            row.put("title",title);
-            row.put("sender",thisMessage.getSender());
-            row.put("addressee",thisMessage.getAddressee());
-            String type=thisMessage.getType();
-            switch(type){
-                case "information":
-                    type="通知";
-                    break;
-                case "invitation":
-                    type="邀请信";
-                    break;
-                default:
-                    break;
-            }
-            row.put("type",type);
-            String status="";
-            int statusCode=thisMessage.getStatus();
-            switch(statusCode){
-                case 0:
-                    status="未读";
-                    break;
-                case 1:
-                    status="已读";
-                    break;
-                case 2:
-                    status="同意";
-                    break;
-                case 3:
-                    status="拒绝";
-                    break;
-                default:
-                    break;
-            }
-            row.put("status",status);
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String sendTime="";
-            try {
-                sendTime=formatter.format(thisMessage.getSendtime());
-            } catch (Exception e) {
-                //e.printStackTrace();
-            }
-            row.put("sendtime",sendTime);
-            rows.add(i,row);
-        }
-        thisTable.put("rows",rows);
-        json=thisTable;
-        return json;
-    }
+	@Override
+	@Transactional
+	public JSON findInfoByAddressee(HttpServletRequest request) {
+		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String this_language = "zh";
+		Locale this_locale = LocaleContextHolder.getLocale();
+		if (this_locale.getLanguage().equals("zh")) {
+			this_language = "zh";
+		}
+		if (this_locale.getLanguage().equals("en")) {
+			this_language = "en";
+		}
+		JSON json = null;
+		String searchText = request.getParameter("search");
+		if (searchText == null || searchText.length() <= 0) {
+			searchText = "";
+		}
+		int limit_serch = Integer.parseInt(request.getParameter("limit"));
+		int offset_serch = Integer.parseInt(request.getParameter("offset"));
+		String sort = "desc";
+		String order = "date";
+		sort = request.getParameter("sort");
+		order = request.getParameter("order");
+		if (sort == null || sort.length() <= 0) {
+			sort = "sendtime";
+		}
+		if (order == null || order.length() <= 0) {
+			order = "desc";
+		}
+		JSONObject thisTable = new JSONObject();
+		JSONArray rows = new JSONArray();
+		List<Object> thisList = new ArrayList<>();
+		Page<Object> thisPage = this.messageRepository.searchInfoByAddressee(searchText, thisUser.getId(),
+				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
+		thisTable.put("total", thisPage.getTotalElements());
+		thisList = thisPage.getContent();
+		for (int i = 0; i < thisList.size(); i++) {
+			JSONObject row = new JSONObject();
+			Message thisMessage = BuildEntity.buildMessage(thisList.get(i));
+			String title = "<a target='_blank' href='console/message/read/" + thisMessage.getId() + "'>"
+					+ thisMessage.getTitle() + "</a>";
+			row.put("title", title);
+			row.put("sender", thisMessage.getSender());
+			row.put("addressee", thisMessage.getAddressee());
+			String type = thisMessage.getType();
+			switch (type) {
+			case "information":
+				type = "通知";
+				break;
+			case "invitation":
+				type = "邀请信";
+				break;
+			default:
+				break;
+			}
+			row.put("type", type);
+			String status = "";
+			int statusCode = thisMessage.getStatus();
+			switch (statusCode) {
+			case 0:
+				status = "未读";
+				break;
+			case 1:
+				status = "已读";
+				break;
+			case 2:
+				status = "同意";
+				break;
+			case 3:
+				status = "拒绝";
+				break;
+			default:
+				break;
+			}
+			row.put("status", status);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String sendTime = "";
+			try {
+				sendTime = formatter.format(thisMessage.getSendtime());
+			} catch (Exception e) {
+				// e.printStackTrace();
+			}
+			row.put("sendtime", sendTime);
+			rows.add(i, row);
+		}
+		thisTable.put("rows", rows);
+		json = thisTable;
+		return json;
+	}
 
     @Override
     @Transactional

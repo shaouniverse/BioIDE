@@ -36,6 +36,7 @@ public class MessageRestController {
      */
     @RequestMapping("/list")
     public JSON List(HttpServletRequest request) {
+    	System.out.println(this.messageService.findInfoByAddressee(request));
         return this.messageService.findInfoByAddressee(request);
     }
 

@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
  * @version: 0.1
  * @since JDK 1.80_144
  */
-@Aspect //声明这是一个切面。必须的！
-@Component
+@Aspect // 声明这是一个切面。必须的！
+@Component // 让此切面成为Spring容器管理的Bean 
 public class AspectConfig {
     @Autowired
     private HttpServletRequest request;
-
+    
     /**
      *<b>删除拦截</b>
      *<p> 对service下的所有删除方法进行权限判断验证，符合权限则放行、不符合权限则终止此方法并将错误信息写入Session</p>
@@ -31,7 +31,7 @@ public class AspectConfig {
      * @param objectId 被删除的实体的id
      * @return java.lang.Object
      */
-    @Around("execution(* org.big.service.*.remove*(..)) && args(objectId)")
+    @Around("execution(* org.big.service.*.logicRemove(..)) && args(objectId)")	// 环绕通知
     public Object canReove(JoinPoint joinPoint,String objectId){
         ProceedingJoinPoint pjp = (ProceedingJoinPoint) joinPoint;
         IdentityVote thisIdentityVote=new IdentityVote();
@@ -39,7 +39,7 @@ public class AspectConfig {
         //System.out.println(pjp.getTarget().getClass().getName());
         //targetName=targetName.substring(16);
         targetName=targetName.replace("org.big.service.","");
-        if(thisIdentityVote.hasAuthority(targetName,objectId)){
+        if(thisIdentityVote.hasAuthority(targetName, objectId)){
             try {
                 return pjp.proceed();
             } catch (Throwable throwable) {

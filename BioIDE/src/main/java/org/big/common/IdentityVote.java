@@ -30,10 +30,10 @@ public class IdentityVote {
      * @return java.lang.Boolean
      */
     public Boolean hasAuthority(String targetName,String objectId){
-        Boolean hasAuthority=false;
+        Boolean hasAuthority = false;
         switch (targetName){
             case "TeamServiceImpl":
-                hasAuthority=isTeamLeaderByTeamId(objectId);
+                hasAuthority = isTeamLeaderByTeamId(objectId);
                 break;
             default:
                 break;
@@ -75,8 +75,8 @@ public class IdentityVote {
      */
     public Boolean isAddresseeByMessage(Message thisMessage){
         //判断当前状态
-        if(thisMessage.getStatus()==0){
-            if(thisMessage.getAddressee().equals(thisUser.getId())){
+        if(thisMessage.getStatus() == 0){
+            if(thisMessage.getAddressee().equals(thisUser.getEmail())){
                 return true;
             }
         }

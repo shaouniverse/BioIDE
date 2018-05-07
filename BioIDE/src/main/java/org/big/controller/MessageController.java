@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 
 /**
  *<p><b>Message相关的Controller类</b></p>
@@ -46,7 +44,7 @@ public class MessageController {
      * @param
      * @return java.lang.String
      */
-    @RequestMapping(value="", method = {RequestMethod.GET})
+    @RequestMapping(value="", method = RequestMethod.GET)
     public String Index() {
         return "message/myMessage";
     }
@@ -73,10 +71,10 @@ public class MessageController {
      */
     @RequestMapping(value="/read/{id}", method = {RequestMethod.GET})
     public String ReadMessage(Model model,@PathVariable String id, HttpServletRequest request) {
-        Message thisMessage=this.messageService.findbyID(id);
-        User thisSender=this.userService.findbyID(thisMessage.getSender());
-        this.messageService.changeStatus(thisMessage,1); // 改变消息状态 -- 未读消息状态为0 | 已读消息状态为1
-        int unReadMessageNum=messageService.countStatus(0); // 根据状态统计未读消息数量
+        Message thisMessage=this.messageService.findbyID(id);				// Message 对象
+        User thisSender=this.userService.findbyID(thisMessage.getSender());	// 当前登录用户
+        this.messageService.changeStatus(thisMessage, 1); 					// 改变消息状态 -- 未读消息状态为0 | 已读消息状态为1
+        int unReadMessageNum=messageService.countStatus(0); 				// 根据状态统计未读消息数量
         request.getSession().setAttribute("unReadMessageNum",unReadMessageNum);
         model.addAttribute("thisMessage", thisMessage);
         model.addAttribute("thisSender", "From:"+thisSender.getNickname());
@@ -92,7 +90,7 @@ public class MessageController {
      */
     @RequestMapping(value="/compose/{id}", method = {RequestMethod.GET})
     public String Add(@PathVariable String id, Model model) {
-        Message thisMessage=new Message();
+		Message thisMessage = new Message();
         thisMessage.setText("<p></p><p></p>");
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         thisMessage.setSender(thisUser.getId());	// 将当前登录用户(团队管理员)，设置为邀请人
@@ -133,6 +131,8 @@ public class MessageController {
         	thisMessage.setTeamid(request.getParameter("TeamID"));
 		}
         String udata = request.getParameter("udata");
+        
+        System.out.println("Udata:" + udata);
         if (null != udata && !"".equals(udata)) {
         	String email = userService.findOneByNickName(udata).getEmail(); // null.Xxx -->空指针异常
         	thisMessage.setAddressee(email);

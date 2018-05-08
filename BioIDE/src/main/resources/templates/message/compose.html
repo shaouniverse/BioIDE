@@ -39,7 +39,7 @@
                 <small>在这里您可以查看系统内所有的消息记录</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
+                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
                 <li class="active"><i class="fa fa-envelope"></i> 消息管理</li>
             </ol>
         </section>
@@ -71,7 +71,7 @@
                 <div class="col-md-9">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Compose New Message</h3>
+                            <h3 class="box-title">写信</h3>
                         </div>
                         <div class="box-body">
                             <form id="thisForm" th:action="@{/console/message/send}" method="post" th:object="${thisMessage}">
@@ -80,8 +80,8 @@
                                 <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
                                 <!-- 可输可选下拉框 -->
                                 <div class="form-group">
-									<label>请输入Email：</label>
-					                <select class="form-control select2" id="udata" name="udata" style="width: 100%;">
+									<label>Email：</label>
+					                <select class="form-control select2" id="udata" name="udata" style="width: 100%;" placeholder="Email:">
 					                	<option value='' selected='selected'></option>
 					                </select>
 								</div>
@@ -90,14 +90,14 @@
                                     <input class="form-control" id="title" th:field="*{title}" placeholder="Title:">
                                 </div>
                                 <div class="form-group">
-	                                <textarea class="form-control" id="text"  th:field="*{text}" style="height: 300px">
+	                                <textarea class="form-control" id="text"  th:field="*{text}" style="height: 500px">
 	                                </textarea>
 	                            </div>
                             <div class="box-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 发送</button>
                                 </div>
-                                <a onclick="clearInput();" type="reset" class="btn btn-default"><i class="fa fa-times"></i> 清除</a>
+                                <a onclick="clearInput1();" type="reset" class="btn btn-default"><i class="fa fa-times"></i> 清除</a>
                             </div>
                             </form>
                         </div>
@@ -106,28 +106,29 @@
             </div>
         </section>
     </div>
-    <!-- /.content-wrapper -->
+    <!-- content-wrapper -->
     <footer class="main-footer">
         <span th:replace="pageFrame/basicsFooter :: copy" />
     </footer>
     <!-- Control Sidebar -->
     <span th:replace="pageFrame/basicsControl :: copy" />
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
+    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
+
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
-<span th:replace="pageFrame/basicsJs :: copy" />
+<span th:replace="pageFrame/basicsJs :: copy" ></span>
 <!-- page_script -->
 <script th:src="@{/js/superTableScript.js}"></script>
 <script th:src="@{/plugins/CKEditor5/classic/ckeditor.js}"></script>
-<!--<script th:src="@{/plugins/CKEditor4/ckeditor.js}"></script>-->
+<!-- bootstrapValidator -->
+<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>SS
 
 <script>
     ClassicEditor
-        .create( document.querySelector( '#text' ) )
-        .catch( error => {
-        console.error( error );
+        .create(document.querySelector( '#text' ))
+        .catch(error => {
+        console.error(error);
     } );
 </script>
 
@@ -211,14 +212,42 @@ $(document).ready(function(){
 });
 
 </script>
-<!-- bootstrapValidator -->
-<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
+
+<script>
+    //清空表单
+     function clearInput1() {
+        $('#thisForm')[0].reset();
+        $("#udata").empty();
+        CKEDITOR.instances.text.setData(' ');
+       /*  $("#text").val("");  */
+        $('#thisForm').data('bootstrapValidator')
+            .updateStatus('title', 'NOT_VALIDATED',null)
+            .updateStatus('text', 'NOT_VALIDATED',null)
+            .validateField('title')
+            .validateField('text');
+    }; 
+
+    //后端验证错误提示
+    $(document).ready(function () {
+        if($('#errorMsg').val()==""||$('#errorMsg').val()==null){
+        }
+        else{
+            layer.msg($('#errorMsg').val(), function(){
+            });
+        }
+    });
+</script>
+
+
+
+
 <!-- page_script -->
 <script th:inline="javascript">
     /*<![CDATA[*/
     var warning_Illegal= [[#{warning_Illegal}]];
     /*]]>*/
 </script>
+
 <script>
     //前端验证错误提示
     $(document).ready(function() {
@@ -247,13 +276,13 @@ $(document).ready(function(){
                 },
                 'text': {
                     validators: {
-                        regexp: {
-                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
-                            message: warning_Illegal
-                        },
                         stringLength: {
                             min: 0,
                             max: 100
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
                         },
                     }
                 },

@@ -369,11 +369,11 @@ public class MessageServiceImpl implements MessageService{
         }
     }
 
-    @Override
-    public int countStatus(int statusNum) {
-        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return this.messageRepository.countStatus(thisUser.getId(),statusNum);
-    }
+	@Override
+	public int countStatus(int statusNum) {
+		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return this.messageRepository.countStatus(thisUser.getEmail(), statusNum);
+	}
     /**
      * 发送邀请信
      * @param request

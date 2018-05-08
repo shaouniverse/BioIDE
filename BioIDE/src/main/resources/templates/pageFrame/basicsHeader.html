@@ -30,7 +30,7 @@
                     </a>
                     <!-- Message frame -->
                     <ul class="dropdown-menu">
-                        <li class="header">You have <span th:text="${session.unReadMessageNum}"></span> new messages</li>
+                        <li class="header">您有 <span th:text="${session.unReadMessageNum}"></span> 封未读消息</li>
                         <li th:if="${session.unReadMessageNum} &gt; 0">
                             <ul class="menu">
                                 <li>
@@ -40,14 +40,14 @@
                                         </div>
                                         <h4>
                                             Support Team
-                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                            <small><i class="fa fa-clock-o"></i> 5 分钟</small>
                                         </h4>
                                         <p>系统消息</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#" th:href="@{/console/message}">See All Messages</a></li>
+                        <li class="footer"><a href="#" th:href="@{/console/message}">查看所有消息</a></li>
                     </ul>
                 </li>
                 <!-- User Account-->

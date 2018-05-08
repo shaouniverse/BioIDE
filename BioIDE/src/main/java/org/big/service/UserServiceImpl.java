@@ -198,12 +198,14 @@ public class UserServiceImpl implements UserService{
         thisSelect.put("incompleteResulte",incompleteResulte);
         thisList = thisPage.getContent();
 
+       /* AllUsers
         if(findPage==1){
             JSONObject row = new JSONObject();
             row.put("id","");
             row.put("full_name", messageSource.getMessage("all_udata", null, LocaleContextHolder.getLocale()));
             items.add(0,row);
         }
+        */
         
         for(int i=0;i<thisList.size();i++){
             JSONObject row= new JSONObject();

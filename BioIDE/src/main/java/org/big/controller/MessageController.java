@@ -69,17 +69,19 @@ public class MessageController {
      * @param id 实体的
      * @return java.lang.String
      */
-    @RequestMapping(value="/read/{id}", method = {RequestMethod.GET})
-    public String ReadMessage(Model model,@PathVariable String id, HttpServletRequest request) {
-        Message thisMessage=this.messageService.findbyID(id);				// Message 对象
-        User thisSender=this.userService.findbyID(thisMessage.getSender());	// 当前登录用户
-        this.messageService.changeStatus(thisMessage, 1); 					// 改变消息状态 -- 未读消息状态为0 | 已读消息状态为1
-        int unReadMessageNum=messageService.countStatus(0); 				// 根据状态统计未读消息数量
-        request.getSession().setAttribute("unReadMessageNum",unReadMessageNum);
-        model.addAttribute("thisMessage", thisMessage);
-        model.addAttribute("thisSender", "From:"+thisSender.getNickname());
-        return "message/read_admin";
-    }
+	@RequestMapping(value = "/read/{id}", method = { RequestMethod.GET })
+	public String ReadMessage(Model model, @PathVariable String id, HttpServletRequest request) {
+		Message thisMessage = this.messageService.findbyID(id); // Message 对象
+		thisMessage.setText("<p></p><p></p>");
+		User thisSender = this.userService.findbyID(thisMessage.getSender()); // 当前登录用户
+		this.messageService.changeStatus(thisMessage, 1); 		// 改变消息状态 -- 未读消息状态为0 | 已读消息状态为1
+		int unReadMessageNum = messageService.countStatus(0); 	// 根据状态统计未读消息数量
+		System.out.println(unReadMessageNum);
+		request.getSession().setAttribute("unReadMessageNum", unReadMessageNum);
+		model.addAttribute("thisMessage", thisMessage);
+		model.addAttribute("thisSender", "From:" + thisSender.getNickname());
+		return "message/read_admin";
+	}
 
     /**
      *<b>团队邀请</b>
@@ -91,7 +93,7 @@ public class MessageController {
     @RequestMapping(value="/compose/{id}", method = {RequestMethod.GET})
     public String Add(@PathVariable String id, Model model) {
 		Message thisMessage = new Message();
-        thisMessage.setText("<p></p><p></p>");
+		thisMessage.setText("<p></p><p></p>");
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         thisMessage.setSender(thisUser.getId());	// 将当前登录用户(团队管理员)，设置为邀请人
         thisMessage.setTeamid(id);
@@ -107,15 +109,14 @@ public class MessageController {
      * @return java.lang.String
      */
     @RequestMapping(value="/compose", method = {RequestMethod.GET})
-    public String Add(Model model) {
-        Message thisMessage=new Message();
-        thisMessage.setText("<p></p><p></p>");
-        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        thisMessage.setSender(thisUser.getId());	// 将当前登录用户(团队管理员)，设置为邀请人
-        model.addAttribute("thisMessage", thisMessage);
-        return "message/compose";
-    }
-    
+	public String Add(Model model) {
+		Message thisMessage = new Message();
+		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		thisMessage.setSender(thisUser.getId()); // 将当前登录用户(团队管理员)，设置为发信人
+		model.addAttribute("thisMessage", thisMessage);
+		return "message/compose";
+	}
+
     /**
      *<b>发送团队邀请函</b>
      *<p> 发送团队邀请函</p>
@@ -126,18 +127,20 @@ public class MessageController {
     @RequestMapping(value="/send", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisMessage") Message thisMessage, HttpServletRequest request) {
     	UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        thisMessage.setSender(thisUser.getId());
+        System.out.println(thisMessage);
+    	thisMessage.setSender(thisUser.getId());
+    	System.out.println(thisMessage.getTeamid());
         if (null != request.getParameter("TeamID") && !"".equals(request.getAttribute("TeamID"))) {
         	thisMessage.setTeamid(request.getParameter("TeamID"));
 		}
         String udata = request.getParameter("udata");
         
-        System.out.println("Udata:" + udata);
         if (null != udata && !"".equals(udata)) {
         	String email = userService.findOneByNickName(udata).getEmail(); // null.Xxx -->空指针异常
         	thisMessage.setAddressee(email);
         }
         this.messageService.sendOne(thisMessage);
+        System.out.println(thisMessage);
         return "redirect:/console/message";
     }
     /**

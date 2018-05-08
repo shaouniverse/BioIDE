@@ -115,5 +115,5 @@ public interface MessageRepository extends BaseRepository<Message, String> {
      * @return void
      */
     @Query(" select count(m) from Message m where m.addressee =?1  AND m.status = ?2")
-    Integer countStatus(String userId,int statusNum);
+    Integer countStatus(String email,int statusNum);
 }

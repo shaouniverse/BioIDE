@@ -12,21 +12,26 @@
                 </div>
                 <div class="pull-left info">
                     <p sec:authentication="name">Name</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 团队名称</a>
                 </div>
             </div>
-            <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </form>
             <!-- sidebar menu -->
             <ul class="sidebar-menu" data-widget="tree">
+                <!-- 团队操作选项 -->
+                <li class="header">团队操作选项</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i> <span>团队名称</span>
+                            <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a th:href="@{/select/team}" href="team"><i class="fa fa-exchange"></i> <span>团队变更</span></a></li>
+                            <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队管理</span></a></li>
+                        </ul>
+                    </li>
+
                 <!-- BioIDE操作选项 -->
                 <li class="header">BioIDE操作选项</li>
                     <li class="treeview">
@@ -97,7 +102,6 @@
                             <li><a href="#"><i class="fa fa-copyright"></i> 版权许可证管理</a></li>
                         </ul>
                     </li>
-                    <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队</span></a></li>
                 <!-- 管理员操作选项 -->
                 	<li sec:authorize="hasRole('ROLE_SUPER')" class="header">管理员操作选项</li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/user}" href="user"><i class="fa fa-user"></i> <span> 用户管理</span></a></li>
@@ -106,10 +110,7 @@
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/dataset}" href="dataset"><i class="fa fa-users"></i> <span> 数据集管理</span></a></li>
                 <!-- 关于我们 -->
                 <li class="header">关于我们</li>
-                    <li><a href="#"><i class="fa fa-users text-green"></i> <span>开发团队</span></a></li>
-                    <li><a href="#"><i class="fa fa-globe text-blue"></i> <span>官方网站</span></a></li>
-                <li class="header">测试页</li>
-                    <li><a th:href="@{/test}" ><i class="fa fa-users text-green"></i> <span>测试</span></a></li>
+                    <li><a href="#"><i class="fa fa-users text-blue"></i> <span>开发团队</span></a></li>
             </ul>
         </section>
     </aside>

@@ -26,355 +26,93 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                BioIDE
-                <small>This is a IDE for Bio</small>
+                团队名称
+                <small>团队备注</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active"><i class="fa fa-teams"></i> 团队名称</li>
             </ol>
         </section>
         <!-- Main content -->
         <section class="content">
-            <div class="box box-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-black" style="background: url('/img/dataset-bg.jpg') center center;">
-                    <h3 class="widget-user-username"><b>数据集</b></h3>
-                    <h5 class="widget-user-desc"><b>在这里，所有的数据都以数据集的形式整合在一起</b></h5>
-                </div>
-                <div class="box-footer">
-                    <div class="row">
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>3<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>分类单元集</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-cubes"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-gray">
+                        <div class="inner">
+                            <h3>3<sup style="font-size: 20px">个</sup></h3>
+                            <p>成员</p>
                         </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>19<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>分类树集</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-sitemap"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
+                        <div class="icon">
+                            <i class="fa fa-users"></i>
                         </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>98<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>进化树集</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-code-fork"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>69<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>Data Set</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-database"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
+                        <a th:href="@{/console/dataset}" class="small-box-footer">
+                            查看详情 <i class="fa fa-arrow-circle-right"></i>
+                        </a>
                     </div>
-                    <!-- /.row -->
                 </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-gray">
+                        <div class="inner">
+                            <h3>69<sup style="font-size: 20px">个</sup></h3>
+
+                            <p>数据集</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-database"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            数据集管理 <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- ./col -->
             </div>
-            <div class="box box-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-black" style="background: url('/img/taxon-bg.jpg') center center;">
-                    <h3 class="widget-user-username"><b>分类单元</b></h3>
-                        <h5 class="widget-user-desc"><b>在这里，分类单元将作为基本单位组成数据集</b></h5>
-                </div>
-                <div class="box-footer">
-                    <div class="row">
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>159698<sup style="font-size: 20px">个</sup></h3>
 
-                                    <p>分类单元</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-cube"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div class="box box-widget widget-user">
+                        <div class="widget-user-header bg-black" style="background: url('/img/dataset-bg.jpg') center center;">
+                            <h3 class="widget-user-username">数据集名</h3>
+                            <h5 class="widget-user-desc">数据集备注</h5>
                         </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>989667<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>描述信息</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-list-alt"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>1325654<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>标本</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-bug"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>557584<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>分布信息</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>22152<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>保护信息</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-flag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>5524245<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>检索表</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-key"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>9585<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>术语</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-book"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>5774<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>分子数据</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-barcode"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>310254<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>媒体数据</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-photo"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>554521<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>别名</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-circle-o"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>44252<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>观测记录</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-map-marker"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="javascript:void (0);">分类单元 <span class="pull-right badge bg-gray">5</span></a></li>
+                                <li><a href="javascript:void (0);">描述信息 <span class="pull-right badge bg-gray">7</span></a></li>
+                                <li><a href="javascript:void (0);">分布信息 <span class="pull-right badge bg-gray">7</span></a></li>
+                                <li><a href="javascript:void (0);">媒体数据 <span class="pull-right badge bg-gray">7</span></a></li>
+                                <li><a href="javascript:void (0);">分类单元集 <span class="pull-right badge bg-gray">12</span></a></li>
+                                <li><a href="javascript:void (0);">分类树集 <span class="pull-right badge bg-gray">842</span></a></li>
+                                <li><a class="btn btn-block bg-gray">进入</a></li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- /.row -->
                 </div>
-            </div>
-            <div class="box box-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-black" style="background: url('/img/info-bg.jpg') center center;">
-                    <h3 class="widget-user-username"><b>附属信息</b></h3>
-                    <h5 class="widget-user-desc"><b>包括参考文献、源数据信息、版权信息等</b></h5>
-                </div>
-                <div class="box-footer">
-                    <div class="row">
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>1589667<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>参考文献</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-list-ol"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <div class="box box-widget widget-user">
+                        <div class="widget-user-header bg-black" style="background: url('/img/dataset-bg.jpg') center center;">
+                            <h3 class="widget-user-username">数据集名</h3>
+                            <h5 class="widget-user-desc">数据集备注</h5>
                         </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>14<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>源数据</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-database"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>45412<sup style="font-size: 20px">个</sup></h3>
-
-                                    <p>版权许可证</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-copyright"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    查看详情 <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="javascript:void (0);">分类单元 <span class="pull-right badge bg-gray">5</span></a></li>
+                                <li><a href="javascript:void (0);">描述信息 <span class="pull-right badge bg-gray">7</span></a></li>
+                                <li><a href="javascript:void (0);">分布信息 <span class="pull-right badge bg-gray">7</span></a></li>
+                                <li><a href="javascript:void (0);">媒体数据 <span class="pull-right badge bg-gray">7</span></a></li>
+                                <li><a href="javascript:void (0);">分类单元集 <span class="pull-right badge bg-gray">12</span></a></li>
+                                <li><a href="javascript:void (0);">分类树集 <span class="pull-right badge bg-gray">842</span></a></li>
+                                <li><a class="btn btn-block bg-gray">进入</a></li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- /.row -->
                 </div>
+                <!-- ./col -->
             </div>
         </section>
         <!-- /.content -->

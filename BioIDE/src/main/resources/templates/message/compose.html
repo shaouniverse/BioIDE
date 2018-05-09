@@ -216,10 +216,10 @@ $(document).ready(function(){
 <script>
     //清空表单
      function clearInput1() {
-        $('#thisForm')[0].reset();
+     /* $('#thisForm')[0].reset();
         $("#udata").empty();
         CKEDITOR.instances.text.setData(' ');
-       /*  $("#text").val("");  */
+         $("#text").val("");  */
         $('#thisForm').data('bootstrapValidator')
             .updateStatus('title', 'NOT_VALIDATED',null)
             .updateStatus('text', 'NOT_VALIDATED',null)

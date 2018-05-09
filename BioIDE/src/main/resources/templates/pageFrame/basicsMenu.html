@@ -28,27 +28,30 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a th:href="@{/select/team}" href="team"><i class="fa fa-exchange"></i> <span>团队变更</span></a></li>
-                            <li><a th:href="@{/console/team}" href="team"><i class="fa fa-users"></i> <span>团队管理</span></a></li>
+                            <li><a href="#"><i class="fa fa-users"></i> <span>团队详情</span></a></li>
                         </ul>
                     </li>
-
-                <!-- BioIDE操作选项 -->
-                <li class="header">BioIDE操作选项</li>
+                <!-- 操作选项 -->
+                <li class="header">操作选项</li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-hdd-o"></i> <span>数据集管理</span>
+                            <i class="fa fa-hdd-o"></i>
+                                <span th:if="${#lists.isEmpty(session.datasetID)}">数据集</span>
+                                <span th:if="${not #lists.isEmpty(session.datasetID)}" >数据集名称</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-cubes"></i> 分类单元集管理</a></li>
-                            <li><a href="#"><i class="fa fa-sitemap"></i> 分类树集管理</a></li>
-                            <li><a href="#"><i class="fa fa-code-fork"></i> 进化树集管理</a></li>
-                            <li><a th:href="@{/console/dataset}" href="dataset/index.html"><i class="fa fa-database"></i> DataSet管理</a></li>
+                            <li th:if="${not #lists.isEmpty(session.datasetID)}" ><a href="#"><i class="fa fa-cubes"></i> 分类单元集管理</a></li>
+                            <li th:if="${not #lists.isEmpty(session.datasetID)}" ><a href="#"><i class="fa fa-sitemap"></i> 分类树集管理</a></li>
+                            <li th:if="${not #lists.isEmpty(session.datasetID)}" ><a href="#"><i class="fa fa-code-fork"></i> 进化树集管理</a></li>
+                            <li th:if="${not #lists.isEmpty(session.datasetID)}"><a th:href="@{/select/dataset}" href="team"><i class="fa fa-exchange"></i> <span>数据集变更</span></a></li>
+                            <li th:if="${#lists.isEmpty(session.datasetID)}" ><a th:href="@{/select/dataset}" href="dataset/index.html"><i class="fa fa-exchange"></i> 选择数据集</a></li>
+                            <li th:if="${#lists.isEmpty(session.datasetID)}" ><a th:href="@{/console/dataset}" href="dataset/index.html"><i class="fa fa-database"></i> 数据集管理</a></li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li th:if="${not #lists.isEmpty(session.datasetID)}" class="treeview">
                         <a href="#">
                             <i class="fa fa-cube"></i> <span> 分类单元管理</span>
                             <span class="pull-right-container">
@@ -89,7 +92,7 @@
                             <li><a href="#"><i class="fa fa-map-marker"></i> 观测记录管理</a></li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li th:if="${not #lists.isEmpty(session.datasetID)}" class="treeview">
                         <a href="#">
                             <i class="fa fa-file-text-o"></i> <span>信息管理</span>
                             <span class="pull-right-container">
@@ -102,6 +105,22 @@
                             <li><a href="#"><i class="fa fa-copyright"></i> 版权许可证管理</a></li>
                         </ul>
                     </li>
+                <!-- 系统操作选项 -->
+                <li class="header">系统操作选项</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-user"></i> <span> 账户管理</span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/user/info}" href="team"><i class="fa fa-user"></i> <span>个人信息</span></a></li>
+                        <li><a th:href="@{/console/message}" href="team"><i class="fa fa-envelope-o"></i> <span>消息管理</span></a></li>
+                    </ul>
+                </li>
+
+                <li><a th:href="@{/console/team}" href="#"><i class="fa fa-users"></i> 团队管理</a></li>
                 <!-- 管理员操作选项 -->
                 	<li sec:authorize="hasRole('ROLE_SUPER')" class="header">管理员操作选项</li>
                     <li sec:authorize="hasRole('ROLE_SUPER')" ><a th:href="@{/super/user}" href="user"><i class="fa fa-user"></i> <span> 用户管理</span></a></li>

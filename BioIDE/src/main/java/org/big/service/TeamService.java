@@ -3,6 +3,7 @@ package org.big.service;
 
 import com.alibaba.fastjson.JSON;
 import org.big.entity.Team;
+import org.big.entity.UserTeam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,7 +26,7 @@ public interface TeamService {
      * @param user_id 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Team>
      */
-    List<Team> selectTeamByUserId(String user_id);
+    List<Team> selectTeamByUserId(String uid);
 
     /**
      *<b>根据teamid查找一个Team实体</b>

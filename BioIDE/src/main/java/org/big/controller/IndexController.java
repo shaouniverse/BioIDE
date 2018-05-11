@@ -2,6 +2,7 @@ package org.big.controller;
 
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
+import org.big.entity.UserTeam;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,7 +68,8 @@ public class IndexController {
     public String SelectTeam(Model model) {
         try{
             UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            List<Team> teamList=this.teamService.selectTeamByUserId(thisUser.getId());//根据user id查找所有team
+            // cannot be cast to org.big.entity.Team -- 多表查询返回的Object对象无法转成Team对象
+            List<Team> teamList = this.teamService.selectTeamByUserId(thisUser.getId());//根据user id查找所有team
             model.addAttribute("teamList", teamList);
             return "team/select";
         }

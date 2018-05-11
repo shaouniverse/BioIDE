@@ -2,7 +2,9 @@ package org.big.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.big.entity.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +34,7 @@ public class LoginController {
      */
     @RequestMapping(value="", method = RequestMethod.GET)
     public String login(Model model) {
-    	System.out.println("BINZI:" + request.getSession().getAttribute("username"));
-        String loginErrorMsg="";
+    	String loginErrorMsg="";
         try{
             if(request.getSession().getAttribute("loginError").equals("name")){
                 model.addAttribute("loginError", 1);

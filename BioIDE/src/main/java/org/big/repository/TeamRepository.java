@@ -1,6 +1,7 @@
 package org.big.repository;
 
 import org.big.entity.Team;
+import org.big.entity.UserTeam;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,12 +29,9 @@ public interface TeamRepository extends BaseRepository<Team, String> {
      * @param user_id 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Team>
      */
-    @Query(value ="SELECT t.* FROM team AS t " +
-            "LEFT JOIN user_team AS ut " +
-            "ON ut.team_id=t.id " +
-            "WHERE ut.user_id=?1"
-            , nativeQuery = true)
-    List<Team> selectTeamByUserId(String user_id);
+/*	@Query(value ="SELECT t.id, t.name, t.leader, t.note FROM Team AS t LEFT JOIN UserTeam AS ut ON ut.teamId = t.id WHERE ut.userId = ?1")*/	
+	@Query(value ="SELECT ut.teamId FROM UserTeam AS ut WHERE ut.userId = ?1")
+    List<String> selectTeamByUserId(String uid);
 
     /**
      *<b>带分页排序的条件查询</b>

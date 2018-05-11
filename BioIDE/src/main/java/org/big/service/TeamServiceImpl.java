@@ -44,13 +44,10 @@ public class TeamServiceImpl implements TeamService  {
     @Autowired
     private UserRepository userRepository;
     @Override
-    public List<Team> selectTeamByUserId(String userId) {
-        System.out.println("userId="+userId);
-        List<Team> teams = this.teamRepository.selectTeamByUserId(userId);
-        for(Team thisTeam:teams){
-            System.out.println(thisTeam.getName());
-        }
-        return this.teamRepository.selectTeamByUserId(userId);
+    public List<Team> selectTeamByUserId(String uId) {
+    	List<String> ids = this.teamRepository.selectTeamByUserId(uId);
+    	List<Team> teamList = teamRepository.findAllById(ids);
+        return teamList;
     }
 
     @Override

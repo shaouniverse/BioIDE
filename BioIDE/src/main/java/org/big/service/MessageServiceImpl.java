@@ -181,8 +181,7 @@ public class MessageServiceImpl implements MessageService{
 		JSONObject thisTable = new JSONObject();
 		JSONArray rows = new JSONArray();
 		List<Object> thisList = new ArrayList<>();
-		Page<Object> thisPage = this.messageRepository.searchInfoByAddressee(searchText, thisUser.getEmail(),
-				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
+		Page<Object> thisPage = this.messageRepository.searchInfoByAddressee(searchText, thisUser.getEmail(), QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
 		thisTable.put("total", thisPage.getTotalElements());
 		thisList = thisPage.getContent();
 		for (int i = 0; i < thisList.size(); i++) {

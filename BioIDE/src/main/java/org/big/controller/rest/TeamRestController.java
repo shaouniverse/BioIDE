@@ -61,12 +61,13 @@ public class TeamRestController {
      */
     @RequestMapping(value="/removeMany/{ids}",method = {RequestMethod.GET})
     public boolean RemoveMany(@PathVariable String ids) {
-        try{
+        
+    	try{
             //获取id列表字符串
             String [] idList = ids.split("￥");
-            for(int i=0;i<idList.length;i++){
-                this.teamService.removeOne(idList[i]);
-            }
+            for (String id : idList) {
+				this.teamService.removeOne(id);
+			}
             return true;
         }catch(Exception e){
             return false;

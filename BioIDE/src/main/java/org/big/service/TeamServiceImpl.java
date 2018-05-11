@@ -44,10 +44,9 @@ public class TeamServiceImpl implements TeamService  {
     @Autowired
     private UserRepository userRepository;
     @Override
-    public List<Team> selectTeamByUserId(String uId) {
-    	List<String> ids = this.teamRepository.selectTeamByUserId(uId);
-    	List<Team> teamList = teamRepository.findAllById(ids);
-        return teamList;
+    public List<Team> selectTeamByUserId(String userId) {
+        List<String> ids = this.teamRepository.selectTeamByUserId(userId);
+        return this.teamRepository.findAllById(ids);
     }
 
     @Override
@@ -211,13 +210,14 @@ public class TeamServiceImpl implements TeamService  {
 
     @Override
     public void removeOne(String ID) {
-        this.teamRepository.deleteById(ID);
+    	this.userTeamRepository.deleteByTeamId(ID);	// 先操作中间表，删除外键关系
+        this.teamRepository.deleteById(ID);			// 再操作Team表
     }
 
     @Override
     public void removeOneByUser(String ID) {
+    	this.userTeamRepository.deleteByTeamId(ID);
         this.teamRepository.deleteById(ID);
-        this.userTeamRepository.deleteByTeamId(ID);
     }
 
     @Override

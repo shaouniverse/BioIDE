@@ -358,4 +358,9 @@ public class DatasetServiceImpl implements DatasetService {
 		}
 		return thisResult;
 	}
+
+	@Override
+	public List<Dataset> findAllDatasetByTeamId(String teamId) {
+		return this.datasetRepository.findAllDatasetByTeamId(teamId);
+	}
 }

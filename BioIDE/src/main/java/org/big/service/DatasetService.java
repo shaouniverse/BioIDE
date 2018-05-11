@@ -3,6 +3,8 @@ import com.alibaba.fastjson.JSON;
 import org.big.entity.Dataset;
 import org.big.entity.Team;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -15,6 +17,16 @@ import javax.servlet.http.HttpServletRequest;
  * @since JDK 1.80_144
  */
 public interface DatasetService {
+	
+	/**
+     *<b>查询指定团队下的所有Dataset</b>
+     *<p> 查询指定团队下的所有Dataset</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return 
+     */
+    List<Dataset> findAllDatasetByTeamId(String teamId);
+	
 	/**
      *<b>带分页排序的条件查询</b>
      *<p> 带分页排序的条件查询</p>

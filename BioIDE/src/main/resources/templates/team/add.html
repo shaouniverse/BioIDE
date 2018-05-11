@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <!--
@@ -19,7 +20,7 @@
     <!-- 引入css -->
     <span th:replace="pageFrame/basicsCss :: copy" />
 </head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-dark fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
     <header id="header" class="main-header">
@@ -35,7 +36,7 @@
                 <small>在这里您可以对您的团队成员进行管理</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
+                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
                 <li><a th:href="@{/team}" href="team"><i class="fa fa-teams"></i> 团队管理</a></li>
                 <li class="active"><i class="fa fa-team-plus"></i> 添加成员</li>
             </ol>
@@ -43,9 +44,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="well">
-                <form id="thisForm" class="form-horizontal"
-                      th:action="@{/console/team/save}"
-                      method="post" th:object="${thisTeam}">
+                <form id="thisForm" class="form-horizontal" th:action="@{/console/team/save}" method="post" th:object="${thisTeam}">
                     <!-- 引入form -->
                     <span th:substituteby="team/form :: copy" />
                     <p></p>
@@ -76,13 +75,87 @@
     <!-- Control Sidebar -->
     <span th:replace="pageFrame/basicsControl :: copy" />
     <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
+    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
 <span th:replace="pageFrame/basicsJs :: copy" />
 <!-- page_script -->
 <script th:src="@{/js/tableScript.js}"></script>
+
+<script>
+    //清空表单
+    function clearInput() {
+        $('#thisForm')[0].reset();
+        $('#thisForm').data('bootstrapValidator')
+            .updateStatus('name', 'NOT_VALIDATED',null)
+            .updateStatus('note', 'NOT_VALIDATED',null)
+            .validateField('name')
+            .validateField('note');
+    };
+    //后端验证错误提示
+    $(document).ready(function () {
+        if($('#errorMsg').val()==""||$('#errorMsg').val()==null){
+        }
+        else{
+            layer.msg($('#errorMsg').val(), function(){
+            });
+        }
+    });
+</script>
+<!-- bootstrapValidator -->
+<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
+<th:block th:if="${#locale.getLanguage().equals('zh')}">
+    <script th:src="@{/plugins/bootstrapValidator/js/language/zh_CN.js}"></script>
+</th:block>
+<!-- page_script -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var warning_Illegal= [[#{warning_Illegal}]];
+    /*]]>*/
+</script>
+<script>
+    //前端验证错误提示
+    $(document).ready(function() {
+        //获取host
+	    $("#base_url").val(window.location.host);
+        $('#thisForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon ',
+                invalid: 'glyphicon ',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                'name': {
+                    validators: {
+                        notEmpty: {
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a【】]+$/,
+                            message: warning_Illegal
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 30,
+                        },
+                    }
+                },
+                'note': {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 100
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+            }
+        });
+    });
+</script>
 </body>
 </html>

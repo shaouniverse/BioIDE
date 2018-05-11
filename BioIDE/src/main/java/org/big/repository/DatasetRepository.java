@@ -1,5 +1,7 @@
 package org.big.repository;
 
+import java.util.List;
+
 import org.big.entity.Dataset;
 import org.big.entity.Team;
 import org.big.repository.base.BaseRepository;
@@ -20,6 +22,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DatasetRepository extends BaseRepository<Dataset, String> {
 	/**
+     *<b>查询指定团队下的所有Dataset</b>
+     *<p> 查询指定团队下的所有Dataset</p>
+     * @author BINZI
+     * @param teamId
+     * @return 
+     */
+	@Query(value = "select d from Dataset d where d.team.id = ?1")
+	List<Dataset> findAllDatasetByTeamId(String teamId);
+	
+	/**
      *<b>带分页排序的条件查询</b>
      *<p> 带分页排序的条件查询</p>
      * @author BINZI 
@@ -28,8 +40,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
 	// 根据dsname & dsabstract & createdDate 模糊 | 排序 | 条件 | 分页查询
-   @Query(value = "select d from Dataset d where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%)"
-    )
+   @Query(value = "select d from Dataset d where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%)")
    Page<Dataset> searchInfo(String findText, Pageable pageable);
 
     /**

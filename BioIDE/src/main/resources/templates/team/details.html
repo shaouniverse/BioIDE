@@ -34,7 +34,7 @@
                 <small> 在这里您可以查看您所属团队的详细信息</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
+                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
                 <li><a th:href="@{/console/team}" href="team"><i class="fa fa-teams"></i> 团队管理</a></li>
                 <li class="active"><i class="fa fa-team-plus"></i> 团队详情</li>
             </ol>
@@ -52,7 +52,7 @@
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
                                 <h5 class="description-header" th:text="${members}">0</h5>
-                                <span class="description-text">MEMBERS</span>
+                                <span class="description-text">成员</span>
                             </div>
                         </div>
                         <div class="col-sm-4 border-right">
@@ -93,13 +93,13 @@
 							           <!-- box-body -->
 							           <div class="box-body">
 							               <a class="btn btn-app" th:href="@{/console/dataset/add/} + ${thisTeam.id}" href="/">
-							                   <i class="fa fa-plus"></i> <span>ADD</span>
+							                   <i class="fa fa-plus"></i> <span>新建</span>
 							               </a>
 							               <a class="btn btn-app" onclick="editSelectObject('dataset');">
-							                   <i class="fa fa-edit"></i> <span>EDIT</span>
+							                   <i class="fa fa-edit"></i> <span>修改</span>
 							               </a>
 							               <a class="btn btn-app" onclick="removeSelectObject('dataset');">
-							                   <i class="fa fa-remove"></i> <span>REMOVE</span>
+							                   <i class="fa fa-remove"></i> <span>删除</span>
 							               </a>
 							           </div>
 							       </div>

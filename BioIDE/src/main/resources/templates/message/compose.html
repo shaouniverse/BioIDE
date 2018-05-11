@@ -87,13 +87,12 @@
 								</div>
                                 
                                 <div class="form-group">
-                                    <input class="form-control" id="title" th:field="*{title}" placeholder="Title:">
+                                    <input class="form-control" id="title" th:field="*{title}" placeholder="主题:" value="${thisMessage.title}">
                                 </div>
                                 <div class="form-group">
-	                                <textarea class="form-control" id="text"  th:field="*{text}" style="height: 500px">
-	                                </textarea>
-	                            </div>
-                            <div class="box-footer">
+	                                <textarea id="editor"  th:field="*{text}" class="form-control" style="height: 300px" value="${thisMessage.text}">
+									</textarea>
+	                            <div class="box-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> 发送</button>
                                 </div>
@@ -121,12 +120,13 @@
 <!-- page_script -->
 <script th:src="@{/js/superTableScript.js}"></script>
 <script th:src="@{/plugins/CKEditor5/classic/ckeditor.js}"></script>
+<!--<script th:src="@{/plugins/CKEditor4/ckeditor.js}"></script>
 <!-- bootstrapValidator -->
 <script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>SS
 
 <script>
     ClassicEditor
-        .create(document.querySelector( '#text' ))
+        .create(document.querySelector( '#editor' ))
         .catch(error => {
         console.error(error);
     } );
@@ -151,10 +151,8 @@
         </script>
     </th:block>
 <script>
-
 $(".select2").select2({
 });
-
 //拼接option
 function formatRepo (repo) {
     if (repo.loading){
@@ -163,12 +161,10 @@ function formatRepo (repo) {
     var markup = repo.full_name;
     return markup;
 }
-
 //拼接option
 function formatRepoSelection (repo) {
     return repo.full_name;
 }
-
 //构造select2的方法
 function buildSelect2 (select_id,url) {
 	$("#"+select_id).select2({
@@ -202,7 +198,6 @@ function buildSelect2 (select_id,url) {
         templateSelection: formatRepoSelection
     });
 }
-
 //初始化所有select组件
 $(document).ready(function(){
     //构造select2
@@ -210,23 +205,22 @@ $(document).ready(function(){
     $("#udata").val();
     $("#udata").prepend("<option value='' selected='selected'>"+ all_udata +"</option>");
 });
-
 </script>
 
 <script>
     //清空表单
      function clearInput1() {
-     /* $('#thisForm')[0].reset();
+     	$('#thisForm')[0].reset();
         $("#udata").empty();
-        CKEDITOR.instances.text.setData(' ');
-         $("#text").val("");  */
+        CKEDITOR.instances.editor.setData(' ');
+        CKEDITOR.replace('#editor');
+        $("#editor").val("");
         $('#thisForm').data('bootstrapValidator')
             .updateStatus('title', 'NOT_VALIDATED',null)
             .updateStatus('text', 'NOT_VALIDATED',null)
             .validateField('title')
             .validateField('text');
     }; 
-
     //后端验证错误提示
     $(document).ready(function () {
         if($('#errorMsg').val()==""||$('#errorMsg').val()==null){
@@ -237,9 +231,6 @@ $(document).ready(function(){
         }
     });
 </script>
-
-
-
 
 <!-- page_script -->
 <script th:inline="javascript">

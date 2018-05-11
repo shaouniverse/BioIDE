@@ -82,7 +82,7 @@ public interface MessageRepository extends BaseRepository<Message, String> {
      * @param pageable 分页排序方案实体
      * @return org.springframework.data.domain.Page<java.lang.Object>
      */
-    @Query(value = "SELECT m.id AS id, us.userName AS sender, ua.email AS addressee, m.sendtime AS sendtime,"
+    @Query(value = "SELECT m.id AS id, us.email AS sender, ua.email AS addressee, m.sendtime AS sendtime,"
     		+ " m.title AS title, m.text AS text, m.status AS status, m.type AS type, m.mark AS mark"
             + " FROM Message m LEFT JOIN User us ON us.id = m.sender LEFT JOIN User ua ON ua.email = m.addressee"
             + " WHERE m.sender = ?2 AND (ua.userName LIKE %?1% OR us.userName LIKE %?1%)"

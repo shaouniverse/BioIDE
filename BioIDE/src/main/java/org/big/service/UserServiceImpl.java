@@ -19,10 +19,14 @@ import org.big.common.IdentityVote;
 import org.big.common.MD5Utils;
 import org.big.common.QueryTool;
 import org.big.entity.Dataset;
+import org.big.entity.Team;
 import org.big.entity.User;
 import org.big.entity.UserDetail;
+import org.big.entity.UserTeam;
 import org.big.repository.DatasetRepository;
+import org.big.repository.TeamRepository;
 import org.big.repository.UserRepository;
+import org.big.repository.UserTeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -53,43 +57,43 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private TeamService teamService;
+    private TeamRepository teamRepository;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private UserTeamRepository userTeamRepository;
     @Autowired
     private LocaleService localeService;
     @Value("${spring.mail.username}") // -- BINZIDYB@163.com
     private String fromEmail;
     @Autowired
-    private MessageSource messageSource;
-    @Autowired
     private DatasetRepository datasetRepository;
     
     @Override
-    @Transactional
-    public JSON findbyInfo(HttpServletRequest request) {
-        String this_language="en";
-        Locale this_locale= LocaleContextHolder.getLocale();
-        if(this_locale.getLanguage().equals("zh")){
-            this_language="zh";
-        }
-        if(this_locale.getLanguage().equals("en")){
-            this_language="en";
-        }
-        JSON json= null;
-        String searchText=request.getParameter("search");
-        if(searchText==null || searchText.length()<=0){
-            searchText="";
-        }
-        int limit_serch=Integer.parseInt(request.getParameter("limit"));
-        int offset_serch=Integer.parseInt(request.getParameter("offset"));
-        String sort="desc";
-        String order="date";
-        sort=request.getParameter("sort");
-        order=request.getParameter("order");
-        if(sort==null || sort.length()<=0){
-            sort="adddate";
-        }
+	@Transactional
+	public JSON findbyInfo(HttpServletRequest request) {
+		String this_language = "en";
+		Locale this_locale = LocaleContextHolder.getLocale();
+		if (this_locale.getLanguage().equals("zh")) {
+			this_language = "zh";
+		}
+		if (this_locale.getLanguage().equals("en")) {
+			this_language = "en";
+		}
+		JSON json = null;
+		String searchText = request.getParameter("search");
+		if (searchText == null || searchText.length() <= 0) {
+			searchText = "";
+		}
+		int limit_serch = Integer.parseInt(request.getParameter("limit"));
+		int offset_serch = Integer.parseInt(request.getParameter("offset"));
+		String sort = "desc";
+		String order = "date";
+		sort = request.getParameter("sort");
+		order = request.getParameter("order");
+		if (sort == null || sort.length() <= 0) {
+			sort = "adddate";
+		}
         if(order==null || order.length()<=0){
             order="desc";
         }
@@ -164,22 +168,23 @@ public class UserServiceImpl implements UserService{
     public User findOneByEmail(String email) {
     	return this.userRepository.findOneByEmail(email);
     }
-    @Override
-    @Transactional
-    public JSON findAllUser(HttpServletRequest request) {
-    	String findText=request.getParameter("find");
-        if(findText==null || findText.length()<=0){
-            findText="";
-        }
-        int findPage=1;
-        try {
-            findPage=Integer.valueOf(request.getParameter("page"));
-        } catch (Exception e) {
-        }
-        int limit_serch=30;
-        int offset_serch=(findPage-1)*30;
-        String sort="email";
-        String order="asc";
+
+	@Override
+	@Transactional
+	public JSON findAllUser(HttpServletRequest request) {
+		String findText = request.getParameter("find");
+		if (findText == null || findText.length() <= 0) {
+			findText = "";
+		}
+		int findPage = 1;
+		try {
+			findPage = Integer.valueOf(request.getParameter("page"));
+		} catch (Exception e) {
+		}
+		int limit_serch = 30;
+		int offset_serch = (findPage - 1) * 30;
+		String sort = "email";
+		String order = "asc";
         // 创建JSONObject对象
         JSONObject thisSelect = new JSONObject();	
         // 创建JSON数组
@@ -270,7 +275,7 @@ public class UserServiceImpl implements UserService{
             row.put("email",thisList.get(i).getEmail());
             // -- 团队角色 -- 
             String role="成员";
-            if(this.teamService.findbyID(teamId).getLeader().equals(thisList.get(i).getId())){
+            if(this.teamRepository.getOne(teamId).getLeader().equals(thisList.get(i).getId())){
                 role="<span class=\"badge bg-light-blue\">负责人</span>";
             }
             row.put("role",role);
@@ -547,76 +552,60 @@ public class UserServiceImpl implements UserService{
 
 	@Override
     public String activeUser(String userName, String mark, HttpServletRequest request, HttpServletResponse response) {
-        String thisLanguage=localeService.getLanguage(request,response);
-        String activeMsg="error";
-        // 用户点击激活链接
-        // http://localhost:8081/register/active/BINZI/ccbf732b-1880-4cca-b2f5-8b3566a987d2/
-        User thisUser=this.findOneByName(userName);	
-        if(thisUser!=null){
-            //有此用户
-            if(thisUser.getStatus()==0){
-                //可正常激活
-                if(thisUser.getMark().equals(mark)){
-                    //设置默认数据集
-                	Dataset newDataset= new Dataset();
+		String thisLanguage = localeService.getLanguage(request, response);
+		String activeMsg = "error";
+        // 用户点击激活链接 -- http://localhost:8081/register/active/BINZI/ccbf732b-1880-4cca-b2f5-8b3566a987d2/
+		User thisUser = this.findOneByName(userName);
+		if (thisUser != null) {	// 是否有此用户
+			if (thisUser.getStatus() == 0) { // 是否能够正常激活
+                if(thisUser.getMark().equals(mark)){ // 创建默认Team及该Team下的数据集
+                	Team newTeam = new Team();
+                	newTeam.setId(UUID.randomUUID().toString());
+                	newTeam.setName(thisUser.getNickname());
+                	newTeam.setLeader(thisUser.getId());
+                	newTeam.setNote("默认团队");
+                	newTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
+                	
+                	UserTeam newUserTeam = new UserTeam();
+                	newUserTeam.setTeamId(newTeam.getId());
+                	newUserTeam.setUserId(thisUser.getId());
+                	
+                	Dataset newDataset = new Dataset();
                 	newDataset.setId(UUID.randomUUID().toString());
+                	newDataset.setDsname(thisUser.getUserName());
+                	newDataset.setDsabstract("默认数据集");
                     newDataset.setCreator(thisUser.getId());
-                    newDataset.setDsname(thisUser.getUserName());
-                    newDataset.setDsabstract("Default");
                     newDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
                     newDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));
                     newDataset.setSynchstatus(0);
                     newDataset.setStatus(1);
-                    newDataset.setMark(UUID.randomUUID().toString());
-         //           newDataset.setTeam(this.teamService.findbyID(ID));
-                    datasetRepository.save(newDataset);
+                    newDataset.setTeam(newTeam);
+                    
+                    this.teamRepository.save(newTeam);
+                    this.datasetRepository.save(newDataset);
+                    this.userTeamRepository.save(newUserTeam);
                     //设置默认观测记录集
-                    this.changeStatus(thisUser,1);
-                    if(thisLanguage.equals("zh"))
-                        activeMsg="此账户已激活";
-                    else if(thisLanguage.equals("en"))
-                        activeMsg="This account has been activated";
-                    else
-                        activeMsg="This account has been activated";
+					this.changeStatus(thisUser, 1);
+                    activeMsg="账户已激活";
                 }
                 else{
                     //激活失败
-                    if(thisLanguage.equals("zh"))
-                        activeMsg="无效激活链接";
-                    else if(thisLanguage.equals("en"))
-                        activeMsg="Invalid activation link";
-                    else
-                        activeMsg="Invalid activation link";
+                    activeMsg="无效激活链接";
                 }
             }
             else if(thisUser.getStatus()==1){
                 //已经激活
-                if(thisLanguage.equals("zh"))
-                    activeMsg="此账户已激活";
-                else if(thisLanguage.equals("en"))
-                    activeMsg="This account has been activated";
-                else
-                    activeMsg="This account has been activated";
+                activeMsg="账户已激活";
             }
             else{
                 //账户异常
-                if(thisLanguage.equals("zh"))
-                    activeMsg="无效激活链接";
-                else if(thisLanguage.equals("en"))
-                    activeMsg="Invalid activation link";
-                else
-                    activeMsg="Invalid activation link";
+                activeMsg="无效激活链接";
             }
 
         }
         else{
             //无效激活链接
-            if(thisLanguage.equals("zh"))
-                activeMsg="无效激活链接";
-            else if(thisLanguage.equals("en"))
-                activeMsg="Invalid activation link";
-            else
-                activeMsg="Invalid activation link";
+            activeMsg="无效激活链接";
         }
         return activeMsg;
     }

@@ -39,7 +39,7 @@
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
                 <li class=""><a th:href="@{/super/message}" href="/"><i class="fa fa-envelope"></i> 消息管理</a></li>
-                <li class="active"><i class="fa fa-eye"></i> 消息查看</li>
+                <li class="active"><a th:href="@{/console/message}" href="/"><i class="fa fa-envelope"></i> 消息查看</a></li>
             </ol>
         </section>
         <!-- Main content -->
@@ -58,18 +58,31 @@
                 </div>
                 <div class="box-footer box-comments">
                     <div class="box-comment">
-                        <div class="comment-text">
-                          	  确认加入团队信息Link
-                            <!-- 判断当前看信人身份 -- 收信人显示按钮 | 写信人不显示
-                            	后端放置身份标识到request域中，判断身份标识 -- 显示对应按钮
-                            <body>
-							    <div th:if="${age} > 20"> 大于 20 </div>
-							    <div th:unless="${age} > 20"> 小于 20 </div>
-							</body>
-                             -->
-                            <button type="button" class="btn btn-primary" id="Accept" name="Accept"> Accept</button>
-                            <button type="button" class="btn btn-primary" name="Refuse"> Refuse</button>
-                        </div>
+					<div th:if="${thisMessage.mark} == 1">
+						<div class="comment-text">
+	                          	<!--   确认加入团队信息Link
+	                            	判断当前看信人身份 -- 收信人显示按钮 | 写信人不显示
+	                            	后端放置身份标识到request域中，判断身份标识 -- 显示对应按钮 -->
+	                            	
+							<button type="button" class="btn btn-primary" id="accept" name="Accept" onclick="accept()"> 接受</button>
+	                        <button type="button" class="btn btn-primary" id="refuse" name="Refuse" onclick="refuse()"> 拒绝</button>
+	                    </div>
+					</div>
+					<div th:unless="${thisMessage.mark} == 0">
+					</div>
+
+	                    
+	                    <!-- <div th:if="${thisMessage.mark} == 0">
+						</div>
+						<div th:if="${thisMessage.mark} == 1">
+	                        <div class="comment-text">
+	                          	  确认加入团队信息Link
+	                            判断当前看信人身份 -- 收信人显示按钮 | 写信人不显示
+	                            	后端放置身份标识到request域中，判断身份标识 -- 显示对应按钮
+								<button type="button" class="btn btn-primary" id="accept" name="Accept"> 接受</button>
+	                        	<button type="button" class="btn btn-primary" id="refuse" name="Refuse"> 拒绝</button>
+	                        </div>
+	                    </div> -->
                     </div>
                 </div>
                 <div class="box-footer">
@@ -91,5 +104,15 @@
 <span th:replace="pageFrame/basicsJs :: copy" />
 <!-- page_script -->
 <script th:src="@{/js/superTableScript.js}"></script>
+<script type="text/javascript">
+	function accept(){
+		layer.msg('邀请函已发送至您邮箱，去邮箱接受邀请',function(){
+		})
+	}
+	function refuse(){
+		layer.msg('拒绝团队邀请',function(){
+		})
+	}
+</script>
 </body>
 </html>

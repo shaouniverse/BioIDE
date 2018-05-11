@@ -3,6 +3,7 @@ package org.big.controller;
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
 import org.big.entity.UserTeam;
+import org.big.service.DatasetService;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +29,8 @@ import java.util.List;
 public class IndexController {
     @Autowired
     private TeamService teamService;
-
+    @Autowired
+    private DatasetService datasetService;
     /**
      *<b>默认页面</b>
      *<p> 登录后自动跳转的主页面</p>
@@ -74,6 +76,7 @@ public class IndexController {
             return "team/select";
         }
         catch(Exception e){
+        	e.printStackTrace();
         }
         return "redirect:/login";
     }
@@ -87,6 +90,32 @@ public class IndexController {
      */
     @RequestMapping(value="/change/team/{teamId}", method = {RequestMethod.GET})
     public String ChangeTeam(HttpServletRequest request, @PathVariable String teamId) {
+    	request.getSession().setAttribute("teamId", teamId);
         return "redirect:/console/"+teamId;
+    }
+    
+    
+    /**
+     *<b>变更团队下的数据集</b>
+     *<p> 变更团队下的数据集</p>
+     * @author WangTianshan (王天山)
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/select/dataset", method = {RequestMethod.GET})
+    public String SelectDataset(Model model, HttpServletRequest request) {
+        try{
+        	String teamId = (String) request.getSession().getAttribute("teamId");
+        	this.datasetService.
+        	
+            UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            // cannot be cast to org.big.entity.Team -- 多表查询返回的Object对象无法转成Team对象
+            List<Team> teamList = this.teamService.selectTeamByUserId(thisUser.getId());//根据user id查找所有team
+            model.addAttribute("teamList", teamList);
+            return "team/select";
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        }
+        return "redirect:/login";
     }
 }

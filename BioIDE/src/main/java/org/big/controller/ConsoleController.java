@@ -35,6 +35,8 @@ public class ConsoleController {
      */
     @RequestMapping(value="/{consoleId}", method = {RequestMethod.GET})
     public String Index(Model model) {
+    	// 查出当前TeamId下的所有数据集 -- 响应到console/index页面
+    	
         int unReadMessageNum=messageService.countStatus(0);
         request.getSession().setAttribute("unReadMessageNum",unReadMessageNum);
         return "console/index";

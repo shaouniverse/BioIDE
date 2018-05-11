@@ -3,9 +3,10 @@ package org.big.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.big.entity.Message;
-import org.big.entity.User;
+import org.big.entity.Team;
 import org.big.entity.UserDetail;
 import org.big.service.MessageService;
+import org.big.service.TeamService;
 import org.big.service.UserService;
 import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class MessageController {
     private UserService userService;
     @Autowired
     private UserTeamService userTeamService;
-    
+    @Autowired
+    private TeamService teamService;
     /**
      *<b>默认页面</b>
      *<p> 展示收信列表和操作选项</p>
@@ -72,14 +74,19 @@ public class MessageController {
 	@RequestMapping(value = "/read/{id}", method = { RequestMethod.GET })
 	public String ReadMessage(Model model, @PathVariable String id, HttpServletRequest request) {
 		Message thisMessage = this.messageService.findbyID(id); // Message 对象
-		thisMessage.setText("<p></p><p></p>");
-		User thisSender = this.userService.findbyID(thisMessage.getSender()); // 当前登录用户
+		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 当前登录用户
+		if ("invitation".equals(thisMessage.getType())) {
+			if (thisUser.getEmail().equals(userService.findbyID(thisMessage.getSender()).getEmail())) {			// 是发信人
+				thisMessage.setMark("0");
+			}else if (thisUser.getEmail().equals(thisMessage.getAddressee())) {	// 是收信人
+				thisMessage.setMark("1");
+			}
+		}
 		this.messageService.changeStatus(thisMessage, 1); 		// 改变消息状态 -- 未读消息状态为0 | 已读消息状态为1
 		int unReadMessageNum = messageService.countStatus(0); 	// 根据状态统计未读消息数量
-		System.out.println(unReadMessageNum);
 		request.getSession().setAttribute("unReadMessageNum", unReadMessageNum);
 		model.addAttribute("thisMessage", thisMessage);
-		model.addAttribute("thisSender", "From:" + thisSender.getNickname());
+		model.addAttribute("thisSender", "From:" + thisUser.getNickname());
 		return "message/read_admin";
 	}
 
@@ -93,12 +100,14 @@ public class MessageController {
     @RequestMapping(value="/compose/{id}", method = {RequestMethod.GET})
     public String Add(@PathVariable String id, Model model) {
 		Message thisMessage = new Message();
-		thisMessage.setText("<p></p><p></p>");
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        thisMessage.setSender(thisUser.getId());	// 将当前登录用户(团队管理员)，设置为邀请人
+        Team team = this.teamService.findbyID(id);
+        
+        thisMessage.setTitle(thisUser.getNickname() + "向您发出团队邀请函");
+        thisMessage.setText("邀请您加入" + team.getName() + "团队");
         thisMessage.setTeamid(id);
         model.addAttribute("thisMessage", thisMessage);
-        return "message/compose";
+        return "team/compose";
     }
 
     /**
@@ -112,7 +121,6 @@ public class MessageController {
 	public String Add(Model model) {
 		Message thisMessage = new Message();
 		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		thisMessage.setSender(thisUser.getId()); // 将当前登录用户(团队管理员)，设置为发信人
 		model.addAttribute("thisMessage", thisMessage);
 		return "message/compose";
 	}
@@ -126,22 +134,22 @@ public class MessageController {
      */
     @RequestMapping(value="/send", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisMessage") Message thisMessage, HttpServletRequest request) {
-    	UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(thisMessage);
+    	UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
     	thisMessage.setSender(thisUser.getId());
-    	System.out.println(thisMessage.getTeamid());
         if (null != request.getParameter("TeamID") && !"".equals(request.getAttribute("TeamID"))) {
         	thisMessage.setTeamid(request.getParameter("TeamID"));
 		}
-        String udata = request.getParameter("udata");
         
+        String udata = request.getParameter("udata");
         if (null != udata && !"".equals(udata)) {
         	String email = userService.findOneByNickName(udata).getEmail(); // null.Xxx -->空指针异常
         	thisMessage.setAddressee(email);
         }
         this.messageService.sendOne(thisMessage);
-        System.out.println(thisMessage);
-        return "redirect:/console/message";
+        if (null != thisMessage.getTeamid()) {
+			return "team/myTeam";
+		}
+        return "message/myMessage";
     }
     /**
      * 处理团队邀请连接
@@ -152,6 +160,7 @@ public class MessageController {
     @RequestMapping(value="/invite/{userName}/{teamid}", method = {RequestMethod.GET})
     public String Invite(@PathVariable String userName, @PathVariable String teamid) {
     	// 用户接收邀请
+    	
     	userTeamService.saveOne(userService.findOneByName(userName).getId(), teamid);
     	return "redirect:/console/team";
     }

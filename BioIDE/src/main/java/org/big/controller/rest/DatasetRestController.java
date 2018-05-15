@@ -21,20 +21,15 @@ public class DatasetRestController {
     private DatasetService datasetService;
 
     /**
-     *<b>Dataset列表</b>
-     *<p> 当前用户的Dataset的检索列表</p>
+     *<b>根据teamId查询对应Team下的Dataset列表</b>
+     *<p> 根据teamId查询对应Team下的Dataset列表</p>
      * @author BINZI
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-    @RequestMapping("/list")
-    public JSON DataSetList(HttpServletRequest request) {
-        return this.datasetService.findMybyInfo(request);
-    }
-    
     @RequestMapping("/list/{id}")
     public JSON DataSetTeamList(HttpServletRequest request, @PathVariable String id) {
-    	return this.datasetService.findMyTeamDatasetByTId(request, id);
+    	return this.datasetService.findMyTeamDatasetsByTid(request, id);
     }
     
     /**
@@ -84,8 +79,7 @@ public class DatasetRestController {
     @RequestMapping(value="/remove/{id}", method = RequestMethod.GET)
     public boolean RemoveDataset(@PathVariable String id) {
     	try{
-    		Boolean rsl = this.datasetService.logicRemove(id);
-            return rsl;
+            return this.datasetService.logicRemove(id);
         }catch(Exception e){
             return false;
         }

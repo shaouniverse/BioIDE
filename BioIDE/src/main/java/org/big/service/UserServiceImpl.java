@@ -563,7 +563,7 @@ public class UserServiceImpl implements UserService{
                 	newTeam.setId(UUID.randomUUID().toString());
                 	newTeam.setName(thisUser.getNickname());
                 	newTeam.setLeader(thisUser.getId());
-                	newTeam.setNote("默认团队");
+                	newTeam.setNote("Default");
                 	newTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
                 	
                 	UserTeam newUserTeam = new UserTeam();
@@ -573,7 +573,7 @@ public class UserServiceImpl implements UserService{
                 	Dataset newDataset = new Dataset();
                 	newDataset.setId(UUID.randomUUID().toString());
                 	newDataset.setDsname(thisUser.getUserName());
-                	newDataset.setDsabstract("默认数据集");
+                	newDataset.setDsabstract("Default");
                     newDataset.setCreator(thisUser.getId());
                     newDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
                     newDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));

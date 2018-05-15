@@ -102,75 +102,7 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	@Transactional
-	public JSON findMybyInfo(HttpServletRequest request) {
-		JSON json = null;
-		String searchText = request.getParameter("search");
-		if (searchText == null || searchText.length() <= 0) {
-			searchText = "";
-		}
-		int limit_serch = Integer.parseInt(request.getParameter("limit"));
-		int offset_serch = Integer.parseInt(request.getParameter("offset"));
-		String sort = "desc";
-		String order = "date";
-		sort = request.getParameter("sort");
-		order = request.getParameter("order");
-		if (sort == null || sort.length() <= 0) {
-			sort = "createdDate";
-		}
-		if (order == null || order.length() <= 0) {
-			order = "desc";
-		}
-		JSONObject thisTable = new JSONObject();
-		JSONArray rows = new JSONArray();
-
-		// 获取当前登录用户
-		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Page<Dataset> thisPage = this.datasetRepository.searchMyInfo(searchText, thisUser.getId(),
-				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
-		List<Dataset> thisList = new ArrayList<>();
-
-		thisList = thisPage.getContent();
-		thisTable.put("total", thisPage.getTotalElements());
-
-		for (int i = 0; i < thisList.size(); i++) {
-			JSONObject row = new JSONObject();
-			String thisSelect = "";
-			String thisEdit = "";
-            // 判断是否为默认数据集 -- 是默认数据集 -- 无法删改
-        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- false 是默认数据集 -- 不拼装'操作'
-        	// !thisPage.getContent().get(i).getDsabstract().equals("Default") -- true 不是默认数据集 -- 拼装操作
-			if (!thisPage.getContent().get(i).getDsabstract().equals("Default")) {
-				thisSelect = "<input type='checkbox' name='checkbox' id='sel_" + thisList.get(i).getId() + "' />";
-				thisEdit =
-                        "<a class=\"table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
-                        	"<span class=\"glyphicon glyphicon-edit\"></span>" +
-                        "</a>" + "&nbsp;"+
-                        "<a class=\"table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','dataset')\" >" +
-                        	"<span class=\"glyphicon glyphicon-remove\"></span>" +
-                        "</a>";
-            }
-			row.put("select", thisSelect);
-			row.put("dsname", "<a href=\"console/dataset/show/" + thisPage.getContent().get(i).getId() + "\">"
-					+ thisPage.getContent().get(i).getDsname() + "</a>");
-			row.put("dsabstract", thisPage.getContent().get(i).getDsabstract());
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String addTime = "";
-			try {
-				addTime = formatter.format(thisPage.getContent().get(i).getCreatedDate());
-			} catch (Exception e) {
-			}
-			row.put("createdDate", addTime);
-			row.put("edit", thisEdit);
-			rows.add(i, row);
-		}
-		thisTable.put("rows", rows);
-		json = thisTable;
-		return json;
-	}
-	
-	@Override
-	@Transactional
-	public JSON findMyTeamDatasetByTId(HttpServletRequest request, String id) {
+	public JSON findMyTeamDatasetsByTid(HttpServletRequest request, String id) {
 		JSON json = null;
 		String searchText = request.getParameter("search");
 		if (searchText == null || searchText.length() <= 0) {
@@ -199,15 +131,17 @@ public class DatasetServiceImpl implements DatasetService {
 
 		thisList = thisPage.getContent();
 		thisTable.put("total", thisPage.getTotalElements());
+		String thisSelect = "";
+		String thisEdit = "";
 		for (int i = 0; i < thisList.size(); i++) {
 			JSONObject row = new JSONObject();
-			String thisSelect = "";
-			String thisEdit = "";
-			thisSelect = "<input type='checkbox' name='checkbox' id='sel_" + thisList.get(i).getId() + "' />";
-			thisEdit = "<a class=\"table-edit-icon\" onclick=\"editThisObject('" + thisList.get(i).getId()
-					+ "','dataset')\" >" + "<span class=\"glyphicon glyphicon-edit\"></span>" + "</a>" + "&nbsp;"
-					+ "<a class=\"table-edit-icon\" onclick=\"removeThisObject('" + thisList.get(i).getId()
-					+ "','dataset')\" >" + "<span class=\"glyphicon glyphicon-remove\"></span>" + "</a>";
+			if (!thisPage.getContent().get(i).getDsabstract().equals("Default")) {
+				thisSelect = "<input type='checkbox' name='checkbox' id='sel_" + thisList.get(i).getId() + "' />";
+				thisEdit = "<a class=\"table-edit-icon\" onclick=\"editThisObject('" + thisList.get(i).getId()
+						+ "','dataset')\" >" + "<span class=\"glyphicon glyphicon-edit\"></span>" + "</a>" + "&nbsp;"
+						+ "<a class=\"table-edit-icon\" onclick=\"removeThisObject('" + thisList.get(i).getId()
+						+ "','dataset')\" >" + "<span class=\"glyphicon glyphicon-remove\"></span>" + "</a>";
+			}
 			row.put("select", thisSelect);
 			row.put("dsname", "<a href=\"console/dataset/show/" + thisList.get(i).getId() + "\">"
 					+ thisList.get(i).getDsname() + "</a>");
@@ -299,10 +233,9 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public Boolean logicRemove(String Id) {
-		Dataset thisDataset = datasetRepository.findOneById(Id);
+		Dataset thisDataset = this.datasetRepository.findOneById(Id);
 		if (null != thisDataset) {
-			int status = thisDataset.getStatus();
-			if (status == 1) {
+			if (1 == thisDataset.getStatus()) {
 				thisDataset.setStatus(0);
 			} else {
 				thisDataset.setStatus(1);
@@ -360,7 +293,7 @@ public class DatasetServiceImpl implements DatasetService {
 	}
 
 	@Override
-	public List<Dataset> findAllDatasetByTeamId(String teamId) {
-		return this.datasetRepository.findAllDatasetByTeamId(teamId);
+	public List<Dataset> findAllDatasetsByTeamId(String teamId) {
+		return this.datasetRepository.findAllDatasetsByTeamId(teamId);
 	}
 }

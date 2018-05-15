@@ -22,8 +22,8 @@ public class Dataset implements Serializable {
 
 	@Id
 	private String id;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+
+	private Timestamp createdDate;
 
 	private String creator;
 
@@ -33,14 +33,14 @@ public class Dataset implements Serializable {
 
 	private String lisenceid;
 
+	private String mark;
+
 	private int status;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date synchdate;
 
 	private int synchstatus;
-	
-	private String mark;
 	
 	// bi-directional many-to-one association to Team
 	@ManyToOne
@@ -49,97 +49,145 @@ public class Dataset implements Serializable {
 	public Dataset() {
 	}
 
+	@Override
+	public String toString() {
+		return "Dataset [id=" + id + ", createdDate=" + createdDate + ", creator=" + creator + ", dsabstract="
+				+ dsabstract + ", dsname=" + dsname + ", lisenceid=" + lisenceid + ", mark=" + mark + ", status="
+				+ status + ", synchdate=" + synchdate + ", synchstatus=" + synchstatus + ", team=" + team + "]";
+	}
+
+
+
 	public String getId() {
 		return id;
 	}
+
+
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
+
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
+
 
 	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
+
+
 	public String getCreator() {
 		return creator;
 	}
+
+
 
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
 
+
+
 	public String getDsabstract() {
 		return dsabstract;
 	}
+
+
 
 	public void setDsabstract(String dsabstract) {
 		this.dsabstract = dsabstract;
 	}
 
+
+
 	public String getDsname() {
 		return dsname;
 	}
+
+
 
 	public void setDsname(String dsname) {
 		this.dsname = dsname;
 	}
 
+
+
 	public String getLisenceid() {
 		return lisenceid;
 	}
+
+
 
 	public void setLisenceid(String lisenceid) {
 		this.lisenceid = lisenceid;
 	}
 
-	public int getStatus() {
-		return status;
-	}
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public Date getSynchdate() {
-		return synchdate;
-	}
-
-	public void setSynchdate(Date synchdate) {
-		this.synchdate = synchdate;
-	}
-
-	public int getSynchstatus() {
-		return synchstatus;
-	}
-
-	public void setSynchstatus(int synchstatus) {
-		this.synchstatus = synchstatus;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
-	}
 
 	public String getMark() {
 		return mark;
 	}
 
+
+
 	public void setMark(String mark) {
 		this.mark = mark;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+
+
+	public int getStatus() {
+		return status;
 	}
+
+
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+
+
+	public Date getSynchdate() {
+		return synchdate;
+	}
+
+
+
+	public void setSynchdate(Date synchdate) {
+		this.synchdate = synchdate;
+	}
+
+
+
+	public int getSynchstatus() {
+		return synchstatus;
+	}
+
+
+
+	public void setSynchstatus(int synchstatus) {
+		this.synchstatus = synchstatus;
+	}
+
+
+	public Team getTeam() {
+		return team;
+	}
+
+
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
+
 
 	@Override
 	public int hashCode() {

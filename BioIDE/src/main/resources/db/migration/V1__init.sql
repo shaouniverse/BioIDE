@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `biodata`.`dataset` (
   `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
   `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步',
   `synchdate` DATETIME NULL COMMENT '最后同步日期',
-  `team_id` VARCHAR(50) NULL COMMENT '所属团队的ID', -- 修改(俩teamid)
+  `team_id` VARCHAR(50) NOT NULL COMMENT '所属团队的ID',
   PRIMARY KEY (`id`),
   INDEX `fk_dataset_team1_idx` (`team_id` ASC),
   CONSTRAINT `fk_dataset_team1`

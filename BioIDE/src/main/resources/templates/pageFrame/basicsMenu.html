@@ -29,7 +29,7 @@
                         <ul class="treeview-menu">
                             <li><a th:href="@{/select/team}" href="team"><i class="fa fa-exchange"></i> <span>团队变更</span></a></li>
                             <!-- http://localhost:8081/console/team/details/ac22bc5f-2439-415c-a485-06cf20c0639f -->
-                            <li><a href="/console/team/details/10dbf8c7-f0af-426f-8353-b5ad6c64fc6b"><i class="fa fa-users"></i> <span>团队详情</span></a></li>
+                            <li><a th:href="@{/console/team/details/} + ${session.teamId}"><i class="fa fa-users"></i> <span>团队详情</span></a></li>
                         </ul>
                     </li>
                 <!-- 操作选项 -->
@@ -49,7 +49,7 @@
                             <li th:if="${not #lists.isEmpty(session.datasetID)}" ><a href="#"><i class="fa fa-code-fork"></i> 进化树集管理</a></li>
                             <li th:if="${not #lists.isEmpty(session.datasetID)}"><a th:href="@{/select/dataset}" href="team"><i class="fa fa-exchange"></i> <span>数据集变更</span></a></li>
                             <li th:if="${#lists.isEmpty(session.datasetID)}" ><a th:href="@{/select/dataset}" href="dataset/index.html"><i class="fa fa-exchange"></i> 选择数据集</a></li>
-                            <li th:if="${#lists.isEmpty(session.datasetID)}" ><a th:href="@{/console/dataset}" href="dataset/index.html"><i class="fa fa-database"></i> 数据集管理</a></li>
+                            <li th:if="${#lists.isEmpty(session.datasetID)}" ><a th:href="@{/console/team/details/} + ${session.teamId}" href="dataset/index.html"><i class="fa fa-database"></i> 数据集管理</a></li>
                         </ul>
                     </li>
                     <li th:if="${not #lists.isEmpty(session.datasetID)}" class="treeview">

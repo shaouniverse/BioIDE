@@ -26,7 +26,7 @@ public interface TeamService {
      * @param user_id 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Team>
      */
-    List<Team> selectTeamByUserId(String uid);
+    List<Team> selectTeamsByUserId(String uid);
 
     /**
      *<b>根据teamid查找一个Team实体</b>

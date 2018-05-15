@@ -44,8 +44,8 @@ public class TeamServiceImpl implements TeamService  {
     @Autowired
     private UserRepository userRepository;
     @Override
-    public List<Team> selectTeamByUserId(String userId) {
-        List<String> ids = this.teamRepository.selectTeamByUserId(userId);
+    public List<Team> selectTeamsByUserId(String userId) {
+        List<String> ids = this.teamRepository.selectTeamsByUserId(userId);
         return this.teamRepository.findAllById(ids);
     }
 
@@ -83,16 +83,20 @@ public class TeamServiceImpl implements TeamService  {
         Page<Team> thisPage=this.teamRepository.searchInfo(searchText, QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
         thisTable.put("total",thisPage.getTotalElements());
         thisList=thisPage.getContent();
+        String thisSelect = "";
+        String thisEdit = "";
         for(int i=0;i<thisList.size();i++){
             JSONObject row= new JSONObject();
-            String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
-            String thisEdit=
-                    		"<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','team')\" >" +
-                            "<span class=\"glyphicon glyphicon-edit\"></span>" +
-                            "</a>" +
-                            "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','team')\" >" +
-                            "<span class=\"glyphicon glyphicon-remove\"></span>" +
-                            "</a>";
+            if (!thisPage.getContent().get(i).getNote().equals("Default")) {
+	            thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisList.get(i).getId()+"' />";
+	            thisEdit=
+	                    		"<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisList.get(i).getId()+"','team')\" >" +
+	                            "<span class=\"glyphicon glyphicon-edit\"></span>" +
+	                            "</a>" +
+	                            "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisList.get(i).getId()+"','team')\" >" +
+	                            "<span class=\"glyphicon glyphicon-remove\"></span>" +
+	                            "</a>";
+            }
             row.put("select",thisSelect);
             row.put("name",thisList.get(i).getName());
             row.put("leader",thisList.get(i).getLeader());
@@ -150,11 +154,14 @@ public class TeamServiceImpl implements TeamService  {
         
         thisList=thisPage.getContent();
         thisTable.put("total",thisPage.getTotalElements());
+        String thisSelect = "";
+        String thisEdit = "";
         for(int i=0;i<thisList.size();i++){
             JSONObject row = new JSONObject();
             Team thisTeam= BuildEntity.buildTeam(thisList.get(i));
-            String thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisTeam.getId()+"' />";
-            String thisEdit=
+
+            thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisTeam.getId()+"' />";
+            thisEdit=
                     "<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisTeam.getId()+"','team')\" >" +
                      	"<span class=\"glyphicon glyphicon-edit\"></span>" +
                     "</a>" +	

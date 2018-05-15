@@ -29,7 +29,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return 
      */
 	@Query(value = "select d from Dataset d where d.team.id = ?1")
-	List<Dataset> findAllDatasetByTeamId(String teamId);
+	List<Dataset> findAllDatasetsByTeamId(String teamId);
 	
 	/**
      *<b>带分页排序的条件查询</b>
@@ -43,19 +43,6 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
    @Query(value = "select d from Dataset d where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%)")
    Page<Dataset> searchInfo(String findText, Pageable pageable);
 
-    /**
-     *<b>带分页排序的条件查询（当前用户的数据集）</b>
-     *<p> 带分页排序的条件查询（当前用户）</p>
-     * @author BINZI 
-     * @param findText 条件关键词，这里是模糊匹配
-     * @param pageable 分页排序方案实体
-     * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
-     */
-    // 根据dsname & dsabstract & createdDate & user.id & status 模糊 | 排序 | 条件 | 分页查询
-    @Query(value = "select d from Dataset d" +
-            " where (d.dsname like %?1% or d.dsabstract like %?1% or d.createdDate like %?1%) and d.creator = ?2 and d.status = 1 and d.team = NUll")
-    Page<Dataset> searchMyInfo(String findText, String userId, Pageable pageable);
-    
     /**
      *<b>带分页排序的条件查询（当前用户組下数据集）</b>
      *<p> 带分页排序的条件查询（当前用户）</p>
@@ -76,8 +63,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
     // 根据dsname & user.id & status 模糊 | 排序 | 条件 | 分页查询
-    @Query(value = "select d from Dataset d where (d.dsname like %?1%) and d.creator = ?2 and d.status = 1"
-    )
+    @Query(value = "select d from Dataset d where (d.dsname like %?1%) and d.creator = ?2 and d.status = 1")
     Page<Dataset> searchMyDsname(String findText, String userId, Pageable pageable);
 
     /**
@@ -87,6 +73,7 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @param id id
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
+    @Query(value = "select d from Dataset d where d.id = ?1")
     Dataset findOneById(String id);
 
     /**

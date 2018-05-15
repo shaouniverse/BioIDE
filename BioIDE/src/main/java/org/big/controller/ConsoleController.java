@@ -1,10 +1,16 @@
 package org.big.controller;
 
+import java.util.List;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.big.entity.Dataset;
+import org.big.service.DatasetService;
 import org.big.service.MessageService;
+import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,6 +31,10 @@ public class ConsoleController {
     private MessageService messageService;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private DatasetService datasetService;
+    @Autowired
+    private TeamService teamService;
 
     /**
      *<b>默认页面</b>
@@ -34,11 +44,13 @@ public class ConsoleController {
      * @return java.lang.String
      */
     @RequestMapping(value="/{consoleId}", method = {RequestMethod.GET})
-    public String Index(Model model) {
+    public String Index(Model model, @PathVariable String consoleId) {
     	// 查出当前TeamId下的所有数据集 -- 响应到console/index页面
-    	
-        int unReadMessageNum=messageService.countStatus(0);
-        request.getSession().setAttribute("unReadMessageNum",unReadMessageNum);
-        return "console/index";
-    }
+		List<Dataset> dsList = this.datasetService.findAllDatasetsByTeamId(consoleId);
+		model.addAttribute("team", this.teamService.findbyID(consoleId));
+		model.addAttribute("dsList", dsList);
+		int unReadMessageNum = messageService.countStatus(0);
+		request.getSession().setAttribute("unReadMessageNum", unReadMessageNum);
+		return "console/index";
+	}
 }

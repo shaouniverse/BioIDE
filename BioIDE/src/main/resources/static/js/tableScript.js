@@ -17,7 +17,7 @@ function editThisObject(id,type) {
 };
 // 删除type
 function removeThisObject(id,type) {
-	var r=confirm("remove?");
+	var r=confirm("确定删除该" + type + "?");
     if (r==true){
         $.get("/console/"+type+"/rest/remove/"+id,
             {},
@@ -167,10 +167,10 @@ function removeSelectObject(type){
                 }
             });
             $.ajax({
-                url: '/console/'+type+'/rest/removeMany/'+ids,
+                url: '/console/'+type+'/rest/removeMany/' + ids,
                 cache: false,
                 success: function () {
-                    layer.msg('已批量删除'+number+'数据',
+                    layer.msg('已批量删除' + number + '数据',
                         {
                             time: 500, //1.5s后自动关闭
                         },

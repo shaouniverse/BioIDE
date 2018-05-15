@@ -45,20 +45,6 @@ public class DatasetController {
 		return "dataset/index";
 	}
     
-    /**
-     *<b>添加Dataset</b>
-     *<p> 添加新的Dataset的编辑的页面</p>
-     * @author BINZI
-     * @param model 初始化模型
-     * @return java.lang.String
-     */
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String Add(Model model) {
-		Dataset thisDataset = new Dataset();
-		model.addAttribute("thisDataset", thisDataset);
-		return "dataset/add";
-	}
-	
 	/**
      *<b>在指定用户组下添加Dataset</b>
      *<p> 添加新的Dataset的编辑的页面</p>
@@ -129,14 +115,8 @@ public class DatasetController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "dataset/add";
 		}
-		String base_url = request.getParameter("base_url");
-		if (base_url.contains("add/")) {
-			base_url = base_url.substring(0, 29) + "/team/details/" + base_url.substring(42); // 用户组添加成功后 -- 目标URL
-		} else {
-			base_url = base_url.substring(0, 29) + "/dataset";								  // 个人用户添加成功后 -- 目标URL
-		}
 		this.datasetService.addOne(thisDataset);
-		return "redirect:" + base_url;
+		return "redirect:/console/team/details/" + request.getSession().getAttribute("teamId");
 	}
     
     /**
@@ -147,7 +127,7 @@ public class DatasetController {
      * @return java.lang.String
      */
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
-	public String Save(@ModelAttribute("thisDataset") @Valid Dataset thisDataset, BindingResult result, Model model) {
+	public String Save(@ModelAttribute("thisDataset") @Valid Dataset thisDataset, BindingResult result, Model model, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
 			String errorMsg = "";
@@ -159,19 +139,6 @@ public class DatasetController {
 			return "dataset/edit";
 		}
 		this.datasetService.saveOne(thisDataset);
-		return "redirect:/console/dataset";
+		return "redirect:/console/team/details/" + request.getSession().getAttribute("teamId");
 	}
-
-    /**
-     *<b>删除Dataset</b>
-     *<p> 将传入的Dataset实体删除</p>
-     * @author BINZI
-     * @param id 传入的Dataset实体的id
-     * @return java.lang.String
-     */
-    @RequestMapping(value="/remove/{id}", method = {RequestMethod.GET})
-    public String Remove(@PathVariable String id) {
-        this.datasetService.logicRemove(id);
-        return "index";
-    }
 }

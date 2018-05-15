@@ -25,7 +25,7 @@ public interface DatasetService {
      * @param request 页面请求
      * @return 
      */
-    List<Dataset> findAllDatasetByTeamId(String teamId);
+    List<Dataset> findAllDatasetsByTeamId(String teamId);
 	
 	/**
      *<b>带分页排序的条件查询</b>
@@ -37,22 +37,13 @@ public interface DatasetService {
     JSON findbyInfo(HttpServletRequest request);
 
     /**
-     *<b>带分页排序的条件查询（当前用户）</b>
-     *<p> 带分页排序的条件查询（当前用户）</p>
-     * @author BINZI
-     * @param request 页面请求
-     * @return com.alibaba.fastjson.JSON
-     */
-    JSON findMybyInfo(HttpServletRequest request);
-    
-    /**
      *<b>带分页排序的条件查询（当前用户组）</b>
      *<p> 带分页排序的条件查询（当前用户组）</p>
      * @author BINZI
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-    JSON findMyTeamDatasetByTId(HttpServletRequest request, String id);
+    JSON findMyTeamDatasetsByTid(HttpServletRequest request, String id);
 
     /**
      *<b>带分页的条件查询（当前用户）</b>

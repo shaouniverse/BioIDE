@@ -2,8 +2,6 @@ package org.big.controller;
 
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
-import org.big.entity.UserTeam;
-import org.big.service.DatasetService;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,8 +27,6 @@ import java.util.List;
 public class IndexController {
     @Autowired
     private TeamService teamService;
-    @Autowired
-    private DatasetService datasetService;
     /**
      *<b>默认页面</b>
      *<p> 登录后自动跳转的主页面</p>
@@ -41,24 +37,13 @@ public class IndexController {
     @RequestMapping(value="/", method = {RequestMethod.GET})
     public String Index(HttpServletRequest request) {
         try{
-            UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            /*UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
             return "redirect:/select/team";
         }
         catch(Exception e){
         }
         return "redirect:/login";
     }
-
-//    @RequestMapping(value="/", method = {RequestMethod.GET})
-//    public String Index(HttpServletRequest request) {
-//        try{
-//            UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            return "redirect:/console/"+thisUser.getUsername();
-//        }
-//        catch(Exception e){
-//        }
-//        return "redirect:/console/1";
-//    }
 
     /**
      *<b>选择团队</b>
@@ -70,13 +55,11 @@ public class IndexController {
     public String SelectTeam(Model model) {
         try{
             UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            // cannot be cast to org.big.entity.Team -- 多表查询返回的Object对象无法转成Team对象
-            List<Team> teamList = this.teamService.selectTeamByUserId(thisUser.getId());//根据user id查找所有team
+            List<Team> teamList=this.teamService.selectTeamsByUserId(thisUser.getId());//根据user id查找所有team
             model.addAttribute("teamList", teamList);
             return "team/select";
         }
         catch(Exception e){
-        	e.printStackTrace();
         }
         return "redirect:/login";
     }
@@ -89,11 +72,10 @@ public class IndexController {
      * @return java.lang.String
      */
     @RequestMapping(value="/change/team/{teamId}", method = {RequestMethod.GET})
-    public String ChangeTeam(HttpServletRequest request, @PathVariable String teamId) {
-    	request.getSession().setAttribute("teamId", teamId);
-        return "redirect:/console/"+teamId;
+    public String ChangeTeam(Model model, HttpServletRequest request, @PathVariable String teamId) {
+    	request.getSession().setAttribute("teamId", teamId);	// 将TeamId存放到Session中
+		return "redirect:/console/" + teamId;
     }
-    
     
     /**
      *<b>变更团队下的数据集</b>
@@ -102,20 +84,28 @@ public class IndexController {
      * @return java.lang.String
      */
     @RequestMapping(value="/select/dataset", method = {RequestMethod.GET})
-    public String SelectDataset(Model model, HttpServletRequest request) {
+    public String SelectDataset(HttpServletRequest request) {
         try{
-        	String teamId = (String) request.getSession().getAttribute("teamId");
-        	this.datasetService.
-        	
-            UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            // cannot be cast to org.big.entity.Team -- 多表查询返回的Object对象无法转成Team对象
-            List<Team> teamList = this.teamService.selectTeamByUserId(thisUser.getId());//根据user id查找所有team
-            model.addAttribute("teamList", teamList);
-            return "team/select";
+        	String teamId = (String) request.getSession().getAttribute("teamId");	// 后台从Session中取TeamId
+            return "redirect:/console/" + teamId;
         }
         catch(Exception e){
         	e.printStackTrace();
         }
-        return "redirect:/login";
+        return "redirect:/select/team";
     }
+    
+    /**
+     *<b>变换团队下的Dataset</b>
+     *<p> 选择团队数据集后变换团队下的数据集</p>
+     * @author WangTianshan (王天山)
+     * @param request 页面请求
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/change/dataset/{id}", method = {RequestMethod.GET})
+    public String ChangeTeamDataset(HttpServletRequest request, @PathVariable String id) {
+    	request.getSession().setAttribute("datasetID", id);	// 将datasetId存放到Session中
+    	return "redirect:/console/dataset/show/" + id;
+    }
+    
 }

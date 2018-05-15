@@ -31,7 +31,7 @@ public interface TeamRepository extends BaseRepository<Team, String> {
      */
 /*	@Query(value ="SELECT t.id, t.name, t.leader, t.note FROM Team AS t LEFT JOIN UserTeam AS ut ON ut.teamId = t.id WHERE ut.userId = ?1")*/	
 	@Query(value ="SELECT ut.teamId FROM UserTeam AS ut WHERE ut.userId = ?1")
-    List<String> selectTeamByUserId(String uid);
+    List<String> selectTeamsByUserId(String uid);
 
     /**
      *<b>带分页排序的条件查询</b>

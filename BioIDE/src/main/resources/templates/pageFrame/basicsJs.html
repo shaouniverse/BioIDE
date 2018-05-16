@@ -1,5 +1,5 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<span th:fragment="copy">
+<th:block th:fragment="copy">
 	<a href="#0" class="cd-top">Top</a>
     <!-- jQuery 3 -->
     <script th:src="@{/bowerComponents/jquery/jquery.min.js}" src="bowerComponents/jquery/dist/jquery.min.js"></script>
@@ -62,5 +62,5 @@
             });
         } );
     </script>
-</span>
+</th:block>
 </html>

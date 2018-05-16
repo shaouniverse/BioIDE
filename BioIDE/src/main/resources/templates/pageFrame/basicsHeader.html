@@ -1,7 +1,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<section th:fragment="copy">
+<th:block th:fragment="copy">
+<section>
     <!-- Logo -->
     <a th:href="@{/}" href="/" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -26,27 +27,27 @@
                     <!-- New message amount -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success" th:if="${session.unReadMessageNum} &gt; 0" th:text="${session.unReadMessageNum}"></span>
+                        <!--<span class="label label-success" th:if="${session.unReadMessageNum} &gt; 0" th:text="${session.unReadMessageNum}"></span>-->
                     </a>
                     <!-- Message frame -->
                     <ul class="dropdown-menu">
                         <li class="header">您有 <span th:text="${session.unReadMessageNum}"></span> 封未读消息</li>
-                        <li th:if="${session.unReadMessageNum} &gt; 0">
-                            <ul class="menu">
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img th:src="@{/img/user-none-160x160.jpg}" src="/img/user-none-160x160.jpg" class="img-circle" alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Support Team
-                                            <small><i class="fa fa-clock-o"></i> 5 分钟</small>
-                                        </h4>
-                                        <p>系统消息</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <!--<li th:if="${session.unReadMessageNum} &gt; 0">-->
+                            <!--<ul class="menu">-->
+                                <!--<li>-->
+                                    <!--<a href="#">-->
+                                        <!--<div class="pull-left">-->
+                                            <!--<img th:src="@{/img/user-none-160x160.jpg}" src="/img/user-none-160x160.jpg" class="img-circle" alt="User Image">-->
+                                        <!--</div>-->
+                                        <!--<h4>-->
+                                            <!--Support Team-->
+                                            <!--<small><i class="fa fa-clock-o"></i> 5 分钟</small>-->
+                                        <!--</h4>-->
+                                        <!--<p>系统消息</p>-->
+                                    <!--</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
                         <li class="footer"><a href="#" th:href="@{/console/message}">查看所有消息</a></li>
                     </ul>
                 </li>
@@ -85,4 +86,5 @@
         </div>
     </nav>
 </section>
+</th:block>
 </html>

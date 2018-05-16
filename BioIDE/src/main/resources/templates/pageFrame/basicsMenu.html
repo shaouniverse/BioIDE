@@ -1,7 +1,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<section th:fragment="copy">
+<th:block th:fragment="copy">
+<section>
     <aside class="main-sidebar">
         <!-- sidebar-->
         <section class="sidebar">
@@ -60,7 +61,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-cube"></i> 分类单元管理</a></li>
+                            <li><a href="#" th:href="@{/console/taxon}"><i class="fa fa-cube"></i> 分类单元管理</a></li>
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-list-alt"></i> 描述管理
@@ -135,4 +136,5 @@
         </section>
     </aside>
 </section>
+</th:block>
 </html>

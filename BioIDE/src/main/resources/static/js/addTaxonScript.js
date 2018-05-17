@@ -16,6 +16,7 @@ $(document).ready( function() {
     //获取host
     $("#base_url").val(window.location.host);
     $('#form_1').bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -54,6 +55,7 @@ $(document).ready( function() {
         }
     });
     $('#form_2').bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -74,6 +76,7 @@ $(document).ready( function() {
         }
     });
     $('#form_3').bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -94,6 +97,7 @@ $(document).ready( function() {
         }
     });
     $('#form_4').bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -114,6 +118,7 @@ $(document).ready( function() {
         }
     });
     $('#form_5').bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -134,6 +139,7 @@ $(document).ready( function() {
         }
     });
     $('#form_6').bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -156,86 +162,22 @@ $(document).ready( function() {
 } );
 
 
-
 //验证状态变更
 function changeVerificationTab(tabNum,status) {
     this['verificationTab'+tabNum]=status;
 }
 
-//验证基本信息
-function formValidator_1() {
-    $('#form_1').data('bootstrapValidator').validate();
+//统一验证
+function formValidator(formNum) {
+    $('#form_'+formNum).data('bootstrapValidator').validate();
     //是否通过校验
-    if(!$('#form_1').data('bootstrapValidator').isValid()){
-        changeVerificationTab(1,-1);
+    if(!$('#form_'+formNum).data('bootstrapValidator').isValid()){
+        changeVerificationTab(formNum,-1);
+        incompleteStep(formNum);
         return false;//没有通过校验
     } else {
-        changeVerificationTab(1,1);
-        return true;//通过校验
-    }
-}
-
-//验证基本信息
-function formValidator_2() {
-    $('#form_2').data('bootstrapValidator').validate();
-    //是否通过校验
-    if(!$('#form_2').data('bootstrapValidator').isValid()){
-        changeVerificationTab(2,-1);
-        return false;//没有通过校验
-    } else {
-        changeVerificationTab(2,1);
-        return true;//通过校验
-    }
-}
-
-//验证基本信息
-function formValidator_3() {
-    $('#form_3').data('bootstrapValidator').validate();
-    //是否通过校验
-    if(!$('#form_3').data('bootstrapValidator').isValid()){
-        changeVerificationTab(3,-1);
-        return false;//没有通过校验
-    } else {
-        changeVerificationTab(3,1);
-        return true;//通过校验
-    }
-}
-
-//验证基本信息
-function formValidator_4() {
-    $('#form_4').data('bootstrapValidator').validate();
-    //是否通过校验
-    if(!$('#form_4').data('bootstrapValidator').isValid()){
-        changeVerificationTab(4,-1);
-        return false;//没有通过校验
-    } else {
-        changeVerificationTab(4,1);
-        return true;//通过校验
-    }
-}
-
-//验证基本信息
-function formValidator_5() {
-    $('#form_5').data('bootstrapValidator').validate();
-    //是否通过校验
-    if(!$('#form_5').data('bootstrapValidator').isValid()){
-        changeVerificationTab(5,-1);
-        return false;//没有通过校验
-    } else {
-        changeVerificationTab(5,1);
-        return true;//通过校验
-    }
-}
-
-//验证基本信息
-function formValidator_6() {
-    $('#form_6').data('bootstrapValidator').validate();
-    //是否通过校验
-    if(!$('#form_6').data('bootstrapValidator').isValid()){
-        changeVerificationTab(6,-1);
-        return false;//没有通过校验
-    } else {
-        changeVerificationTab(6,1);
+        changeVerificationTab(formNum,1);
+        completeStep(formNum);
         return true;//通过校验
     }
 }
@@ -250,7 +192,6 @@ $('#addSteps a').click(function (e) {
         $(this).unbind('show.bs.tab');
         completeStep(idNum-1);
         activeStep(idNum);
-        //changeVerificationTab(idNum,0);
         $(this).tab('show');
         activeTab=idNum;
     }
@@ -258,36 +199,112 @@ $('#addSteps a').click(function (e) {
         $(this).on('show.bs.tab', function(e) {
              e.preventDefault();
         });
-        layer.msg("请先完成当前步骤的填写", function(){
+        layer.msg("请先完成前置步骤的填写", function(){
         });
     }
 })
 
-//验证完善程度
+//验证前置步骤完善程度
 function verifierStep(stepNum){
     if(Number(stepNum)<Number(activeTab)){
+        changeVerificationTab(activeTab,0);
         return true;
     }
     switch(stepNum)
     {
         case "2":
-            changeVerificationTab(1,0);
-            return formValidator_1();
+            formValidator(1);
+            if(verificationTab1==1){//验证通过
+                return true;
+            }
+            else{//验证不通过
+                return false;
+            }
             break;
         case "3":
-            return (formValidator_1() && formValidator_2());
+            formValidator(1);
+            formValidator(2);
+            if(
+                verificationTab1==1 &&
+                verificationTab2==1
+            ){//验证通过
+                return true;
+            }
+            else{//验证不通过
+                return false;
+            }
             break;
         case "4":
-            return (formValidator_1() && formValidator_2() && formValidator_3());
+            formValidator(1);
+            formValidator(2);
+            formValidator(3);
+            if(
+                verificationTab1==1 &&
+                verificationTab2==1 &&
+                verificationTab3==1
+            ){//验证通过
+                return true;
+            }
+            else{//验证不通过
+                return false;
+            }
             break;
         case "5":
-            return (formValidator_1() && formValidator_2() && formValidator_3() && formValidator_4());
+            formValidator(1);
+            formValidator(2);
+            formValidator(3);
+            formValidator(4);
+            if(
+                verificationTab1==1 &&
+                verificationTab2==1 &&
+                verificationTab3==1 &&
+                verificationTab4==1
+            ){//验证通过
+                return true;
+            }
+            else{//验证不通过
+                return false;
+            }
             break;
         case "6":
-            return (formValidator_1() && formValidator_2() && formValidator_3() && formValidator_4() && formValidator_5());
+            formValidator(1);
+            formValidator(2);
+            formValidator(3);
+            formValidator(4);
+            formValidator(5);
+            if(
+                verificationTab1==1 &&
+                verificationTab2==1 &&
+                verificationTab3==1 &&
+                verificationTab4==1 &&
+                verificationTab5==1
+            ){//验证通过
+                return true;
+            }
+            else{//验证不通过
+                return false;
+            }
             break;
         case "7":
-            return (formValidator_1() && formValidator_2() && formValidator_3() && formValidator_4() && formValidator_5() && formValidator_6());
+            formValidator(1);
+            formValidator(2);
+            formValidator(3);
+            formValidator(4);
+            formValidator(5);
+            formValidator(6);
+            if(
+                verificationTab1==1 &&
+                verificationTab2==1 &&
+                verificationTab3==1 &&
+                verificationTab4==1 &&
+                verificationTab5==1 &&
+                verificationTab6==1
+            ){//验证通过
+                return true;
+            }
+            else{//验证不通过
+                return false;
+            }
             break;
         default:
             return true;
@@ -316,6 +333,7 @@ function activeStep(stepNum){
 //配置已完成步骤样式
 function completeStep(stepNum){
     var labelTitle=$("#label_title_"+stepNum);
+    labelTitle.removeClass();
     labelTitle.addClass("badge label label-success");
     var labelIcon=$("#lable_icon_"+stepNum);
     labelIcon.removeClass();
@@ -324,14 +342,14 @@ function completeStep(stepNum){
 
 };
 
-//删除其他步骤样式
-function unactiveStep(){
-    $("span[id^='label_title_']").removeClass();
-    //$("#label_title_1,#label_title_2,#label_title_3,#label_title_4,#label_title_5,#label_title_6").removeClass();
-};
+//配置未完成步骤样式
+function incompleteStep(stepNum){
+    var labelTitle=$("#label_title_"+stepNum);
+    labelTitle.removeClass();
+    labelTitle.addClass("badge label label-danger");
+    var labelIcon=$("#lable_icon_"+stepNum);
+    labelIcon.removeClass();
+    labelIcon.addClass("fa fa-angle-right");
+    labelIcon.css("color","#dd4b39");
 
-//模拟tab点击
-function activeTab(stepNum){
-    var lable=$("#label_"+stepNum);
-    lable.click();
 };

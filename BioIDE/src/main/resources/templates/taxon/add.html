@@ -47,7 +47,8 @@
                     <li class=""><a id="label_3" href="#tab_3" data-toggle="tab" aria-expanded="false"><span id="label_title_3">3 分子数据</span> &nbsp;&nbsp;&nbsp;<i id="lable_icon_3" class="fa fa-angle-right"></i></a></li>
                     <li class=""><a id="label_4" href="#tab_4" data-toggle="tab" aria-expanded="false"><span id="label_title_4">4 俗名信息</span> &nbsp;&nbsp;&nbsp;<i id="lable_icon_4" class="fa fa-angle-right"></i></a></li>
                     <li class=""><a id="label_5" href="#tab_5" data-toggle="tab" aria-expanded="false"><span id="label_title_5">5 观测记录</span> &nbsp;&nbsp;&nbsp;<i id="lable_icon_5" class="fa fa-angle-right"></i></a></li>
-                    <li class=""><a id="label_6" href="#tab_6" data-toggle="tab" aria-expanded="false"><span id="label_title_6">6 多媒体信息</span></a></li>
+                    <li class=""><a id="label_6" href="#tab_6" data-toggle="tab" aria-expanded="false"><span id="label_title_6">6 多媒体信息</span> &nbsp;&nbsp;&nbsp;<i id="lable_icon_6" class="fa fa-angle-right"></i></a></li>
+                    <li class=""><a id="label_7" href="#tab_7" data-toggle="tab" aria-expanded="false"><span id="label_title_7"><i class="fa fa-calendar-check-o"></i> 提交确认</span></a></li>
                 </ul>
                 <div id="addStepsTab" class="tab-content">
                     <div class="tab-pane fade in active" id="tab_1">
@@ -270,8 +271,27 @@
                             <a class="btn btn-app" onclick="clearInput();">
                                 <i class="fa fa-rotate-left"></i> 清空表单
                             </a>
-                            <a class="btn btn-app" onclick="toStep(6);">
+                            <a class="btn btn-app" onclick="toStep(7);">
                                 <i class="fa fa-chevron-right"></i> 下一步
+                            </a>
+                        </div>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_7">
+                        <h4>
+                            <b>提交确认</b>
+                            <small>提交确认</small>
+                        </h4>
+                        提交确认
+                        <p></p>
+                        <div class="pull-right">
+                            <a class="btn btn-app" onclick="toStep(6);">
+                                <i class="fa fa-chevron-left"></i> 上一步
+                            </a>
+                            <a class="btn btn-app" onclick="toStep(6);">
+                                <i class="fa fa-chevron-right"></i> 提交
                             </a>
                         </div>
                         <p>&nbsp;</p>

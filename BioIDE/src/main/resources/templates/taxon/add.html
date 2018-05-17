@@ -41,7 +41,7 @@
         <section class="content">
 
             <div class="nav-tabs-custom">
-                <ul id="addSteps" class="nav nav-tabs">
+                <ul  id="addSteps" class="nav nav-tabs">
                     <li class="active"><a id="label_1" href="#tab_1" data-toggle="tab" aria-expanded="true"><span id="label_title_1" class="badge label label-primary">1 基础信息</span>  &nbsp;&nbsp;&nbsp;<i id="lable_icon_1" class="fa fa-chevron-right" style="color: #3c8dbc;"></i></a></li>
                     <li class=""><a id="label_2" href="#tab_2" data-toggle="tab" aria-expanded="false"><span id="label_title_2">2 描述信息</span> &nbsp;&nbsp;&nbsp;<i id="lable_icon_2" class="fa fa-angle-right"></i></a></li>
                     <li class=""><a id="label_3" href="#tab_3" data-toggle="tab" aria-expanded="false"><span id="label_title_3">3 分子数据</span> &nbsp;&nbsp;&nbsp;<i id="lable_icon_3" class="fa fa-angle-right"></i></a></li>
@@ -49,13 +49,37 @@
                     <li class=""><a id="label_5" href="#tab_5" data-toggle="tab" aria-expanded="false"><span id="label_title_5">5 观测记录</span> &nbsp;&nbsp;&nbsp;<i id="lable_icon_5" class="fa fa-angle-right"></i></a></li>
                     <li class=""><a id="label_6" href="#tab_6" data-toggle="tab" aria-expanded="false"><span id="label_title_6">6 多媒体信息</span></a></li>
                 </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1">
+                <div id="addStepsTab" class="tab-content">
+                    <div class="tab-pane fade in active" id="tab_1">
                         <h4>
                             <b>基础信息</b>
                             <small>分类单元数据所属的分类单元数据集信息</small>
+                            <p>&nbsp;</p>
                         </h4>
-                        这里是基础信息
+                        <form id="form_1" class="form-horizontal"
+                              th:action="@{/}"
+                              method="post">
+                            <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
+                            <input class="hidden" th:field="*{thisTaxon.id}" readonly="readonly"></input>
+                            <div class="form-group">
+                                <label for="scientificname" class="col-sm-2 control-label">学名:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input th:field="*{thisTaxon.scientificname}" type="text" class="form-control" id="scientificname" name="scientificname" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="authorstr" class="col-sm-2 control-label">命名人和命名年代:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input th:field="*{thisTaxon.authorstr}" type="text" class="form-control" id="authorstr" name="authorstr" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="epithet" class="col-sm-2 control-label">种加词/亚种加词:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input th:field="*{thisTaxon.epithet}" type="text" class="form-control" id="epithet" name="epithet" placeholder="2～45个字符" />
+                                </div>
+                            </div>
+                        </form>
                         <p></p>
                         <div class="pull-right">
                             <a class="btn btn-app" onclick="clearInput();">
@@ -69,12 +93,27 @@
                         <p>&nbsp;</p>
                     </div>
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_2">
+                    <div class="tab-pane fade" id="tab_2">
                         <h4>
                             <b>描述信息</b>
                             <small>描述信息</small>
                         </h4>
-                        这里是描述信息
+                        <form id="form_2" class="form-horizontal"
+                              th:action="@{/}"
+                              method="post">
+                            <div class="form-group">
+                                <label for="description1" class="col-sm-2 control-label">描述1:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="description1" name="description1" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description2" class="col-sm-2 control-label">描述2:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="description2" name="description2" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                        </form>
                         <p></p>
                         <div class="pull-right">
                             <a class="btn btn-app" onclick="toStep(1);">
@@ -91,12 +130,27 @@
                         <p>&nbsp;</p>
                     </div>
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_3">
+                    <div class="tab-pane fade" id="tab_3">
                         <h4>
                             <b>分子数据</b>
                             <small>分子数据</small>
                         </h4>
-                        这里是分子数据
+                        <form id="form_3" class="form-horizontal"
+                              th:action="@{/}"
+                              method="post">
+                            <div class="form-group">
+                                <label for="molecular1" class="col-sm-2 control-label">分子1:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="molecular1" name="molecular1" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="molecular2" class="col-sm-2 control-label">分子2:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="molecular2" name="molecular2" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                        </form>
                         <p></p>
                         <div class="pull-right">
                             <a class="btn btn-app" onclick="toStep(2);">
@@ -118,7 +172,22 @@
                             <b>俗名信息</b>
                             <small>俗名信息</small>
                         </h4>
-                        这里是俗名信息
+                        <form id="form_4" class="form-horizontal"
+                              th:action="@{/}"
+                              method="post">
+                            <div class="form-group">
+                                <label for="commonname1" class="col-sm-2 control-label">俗名1:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="commonname1" name="commonname1" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="commonname2" class="col-sm-2 control-label">俗名2:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="commonname2" name="commonname2" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                        </form>
                         <p></p>
                         <div class="pull-right">
                             <a class="btn btn-app" onclick="toStep(3);">
@@ -140,7 +209,22 @@
                             <b>观测记录</b>
                             <small>观测记录</small>
                         </h4>
-                        这里是观测记录
+                        <form id="form_5" class="form-horizontal"
+                              th:action="@{/}"
+                              method="post">
+                            <div class="form-group">
+                                <label for="occurrence1" class="col-sm-2 control-label">观测1:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="occurrence1" name="occurrence1" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="occurrence2" class="col-sm-2 control-label">观测2:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="occurrence2" name="occurrence2" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                        </form>
                         <p></p>
                         <div class="pull-right">
                             <a class="btn btn-app" onclick="toStep(4);">
@@ -162,7 +246,22 @@
                             <b>多媒体信息</b>
                             <small>多媒体信息</small>
                         </h4>
-                        这里是多媒体信息
+                        <form id="form_6" class="form-horizontal"
+                              th:action="@{/}"
+                              method="post">
+                            <div class="form-group">
+                                <label for="multimedia1" class="col-sm-2 control-label">多媒体1:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="multimedia1" name="multimedia1" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="multimedia2" class="col-sm-2 control-label">多媒体2:</label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="multimedia2" name="multimedia2" placeholder="2～80个字符" />
+                                </div>
+                            </div>
+                        </form>
                         <p></p>
                         <div class="pull-right">
                             <a class="btn btn-app" onclick="toStep(5);">
@@ -198,6 +297,10 @@
 </div>
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
 <th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
+<!-- bootstrapValidator -->
+<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
+<script th:src="@{/plugins/bootstrapValidator/js/language/zh_CN.js}"></script>
+
 <!-- 引入addTaxonScript -->
 <script th:src="@{/js/addTaxonScript.js}"></script>
 </body>

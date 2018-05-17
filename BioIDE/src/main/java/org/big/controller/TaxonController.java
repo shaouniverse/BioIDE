@@ -49,7 +49,11 @@ public class TaxonController {
      */
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
-        model.addAttribute("thisTaxon", new Taxon());
+
+        Taxon thisTaxon =new Taxon();
+        thisTaxon.setScientificname("123123123");
+
+        model.addAttribute("thisTaxon",thisTaxon);
         return "taxon/add";
     }
 }

@@ -92,16 +92,16 @@ $(document).ready( function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            'description1': {
-                validators: {
-                    notEmpty: {
-                    },
-                    stringLength: {
-                        min: 2,
-                        max: 80
-                    },
-                }
-            },
+            // 'description1': {
+            //     validators: {
+            //         notEmpty: {
+            //         },
+            //         stringLength: {
+            //             min: 2,
+            //             max: 80
+            //         },
+            //     }
+            // },
         }
     });
     $('#form_3').bootstrapValidator({

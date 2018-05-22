@@ -183,3 +183,10 @@ function incompleteStep(stepNum){
     labelIcon.css("color","#dd4b39");
 
 };
+
+// 重置表单
+function resetFrom(stepNum) {
+    var thisForm=$("#form_"+stepNum);
+    thisForm[0].reset();
+    thisForm.data("bootstrapValidator").resetForm();
+};

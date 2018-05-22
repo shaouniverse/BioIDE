@@ -62,7 +62,7 @@
                         <th:block th:replace="taxon/form1 :: copy"></th:block>
                         <p></p>
                         <div class="pull-right">
-                            <a class="btn btn-app" onclick="clearInput();">
+                            <a class="btn btn-app" onclick="resetFrom(1);">
                                 <i class="fa fa-rotate-left"></i> 清空表单
                             </a>
                             <a class="btn btn-app" onclick="toStep(2);">
@@ -71,12 +71,13 @@
                         </div>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
+                        <p>&nbsp;</p>
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane fade" id="tab_2">
                         <h4>
                             <b>描述信息</b>
-                            <small>描述信息</small>
+                            <!--<small>描述信息</small>-->
                         </h4>
                         <th:block th:replace="taxon/form2 :: copy"></th:block>
                         <p></p>
@@ -84,13 +85,14 @@
                             <a class="btn btn-app" onclick="toStep(1);">
                                 <i class="fa fa-chevron-left"></i> 上一步
                             </a>
-                            <a class="btn btn-app" onclick="clearInput();">
+                            <a class="btn btn-app" onclick="resetFrom(2);">
                                 <i class="fa fa-rotate-left"></i> 清空表单
                             </a>
                             <a class="btn btn-app" onclick="toStep(3);">
                                 <i class="fa fa-chevron-right"></i> 下一步
                             </a>
                         </div>
+                        <p>&nbsp;</p>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
                     </div>
@@ -121,13 +123,14 @@
                             <a class="btn btn-app" onclick="toStep(2);">
                                 <i class="fa fa-chevron-left"></i> 上一步
                             </a>
-                            <a class="btn btn-app" onclick="clearInput();">
+                            <a class="btn btn-app" onclick="resetFrom(3);">
                                 <i class="fa fa-rotate-left"></i> 清空表单
                             </a>
                             <a class="btn btn-app" onclick="toStep(4);">
                                 <i class="fa fa-chevron-right"></i> 下一步
                             </a>
                         </div>
+                        <p>&nbsp;</p>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
                     </div>
@@ -158,13 +161,14 @@
                             <a class="btn btn-app" onclick="toStep(3);">
                                 <i class="fa fa-chevron-left"></i> 上一步
                             </a>
-                            <a class="btn btn-app" onclick="clearInput();">
+                            <a class="btn btn-app" onclick="resetFrom(4);">
                                 <i class="fa fa-rotate-left"></i> 清空表单
                             </a>
                             <a class="btn btn-app" onclick="toStep(5);">
                                 <i class="fa fa-chevron-right"></i> 下一步
                             </a>
                         </div>
+                        <p>&nbsp;</p>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
                     </div>
@@ -195,13 +199,14 @@
                             <a class="btn btn-app" onclick="toStep(4);">
                                 <i class="fa fa-chevron-left"></i> 上一步
                             </a>
-                            <a class="btn btn-app" onclick="clearInput();">
+                            <a class="btn btn-app" onclick="resetFrom(5);">
                                 <i class="fa fa-rotate-left"></i> 清空表单
                             </a>
                             <a class="btn btn-app" onclick="toStep(6);">
                                 <i class="fa fa-chevron-right"></i> 下一步
                             </a>
                         </div>
+                        <p>&nbsp;</p>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
                     </div>
@@ -232,13 +237,14 @@
                             <a class="btn btn-app" onclick="toStep(5);">
                                 <i class="fa fa-chevron-left"></i> 上一步
                             </a>
-                            <a class="btn btn-app" onclick="clearInput();">
+                            <a class="btn btn-app" onclick="resetFrom(6);">
                                 <i class="fa fa-rotate-left"></i> 清空表单
                             </a>
                             <a class="btn btn-app" onclick="toStep(7);">
                                 <i class="fa fa-chevron-right"></i> 下一步
                             </a>
                         </div>
+                        <p>&nbsp;</p>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
                     </div>
@@ -287,9 +293,13 @@
 <!-- Select2 4.0.3 -->
 <script th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
 <script th:src="@{/plugins/select2/js/i18n/zh-CN.js}"></script>
+
+<!-- jquery tmpl -->
+<script th:src="@{/plugins/jquery.tmpl/jquery.tmpl.js}"></script>
 <!-- 引入Script -->
 <script th:src="@{/js/taxon/selectScript.js}"></script>
 <script th:src="@{/js/taxon/stepScript.js}"></script>
 <script th:src="@{/js/taxon/validatorScript.js}"></script>
+<script th:src="@{/js/taxon/descriptionScript.js}"></script>
 </body>
 </html>

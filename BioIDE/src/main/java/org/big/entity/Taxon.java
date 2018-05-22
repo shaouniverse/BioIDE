@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "taxon", schema = "biodata")
-@TypeDef( name= "StringJsonUserType", typeClass = StringJsonUserType.class)
+@TypeDef(name= "StringJsonUserType", typeClass = StringJsonUserType.class)
 public class Taxon implements Serializable {
 	private static final long serialVersionUID = 1L;
 

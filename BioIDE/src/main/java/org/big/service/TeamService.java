@@ -3,8 +3,6 @@ package org.big.service;
 
 import com.alibaba.fastjson.JSON;
 import org.big.entity.Team;
-import org.big.entity.UserTeam;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 

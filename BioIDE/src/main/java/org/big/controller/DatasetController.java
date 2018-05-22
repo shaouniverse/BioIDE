@@ -84,16 +84,23 @@ public class DatasetController {
      */
 	@RequestMapping(value = "/show/{id}", method = { RequestMethod.GET })
 	public String Show(Model model, @PathVariable String id, HttpServletRequest request) {
-		Dataset thisDataset = this.datasetService.findbyID(id);
-		model.addAttribute("thisDataset", thisDataset);
-		int offset_serch = 0;
-		try {
-			offset_serch = Integer.parseInt(request.getParameter("offset"));
-		} catch (Exception e) {
-
+		String teamId = (String) request.getSession().getAttribute("teamId");
+		List<Dataset> dsList = this.datasetService.findAllDatasetsByTeamId(teamId);
+		Dataset thisDataset = null;
+		for (Dataset dataset : dsList) {
+			if (dataset.getId().equals(id)) {
+				thisDataset = this.datasetService.findbyID(id);
+				model.addAttribute("thisDataset", thisDataset);
+				int offset_serch = 0;
+				try {
+					offset_serch = Integer.parseInt(request.getParameter("offset"));
+				} catch (Exception e) {
+				}
+				model.addAttribute("thisPage", offset_serch);
+				return "dataset/show";
+			}
 		}
-		model.addAttribute("thisPage", offset_serch);
-		return "dataset/show";
+		return "redirect:/select/dataset";
 	}
     
     /**

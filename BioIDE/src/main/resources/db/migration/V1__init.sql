@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `biodata`.`taxaset` (
   `id` VARCHAR(50) NOT NULL,
   `tsname` VARCHAR(50) NULL COMMENT 'taxaset 名称',
   `tsinfo` VARCHAR(500) NULL COMMENT 'taxaset 简介',
+  `createdDate` DATETIME NULL COMMENT '添加日期',
   `refsjson` JSON NULL COMMENT '相关文献',
   `sourcejson` JSON NULL COMMENT '相关数据源',
   `status` INT NULL DEFAULT 1 COMMENT '状态（默认1、可用；0、不可用）',
@@ -82,6 +83,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biodata`.`rank` (
   `id` INT NOT NULL,
+  `sort` INT NOT NULL COMMENT '排序',
   `chname` VARCHAR(100) NULL COMMENT '等级的中文名',
   `enname` VARCHAR(100) NOT NULL COMMENT '等级的拉丁？英文名？',
   PRIMARY KEY (`id`))

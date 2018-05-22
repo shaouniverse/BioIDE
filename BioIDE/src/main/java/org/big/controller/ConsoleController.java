@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.big.entity.Dataset;
+import org.big.entity.Team;
+import org.big.entity.UserDetail;
 import org.big.service.DatasetService;
 import org.big.service.MessageService;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,13 +47,20 @@ public class ConsoleController {
      * @return java.lang.String
      */
     @RequestMapping(value="/{consoleId}", method = {RequestMethod.GET})
-    public String Index(Model model, @PathVariable String consoleId) {
-    	// 查出当前TeamId下的所有数据集 -- 响应到console/index页面
-		List<Dataset> dsList = this.datasetService.findAllDatasetsByTeamId(consoleId);
-		model.addAttribute("team", this.teamService.findbyID(consoleId));
-		model.addAttribute("dsList", dsList);
-		int unReadMessageNum = messageService.countStatus(0);
-		request.getSession().setAttribute("unReadMessageNum", unReadMessageNum);
-		return "console/index";
+    public String Index(Model model, @PathVariable String consoleId, HttpServletRequest request) {
+    	UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // 判断当前用户是否有consoleId对应的Team
+    	List<Team> teamList = this.teamService.selectTeamsByUserId(thisUser.getId());
+    	for (Team team : teamList) {
+			if (team.getId().equals(consoleId)) {
+				// 查出当前TeamId下的所有数据集 -- 响应到console/index页面
+				List<Dataset> dsList = this.datasetService.findAllDatasetsByTeamId(consoleId);
+				model.addAttribute("team", this.teamService.findbyID(consoleId));
+				model.addAttribute("dsList", dsList);
+				int unReadMessageNum = messageService.countStatus(0);
+				request.getSession().setAttribute("unReadMessageNum", unReadMessageNum);
+				return "console/index";
+			}
+		}
+    	return "redirect:/select/team";
 	}
 }

@@ -74,6 +74,7 @@ public class IndexController {
     @RequestMapping(value="/change/team/{teamId}", method = {RequestMethod.GET})
     public String ChangeTeam(Model model, HttpServletRequest request, @PathVariable String teamId) {
     	request.getSession().setAttribute("teamId", teamId);	// 将TeamId存放到Session中
+    	request.getSession().setAttribute("team", this.teamService.findbyID(teamId));
 		return "redirect:/console/" + teamId;
     }
     

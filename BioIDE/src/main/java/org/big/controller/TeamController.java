@@ -110,7 +110,10 @@ public class TeamController {
      */
     @RequestMapping(value="/save", method = {RequestMethod.POST})
     public String Save(@ModelAttribute("thisTeam") Team thisTeam) {
-        this.teamService.saveOneByUser(thisTeam);
+        if (null != thisTeam.getNote() && !"".equals(thisTeam.getNote()) && "Default".equals(thisTeam.getNote())) {
+			thisTeam.setNote(thisTeam.getNote().toLowerCase());
+		}
+    	this.teamService.saveOneByUser(thisTeam);
         return "redirect:/console/team";
     }
 

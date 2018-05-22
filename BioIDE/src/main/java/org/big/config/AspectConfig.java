@@ -31,7 +31,7 @@ public class AspectConfig {
      * @param objectId 被删除的实体的id
      * @return java.lang.Object
      */
-    @Around("execution(* org.big.service.*.logicRemove(..)) && args(objectId)")	// 环绕通知
+    @Around("execution(* org.big.service.*.logicRemove001(..)) && args(objectId)")	// 环绕通知
     public Object canReove(JoinPoint joinPoint,String objectId){
         ProceedingJoinPoint pjp = (ProceedingJoinPoint) joinPoint;
         IdentityVote thisIdentityVote=new IdentityVote();

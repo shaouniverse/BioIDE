@@ -1,19 +1,12 @@
 package org.big.controller;
 
 import org.big.entity.Taxon;
-import org.big.entity.Team;
-import org.big.entity.UserDetail;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  *<p><b>TaxonController类</b></p>

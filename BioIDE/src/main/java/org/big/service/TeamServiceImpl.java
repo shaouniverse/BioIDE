@@ -159,15 +159,16 @@ public class TeamServiceImpl implements TeamService  {
         for(int i=0;i<thisList.size();i++){
             JSONObject row = new JSONObject();
             Team thisTeam= BuildEntity.buildTeam(thisList.get(i));
-
-            thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisTeam.getId()+"' />";
-            thisEdit=
-                    "<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisTeam.getId()+"','team')\" >" +
-                     	"<span class=\"glyphicon glyphicon-edit\"></span>" +
-                    "</a>" +	
-                    "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisTeam.getId()+"','team')\" >" +
-                     	"<span class=\"glyphicon glyphicon-remove\"></span>" +
-                    "</a>";
+            if (!thisTeam.getNote().equals("Default")) {
+	            thisSelect="<input type='checkbox' name='checkbox' id='sel_"+thisTeam.getId()+"' />";
+	            thisEdit=
+	                    "<a class=\"wts-table-edit-icon\" onclick=\"editThisObject('"+thisTeam.getId()+"','team')\" >" +
+	                     	"<span class=\"glyphicon glyphicon-edit\"></span>" +
+	                    "</a>" +	
+	                    "<a class=\"wts-table-edit-icon\" onclick=\"removeThisObject('"+thisTeam.getId()+"','team')\" >" +
+	                     	"<span class=\"glyphicon glyphicon-remove\"></span>" +
+	                    "</a>";
+            }
             row.put("select",thisSelect);
             row.put("name","<a target='_blank' href='console/team/details/"+thisTeam.getId()+"'>"+thisTeam.getName()+"</a>");
             row.put("leader",thisTeam.getLeader());

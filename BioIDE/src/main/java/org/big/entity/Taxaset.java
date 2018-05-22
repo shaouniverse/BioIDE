@@ -1,6 +1,8 @@
 package org.big.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 import org.big.common.StringJsonUserType;
@@ -44,6 +46,9 @@ public class Taxaset implements Serializable {
 
 	private String tsname;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+	
 	//bi-directional many-to-one association to Dataset
 	@ManyToOne
 	private Dataset dataset;
@@ -147,6 +152,14 @@ public class Taxaset implements Serializable {
 		taxon.setTaxaset(null);
 
 		return taxon;
+	}
+	
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	@Override

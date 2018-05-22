@@ -22,6 +22,8 @@ public class Rank implements Serializable {
 	@Id
 	private int id;
 
+	private int sort;
+	
 	private String chname;
 
 	private String enname;
@@ -39,6 +41,14 @@ public class Rank implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getSort() {
+		return sort;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
 	}
 
 	public String getChname() {

@@ -6,6 +6,7 @@ import org.big.service.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 /**
@@ -23,9 +24,9 @@ public class RankController {
 	@Autowired
 	private RankService rankService;
 	
+	@RequestMapping(value = "/data", method = RequestMethod.GET)
 	public JSON data(HttpServletRequest request) {
-//		return this.rankService.findRankSortData(request);
-		return null;
+		return this.rankService.findRankSortData(request);
 	}
 	
 }

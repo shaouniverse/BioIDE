@@ -3,7 +3,7 @@ package org.big.repository;
 import org.big.entity.Rank;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -64,6 +64,6 @@ public interface RankRepository extends BaseRepository<Rank, Integer> {
 	@Query(value = "Select r from Rank r where r.enname = ?1")
     Rank findOneByEnname(String EnName);
 	
-/*	@Query(value = "Select r from Rank r where (r.enname like %?1% or r.sort like %?1%)")
-	Page<Object> findRankSortData(String findText, String name, PageRequest buildPageRequest);*/
+	@Query(value = "Select r from Rank r where (r.enname like %?1% or r.sort like %?1%)")
+	Page<Object> findBySort(String findText, Pageable pageable);
 }

@@ -69,6 +69,6 @@ public interface RankService {
      * @param request
      * @return
      */
-//	JSON findRankSortData(HttpServletRequest request);
+	JSON findRankSortData(HttpServletRequest request);
 
 }

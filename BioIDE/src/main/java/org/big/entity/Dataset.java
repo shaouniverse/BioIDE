@@ -22,7 +22,7 @@ public class Dataset implements Serializable {
 
 	@Id
 	private String id;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
@@ -42,7 +42,7 @@ public class Dataset implements Serializable {
 	private Date synchdate;
 
 	private int synchstatus;
-	
+
 	// bi-directional many-to-one association to Team
 	@ManyToOne
 	private Team team;
@@ -57,138 +57,93 @@ public class Dataset implements Serializable {
 				+ status + ", synchdate=" + synchdate + ", synchstatus=" + synchstatus + ", team=" + team + "]";
 	}
 
-
-
 	public String getId() {
 		return id;
 	}
-
-
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
-
 
 	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
-
-
 	public String getCreator() {
 		return creator;
 	}
-
-
 
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
 
-
-
 	public String getDsabstract() {
 		return dsabstract;
 	}
-
-
 
 	public void setDsabstract(String dsabstract) {
 		this.dsabstract = dsabstract;
 	}
 
-
-
 	public String getDsname() {
 		return dsname;
 	}
-
-
 
 	public void setDsname(String dsname) {
 		this.dsname = dsname;
 	}
 
-
-
 	public String getLisenceid() {
 		return lisenceid;
 	}
-
-
 
 	public void setLisenceid(String lisenceid) {
 		this.lisenceid = lisenceid;
 	}
 
-
-
 	public String getMark() {
 		return mark;
 	}
-
-
 
 	public void setMark(String mark) {
 		this.mark = mark;
 	}
 
-
-
 	public int getStatus() {
 		return status;
 	}
-
-
 
 	public void setStatus(int status) {
 		this.status = status;
 	}
 
-
-
 	public Date getSynchdate() {
 		return synchdate;
 	}
-
-
 
 	public void setSynchdate(Date synchdate) {
 		this.synchdate = synchdate;
 	}
 
-
-
 	public int getSynchstatus() {
 		return synchstatus;
 	}
-
-
 
 	public void setSynchstatus(int synchstatus) {
 		this.synchstatus = synchstatus;
 	}
 
-
 	public Team getTeam() {
 		return team;
 	}
 
-
-
 	public void setTeam(Team team) {
 		this.team = team;
 	}
-
-
 
 	@Override
 	public int hashCode() {

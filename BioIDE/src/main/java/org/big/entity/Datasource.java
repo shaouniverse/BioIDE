@@ -39,7 +39,11 @@ public class Datasource implements Serializable {
 	private String title;
 
 	private String versions;
-
+	
+	// bi-directional many-to-one association to Team
+	@ManyToOne
+	private Dataset dataset;
+	
 	public Datasource() {
 	}
 
@@ -115,10 +119,19 @@ public class Datasource implements Serializable {
 		this.versions = versions;
 	}
 
+	public Dataset getDataset() {
+		return dataset;
+	}
+
+	public void setDataset(Dataset dataset) {
+		this.dataset = dataset;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((dataset == null) ? 0 : dataset.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((info == null) ? 0 : info.hashCode());
 		result = prime * result + ((inputer == null) ? 0 : inputer.hashCode());
@@ -140,6 +153,11 @@ public class Datasource implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Datasource other = (Datasource) obj;
+		if (dataset == null) {
+			if (other.dataset != null)
+				return false;
+		} else if (!dataset.equals(other.dataset))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;

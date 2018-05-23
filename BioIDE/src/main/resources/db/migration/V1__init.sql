@@ -512,7 +512,6 @@ CREATE TABLE IF NOT EXISTS `biodata`.`taxaction` (
 ENGINE = InnoDB
 COMMENT = '描述分类动作';
 
-
 -- -----------------------------------------------------
 -- Table `biodata`.`datasources`
 -- -----------------------------------------------------
@@ -526,10 +525,16 @@ CREATE TABLE IF NOT EXISTS `biodata`.`datasources` (
   `inputtime` DATETIME NULL COMMENT '录入时间',
   `synchstatus` INT NULL DEFAULT 0 COMMENT '同步状态，即是否与服务器进行同步\n0 本地有更新，未与服务器同步\n1 与服务器同步中\n2 完成同步',
   `synchdate` DATETIME NULL COMMENT '最后同步日期',
-  PRIMARY KEY (`id`))
+  `dataset_id` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_datasources_dataset1_idx` (`dataset_id` ASC),
+  CONSTRAINT `fk_datasources_dataset1`
+    FOREIGN KEY (`dataset_id`)
+    REFERENCES `biodata`.`dataset` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 COMMENT = '数据源';
-
 
 -- -----------------------------------------------------
 -- Table `biodata`.`refs`

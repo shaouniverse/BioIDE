@@ -4,6 +4,7 @@
 $(document).ready( function() {
     //获取host
     $("#base_url").val(window.location.host);
+    //基础信息验证规则
     $('#form_1').bootstrapValidator({
         excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
@@ -83,6 +84,7 @@ $(document).ready( function() {
             },
         }
     });
+    //描述验证规则
     $('#form_2').bootstrapValidator({
         excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
@@ -196,7 +198,7 @@ function changeVerificationTab(tabNum,status) {
     this['verificationTab'+tabNum]=status;
 }
 
-//统一验证
+//统一验证form
 function formValidator(formNum) {
     $('#form_'+formNum).data('bootstrapValidator').validate();
     //是否通过校验
@@ -210,3 +212,80 @@ function formValidator(formNum) {
         return true;//通过校验
     }
 }
+
+//构造一个description验证规则
+function addDescriptionValidator(descriptionNum) {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon ',
+            invalid: 'glyphicon ',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "destitle_"+descriptionNum, {
+        validators: {
+            notEmpty: {
+            },
+            stringLength: {
+                min: 1,
+                max: 100
+            },
+        }
+    });
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "destypeid_"+descriptionNum, {
+        validators: {
+            // notEmpty: {
+            // }
+        }
+    });
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "desdate_"+descriptionNum, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 50
+            },
+        }
+    });
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "describer_"+descriptionNum, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 50
+            },
+        }
+    });
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "rightsholder_"+descriptionNum, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 100
+            },
+        }
+    });
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "descontent_"+descriptionNum, {
+        validators: {
+            notEmpty: {
+            },
+            stringLength: {
+                min: 1,
+                // max: 100
+            },
+        }
+    });
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "descriptionremark_"+descriptionNum, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 500
+            },
+        }
+    });
+}
+//统一验证description
+function descriptionFormValidator(Num) {
+    $('#descriptionForm_'+Num).data('bootstrapValidator').validate();
+}
+
+

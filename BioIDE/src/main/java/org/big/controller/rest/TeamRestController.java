@@ -61,13 +61,13 @@ public class TeamRestController {
      */
     @RequestMapping(value="/removeMany/{ids}",method = {RequestMethod.GET})
     public boolean RemoveMany(@PathVariable String ids) {
-        
-    	try{
+
+        try{
             //获取id列表字符串
             String [] idList = ids.split("￥");
             for (String id : idList) {
-				this.teamService.removeOne(id);
-			}
+                this.teamService.removeOne(id);
+            }
             return true;
         }catch(Exception e){
             return false;
@@ -129,7 +129,7 @@ public class TeamRestController {
             return false;
         }
     }
-    
+
     /**
      *<b>团队负责人授权</b>
      *<p> 团队负责人授权</p>
@@ -139,18 +139,18 @@ public class TeamRestController {
      */
     @RequestMapping(value="/transMember",method = {RequestMethod.POST})
     public boolean TransMember(HttpServletRequest request, HttpServletResponse response) {
-    	String teamId=request.getParameter("teamId");
+        String teamId=request.getParameter("teamId");
         String userId=request.getParameter("userId");
         Team team = this.teamService.findbyID(teamId);
         try{
-        	this.teamService.updateTeamInfoByLeader(teamId, userId);
-        	String email = this.userRepository.findOneById(userId).getEmail();
-        	if (null != email && !"".contains(email)) {
-        		this.userTeamService.SendEmailTransPermissionAdvice(request, response, email, team);
-        	}
-        	return true;
+            this.teamService.updateTeamInfoByLeader(teamId, userId);
+            String email = this.userRepository.findOneById(userId).getEmail();
+            if (null != email && !"".contains(email)) {
+                this.userTeamService.SendEmailTransPermissionAdvice(request, response, email, team);
+            }
+            return true;
         }catch(Exception e){
-        	return false;
+            return false;
         }
     }
 }

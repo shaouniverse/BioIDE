@@ -53,10 +53,10 @@ function verifierStep(stepNum){
             break;
         case "3":
             formValidator(1);
-            formValidator(2);
+            //submitAllDescription();
             if(
                 verificationTab1==1 &&
-                verificationTab2==1
+                submitAllDescription()
             ){//验证通过
                 return true;
             }

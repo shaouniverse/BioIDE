@@ -49,4 +49,15 @@ public class TaxonController {
         model.addAttribute("thisTaxon",thisTaxon);
         return "taxon/add";
     }
+    /**
+     *<b>新建Taxon添加基础信息</b>
+     *<p> 新建Taxon添加基础信息</p>
+     * @author WangTianshan (王天山)
+     * @return java.lang.String
+     */
+    @RequestMapping(value="/add/baseinfo", method = {RequestMethod.POST})
+    public String AddBaseInfo() {
+    	
+    	return "taxon/add";
+    }
 }

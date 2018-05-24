@@ -90,4 +90,13 @@ public interface TaxasetService {
      */
     List<Taxaset> findTaxasetsByDatasetId(String id);
 
+    /**
+     *<b>Taxaset的select列表</b>
+     *<p> 当前Dataset下的Taxaset的select检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	JSON findBySelect(HttpServletRequest request);
+
 }

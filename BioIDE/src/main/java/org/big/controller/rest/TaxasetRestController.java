@@ -67,4 +67,16 @@ public class TaxasetRestController {
 		}
 		return false;
 	}
+	
+	/**
+     *<b>Taxaset的select列表</b>
+     *<p> 当前用户的Taxaset的select检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
+	public JSON select(HttpServletRequest request){
+		return this.taxasetService.findBySelect(request);
+	}
 }

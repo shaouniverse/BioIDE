@@ -1,8 +1,6 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="copy">
-  <form id="form_1" class="form-horizontal"
-        th:action="@{/}"
-        method="post">
+  <form id="form_1" class="form-horizontal" th:action="@{/console/taxon/add/baseinfo}" method="post">
     <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
     <input class="hidden" th:field="*{thisTaxon.id}" readonly="readonly"></input>
 

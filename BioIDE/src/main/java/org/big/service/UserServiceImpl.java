@@ -193,7 +193,8 @@ public class UserServiceImpl implements UserService{
         // 获取当前登录用户
         // 传入页码起始页、页面大小、排序字段和排序类型关键参数返回SpringData规定排序PageRequest类型
         UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Page<Object> thisPage=this.userRepository.findUsersByEmail(findText, thisUser.getEmail(), QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
+        Page<Object> thisPage=this.userRepository.findUsersByEmail(findText, thisUser.getEmail(), 
+        		QueryTool.buildPageRequest(offset_serch,limit_serch,sort,order));
         thisSelect.put("total_count",thisPage.getTotalElements());	// 总记录数
         Boolean incompleteResulte=true;
         

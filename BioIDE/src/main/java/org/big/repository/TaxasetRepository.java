@@ -5,6 +5,7 @@ import java.util.List;
 import org.big.entity.Taxaset;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -75,4 +76,17 @@ public interface TaxasetRepository extends BaseRepository<Taxaset, String> {
      */
     @Query(value = "Select ts from Taxaset ts where (ts.tsname like %?1% or ts.tsinfo like %?1% or ts.createdDate like %?1%) and ts.status = 1 and ts.dataset.id = ?2")
     Page<Taxaset> searchInfo(String findText, Pageable pageable, String id);
+    
+    
+    /**
+     *<b>Taxaset的select列表</b>
+     *<p> 当前Dataset下的Taxaset的select检索列表</p>
+     * @author BINZI
+     * @param findText
+     * @param dsId
+     * @param pageable
+     * @return com.alibaba.fastjson.JSON
+     */
+    @Query(value = "Select ts from Taxaset ts where (ts.tsname like %?1%) and ts.dataset.id = ?2 and ts.status = 1")
+    Page<Taxaset> searchByTsname(String findText, String dsId, Pageable pageable);
 }

@@ -44,6 +44,12 @@ public interface RankService {
      * @return void
      */
     void updateOneById(Rank thisRank);
+    /**
+     *<b>查询所有Rank实体</b>
+     *<p> 查询所有Rank实体</p>
+     * @return
+     */
+//    List<Rank> findAll();
     
     /**
      *<b>根据rankId查找一个Rank实体</b>
@@ -69,6 +75,6 @@ public interface RankService {
      * @param request
      * @return
      */
-	JSON findRankSortData(HttpServletRequest request);
+	JSON findBySelect(HttpServletRequest request);
 
 }

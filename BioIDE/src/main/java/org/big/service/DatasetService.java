@@ -125,4 +125,13 @@ public interface DatasetService {
      * @return java.lang.String
      */
     JSON newOne(Dataset thisDataset);
+    
+    /**
+     *<b>Dataset的select列表</b>
+     *<p> 当前用户的Dataset的select检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	JSON findBySelect(HttpServletRequest request);
 }

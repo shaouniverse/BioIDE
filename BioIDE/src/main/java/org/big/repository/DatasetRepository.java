@@ -2,13 +2,18 @@ package org.big.repository;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.big.entity.Dataset;
 import org.big.entity.Team;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  *<p><b>Dataset的DAO类接口</b></p>
@@ -94,5 +99,17 @@ public interface DatasetRepository extends BaseRepository<Dataset, String> {
      * @return org.springframework.data.domain.Page<org.big.entity.Dataset>
      */
     Dataset findOneByMark(String mark);
+
+    /**
+     *<b>Dataset的select列表</b>
+     *<p> 当前Team下的Dataset的select检索列表</p>
+     * @author BINZI
+     * @param findText
+     * @param teamId
+     * @param pageable
+     * @return com.alibaba.fastjson.JSON
+     */
+    @Query(value = "select ds from Dataset ds where (ds.dsname like %?1%) and ds.team.id = ?2 and ds.status = 1")
+	Page<Dataset> searchByDsname(String findText, String teamId, Pageable pageable);
     
 }

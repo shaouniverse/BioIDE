@@ -64,6 +64,6 @@ public interface RankRepository extends BaseRepository<Rank, Integer> {
 	@Query(value = "Select r from Rank r where r.enname = ?1")
     Rank findOneByEnname(String EnName);
 	
-	@Query(value = "Select r from Rank r where (r.enname like %?1% or r.sort like %?1%)")
-	Page<Object> findBySort(String findText, Pageable pageable);
+	@Query(value = "Select r from Rank r where (r.enname like %?1%)")
+	Page<Rank> searchByEnname(String findText, Pageable pageable);
 }

@@ -24,8 +24,11 @@ function submitDistributiondata(distributiondataNum) {
                 time: 1500, //1.5s后自动关闭
             },
             function(){
-                $('#distributiondataCollapseTitle_'+distributiondataNum).trigger("click");
+                if($('#distributiondataCollapse_'+distributiondataNum).hasClass('in')){
+                    $('#distributiondataCollapseTitle_'+distributiondataNum).trigger("click");
+                }
                 $('#distributiondataForm_'+distributiondataNum).removeClass("panel-default");
+                $('#distributiondataForm_'+distributiondataNum).removeClass("panel-danger");
                 $('#distributiondataForm_'+distributiondataNum).addClass("panel-success");
                 $('#distributiondataStatus_'+distributiondataNum).removeClass("hidden");
                 return true;
@@ -33,10 +36,13 @@ function submitDistributiondata(distributiondataNum) {
         return true;
     }
     else{
+        if(!$('#distributiondataCollapse_'+distributiondataNum).hasClass('in')){
+            $('#distributiondataCollapseTitle_'+distributiondataNum).trigger("click");
+        }
         $('#distributiondataForm_'+distributiondataNum).removeClass("panel-success");
         $('#distributiondataForm_'+distributiondataNum).addClass("panel-default");
         $('#distributiondataStatus_'+distributiondataNum).addClass("hidden");
-        layer.msg("请完成此文本描述的填写", function(){
+        layer.msg("请完成此分布数据的填写", function(){
         });
         return false;
     }

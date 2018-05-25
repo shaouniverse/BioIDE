@@ -24,8 +24,11 @@ function submitDescription(descriptionNum) {
                 time: 1500, //1.5s后自动关闭
             },
             function(){
-                $('#descriptionCollapseTitle_'+descriptionNum).trigger("click");
+                if($('#descriptionCollapse_'+descriptionNum).hasClass('in')){
+                    $('#descriptionCollapseTitle_'+descriptionNum).trigger("click");
+                }
                 $('#descriptionForm_'+descriptionNum).removeClass("panel-default");
+                $('#descriptionForm_'+descriptionNum).removeClass("panel-danger");
                 $('#descriptionForm_'+descriptionNum).addClass("panel-success");
                 $('#descriptionStatus_'+descriptionNum).removeClass("hidden");
                 return true;
@@ -33,8 +36,11 @@ function submitDescription(descriptionNum) {
         return true;
     }
     else{
+        if(!$('#descriptionCollapse_'+descriptionNum).hasClass('in')){
+            $('#descriptionCollapseTitle_'+descriptionNum).trigger("click");
+        }
         $('#descriptionForm_'+descriptionNum).removeClass("panel-success");
-        $('#descriptionForm_'+descriptionNum).addClass("panel-default");
+        $('#descriptionForm_'+descriptionNum).addClass("panel-danger");
         $('#descriptionStatus_'+descriptionNum).addClass("hidden");
         layer.msg("请完成此文本描述的填写", function(){
         });
@@ -132,48 +138,4 @@ function buildSelect2 (select_id,url) {
         templateResult: formatRepo,
         templateSelection: formatRepoSelection
     });
-}
-
-//提交一个描述
-function submitDescription(descriptionNum) {
-    descriptionFormValidator(descriptionNum);
-    if($('#descriptionForm_'+descriptionNum).data('bootstrapValidator').isValid()){
-        //处理ajax提交
-        //
-        //
-        //
-        layer.msg('提交成功，请继续填写其他内容',
-            {
-                time: 1500, //1.5s后自动关闭
-            },
-            function(){
-                $('#descriptionCollapseTitle_'+descriptionNum).trigger("click");
-                $('#descriptionForm_'+descriptionNum).removeClass("panel-default");
-                $('#descriptionForm_'+descriptionNum).addClass("panel-success");
-                $('#descriptionStatus_'+descriptionNum).removeClass("hidden");
-                return true;
-            });
-        return true;
-    }
-    else{
-        $('#descriptionForm_'+descriptionNum).removeClass("panel-success");
-        $('#descriptionForm_'+descriptionNum).addClass("panel-default");
-        $('#descriptionStatus_'+descriptionNum).addClass("hidden");
-        layer.msg("请完成此文本描述的填写", function(){
-        });
-        return false;
-    }
-}
-
-//提交所有description
-function submitAllDescription() {
-    var submitResult=true;
-    $("form[id^='descriptionForm_']").each(function () {
-        if(submitDescription($(this).attr("id").substr($(this).attr("id").lastIndexOf("_")+1))){
-        }
-        else{
-            submitResult= false;
-        }
-    });
-    return submitResult;
 }

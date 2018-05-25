@@ -6,13 +6,13 @@
         <li role="presentation" class="active">
           <a href="#description" aria-controls="description" role="tab" data-toggle="tab">文本描述</a></li>
         <li role="presentation">
-          <a href="#distributiondata" aria-controls="distributiondata" role="tab" data-toggle="tab">分布信息</a></li>
+          <a href="#distributiondata" aria-controls="distributiondata" role="tab" data-toggle="tab">分布数据</a></li>
         <li role="presentation">
-          <a href="#protection" aria-controls="protection" role="tab" data-toggle="tab">保护信息</a></li>
+          <a href="#protection" aria-controls="protection" role="tab" data-toggle="tab">保护数据</a></li>
         <li role="presentation">
           <a href="#taxkey" aria-controls="taxkey" role="tab" data-toggle="tab">检索表</a></li>
         <li role="presentation">
-          <a href="#traitdata" aria-controls="traitdata" role="tab" data-toggle="tab">特征信息</a></li>
+          <a href="#traitdata" aria-controls="traitdata" role="tab" data-toggle="tab">特征数据</a></li>
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="description">
@@ -147,6 +147,127 @@
             <small>&nbsp;描述物种分布的信息；可添加多条</small>
             <p>&nbsp;</p>
           </h4>
+          <div id="newDistributiondata"></div>
+          <a class="btn btn-app" onclick="addDistributiondata ();">
+            <i class="fa fa-plus"></i>添加新分布数据</a>
+          <input class="hidden" id="countDistributiondata" name="countDistributiondata" value="0"></input>
+          <script id="distributiondataForm" type="text/x-jquery-tmpl">
+            <form class="panel panel-default" id="distributiondataForm_${num}" th:action="@{/}" method="post">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <i class="fa fa-check-circle hidden" id="distributiondataStatus_${num}"></i>
+                  <a id="distributiondataCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#distributiondataCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的描述</a>
+                  <a role="button" class="pull-right" onclick="removeDistributiondata(${num});">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="distributiondataCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="destitle_${num}" class="col-sm-4 control-label">描述标题:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="destitle_${num}" name="destitle_${num}" placeholder="描述标题" /></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="destypeid_${num}" class="col-sm-4 control-label">描述类型:</label>
+                      <div class="col-sm-8">
+                        <select class="form-control select2" id="destypeid_${num}" name="destypeid_${num}" style="width: 100%;"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="desdate_${num}" class="col-sm-4 control-label">描述时间:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="desdate_${num}" name="desdate_${num}" placeholder="描述时间，一般为年份" /></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="describer_${num}" class="col-sm-4 control-label">描述人:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="describer_${num}" name="describer_${num}" placeholder="描述人" /></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="language_${num}" class="col-sm-4 control-label">描述语言:</label>
+                      <div class="col-sm-8">
+                        <select class="form-control select2" id="language_${num}" name="language_${num}" style="width: 100%;"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="distributiondatasourcesid_${num}" class="col-sm-4 control-label">数据源:</label>
+                      <div class="col-sm-8">
+                        <select class="form-control select2" id="distributiondatasourcesid_${num}" name="distributiondatasourcesid_${num}" style="width: 100%;"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="rightsholder_${num}" class="col-sm-4 control-label">权利所有人:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="rightsholder_${num}" name="rightsholder_${num}" placeholder="描述的权利所有人" /></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="licenseid_${num}" class="col-sm-4 control-label">共享协议:</label>
+                      <div class="col-sm-8">
+                        <select class="form-control select2" id="licenseid_${num}" name="licenseid_${num}" style="width: 100%;"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="descontent_${num}" class="col-sm-2 control-label">描述原文:</label>
+                      <div class="col-sm-10 col-md-10">
+                        <textarea class="form-control" rows="3" id="descontent_${num}" name="descontent_${num}" placeholder="描述原文"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="relation_${num}" class="col-sm-2 control-label">关系:</label>
+                      <div class="col-sm-10 col-md-10">
+                        <div class="input-group" id="relation">
+                          <select class="form-control select2 col-sm-6 col-md-6" id="relationDes_${num}" name="relationDes_${num}" style="width: 100%;"></select>
+                          <div class="input-group-btn">
+                            <button type="button" id="relationBtn_${num}" class="btn btn-default dropdown-toggle" data-toggle="dropdown">选择关系
+                              <span class="fa fa-caret-down"></span></button>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a onclick="selectRelation(${num},0,'无关系');">无关系</a></li>
+                              <li>
+                                <a onclick="selectRelation(${num},1,'的 翻译');">的 翻译</a></li>
+                              <li>
+                                <a onclick="selectRelation(${num},2,'的 总结');">的 总结</a></li>
+                              <li>
+                                <a onclick="selectRelation(${num},3,'的 说明');">的 说明</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input class="hidden" id="relationId_${num}" name="relationId_${num}"></input>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="distributiondataremark_${num}" class="col-sm-2 control-label">备注:</label>
+                      <div class="col-sm-10 col-md-10">
+                        <input type="text" class="form-control" id="distributiondataremark_${num}" name="distributiondataremark_${num}" placeholder="备注信息" /></div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-primary pull-right" onclick="submitDistributiondata(${num});">确认</button></div>
+              </div>
+            </form>
+          </script>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="protection">这里是保护信息</div>
         <div role="tabpanel" class="tab-pane fade" id="taxkey">这里是检索表</div>

@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.big.common.QueryTool;
 import org.big.entity.Taxaset;
+import org.big.entity.UserDetail;
 import org.big.repository.TaxasetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -23,6 +25,26 @@ import com.alibaba.fastjson.JSONObject;
 public class TaxasetServiceImpl implements TaxasetService {
 	@Autowired
 	private TaxasetRepository taxasetRepository;
+	
+	@Override
+	public JSON newOne(Taxaset thisTaxaset) {
+		JSONObject thisResult = new JSONObject();
+		try {
+			String id = UUID.randomUUID().toString();
+			thisTaxaset.setId(id);
+			thisTaxaset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+			thisTaxaset.setSynchdate(new Timestamp(System.currentTimeMillis()));
+			thisTaxaset.setStatus((byte) 1);
+
+			this.taxasetRepository.save(thisTaxaset);
+			thisResult.put("result", true);
+			thisResult.put("newId", this.taxasetRepository.findOneById(id).getId());
+			thisResult.put("newTsname", this.taxasetRepository.findOneById(id).getTsname());
+		} catch (Exception e) {
+			thisResult.put("result", false);
+		}
+		return thisResult;
+	}
 	
 	@Override
 	public void saveOne(Taxaset thisTaxaset) {
@@ -69,7 +91,6 @@ public class TaxasetServiceImpl implements TaxasetService {
 
 	@Override
 	public JSON findTaxasetList(HttpServletRequest request) {
-		
 		String dsId = (String) request.getSession().getAttribute("datasetID");
 		JSON json = null;
 		String searchText = request.getParameter("search");
@@ -148,7 +169,7 @@ public class TaxasetServiceImpl implements TaxasetService {
 		JSONObject thisSelect = new JSONObject();
 		JSONArray items = new JSONArray();
 		List<Taxaset> thisList = new ArrayList<>();
-		// 获取当前选中Dataset
+		// 获取当前选中Dataset下的Taxaset
 		String dsId = (String) request.getSession().getAttribute("datasetID");
 		Page<Taxaset> thisPage = this.taxasetRepository.searchByTsname(findText, dsId,
 				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
@@ -159,14 +180,12 @@ public class TaxasetServiceImpl implements TaxasetService {
 		}
 		thisSelect.put("incompleteResulte", incompleteResulte);
 		thisList = thisPage.getContent();
-		
 		if (findPage == 1) {
 			JSONObject row = new JSONObject();
 			row.put("id", "addNew");
 			row.put("full_name", "新建一个分类单元集");
 			items.add(row);
 		}
-		
 		for (int i = 0; i < thisList.size(); i++) {
 			JSONObject row = new JSONObject();
 			row.put("id", thisList.get(i).getId());
@@ -176,5 +195,4 @@ public class TaxasetServiceImpl implements TaxasetService {
 		thisSelect.put("items", items);
 		return thisSelect;
 	}
-
 }

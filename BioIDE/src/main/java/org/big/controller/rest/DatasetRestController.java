@@ -6,6 +6,7 @@ import org.big.entity.Dataset;
 import org.big.service.DatasetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -92,8 +93,8 @@ public class DatasetRestController {
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-    @RequestMapping("/new")
-    public JSON New(HttpServletRequest request) {
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public JSON New(Model model, HttpServletRequest request) {
         Dataset thisDataset=new Dataset();
         thisDataset.setDsname(request.getParameter("dsname"));
         thisDataset.setDsabstract(request.getParameter("dsabstract"));

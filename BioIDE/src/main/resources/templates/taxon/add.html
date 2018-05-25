@@ -280,6 +280,19 @@
                     </div>
                 </div>
             </div>
+            <div>
+            	<!-- Form1 -->
+	            <a href="#" id="addDataset" class="hidden" data-toggle="modal" data-target="#modal-addDataset"></a>
+			    <!-- 引入addDatasetModal -->
+			    <th:block th:replace="dataset/addModal :: copy"></th:block>
+			     
+	            <a href="#" id="addTaxaset" class="hidden" data-toggle="modal" data-target="#modal-addTaxaset"></a>
+			    <!-- 引入addDatasetModal -->
+			    <th:block th:replace="taxaset/addModal :: copy"></th:block> 
+            	
+            	<!-- Form2 -->
+            
+            </div>
         </section>
     </div>
     <footer class="main-footer">
@@ -304,5 +317,8 @@
 <script th:src="@{/js/taxon/stepScript.js}"></script>
 <script th:src="@{/js/taxon/validatorScript.js}"></script>
 <script th:src="@{/js/taxon/descriptionScript.js}"></script>
+<script th:src="@{/js/taxon/addNewScript.js}"></script>
 </body>
+<script type="text/javascript">
+</script>
 </html>

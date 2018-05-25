@@ -1,5 +1,7 @@
 package org.big.controller;
 
+import org.big.entity.Dataset;
+import org.big.entity.Taxaset;
 import org.big.entity.Taxon;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +47,11 @@ public class TaxonController {
 
         Taxon thisTaxon =new Taxon();
         thisTaxon.setScientificname("123123123");
-
         model.addAttribute("thisTaxon",thisTaxon);
+        Dataset thisDataset = new Dataset();
+        Taxaset thisTaxaset = new Taxaset();
+        model.addAttribute("thisDataset", thisDataset);
+        model.addAttribute("thisTaxaset", thisTaxaset);
         return "taxon/add";
     }
     /**

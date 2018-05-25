@@ -151,12 +151,10 @@
 
 //拼接option
 function formatRepo (repo) {
-	alert(repo.loading);
     if (repo.loading){
     	return repo.text;
     }
     var markup = repo.full_name;
-    alert("markup:" + markup);
     return markup;
 }
 //拼接option
@@ -172,14 +170,12 @@ function buildSelect2 (select_id, url) {
             dataType: 'json',
             delay: 250,
             data: function (params) {
-            	alert(params.term);
                 return {
                     find: params.term,
                     page: params.page
                 };
             },
             processResults: function (data, params) {
-            	alert(data.items);
                 params.page = params.page || 1;
                 return {
                     results: data.items,

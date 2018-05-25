@@ -2,9 +2,13 @@ package org.big.controller.rest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.big.entity.Dataset;
+import org.big.entity.Taxaset;
+import org.big.service.DatasetService;
 import org.big.service.TaxasetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +22,9 @@ import com.alibaba.fastjson.JSON;
 public class TaxasetRestController {
 	@Autowired
 	private TaxasetService taxasetService;
+	
+	@Autowired
+	private DatasetService datasetService;
 	/**
 	 * <b> Taxaset的Index页面分页列表查询</b>
 	 * <p> Taxaset的Index页面分页列表查询</p>
@@ -78,5 +85,22 @@ public class TaxasetRestController {
 	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public JSON select(HttpServletRequest request){
 		return this.taxasetService.findBySelect(request);
+	}
+	
+    /**
+     *<b>Taxaset的select列表</b>
+     *<p> 当前用户的Taxaset的select检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping("/new")
+	public JSON New(Model model, HttpServletRequest request) {
+		Taxaset thisTaxaset = new Taxaset();
+		thisTaxaset.setTsname(request.getParameter("tsname"));
+		thisTaxaset.setTsinfo(request.getParameter("tsinfo"));
+		String datasetID = (String) request.getSession().getAttribute("datasetID");
+		thisTaxaset.setDataset(this.datasetService.findbyID(datasetID));
+		return this.taxasetService.newOne(thisTaxaset);
 	}
 }

@@ -318,7 +318,7 @@ public class DatasetServiceImpl implements DatasetService {
 		JSONObject thisSelect = new JSONObject();
 		JSONArray items = new JSONArray();
 		List<Dataset> thisList = new ArrayList<>();
-		
+		// 获得当前选中Team下的Dataset
 		String teamId = (String) request.getSession().getAttribute("teamId");
 		Page<Dataset> thisPage = this.datasetRepository.searchByDsname(findText, teamId,
 				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));

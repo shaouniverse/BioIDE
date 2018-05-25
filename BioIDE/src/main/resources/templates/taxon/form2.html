@@ -6,13 +6,13 @@
         <li role="presentation" class="active">
           <a href="#description" aria-controls="description" role="tab" data-toggle="tab">文本描述</a></li>
         <li role="presentation">
-          <a href="#distributiondata" aria-controls="distributiondata" role="tab" data-toggle="tab">分布信息</a></li>
+          <a href="#distributiondata" aria-controls="distributiondata" role="tab" data-toggle="tab">分布数据</a></li>
         <li role="presentation">
-          <a href="#protection" aria-controls="protection" role="tab" data-toggle="tab">保护信息</a></li>
+          <a href="#protection" aria-controls="protection" role="tab" data-toggle="tab">保护数据</a></li>
         <li role="presentation">
           <a href="#taxkey" aria-controls="taxkey" role="tab" data-toggle="tab">检索表</a></li>
         <li role="presentation">
-          <a href="#traitdata" aria-controls="traitdata" role="tab" data-toggle="tab">特征信息</a></li>
+          <a href="#traitdata" aria-controls="traitdata" role="tab" data-toggle="tab">特征数据</a></li>
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="description">
@@ -147,6 +147,41 @@
             <small>&nbsp;描述物种分布的信息；可添加多条</small>
             <p>&nbsp;</p>
           </h4>
+          <div id="newDistributiondata"></div>
+          <a class="btn btn-app" onclick="addDistributiondata ();">
+            <i class="fa fa-plus"></i>添加新分布数据</a>
+          <input class="hidden" id="countDistributiondata" name="countDistributiondata" value="0"></input>
+          <script id="distributiondataForm" type="text/x-jquery-tmpl">
+            <form class="panel panel-default" id="distributiondataForm_${num}" th:action="@{/}" method="post">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <i class="fa fa-check-circle hidden" id="distributiondataStatus_${num}"></i>
+                  <a id="distributiondataCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#distributiondataCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的描述</a>
+                  <a role="button" class="pull-right" onclick="removeDistributiondata(${num});">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="distributiondataCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="lng_${num}" class="col-sm-4 control-label">经度:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="lng_${num}" name="lng_${num}" placeholder="经度(10进制)" /></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="lat_${num}" class="col-sm-4 control-label">纬度:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="lat_${num}" name="lat_${num}" placeholder="纬度(10进制)" /></div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-primary pull-right" onclick="submitDistributiondata(${num});">确认</button></div>
+              </div>
+            </form>
+          </script>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="protection">这里是保护信息</div>
         <div role="tabpanel" class="tab-pane fade" id="taxkey">这里是检索表</div>

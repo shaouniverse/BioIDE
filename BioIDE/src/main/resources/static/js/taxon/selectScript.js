@@ -23,16 +23,6 @@ $(document).ready(function(){
     });
     buildSelect2("taxaset", "console/taxaset/rest/select");
 
-    //左右多选
-    var refjson = $('#refjson').bootstrapDualListbox({
-        nonSelectedListLabel: '所有文献列表',
-        selectedListLabel: '已加入文献列表',
-        preserveSelectionOnMove: 'moved',
-        moveOnSelect: false,
-    });
-
-    buildMultiple();
-
 });
 //拼接option
 function formatRepo (repo) {
@@ -73,40 +63,5 @@ function buildSelect2 (select_id,url) {
         minimumInputLength: 0,
         templateResult: formatRepo,
         templateSelection: formatRepoSelection
-    });
-}
-
-//构造参考文献列表的方法
-function buildMultiple () {
-    $.ajax({
-        url:"/console/rank/rest/select",
-        type:"get",
-        async:true,
-        success:function(returnData){
-            $.each(returnData, function(key, val) {
-                var o = document.createElement("option")
-                o.value = val.id;
-                o.text = val.permissionName;
-                if("undefined" != typeof (selectedDataStr) && selectedDataStr != ""){
-                    var selectedDataArray = selectedDataStr.split(',');
-                    $.each(selectedDataArray, function (i, val){
-                        if(o.value = val){
-                            o.selected = "selected";
-                            return false;
-                        }
-                    });
-                }
-                $("select[multiple*='multiple']")[0].options.add(o);
-            });
-
-            $('#refjson').bootstrapDualListbox({
-                nonSelectedListLabel : "Non-selected",
-                selectedListLabel : "selected",
-                preserveSelectionOnMove : "moved",
-            });
-        },
-        error: function(e){
-            alert(e.msg)
-        }
     });
 }

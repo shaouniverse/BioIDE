@@ -98,3 +98,29 @@ function addDescription () {
     });
 
 }
+
+//选择参考文献类型
+function selectDescriptionReferences(descriptionNum,referencesNum,referencesId,referencesText) {
+    $("#descriptionReferencesType_"+descriptionNum+"_"+referencesNum).val(referencesId);
+    $("#descriptionReferencesBtn_"+descriptionNum+"_"+referencesNum).text(referencesText);
+}
+//删除一个新参考文献
+function removeDescriptionReferences(descriptionNum,referencesNum) {
+    $("#descriptionReferencesForm_"+descriptionNum+"_"+referencesNum).remove();
+}
+//添加一个新参考文献
+function addDescriptionReferences(descriptionNum) {
+
+    var countDescriptionReferences=parseInt($('#countDescriptionReferences_'+descriptionNum).val());
+
+    var thisReferencesNum = {dnum: descriptionNum,num: countDescriptionReferences+1};
+
+    $('#descriptionReferencesForm').tmpl(thisReferencesNum).appendTo('#newDescriptionReferences_'+descriptionNum);
+
+    $("#descriptionReferences_" + descriptionNum+"_"+(countDescriptionReferences + 1)).select2({
+        placeholder: "请选择参考文献"
+    });
+
+    $('#countDescriptionReferences_'+descriptionNum).val(countDescriptionReferences+1);
+
+}

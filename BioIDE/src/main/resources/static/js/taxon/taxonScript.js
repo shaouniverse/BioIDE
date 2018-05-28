@@ -4,8 +4,8 @@
 
 //选择参考文献类型
 function selectReferences (referencesNum,referencesId,referencesText) {
-    $("#referencesId_"+referencesNum).val(referencesId);
-    $("#referencesType_"+referencesNum).text(referencesText);
+    $("#referencesType_"+referencesNum).val(referencesId);
+    $("#referencesBtn_"+referencesNum).text(referencesText);
 }
 //删除一个新参考文献
 function removeReferences (referencesNum) {

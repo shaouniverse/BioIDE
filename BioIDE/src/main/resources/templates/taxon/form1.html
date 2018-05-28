@@ -88,18 +88,22 @@
         <div class="form-group">
           <label for="refjson" class="col-sm-2 control-label">参考文献:</label>
           <div class="col-sm-10 col-md-10">
-            <div class="well well-sm" id="refjson">
-              <div id="newReferences"></div>
-              <button type="button" class="btn btn-default btn-sm" onclick="addReferences ();"><i class="fa fa-plus"></i></button>
+            <div class="" id="refjson">
+              <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <tbody id="newReferences"></tbody>
+                </table>
+                <button type="button" class="btn btn-default btn-sm" onclick="addReferences ();"><i class="fa fa-plus"></i></button>
+              </div>
               <script id="referencesForm" type="text/x-jquery-tmpl">
-                <div id="referencesForm_${num}" class="col-md-12">
-                  <div class="form-group">
-                    <label for="relation_${num}" class="col-sm-1 control-label">[${num}]</label>
-                    <div class="col-sm-7 col-md-7">
-                      <div class="input-group" id="relation">
+                <tr id="referencesForm_${num}">
+                <td><label class="control-label">[${num}]</label><td>
+                  <td class="form-group">
+                    <div class="col-sm-8 col-md-8 col-xs-12">
+                      <div class="input-group">
                         <select class="form-control select2" id="references_${num}" name="references_${num}" style="width: 100%;"></select>
                         <div class="input-group-btn">
-                          <button type="button" id="referencesType_${num}" class="btn btn-default dropdown-toggle" data-toggle="dropdown">选择参考类型
+                          <button type="button" id="referencesBtn_${num}" class="btn btn-default dropdown-toggle" data-toggle="dropdown">选择参考类型
                             <span class="fa fa-caret-down"></span></button>
                           <ul class="dropdown-menu">
                             <li>
@@ -115,15 +119,15 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-sm-2 col-md-2">
-                          <input type="text" class="form-control" id="referencesPageS_{num}" name="referencesPageS_{num}" placeholder="起始页" />
+                    <div class="col-sm-2 col-md-2 col-xs-6">
+                      <input type="text" class="form-control" id="referencesPageS_{num}" name="referencesPageS_{num}" placeholder="起始页" />
                     </div>
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-2 col-md-2 col-xs-6">
                       <input type="text" class="form-control" id="referencesPageE_{num}" name="referencesPageE_{num}" placeholder="终止页" />
                     </div>
-                    <input class="hidden" id="referencesId_${num}" name="referencesId_${num}"></input>
-                  </div>
-                </div>
+                    <input class="hidden" id="referencesType_${num}" name="referencesType_${num}"></input>
+                  </td>
+                </tr>
               </script>
             </div>
           </div>

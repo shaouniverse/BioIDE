@@ -160,52 +160,6 @@ public class DatasetServiceImpl implements DatasetService {
 		json = thisTable;
 		return json;
 	}
-	
-	@Override
-	public JSON findMybySelect(HttpServletRequest request) {
-		String findText = request.getParameter("find");
-		if (findText == null || findText.length() <= 0) {
-			findText = "";
-		}
-		int findPage = 1;
-		try {
-			findPage = Integer.valueOf(request.getParameter("page"));
-		} catch (Exception e) {
-		}
-		int limit_serch = 30;
-		int offset_serch = (findPage - 1) * 30;
-		String sort = "dtime";
-		String order = "asc";
-		JSONObject thisSelect = new JSONObject();
-		JSONArray items = new JSONArray();
-		List<Dataset> thisList = new ArrayList<>();
-		// 获取当前登录用户
-		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Page<Dataset> thisPage = this.datasetRepository.searchMyDsname(findText, thisUser.getId(),
-				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
-		thisSelect.put("total_count", thisPage.getTotalElements());
-		Boolean incompleteResulte = true;
-		if ((thisPage.getTotalElements() / 30) > findPage)
-			incompleteResulte = false;
-		thisSelect.put("incompleteResulte", incompleteResulte);
-		thisList = thisPage.getContent();
-		if (findPage == 1) {
-			JSONObject row = new JSONObject();
-			row.put("id", "addNew");
-			row.put("full_name", "新建一个数据集");
-			items.add(row);
-		}
-		for (int i = 0; i < thisList.size(); i++) {
-			JSONObject row = new JSONObject();
-			String thisId = thisList.get(i).getId();
-			String thisName = thisList.get(i).getDsname();
-			row.put("id", thisId);
-			row.put("full_name", thisName);
-			items.add(row);
-		}
-		thisSelect.put("items", items);
-		return thisSelect;
-	}
 
 	@Override
 	public void saveOne(Dataset thisDataset) {
@@ -275,72 +229,7 @@ public class DatasetServiceImpl implements DatasetService {
 	}
 
 	@Override
-	public JSON newOne(Dataset thisDataset) {
-		JSONObject thisResult = new JSONObject();
-		try {
-			thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-			thisDataset.setStatus((byte) 1);
-			String mark = UUID.randomUUID().toString();
-			thisDataset.setMark(mark);
-			// 获取当前登录用户
-			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			thisDataset.setCreator(thisUser.getId());
-			this.datasetRepository.save(thisDataset);
-			thisResult.put("result", true);
-			thisResult.put("newId", this.datasetRepository.findOneByMark(mark).getId());
-			thisResult.put("newDsname", this.datasetRepository.findOneByMark(mark).getDsname());
-		} catch (Exception e) {
-			thisResult.put("result", false);
-		}
-		return thisResult;
-	}
-
-	@Override
 	public List<Dataset> findAllDatasetsByTeamId(String teamId) {
 		return this.datasetRepository.findAllDatasetsByTeamId(teamId);
-	}
-
-	@Override
-	public JSON findBySelect(HttpServletRequest request) {
-		String findText = request.getParameter("find");
-		if (findText == null || findText.length() <= 0) {
-			findText = "";
-		}
-		int findPage = 1;
-		try {
-			findPage = Integer.valueOf(request.getParameter("page"));
-		} catch (Exception e) {
-		}
-		int limit_serch = 30;
-		int offset_serch = (findPage - 1) * 30;
-		String sort = "dsname";
-		String order = "asc";
-		JSONObject thisSelect = new JSONObject();
-		JSONArray items = new JSONArray();
-		List<Dataset> thisList = new ArrayList<>();
-		// 获得当前选中Team下的Dataset
-		String teamId = (String) request.getSession().getAttribute("teamId");
-		Page<Dataset> thisPage = this.datasetRepository.searchByDsname(findText, teamId,
-				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
-		thisSelect.put("total_count", thisPage.getTotalElements());
-		Boolean incompleteResulte = true;
-		if ((thisPage.getTotalElements() / 30) > findPage)
-			incompleteResulte = false;
-		thisSelect.put("incompleteResulte", incompleteResulte);
-		thisList = thisPage.getContent();
-		if (findPage == 1) {
-			JSONObject row = new JSONObject();
-			row.put("id", "addNew");
-			row.put("full_name", "新建一个数据集");
-			items.add(row);
-		}
-		for (int i = 0; i < thisList.size(); i++) {
-			JSONObject row = new JSONObject();
-			row.put("id", thisList.get(i).getId());
-			row.put("full_name", thisList.get(i).getDsname());
-			items.add(row);
-		}
-		thisSelect.put("items", items);
-		return thisSelect;
 	}
 }

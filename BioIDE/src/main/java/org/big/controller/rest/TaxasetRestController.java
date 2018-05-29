@@ -45,7 +45,7 @@ public class TaxasetRestController {
 	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
 	public int removeMany(@PathVariable String ids) {
 		try {
-			String[] idArr = ids.split("$");
+			String[] idArr = ids.split("￥");
 			int isRemove = 0;
 			for (String id : idArr) {
 				if (this.taxasetService.logicRemove(id)) {
@@ -85,22 +85,5 @@ public class TaxasetRestController {
 	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public JSON select(HttpServletRequest request){
 		return this.taxasetService.findBySelect(request);
-	}
-	
-    /**
-     *<b>Taxaset的select列表</b>
-     *<p> 当前用户的Taxaset的select检索列表</p>
-     * @author BINZI
-     * @param request 页面请求
-     * @return com.alibaba.fastjson.JSON
-     */
-	@RequestMapping("/new")
-	public JSON New(Model model, HttpServletRequest request) {
-		Taxaset thisTaxaset = new Taxaset();
-		thisTaxaset.setTsname(request.getParameter("tsname"));
-		thisTaxaset.setTsinfo(request.getParameter("tsinfo"));
-		String datasetID = (String) request.getSession().getAttribute("datasetID");
-		thisTaxaset.setDataset(this.datasetService.findbyID(datasetID));
-		return this.taxasetService.newOne(thisTaxaset);
 	}
 }

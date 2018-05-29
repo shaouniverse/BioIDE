@@ -18,7 +18,7 @@
     <!-- 引入Header -->
     <header id="header" class="main-header">
         <th:block th:replace="pageFrame/basicsHeader :: copy"></th:block>
-    </header>
+    </header> 
     <!-- 引入左侧用户操作菜单-->
     <th:block th:replace="pageFrame/basicsMenu :: copy"></th:block>
     <!-- 显示区 -->
@@ -26,28 +26,30 @@
         <!-- 内容区 -->
         <section class="container content-header">
             <h1>
-                编辑分类单元集
-				<small>在这里您可以对一个已有的分类单元集信息进行修改</small>
+                编辑数据源
+				<small>在这里您可以对一个已有的数据源信息进行修改</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
                 <li><a th:href="@{/}" href="/"><i class="fa fa-users"></i> 团队名称</a></li>
                 <li><a th:href="@{/}" href="/"><i class="fa fa-database"></i> 数据集名称</a></li>
-                <li><a th:href="@{/}" href="/"><i class="fa fa-cube"></i> 分类单元集管理</a></li>
+                <li><a th:href="@{/}" href="/"><i class="fa fa-cube"></i> 数据源管理</a></li>
                 <li class="active"><i class="fa fa-plus"></i> 新建</li>
             </ol>
         </section>
         <!-- 内容区 -->
         <section class="container content">
             <div class="well">
-                <form id="thisForm" class="form-horizontal" th:action="@{/console/taxaset/save}" method="post" th:object="${thisTaxaset}">
+                <form id="thisForm" class="form-horizontal" th:action="@{/console/datasource/save}" method="post" th:object="${thisDatasource}">
+                    <div>
+                    </div>
                     <!-- 引入form -->
-                    <th:block th:replace="taxaset/form :: copy"></th:block>
+                    <th:block th:replace="datasource/form :: copy"></th:block>
                     <p></p>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">
-                                <a class="btn btn-app" th:href="@{/console/taxaset}" href="/console/tsxaset">
+                                <a class="btn btn-app" th:href="@{/console/datasource}" href="/console/datasource">
                                     <i class="fa fa-chevron-left"></i> <span>取消编辑</span>
                                 </a>
                                 <a class="btn btn-app" onclick="clearInput();">
@@ -69,17 +71,17 @@
 </div>
 <!-- 引入js -->
 <th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
-<!-- page_script -->
-<script th:src="@{/js/tableScript.js}"></script>
 <script>
     //清空表单
     function clearInput() {
         $('#thisForm')[0].reset();
         $('#thisForm').data('bootstrapValidator')
-            .updateStatus('tsname', 'NOT_VALIDATED',null)
-            .updateStatus('tsinfo', 'NOT_VALIDATED',null)
-            .validateField('tsname')
-            .validateField('tsinfo');
+        .updateStatus('versions', 'NOT_VALIDATED',null)
+        .updateStatus('title', 'NOT_VALIDATED',null)
+        .updateStatus('info', 'NOT_VALIDATED',null)
+        .updateStatus('versions', 'NOT_VALIDATED',null)
+        .validateField('title')
+        .validateField('info');
     };
     //后端验证错误提示
     $(document).ready(function () {
@@ -106,7 +108,7 @@
     //前端验证错误提示
     $(document).ready(function() {
         //获取host
-        $("#base_url").val(window.location.host);
+	    $("#base_url").val(window.location.host);
         $('#thisForm').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -115,7 +117,21 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                'tsname': {
+            	'versions': {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                        notEmpty: {
+                        },
+                    }
+                },
+                'title': {
                     validators: {
                         notEmpty: {
                         },
@@ -129,7 +145,7 @@
                         },
                     }
                 },
-                'tsinfo': {
+                'info': {
                     validators: {
                         stringLength: {
                             min: 0,

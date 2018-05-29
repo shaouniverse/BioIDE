@@ -99,13 +99,4 @@ public interface TaxasetService {
      */
 	JSON findBySelect(HttpServletRequest request);
 
-	/**
-     *<b>存储一个新的Taxaset实体</b>
-     *<p> 存储一个新的Taxaset实体</p>
-     * @author BINZI
-     * @param thisTaxaset 实体
-     * @return com.alibaba.fastjson.JSON
-     */
-	JSON newOne(Taxaset thisTaxaset);
-
 }

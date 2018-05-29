@@ -34,18 +34,6 @@ public class DatasetRestController {
     }
     
     /**
-     *<b>Dataset的select列表</b>
-     *<p> 当前用户的Dataset的select检索列表</p>
-     * @author BINZI
-     * @param request 页面请求
-     * @return com.alibaba.fastjson.JSON
-     */
-    @RequestMapping("/select")
-    public JSON MySelect(HttpServletRequest request) {
-        return this.datasetService.findMybySelect(request);
-    }
-
-    /**
      *<b>删除多个Dataset</b>
      *<p> 根据Dataset id序列一次性删除多个</p>
      * @author BINZI
@@ -84,20 +72,5 @@ public class DatasetRestController {
         }catch(Exception e){
             return false;
         }
-    }
-
-    /**
-     *<b>Dataset的select列表</b>
-     *<p> 当前用户的Dataset的select检索列表</p>
-     * @author BINZI
-     * @param request 页面请求
-     * @return com.alibaba.fastjson.JSON
-     */
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public JSON New(Model model, HttpServletRequest request) {
-        Dataset thisDataset=new Dataset();
-        thisDataset.setDsname(request.getParameter("dsname"));
-        thisDataset.setDsabstract(request.getParameter("dsabstract"));
-        return this.datasetService.newOne(thisDataset);
     }
 }

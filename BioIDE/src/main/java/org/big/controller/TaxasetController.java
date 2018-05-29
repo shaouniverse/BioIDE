@@ -134,4 +134,17 @@ public class TaxasetController {
 		model.addAttribute("errorMsg", errorMsg);
 	}
 	
+	/**
+     *<b>添加Taxaset</b>
+     *<p> 添加新的Taxaset的编辑的页面</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
+	@RequestMapping(value = "/addNew", method = RequestMethod.GET)
+	public String addNew(Model model) {
+		Taxaset thisTaxaset = new Taxaset();
+		model.addAttribute("thisTaxaset", thisTaxaset);
+		return "taxaset/addModal";
+	}
 }

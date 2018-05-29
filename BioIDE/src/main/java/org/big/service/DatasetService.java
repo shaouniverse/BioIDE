@@ -46,15 +46,6 @@ public interface DatasetService {
     JSON findMyTeamDatasetsByTid(HttpServletRequest request, String id);
 
     /**
-     *<b>带分页的条件查询（当前用户）</b>
-     *<p> 带分页的条件查询（当前用户）</p>
-     * @author BINZI
-     * @param request 页面请求
-     * @return com.alibaba.fastjson.JSON
-     */
-    JSON findMybySelect(HttpServletRequest request);
-
-    /**
      *<b>存储媒体实体</b>
      *<p> 存储媒体实体</p>
      * @author BINZI
@@ -117,21 +108,4 @@ public interface DatasetService {
      */
     Dataset findDefaultByUser();
 
-    /**
-     *<b>存储一个新的媒体实体</b>
-     *<p> 存储一个新的媒体实体</p>
-     * @author BINZI
-     * @param thisDataset 实体
-     * @return java.lang.String
-     */
-    JSON newOne(Dataset thisDataset);
-    
-    /**
-     *<b>Dataset的select列表</b>
-     *<p> 当前用户的Dataset的select检索列表</p>
-     * @author BINZI
-     * @param request 页面请求
-     * @return com.alibaba.fastjson.JSON
-     */
-	JSON findBySelect(HttpServletRequest request);
 }

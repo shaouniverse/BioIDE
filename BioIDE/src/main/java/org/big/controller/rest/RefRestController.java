@@ -68,4 +68,15 @@ public class RefRestController {
 		return false;
 	}
 	
+	/**
+     *<b>Ref的select列表</b>
+     *<p> 当前用户的Ref的select检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
+	public JSON select(HttpServletRequest request){
+		return this.refService.findBySelect(request);
+	}
 }

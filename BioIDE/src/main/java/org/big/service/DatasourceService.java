@@ -68,4 +68,13 @@ public interface DatasourceService {
      * @return
      */
     boolean logicRemove(String id);
+
+    /**
+     *<b>存储一个新的Datasource实体</b>
+     *<p> 存储一个新的Datasource实体</p>
+     * @author BINZI
+     * @param Datasource 实体
+     * @return com.alibaba.fastjson.JSON
+     */	
+	JSON newOne(Datasource thisDatasource, HttpServletRequest request);
 }

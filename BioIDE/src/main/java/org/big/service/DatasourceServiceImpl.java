@@ -25,7 +25,11 @@ import com.alibaba.fastjson.JSONObject;
 public class DatasourceServiceImpl implements DatasourceService{
 	@Autowired
 	private DatasourceRepository datasourceRepository;
-	@Autowired UserService userService;
+	@Autowired 
+	private UserService userService;
+	@Autowired
+	private DatasetService datasetService;
+	
 	@Override
 	public JSON findBySelect(HttpServletRequest request) {
 		String findText = request.getParameter("find");
@@ -167,5 +171,32 @@ public class DatasourceServiceImpl implements DatasourceService{
 	@Override
 	public Datasource findOneById(String id) {
 		return this.datasourceRepository.findOneById(id);
+	}
+
+	@Override
+	public JSON newOne(Datasource thisDatasource, HttpServletRequest request) {
+		JSONObject thisResult = new JSONObject();
+		try {
+			thisDatasource.setInputtime(new Timestamp(System.currentTimeMillis()));
+			thisDatasource.setSynchdate(new Timestamp(System.currentTimeMillis()));
+			thisDatasource.setStatus(1);
+			String id = UUID.randomUUID().toString();
+			thisDatasource.setId(id);
+			thisDatasource.setSynchstatus(0);
+			// 获取当前登录用户
+			 UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			 thisDatasource.setInputer(thisUser.getId());
+			// 获取当前选中Dataset
+			String dsid = (String) request.getSession().getAttribute("datasetID");
+			thisDatasource.setDataset(datasetService.findbyID(dsid));
+			this.datasourceRepository.save(thisDatasource);
+
+			thisResult.put("result", true);
+			thisResult.put("newId", this.datasourceRepository.findOneById(id).getId());
+			thisResult.put("newTitle", this.datasourceRepository.findOneById(id).getTitle());
+		} catch (Exception e) {
+			thisResult.put("result", false);
+		}
+		return thisResult;
 	}
 }

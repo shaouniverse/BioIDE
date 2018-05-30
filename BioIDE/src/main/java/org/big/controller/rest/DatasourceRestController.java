@@ -2,6 +2,7 @@ package org.big.controller.rest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.big.entity.Datasource;
 import org.big.service.DatasourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,5 +80,21 @@ public class DatasourceRestController {
 	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public JSON select(HttpServletRequest request) {
 		return this.datasourceService.findBySelect(request);
+	}
+	
+	/**
+     *<b>Datasource的select列表之新建Datasource实体</b>
+     *<p> Datasource的select列表之新建Datasource实体</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	public JSON New(HttpServletRequest request) {
+		Datasource thisDatasource = new Datasource();
+		thisDatasource.setVersions(request.getParameter("versions"));
+		thisDatasource.setTitle(request.getParameter("title"));
+		thisDatasource.setInfo(request.getParameter("info"));
+		return this.datasourceService.newOne(thisDatasource, request);
 	}
 }

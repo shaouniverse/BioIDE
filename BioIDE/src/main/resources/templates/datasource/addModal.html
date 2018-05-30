@@ -36,9 +36,9 @@
 	                        <a class="btn btn-app" onclick="clearInput();">
 	                            <i class="fa fa-rotate-left"></i> <span>清空表单</span>
 	                        </a>
-	                        <button type="submit" class="btn btn-app">
-	                            <i class="fa fa-check"></i> <span>提交</span>
-	                        </button>
+                            <a class="btn btn-app" onclick="addDatasource();">
+                                <i class="fa fa-check"></i> <span>提交</span>
+                            </a>
 	                    </div>
 	                </div>
 	            </div>
@@ -134,6 +134,47 @@
             }
         });
     });
+</script>
+<script type="text/javascript">
+/* 添加Datasource */
+function addDatasource() {
+    if(dsnameValidator($('input[name="title"]').val()) && dsabstractionValidator($('textarea[name="info"]').val())){
+        layer.load(2);
+        $.post("console/datasource/rest/new",
+        {
+            "_csrf":$('input[name="_csrf"]').val(),
+            "title":$('input[name="title"]').val(),
+            "info":$('textarea[name="info"]').val()
+        },
+        function(rsl){
+            if(rsl.result == true){
+                $("#sourcesid").val(rsl.newId);
+                $("#sourcesid").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
+               /*  $('#addForm').data('bootstrapValidator').updateStatus('datasetByDsid.id', 'NOT_VALIDATED',null)
+                .validateField('datasetByDsid.id'); */
+	        	alert(rsl.result + "-----" + rsl.newId + "-----" + rsl.newTitle);
+                layer.close(parent.layer.getFrameIndex(window.name)); 
+            }
+            else{
+            	alert("123");
+            }
+        });
+    }
+    else{
+        layer.msg(warning_Illegal, function(){
+        });
+    }
+};
+//验证dsname
+function dsnameValidator(dsname) {
+    var pattern = /^[\da-zA-Z_\u4e00-\u9f5a【】]{1,30}$/;
+    return pattern.test(dsname);
+}
+//验证dsabstraction
+function dsabstractionValidator(dsabstraction) {
+    var pattern = /^[\da-zA-Z_\u4e00-\u9f5a【】]{0,100}$/;
+    return pattern.test(dsabstraction);
+}
 </script>
 </body>
 </html>

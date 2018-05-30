@@ -19,12 +19,8 @@ function addReferences () {
     var thisReferencesNum = {num: countReferences+1};
 
     $('#referencesForm').tmpl(thisReferencesNum).appendTo('#newReferences');
-
-
-    $("#references_" + (countReferences + 1)).select2({
-        placeholder: "请选择参考文献"
-    });
-
+    // 参考文件下拉选   
+    buildSelect2("references_" + (countReferences + 1), "console/ref/rest/select", "请选择参考文献");
     $('#countReferences').val(countReferences+1);
 
 }

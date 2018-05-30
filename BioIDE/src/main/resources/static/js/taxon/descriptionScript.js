@@ -68,22 +68,15 @@ function addDescription () {
     var thisDescriptionNum = {num: countDescription+1};
 
     $('#descriptionForm').tmpl(thisDescriptionNum).appendTo('#newDescription');
-
-    $("#destypeid_"+(countDescription+1)).select2({
-        placeholder: "请选择描述类型"
-    });
-	buildSelect2("destypeid_" + (countDescription+1), "console/descriptiontype/rest/select");
-    $("#licenseid_"+(countDescription+1)).select2({
-        placeholder: "请选择共享协议"
-    });
-	buildSelect2("licenseid_" + (countDescription+1), "console/license/rest/select");
+    // 描述类型下拉选
+	buildSelect2("destypeid_" + (countDescription+1), "console/descriptiontype/rest/select", "请选择描述类型");
+	// 共享协议下拉选
+	buildSelect2("licenseid_" + (countDescription+1), "console/license/rest/select", "请选择共享协议");
     $("#language_"+(countDescription+1)).select2({
         placeholder: "请选择描述语言"
     });
-    $("#descriptionsourcesid_"+(countDescription+1)).select2({
-        placeholder: "请选择数据来源"
-    });
-	buildSelect2("descriptionsourcesid_" + (countDescription+1), "console/datasource/rest/select");
+    // 数据源下拉选
+	buildSelect2("descriptionsourcesid_" + (countDescription+1), "console/datasource/rest/select", "请选择数据来源");
     $("#relationDes_"+(countDescription+1)).select2({
         placeholder: "请选择描述"
     });

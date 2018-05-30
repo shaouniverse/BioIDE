@@ -52,4 +52,16 @@ public interface RefRepository extends BaseRepository<Ref, String> {
 	@Query(value = "Delete From Ref r Where r.id = ?1")
 	void deleteOneById(String id);
 
+    /**
+     *<b>Ref的select列表</b>
+     *<p> Ref的select检索列表</p>
+     * @author BINZI
+     * @param findText
+     * @param dsId
+     * @param pageable
+     * @return com.alibaba.fastjson.JSON
+     */
+    @Query(value = "Select r from Ref r where (r.title like %?1%) and r.status = 1")
+	Page<Ref> searchByTitle(String findText, Pageable pageable);
+
 }

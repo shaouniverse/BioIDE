@@ -23,6 +23,8 @@ import com.alibaba.fastjson.JSONObject;
 public class TaxasetServiceImpl implements TaxasetService {
 	@Autowired
 	private TaxasetRepository taxasetRepository;
+	@Autowired
+	private DatasetService datasetService;
 	
 	@Override
 	public void saveOne(Taxaset thisTaxaset) {
@@ -172,5 +174,29 @@ public class TaxasetServiceImpl implements TaxasetService {
 		}
 		thisSelect.put("items", items);
 		return thisSelect;
+	}
+
+	@Override
+	public JSON newOne(Taxaset thisTaxaset, HttpServletRequest request) {
+		JSONObject thisResult = new JSONObject();
+		try {
+			thisTaxaset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+			thisTaxaset.setSynchdate(new Timestamp(System.currentTimeMillis()));
+			thisTaxaset.setStatus(1);
+			String id = UUID.randomUUID().toString();
+			thisTaxaset.setId(id);
+			thisTaxaset.setSynchstatus(0);
+			// 获取当前选中Dataset
+			String dsid = (String) request.getSession().getAttribute("datasetID");
+			thisTaxaset.setDataset(datasetService.findbyID(dsid));
+			this.taxasetRepository.save(thisTaxaset);
+
+			thisResult.put("result", true);
+			thisResult.put("newId", this.taxasetRepository.findOneById(id).getId());
+			thisResult.put("newTsname", this.taxasetRepository.findOneById(id).getTsname());
+		} catch (Exception e) {
+			thisResult.put("result", false);
+		}
+		return thisResult;
 	}
 }

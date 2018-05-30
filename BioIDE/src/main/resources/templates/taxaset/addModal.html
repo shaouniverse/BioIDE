@@ -26,22 +26,21 @@
 	    <!-- 内容区 -->
 	    <div class="well">
 	        <form id="addForm" class="form-horizontal" th:action="@{/console/taxaset/save}" method="post" th:object="${thisTaxaset}">
-               	<input id="handle_status" value="" hidden="hidden">
                 <!-- 引入form -->
                 <th:block th:replace="taxaset/form :: copy"></th:block>
                 <p></p>
                 <div class="form-group">
-                    <div class="col-sm-12">
-                        <div class="pull-right">
-                            <a class="btn btn-app" onclick="clearInput('addForm');">
-                                <i class="fa fa-rotate-left"></i> <span>清空表单</span>
-                            </a>
+	                <div class="col-sm-12">
+	                    <div class="pull-right">
+	                        <a class="btn btn-app" onclick="clearInput();">
+	                            <i class="fa fa-rotate-left"></i> <span>清空表单</span>
+	                        </a>
                             <a class="btn btn-app" onclick="addTaxaset();">
                                 <i class="fa fa-check"></i> <span>提交</span>
                             </a>
-                        </div>
-                    </div>
-                </div>
+	                    </div>
+	                </div>
+	            </div>
             </form>
 	    </div>
 	</div>
@@ -120,6 +119,49 @@
             }
         });
     });
+</script>
+<script type="text/javascript">
+/* 添加Taxaset */
+function addTaxaset() {
+	alert("13126863899");
+    if(dsnameValidator($('input[name="tsname"]').val()) && dsabstractionValidator($('textarea[name="tsinfo"]').val())){
+        layer.load(2);
+        $.post("console/taxaset/rest/new",
+        {
+            "_csrf":$('input[name="_csrf"]').val(),
+            "tsname":$('input[name="tsname"]').val(),
+            "tsinfo":$('textarea[name="tsinfo"]').val()
+        },
+        function(rsl){
+            if(rsl.result == true){
+                $("#taxaset").val(rsl.newId);
+                $("#taxaset").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTsname+"</option>");
+	        	/* alert(rsl.result + "-----" + rsl.newId + "-----" + rsl.newTsname);
+                layer.close(parent.layer.getFrameIndex(window.name));  */
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                /* parent.showMessageLayer($('#message_successful_login').text()); */
+                parent.layer.close(index);
+            }
+            else{
+            	alert("123");
+            }
+        });
+    }
+    else{
+        layer.msg(warning_Illegal, function(){
+        });
+    }
+};
+//验证dsname
+function dsnameValidator(dsname) {
+    var pattern = /^[\da-zA-Z_\u4e00-\u9f5a【】]{1,30}$/;
+    return pattern.test(dsname);
+}
+//验证dsabstraction
+function dsabstractionValidator(dsabstraction) {
+    var pattern = /^[\da-zA-Z_\u4e00-\u9f5a【】]{0,100}$/;
+    return pattern.test(dsabstraction);
+}
 </script>
 </body>
 </html>

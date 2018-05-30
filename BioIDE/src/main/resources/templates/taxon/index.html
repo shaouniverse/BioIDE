@@ -31,10 +31,15 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> Home</a></li>
-                <li><a th:href="@{/}" href="/"><i class="fa fa-users"></i> 团队名称</a></li>
-                <li><a th:href="@{/}" href="/"><i class="fa fa-database"></i> 数据集名称</a></li>
-                <li><a th:href="@{/}" href="/"><i class="fa fa-cube"></i> 分类单元管理</a></li>
-                <li class="active"><i class="fa fa-plus"></i> 新建</li>
+                <li>
+                    <a th:href="@{/console/}+${session.teamId}" href="/">
+                        <i class="fa fa-users"></i><span th:text="${session.teamName}">团队名称</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/console/dataset/show/}+${session.datasetID}" href="/">
+                        <i class="fa fa-database"></i><span th:text="${session.datasetName}">数据集名称</span></a>
+                </li>
+                <li class="active"><i class="fa fa-cube"></i> 分类单元管理</li>
             </ol>
         </section>
         <!-- Main content -->

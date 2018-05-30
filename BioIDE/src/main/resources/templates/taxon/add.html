@@ -37,15 +37,15 @@
                         <i class="fa fa-home"></i>Home</a>
                 </li>
                 <li>
-                    <a th:href="@{/}" href="/">
-                        <i class="fa fa-users"></i>团队名称</a>
+                    <a th:href="@{/console/}+${session.teamId}" href="/">
+                        <i class="fa fa-users"></i><span th:text="${session.teamName}">团队名称</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/}" href="/">
-                        <i class="fa fa-database"></i>数据集名称</a>
+                    <a th:href="@{/console/dataset/show/}+${session.datasetID}" href="/">
+                        <i class="fa fa-database"></i><span th:text="${session.datasetName}">数据集名称</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/}" href="/">
+                    <a th:href="@{/console/taxon}" href="/">
                         <i class="fa fa-cube"></i>分类单元管理</a>
                 </li>
                 <li class="active">

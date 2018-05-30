@@ -2,6 +2,7 @@ package org.big.controller;
 
 import org.big.entity.Team;
 import org.big.entity.UserDetail;
+import org.big.service.DatasetService;
 import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,8 @@ import java.util.List;
 public class IndexController {
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private DatasetService datasetService;
     /**
      *<b>默认页面</b>
      *<p> 登录后自动跳转的主页面</p>
@@ -74,7 +77,12 @@ public class IndexController {
     @RequestMapping(value="/change/team/{teamId}", method = {RequestMethod.GET})
     public String ChangeTeam(Model model, HttpServletRequest request, @PathVariable String teamId) {
     	request.getSession().setAttribute("teamId", teamId);	// 将TeamId存放到Session中
-    	request.getSession().setAttribute("team", this.teamService.findbyID(teamId));
+        request.getSession().setAttribute("teamName", this.teamService.findbyID(teamId).getName());
+        request.getSession().setAttribute("team", this.teamService.findbyID(teamId));
+        //删除dataset中的记录
+        request.getSession().removeAttribute("datasetID");
+        request.getSession().removeAttribute("datasetName");
+        request.getSession().removeAttribute("dataset");
 		return "redirect:/console/" + teamId;
     }
     
@@ -106,6 +114,8 @@ public class IndexController {
     @RequestMapping(value="/change/dataset/{id}", method = {RequestMethod.GET})
     public String ChangeTeamDataset(HttpServletRequest request, @PathVariable String id) {
     	request.getSession().setAttribute("datasetID", id);	// 将datasetId存放到Session中
+        request.getSession().setAttribute("datasetName", this.datasetService.findbyID(id).getDsname());
+        request.getSession().setAttribute("dataset", this.datasetService.findbyID(id));
     	return "redirect:/console/dataset/show/" + id;
     }
     

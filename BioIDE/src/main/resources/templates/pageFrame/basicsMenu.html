@@ -22,7 +22,7 @@
                 <li class="header">团队操作选项</li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-users"></i> <span>团队名称</span>
+                            <i class="fa fa-users"></i> <span th:text="${session.teamName}">团队名称</span>
                             <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -39,7 +39,7 @@
                         <a href="#">
                             <i class="fa fa-hdd-o"></i>
                                 <span th:if="${#lists.isEmpty(session.datasetID)}">数据集</span>
-                                <span th:if="${not #lists.isEmpty(session.datasetID)}" >数据集名称</span>
+                                <span th:if="${not #lists.isEmpty(session.datasetID)}" th:text="${session.datasetName}">数据集名称</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>

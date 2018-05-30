@@ -50,14 +50,14 @@ $(document).ready( function() {
             },
             'rank.id': {
                 validators: {
-                    // notEmpty: {
-                    // }
+                    notEmpty: {
+                    }
                 }
             },
             'sourcesid': {
                 validators: {
-                    // notEmpty: {
-                    // }
+                    notEmpty: {
+                    }
                 }
             },
             'tci': {
@@ -70,8 +70,8 @@ $(document).ready( function() {
             },
             'taxaset.id': {
                 validators: {
-                    // notEmpty: {
-                    // }
+                    notEmpty: {
+                    }
                 }
             },
             'remark': {

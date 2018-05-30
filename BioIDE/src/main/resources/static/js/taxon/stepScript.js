@@ -11,6 +11,7 @@
     var verificationTab4=0;
     var verificationTab5=0;
     var verificationTab6=0;
+    var verificationTab7=0;
 
 //点击标签页的操作
 $('#addSteps a').click(function (e) {
@@ -53,10 +54,10 @@ function verifierStep(stepNum){
             break;
         case "3":
             formValidator(1);
-            //submitAllDescription();
+            //formValidator(2);
             if(
                 verificationTab1==1 &&
-                submitAllDescription()
+                submitAllCitation()
             ){//验证通过
                 return true;
             }
@@ -66,12 +67,12 @@ function verifierStep(stepNum){
             break;
         case "4":
             formValidator(1);
-            formValidator(2);
-            formValidator(3);
+            //formValidator(2);
+            //formValidator(3);
             if(
                 verificationTab1==1 &&
-                verificationTab2==1 &&
-                verificationTab3==1
+                submitAllCitation() &&
+                submitAllDescription()
             ){//验证通过
                 return true;
             }
@@ -81,13 +82,13 @@ function verifierStep(stepNum){
             break;
         case "5":
             formValidator(1);
-            formValidator(2);
-            formValidator(3);
+            //formValidator(2);
+            //formValidator(3);
             formValidator(4);
             if(
                 verificationTab1==1 &&
-                verificationTab2==1 &&
-                verificationTab3==1 &&
+                submitAllCitation() &&
+                submitAllDescription() &&
                 verificationTab4==1
             ){//验证通过
                 return true;
@@ -98,14 +99,14 @@ function verifierStep(stepNum){
             break;
         case "6":
             formValidator(1);
-            formValidator(2);
-            formValidator(3);
+            //formValidator(2);
+            //formValidator(3);
             formValidator(4);
             formValidator(5);
             if(
                 verificationTab1==1 &&
-                verificationTab2==1 &&
-                verificationTab3==1 &&
+                submitAllCitation() &&
+                submitAllDescription() &&
                 verificationTab4==1 &&
                 verificationTab5==1
             ){//验证通过
@@ -117,18 +118,41 @@ function verifierStep(stepNum){
             break;
         case "7":
             formValidator(1);
-            formValidator(2);
-            formValidator(3);
+            //formValidator(2);
+            //formValidator(3);
             formValidator(4);
             formValidator(5);
             formValidator(6);
             if(
                 verificationTab1==1 &&
-                verificationTab2==1 &&
-                verificationTab3==1 &&
+                submitAllCitation() &&
+                submitAllDescription() &&
                 verificationTab4==1 &&
                 verificationTab5==1 &&
                 verificationTab6==1
+            ){//验证通过
+                return true;
+            }
+            else{//验证不通过
+                return false;
+            }
+            break;
+        case "8":
+            formValidator(1);
+            //formValidator(2);
+            //formValidator(3);
+            formValidator(4);
+            formValidator(5);
+            formValidator(6);
+            formValidator(7);
+            if(
+                verificationTab1==1 &&
+                submitAllCitation() &&
+                submitAllDescription() &&
+                verificationTab4==1 &&
+                verificationTab5==1 &&
+                verificationTab6==1 &&
+                verificationTab7==1
             ){//验证通过
                 return true;
             }

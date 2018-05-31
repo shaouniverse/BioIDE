@@ -38,11 +38,11 @@
                 </li>
                 <li>
                     <a th:href="@{/console/}+${session.teamId}" href="/">
-                        <i class="fa fa-users"></i><span th:text="${session.teamName}">团队名称</span></a>
+                        <i class="fa fa-users"></i><span th:text="${#strings.length(session.teamName)<13} ? ${session.teamName} : ${#strings.substring(session.teamName,0,10)+'...'}" th:title="${session.teamName}" >团队名称</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/console/dataset/show/}+${session.datasetID}" href="/">
-                        <i class="fa fa-database"></i><span th:text="${session.datasetName}">数据集名称</span></a>
+                    <a th:href="@{/console/dataset/show/}+${session.datasetID}">
+                        <i class="fa fa-database"></i><span th:text="${#strings.length(session.datasetName)<13} ? ${session.datasetName} : ${#strings.substring(session.datasetName,0,10)+'...'}" th:title="${session.datasetName}">数据集名称</span></a>
                 </li>
                 <li>
                     <a th:href="@{/console/taxon}" href="/">

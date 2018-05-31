@@ -22,24 +22,23 @@
                 <li class="header">团队操作选项</li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-users"></i> <span th:text="${session.teamName}" >团队名称</span>
+                            <i class="fa fa-users"></i> <span th:text="${#strings.length(session.teamName)<13} ? ${session.teamName} : ${#strings.substring(session.teamName,0,10)+'...'}" th:title="${session.teamName}" >团队名称</span>
                             <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
-                                </span>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
                             <li><a th:href="@{/select/team}" href="team"><i class="fa fa-exchange"></i> <span>团队变更</span></a></li>
-                            <!-- http://localhost:8081/console/team/details/ac22bc5f-2439-415c-a485-06cf20c0639f -->
                             <li><a th:href="@{/console/team/details/} + ${session.teamId}"><i class="fa fa-users"></i> <span>团队详情</span></a></li>
                         </ul>
                     </li>
                 <!-- 操作选项 -->
                 <li class="header">操作选项</li>
                     <li class="treeview">
-                        <a href="#">
+                        <a href="#" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" >
                             <i class="fa fa-hdd-o"></i>
                                 <span th:if="${#lists.isEmpty(session.datasetID)}">数据集</span>
-                                <span th:if="${not #lists.isEmpty(session.datasetID)}" th:text="${session.datasetName}">数据集名称</span>
+                                <span th:if="${not #lists.isEmpty(session.datasetID)}" th:text="${#strings.length(session.datasetName)<13} ? ${session.datasetName} : ${#strings.substring(session.datasetName,0,10)+'...'}" th:title="${session.datasetName}">数据集名称</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>

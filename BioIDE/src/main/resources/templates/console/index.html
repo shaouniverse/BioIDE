@@ -9,6 +9,7 @@
     <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
+    <base th:href="@{/}"/>
     <!-- 引入css -->
     <span th:replace="pageFrame/basicsCss :: copy" />
 </head>
@@ -31,7 +32,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
-                <li><a th:href="@{/console/}+ ${team.id}" th:text = "${team.name}" class="active"><i class="fa fa-teams"></i> 团队名称</a></li>
+                <li><a th:href="@{/console/}+ ${team.id}" th:text="${#strings.length(team.name)<13} ? ${team.name} : ${#strings.substring(team.name,0,10)+'...'}" th:title="${team.name}" class="active"><i class="fa fa-teams"></i> 团队名称</a></li>
             </ol>
         </section>
         <!-- Main content -->

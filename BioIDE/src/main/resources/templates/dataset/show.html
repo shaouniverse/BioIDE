@@ -1,145 +1,389 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<!--
-    Title:控制台首页
-    Description：控制台首页
-    Author：WangTianshan (王天山)
-    Created date: 2017/9/15 21:35
-    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
-    Version: Html5
- -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <title th:text="#{web_title}">BioIDE</title>
-    <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
+    <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
+    <base th:href="@{/}"/>
     <!-- 引入css -->
-    <!-- basicsCss -->
-    <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
-    <link rel="stylesheet" th:href="@{/plugins/magnific-popup/magnific-popup.css}" href="css/banner.css"/>
-    <link rel="stylesheet" th:href="@{/plugins/salvattore/salvattore.css}" href="css/banner.css"/>
-    <link rel="stylesheet" th:href="@{/plugins/waterfall/waterfall.css}" href="css/waterfall.css"/>
+    <span th:replace="pageFrame/basicsCss :: copy" />
 </head>
 <body class="hold-transition skin-dark fixed sidebar-mini">
-<!-- 主界面区 -->
+<!-- Site wrapper -->
 <div class="wrapper">
-    <!-- 引入Header -->
     <header id="header" class="main-header">
-        <th:block th:replace="pageFrame/basicsHeader :: copy"></th:block>
-    </header> 
-    <!-- 引入左侧用户操作菜单-->
-    <th:block th:replace="pageFrame/basicsMenu :: copy"></th:block>
-    <!-- 引入logoutModal -->
-    <th:block th:replace="user/logoutModal :: copy"></th:block>
-    <!-- 显示区 -->
+        <!-- 引入Header -->
+        <span th:replace="pageFrame/basicsHeader :: copy" />
+    </header>
+    <!-- 引入 Left side column. contains the sidebar -->
+    <span th:replace="pageFrame/basicsMenu :: copy" />
+    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- 内容区 -->
-        <section class="container content-header">
-            <h3>
-                <span>数据集管理</span><br/>
-                <small>在这里您可以对您的数据集进行管理</small>
-            </h3>
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <span th:text="${thisDataset.dsname}">团队名称</span>
+                <small><span th:text = "${thisDataset.dsabstract}">团队备注</span></small>
+            </h1>
             <ol class="breadcrumb">
-                <li><a th:href="@{/user/info}" href="/"><i class="fa fa-user"></i> <span>我的数据</span></a></li>
-                <li><a th:href="@{/console/dataset}" href="/"><i class="fa fa-cubes"></i> <span>数据集管理</span></a></li>
-                <li class="active"><i class="fa fa-edit"></i> <span>数据集</span></li>
+                <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
+                <li>
+                    <a th:href="@{/console/}+${session.teamId}" href="/">
+                        <i class="fa fa-users"></i><span th:text="${#strings.length(session.teamName)<13} ? ${session.teamName} : ${#strings.substring(session.teamName,0,10)+'...'}" th:title="${session.teamName}" >团队名称</span></a>
+                </li>
             </ol>
         </section>
-        <section class="content container">
-            <form id="searchInfo" class="hidden" action="javascript:void(0);" method="post">
-                <input id="searchThisPage" class="hidden" th:value="${thisPage}" readonly="readonly"></input>
-            </form>
+        <section class="content">
+            <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-black" style="height: 90px; background: url('/img/dataset-bg.jpg') center center;">
+                    <h3 class="widget-user-username"><b>集合</b></h3>
+                    <h5 class="widget-user-desc"><b>在这里，所有的相同类型的数据都以集合的形式分组整合在一起</b></h5>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-12">
+                            <p>
+                                <b>创建者:</b>
+                                <span th:text="${thisDataset.creator}"></span>
+                            </p>
+                            <p>
+                                <b>创建时间:</b>
+                                <span th:text="${#dates.format(thisDataset.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countTaxaset">0</span><sup style="font-size: 20px">个</sup></h3>
 
-            <div class="col-lg-4 col-md-4">
-                <dl class="dl-horizontal">
-                    <dt>数据集名称:</dt>
-                    <dd><span th:text="${thisDataset.dsname}"></span></dd>
-                    <dt>数据集描述:</dt>
-                    <dd><span th:text="${thisDataset.dsabstract}"></span></dd>
-                    <dt>创建时间:</dt>
-                    <dd><span th:text="${#dates.format(thisDataset.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span></dd>
-                </dl>
-            </div>
-             <div class="col-lg-8 col-md-8">
-                 <div id="fh5co-main">
-                    <div id="fh5co-board" data-columns>
-                        <div class="item">
-                            <div class="animate-box">
-                                <a th:href="@{/user/record/addNew/} + ${thisDataset.id}" th:title="'添加新的'">
-                                    <img th:src="@{/img/add.jpg}" style="width: 100%;" alt="">
-                                </a>
+                                    <p>分类单元集</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-cubes"></i>
+                                </div>
+                                <a href="console/taxaset" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="fh5co-desc">
-                                <a th:href="@{/user/record/addNew/} + ${thisDataset.id}">
-                                    <span>添加</span>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countTaxtree">0</span><sup style="font-size: 20px">个</sup></h3>
+
+                                    <p>分类树</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-sitemap"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countTraitset">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>进化树</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-code-fork"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-black" style="height: 90px; background: url('/img/taxon-bg.jpg') center center;">
+                    <h3 class="widget-user-username"><b>分类单元</b></h3>
+                    <h5 class="widget-user-desc"><b>在这里，分类单元将作为基本单位组成数据集</b></h5>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countTaxon">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>分类单元</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-cube"></i>
+                                </div>
+                                <a href="console/taxon" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
-                        
-					<!--                        
-						<div class="item" th:each="record : ${recordList}">
-                            <div class="animate-box">
-                                <a th:if="${#lists.isEmpty(record.mediasById)}" th:href="@{/user/record/show/}+${record.id}" target="_blank">
-                                    <img th:if="${#lists.isEmpty(record.mediasById)}" th:src="@{/img/noimage.jpg}" style="width: 100%;" alt="">
-                                </a>
-                                <a th:if="${not #lists.isEmpty(record.mediasById)}" th:href="@{/user/record/show/}+${record.id}" target="_blank">
-                                    <img th:src="'upload/images/'+${record.mediasById[0].userByUserid.id}+'/mini/'+${record.mediasById[0].filename}" style="width: 100%;" alt="">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countCitation">0</span><sup style="font-size: 20px">条</sup></h3>
+                                    <p>引证信息</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-th-list"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countDescription">0</span><sup style="font-size: 20px">个</sup></h3>
+
+                                    <p>描述信息</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-list-alt"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countSpecimendata">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>标本</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-bug"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countDistributiondata">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>分布信息</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countProtection">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>保护信息</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-flag"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countTaxkey">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>检索表</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="glyphicon glyphicon-indent-left"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countTraitdata">0</span><sup style="font-size: 20px">个</sup></h3>
+
+                                    <p>术语</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countMolecular">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>分子数据</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-barcode"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countMultimedia">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>媒体数据</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-photo"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countCommoname">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>别名</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-circle-o"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countOccurrence">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>观测记录</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-black" style="height: 90px; background: url('/img/info-bg.jpg') center center;">
+                    <h3 class="widget-user-username"><b>附属信息</b></h3>
+                    <h5 class="widget-user-desc"><b>包括参考文献、源数据信息、版权信息等</b></h5>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countRefs">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>参考文献</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-list-ol"></i>
+                                </div>
+                                <a href="console/ref" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
-                            <div class="fh5co-desc">
-                                <a th:href="@{/user/record/show/}+${record.id}" target="_blank">
-                                    <span th:text="${#dates.format(record.rdate, 'yyyy-MM-dd HH:mm:ss')}"></span><br/>
-                                    <span th:text="${record.locality}"></span>
-                                </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countDatasources">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>源数据</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-database"></i>
+                                </div>
+                                <a href="console/datasource" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </div> 
-                      -->
-                        
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3><span id="countLicense">0</span><sup style="font-size: 20px">个</sup></h3>
+                                    <p>版权许可证</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-creative-commons"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-   <!--  <div>
-        <nav aria-label="Page navigation" style="text-align: center">
-            <ul class="pagination">
-                <li th:if="${thisPage >= 30}">
-                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)-30}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li th:if="${(totalRecord/30)<5}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence(0,((totalRecord-1)/30))}">
-                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
-                </li>
-                <li th:if="${(totalRecord/30)>=5 and (thisPage)<(30*(totalRecord/30-4))}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence((thisPage/30),(thisPage/30)+4)}">
-                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
-                </li>
-                <li th:if="${(totalRecord/30)>=5 and (thisPage)>=(30*(totalRecord/30-4))}" th:class="${thisPage ==(n*30)}? 'active' : ''" th:each="n:${#numbers.sequence(((totalRecord-1)/30)-4,((totalRecord-1)/30))}">
-                    <a th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(n)*30}" th:text="${(n+1)}">1</a>
-                </li>
-
-                <li th:if="${thisPage < (totalRecord-30)}">
-                    <a  th:href="@{/console/dataset/show/}+${thisDataset.id}+'?offset='+${(thisPage)+30}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div> -->
-</section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <span th:replace="pageFrame/basicsFooter :: copy" />
+    </footer>
+    <!-- Control Sidebar -->
+    <span th:replace="pageFrame/basicsControl :: copy" />
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
 </div>
-<footer>
-<th:block th:replace="pageFrame/basicsFooter :: copy"></th:block>
-</footer>
-</div>
-<!-- 引入js -->
-<th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
-<script th:src="@{/plugins/modernizr/modernizr-2.6.2.min.js}"></script>
-<script th:src="@{/plugins/waypoints/jquery.waypoints.min.js}"></script>
-<script th:src="@{/plugins/magnific-popup/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{/plugins/salvattore/salvattore.min.js}"></script>
-<script th:src="@{/plugins/waterfall/waterfall.js}"></script>
+<!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
+<span th:replace="pageFrame/basicsJs :: copy" />
+<!-- countUp -->
+<script th:src="@{/plugins/countUp/countUp.min.js}"></script>
+<script>
+    //计算数量统计
+    $(document).ready(function () {
+//                $.get("/",
+//                    {},
+//                    function(data,status){
+//                        if(status){
+//                            countNumber('countRecord',data.record);
+//                            countNumber('countSpecies',data.species);
+//                        }
+//                        else{
+//                            countNumber('countRecord',987654);
+//                            countNumber('countSpecies',1234);
+//                        }
+//                    });
+        countNumber('countTaxaset',987654);
+        countNumber('countTaxtree',1234);
+        countNumber('countTraitset',543);
+        countNumber('countTaxon',66451234);
+        countNumber('countCitation',7754111);
+        countNumber('countDescription',5545241);
+        countNumber('countSpecimendata',100024);
+        countNumber('countDistributiondata',75542);
+        countNumber('countProtection',54552);
+        countNumber('countTaxkey',66354);
+        countNumber('countTraitdata',1254);
+        countNumber('countMolecular',5437);
+        countNumber('countMultimedia',7543);
+        countNumber('countCommoname',5453);
+        countNumber('countOccurrence',5543);
+        countNumber('countRefs',544443);
+        countNumber('countDatasources',554);
+        countNumber('countLicense',15);
+    });
+    function countNumber(id,number) {
+        var options = {
+            useEasing: true,
+            useGrouping: true,
+            separator: ',',
+            decimal: '.',
+        };
+        var countNumber = new CountUp(id, 0, number, 0, 2.0, options);
+        if (!countNumber.error) {
+            countNumber.start();
+        } else {
+            console.error(countNumber.error);
+        }
+    };
+</script>
 </body>
 </html>

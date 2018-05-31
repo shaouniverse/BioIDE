@@ -71,29 +71,44 @@
                 </div>
                 <!-- ./col -->
             </div>
-
             <div class="row">
-                <div th:each="dataset : ${dsList}">
-		            <div class="col-lg-3 col-xs-6">
-	                    <div class="box box-widget widget-user">
-							<div class="widget-user-header bg-black" style="background: url('/img/dataset-bg.jpg') center center;">
-	                            <h3 class="widget-user-username" th:text = "${dataset.dsname}">数据集名</h3>
-	                            <h5 class="widget-user-desc" th:text = "${dataset.dsabstract}">数据集备注</h5>
-	                        </div>
-	                        <div class="box-footer no-padding">
-	                            <ul class="nav nav-stacked">
-	                                <li><a href="javascript:void (0);">分类单元 <span class="pull-right badge bg-gray">5</span></a></li>
-	                                <li><a href="javascript:void (0);">描述信息 <span class="pull-right badge bg-gray">7</span></a></li>
-	                                <li><a href="javascript:void (0);">分布信息 <span class="pull-right badge bg-gray">7</span></a></li>
-	                                <li><a href="javascript:void (0);">媒体数据 <span class="pull-right badge bg-gray">7</span></a></li>
-	                                <li><a href="javascript:void (0);">分类单元集 <span class="pull-right badge bg-gray">12</span></a></li>
-	                                <li><a href="javascript:void (0);">分类树集 <span class="pull-right badge bg-gray">842</span></a></li>
-	                                <li><a class="btn btn-block bg-gray" th:href="@{/change/dataset/}+${dataset.id}">进入</a></li>
-	                            </ul>
-	                        </div>
-	                    </div>
-	                </div>
-				</div> 
+                <div class="col-lg-3 col-xs-6">
+                    <div class="box box-widget widget-user">
+                        <div class="widget-user-header bg-black" style="height: 90px; background: url('/img/dataset-bg.jpg') center center;">
+                            <h3 class="widget-user-username" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" >新建数据集</h3>
+                            <h5 class="widget-user-desc" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" >&nbsp;</h5>
+                        </div>
+                        <div class="box-body" style="min-height: 103px">
+                            <h1 class="text-center"><a th:href="@{/console/dataset/add}" ><i class="fa fa-plus"></i></a></li></h1>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a class="btn btn-block bg-gray" th:href="@{/console/dataset/add}">新建</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6" th:each="dataset : ${dsList}">
+                    <div class="box box-widget widget-user">
+                        <div class="widget-user-header bg-black" style="height: 90px; background: url('/img/dataset-bg.jpg') center center;">
+                            <h3 class="widget-user-username" th:text = "${dataset.dsname}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" >数据集名</h3>
+                            <h5 class="widget-user-desc" th:text = "${dataset.dsabstract}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" >数据集备注</h5>
+                        </div>
+                        <div class="box-body">
+                            <ul class="nav nav-stacked">
+                                <li>分类单元 <span class="pull-right badge bg-gray">5</span></li>
+                                <li>描述信息 <span class="pull-right badge bg-gray">7</span></li>
+                                <li>媒体数据 <span class="pull-right badge bg-gray">7</span></li>
+                                <li>分类树集 <span class="pull-right badge bg-gray">842</span></li>
+                            </ul>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a class="btn btn-block bg-gray" th:href="@{/change/dataset/}+${dataset.id}">进入</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 			</div>
         </section>
         <!-- /.content -->

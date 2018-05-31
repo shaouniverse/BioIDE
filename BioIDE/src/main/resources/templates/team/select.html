@@ -26,21 +26,62 @@
         <b>Bio</b>IDE</a>
     </div>
     <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <i class="fa fa-warning"></i>
+
+                    <h3 class="box-title">说明</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <h4>
+                        欢迎使用BioIDE。请选择您要进入的团队。<br/>
+                        <small>不同团队间的数据和权限相对独立，进入某个团队后，您的操作仅限于该团队下的内容，如需操作其他团队的数据内容，可在操作菜单切换当前团队。</small>
+                    </h4>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+            <div class="box box-widget widget-user-2">
+                <div class="widget-user-header bg-primary">
+                    <div class="widget-user-image">
+                        <img class="img-circle" th:src="@{/img/user-none-160x160.jpg}" alt="User Avatar">
+                    </div>
+                    <h4 class="widget-user-username">新建团队</h4>
+                    <h5 class="widget-user-desc">&nbsp;</h5>
+                </div>
+                <div class="box-body" style="min-height: 103px">
+                    <h1 class="text-center"><a th:href="@{/console/team/add}" ><i class="fa fa-plus"></i></a></li></h1>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a class="btn btn-block bg-primary" th:href="@{/console/team/add}" >新建</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="col-md-4" th:each="team : ${teamList}">
             <div class="box box-widget widget-user-2">
                 <div class="widget-user-header bg-navy">
                     <div class="widget-user-image">
                         <img class="img-circle" th:src="@{/img/user-none-160x160.jpg}" alt="User Avatar">
                     </div>
-                    <h3 class="widget-user-username" th:text="${team.name}">团队名</h3>
-                    <h5 class="widget-user-desc" th:text="${team.note}">团队备注</h5>
+                    <h4 class="widget-user-username" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" th:text="${team.name}" th:title="${team.name}">团队名</h4>
+                    <h5 class="widget-user-desc" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" th:text="${team.note}" th:title="${team.note}">团队备注</h5>
+                </div>
+                <div class="box-body">
+                    <ul class="nav nav-stacked">
+                        <li>成员数 <span class="pull-right badge bg-navy">5</span></li>
+                        <li>数据集 <span class="pull-right badge bg-navy">7</span></li>
+                        <li>分类单元集 <span class="pull-right badge bg-navy">12</span></li>
+                        <li>分类树集 <span class="pull-right badge bg-navy">842</span></li>
+                    </ul>
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
-                        <li><a href="javascript:void (0);">成员数 <span class="pull-right badge bg-navy">5</span></a></li>
-                        <li><a href="javascript:void (0);">数据集 <span class="pull-right badge bg-navy">7</span></a></li>
-                        <li><a href="javascript:void (0);">分类单元集 <span class="pull-right badge bg-navy">12</span></a></li>
-                        <li><a href="javascript:void (0);">分类树集 <span class="pull-right badge bg-navy">842</span></a></li>
                         <li><a class="btn btn-block bg-navy" th:href="@{/change/team/}+${team.id}" >进入</a></li>
                     </ul>
                 </div>

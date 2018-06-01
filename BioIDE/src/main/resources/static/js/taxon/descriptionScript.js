@@ -42,6 +42,7 @@ function submitDescription(descriptionNum) {
         $('#descriptionForm_'+descriptionNum).removeClass("panel-success");
         $('#descriptionForm_'+descriptionNum).addClass("panel-danger");
         $('#descriptionStatus_'+descriptionNum).addClass("hidden");
+        $('#tab-description').addClass("alert alert-danger");
         layer.msg("请完成此文本描述的填写", function(){
         });
         return false;
@@ -51,6 +52,8 @@ function submitDescription(descriptionNum) {
 //提交所有description
 function submitAllDescription() {
     var submitResult=true;
+    $('#tab-description').removeClass("alert-danger");
+    $('#tab-description').removeClass("alert");
     $("form[id^='descriptionForm_']").each(function () {
         if(submitDescription($(this).attr("id").substr($(this).attr("id").lastIndexOf("_")+1))){
         }

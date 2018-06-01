@@ -72,7 +72,8 @@ function verifierStep(stepNum){
             if(
                 verificationTab1==1 &&
                 submitAllCitation() &&
-                submitAllDescription()
+                submitAllDescription()&&
+                submitAllProtection()
             ){//验证通过
                 return true;
             }
@@ -89,6 +90,7 @@ function verifierStep(stepNum){
                 verificationTab1==1 &&
                 submitAllCitation() &&
                 submitAllDescription() &&
+                submitAllProtection() &&
                 verificationTab4==1
             ){//验证通过
                 return true;
@@ -107,6 +109,7 @@ function verifierStep(stepNum){
                 verificationTab1==1 &&
                 submitAllCitation() &&
                 submitAllDescription() &&
+                submitAllProtection() &&
                 verificationTab4==1 &&
                 verificationTab5==1
             ){//验证通过
@@ -127,6 +130,7 @@ function verifierStep(stepNum){
                 verificationTab1==1 &&
                 submitAllCitation() &&
                 submitAllDescription() &&
+                submitAllProtection() &&
                 verificationTab4==1 &&
                 verificationTab5==1 &&
                 verificationTab6==1
@@ -149,6 +153,7 @@ function verifierStep(stepNum){
                 verificationTab1==1 &&
                 submitAllCitation() &&
                 submitAllDescription() &&
+                submitAllProtection() &&
                 verificationTab4==1 &&
                 verificationTab5==1 &&
                 verificationTab6==1 &&

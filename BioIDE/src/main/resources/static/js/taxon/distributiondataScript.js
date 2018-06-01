@@ -42,6 +42,7 @@ function submitDistributiondata(distributiondataNum) {
         $('#distributiondataForm_'+distributiondataNum).removeClass("panel-success");
         $('#distributiondataForm_'+distributiondataNum).addClass("panel-default");
         $('#distributiondataStatus_'+distributiondataNum).addClass("hidden");
+        $('#tab-distributiondata').addClass("alert alert-danger");
         layer.msg("请完成此分布数据的填写", function(){
         });
         return false;
@@ -51,6 +52,8 @@ function submitDistributiondata(distributiondataNum) {
 //提交所有distributiondata
 function submitAllDistributiondata() {
     var submitResult=true;
+    $('#tab-distributiondata').removeClass("alert-danger");
+    $('#tab-distributiondata').removeClass("alert");
     $("form[id^='distributiondataForm_']").each(function () {
         if(submitDistributiondata($(this).attr("id").substr($(this).attr("id").lastIndexOf("_")+1))){
         }

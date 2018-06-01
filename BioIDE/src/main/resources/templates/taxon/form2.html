@@ -89,27 +89,27 @@
       </form>
     </script>
     <script id="citationReferencesForm" type="text/x-jquery-tmpl">
-            <tr id="descriptionReferencesForm_${cnum}_${num}">
-              <td><label class="control-label">[${num}]</label><td>
-              <div class="form-group">
-                <div class="col-sm-8 col-md-8 col-xs-12">
-                  <div class="input-group">
-                    <select class="form-control select2" id="citationReferences_${cnum}_${num}" name="citationReferences_${cnum}_${num}" style="width: 100%;"></select>
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-default dropdown-toggle" onclick="removeDescriptionReferences(${cnum},${num});">
-                        <i class="fa fa-remove"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-2 col-md-2 col-xs-6">
-                  <input type="text" class="form-control" id="descriptionReferencesPageS_${cnum}_${num}" name="descriptionReferencesPageS_${cnum}_${num}" placeholder="起始页" /></div>
-                <div class="col-sm-2 col-md-2 col-xs-6">
-                  <input type="text" class="form-control" id="descriptionReferencesPageE_${cnum}_${num}" name="descriptionReferencesPageE_${cnum}_${num}" placeholder="终止页" /></div>
-                <input class="hidden" id="descriptionReferencesType_${cnum}_${num}" name="descriptionReferencesId_${cnum}_${num}"></input>
-              </td>
-            </tr>
-          </script>
+      <tr id="descriptionReferencesForm_${cnum}_${num}">
+        <td><label class="control-label">[${num}]</label><td>
+        <div class="form-group">
+          <div class="col-sm-8 col-md-8 col-xs-12">
+            <div class="input-group">
+              <select class="form-control select2" id="citationReferences_${cnum}_${num}" name="citationReferences_${cnum}_${num}" style="width: 100%;"></select>
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" onclick="removeDescriptionReferences(${cnum},${num});">
+                  <i class="fa fa-remove"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-xs-6">
+            <input type="text" class="form-control" id="descriptionReferencesPageS_${cnum}_${num}" name="descriptionReferencesPageS_${cnum}_${num}" placeholder="起始页" /></div>
+          <div class="col-sm-2 col-md-2 col-xs-6">
+            <input type="text" class="form-control" id="descriptionReferencesPageE_${cnum}_${num}" name="descriptionReferencesPageE_${cnum}_${num}" placeholder="终止页" /></div>
+          <input class="hidden" id="descriptionReferencesType_${cnum}_${num}" name="descriptionReferencesId_${cnum}_${num}"></input>
+        </td>
+      </tr>
+    </script>
   </form>
 </th:block>
 

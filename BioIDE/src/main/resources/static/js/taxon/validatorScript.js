@@ -368,5 +368,46 @@ function addCitationValidator(citationNum) {
 function citationFormValidator(Num) {
     $('#citationForm_'+Num).data('bootstrapValidator').validate();
 }
-
+//构造一个protection验证规则
+function addProtectionValidator(protectionNum) {
+    $("#protectionForm_" + protectionNum).bootstrapValidator({
+        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon ',
+            invalid: 'glyphicon ',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "standardname_"+protectionNum, {
+        validators: {
+            notEmpty: {
+            }
+        }
+    });
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "version_"+protectionNum, {
+        validators: {
+            notEmpty: {
+            }
+        }
+    });
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "protlevel_"+protectionNum, {
+        validators: {
+            notEmpty: {
+            }
+        }
+    });
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "proassessment_"+protectionNum, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 1500
+            },
+        }
+    });
+}
+//统一验证protection
+function protectionFormValidator(Num) {
+    $('#protectionForm_'+Num).data('bootstrapValidator').validate();
+}
 

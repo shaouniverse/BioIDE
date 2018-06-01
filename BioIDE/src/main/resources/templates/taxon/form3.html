@@ -4,17 +4,18 @@
     <div>
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
-          <a href="#description" aria-controls="description" role="tab" data-toggle="tab">文本描述</a></li>
+          <a href="#description" id="tab-description" aria-controls="description" role="tab" data-toggle="tab">文本描述</a></li>
         <li role="presentation">
-          <a href="#distributiondata" aria-controls="distributiondata" role="tab" data-toggle="tab">分布数据</a></li>
+          <a href="#distributiondata" id="tab-distributiondata" aria-controls="distributiondata" role="tab" data-toggle="tab">分布数据</a></li>
         <li role="presentation">
-          <a href="#protection" aria-controls="protection" role="tab" data-toggle="tab">保护数据</a></li>
+          <a href="#protection" id="tab-protection" aria-controls="protection" role="tab" data-toggle="tab">保护数据</a></li>
         <li role="presentation">
-          <a href="#taxkey" aria-controls="taxkey" role="tab" data-toggle="tab">检索表</a></li>
+          <a href="#taxkey" id="tab-taxkey" aria-controls="taxkey" role="tab" data-toggle="tab">检索表</a></li>
         <li role="presentation">
-          <a href="#traitdata" aria-controls="traitdata" role="tab" data-toggle="tab">特征数据</a></li>
+          <a href="#traitdata" id="tab-traitdata" aria-controls="traitdata" role="tab" data-toggle="tab">特征数据</a></li>
       </ul>
       <div class="tab-content">
+        <!-- 文本数据面板 -->
         <div role="tabpanel" class="tab-pane active" id="description">
           <h4>
             <small>&nbsp;从历史资料、志书、文献、书籍、调查报告中提取的描述性文本</small>
@@ -24,6 +25,7 @@
           <a class="btn btn-app" onclick="addDescription ();">
             <i class="fa fa-plus"></i>添加新描述</a>
           <input class="hidden" id="countDescription" name="countDescription" value="0"></input>
+          <!-- 文本数据模板 -->
           <script id="descriptionForm" type="text/x-jquery-tmpl">
             <form class="panel panel-default" id="descriptionForm_${num}" th:action="@{/}" method="post">
               <div class="panel-heading" role="tab" id="headingOne">
@@ -157,6 +159,7 @@
               </div>
             </form>
           </script>
+          <!-- 文本数据的参考文献模板 -->
           <script id="descriptionReferencesForm" type="text/x-jquery-tmpl">
             <tr id="descriptionReferencesForm_${dnum}_${num}">
               <td><label class="control-label">[${num}]</label><td>
@@ -192,6 +195,7 @@
             </tr>
           </script>
         </div>
+        <!-- 分布数据面板 -->
         <div role="tabpanel" class="tab-pane fade" id="distributiondata">
           <h4>
             <small>&nbsp;描述物种分布的信息；可添加多条</small>
@@ -201,6 +205,7 @@
           <a class="btn btn-app" onclick="addDistributiondata ();">
             <i class="fa fa-plus"></i>添加新分布数据</a>
           <input class="hidden" id="countDistributiondata" name="countDistributiondata" value="0"></input>
+          <!-- 分布数据模板 -->
           <script id="distributiondataForm" type="text/x-jquery-tmpl">
             <form class="panel panel-default" id="distributiondataForm_${num}" th:action="@{/}" method="post">
               <div class="panel-heading" role="tab" id="headingOne">
@@ -233,8 +238,97 @@
             </form>
           </script>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="protection">这里是保护信息</div>
+        <!-- 保护数据面板 -->
+        <div role="tabpanel" class="tab-pane fade" id="protection">
+          <h4>
+            <small>&nbsp;该物种的保护信息</small>
+            <p>&nbsp;</p>
+          </h4>
+          <div id="newProtection"></div>
+          <a class="btn btn-app" onclick="addProtection ();">
+            <i class="fa fa-plus"></i>添加新的保护数据</a>
+          <input class="hidden" id="countProtection" name="countProtection" value="0"></input>
+          <!-- 保护数据模板 -->
+          <script id="protectionForm" type="text/x-jquery-tmpl">
+            <form class="panel panel-default" id="protectionForm_${num}" th:action="@{/}" method="post">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <i class="fa fa-check-circle hidden" id="protectionStatus_${num}"></i>
+                  <a id="protectionCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#protectionCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的保护数据</a>
+                  <a role="button" class="pull-right" onclick="removeProtection(${num});">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="protectionCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="standardname_${num}" class="col-sm-2 control-label">保护级别:</label>
+                      <div class="col-sm-4">
+                        <select class="form-control select2" id="standardname_${num}" name="standardname_${num}" style="width: 100%;"></select>
+                      </div>
+                      <div class="col-sm-2">
+                        <select class="form-control select2" id="version_${num}" name="version_${num}" style="width: 100%;"></select>
+                      </div>
+                      <div class="col-sm-4">
+                        <select class="form-control select2" id="protlevel_${num}" name="protlevel_${num}" style="width: 100%;"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="proassessment_${num}" class="col-sm-2 control-label">保护评估:</label>
+                      <div class="col-sm-10 col-md-10">
+                        <textarea class="form-control" rows="3" id="proassessment_${num}" name="proassessment_${num}" placeholder="保护评估"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <input class="hidden" id="countProtectionReferences_${num}" name="countProtectionReferences_${num}" value="0"></input>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="refjson" class="col-sm-2 control-label">参考文献:</label>
+                      <div class="col-sm-10 col-md-10 table-responsive">
+                        <table class="table table-hover table-condensed">
+                          <tbody id="newProtectionReferences_${num}"></tbody>
+                        </table>
+                        <button type="button" class="btn btn-default btn-sm" onclick="addProtectionReferences (${num});">
+                          <i class="fa fa-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-primary pull-right" onclick="submitProtection(${num});">确认</button></div>
+              </div>
+            </form>
+          </script>
+          <!-- 保护数据参考文献模板 -->
+          <script id="protectionReferencesForm" type="text/x-jquery-tmpl">
+            <tr id="descriptionReferencesForm_${pnum}_${num}">
+              <td><label class="control-label">[${num}]</label><td>
+              <div class="form-group">
+                <div class="col-sm-8 col-md-8 col-xs-12">
+                  <div class="input-group">
+                    <select class="form-control select2" id="protectionReferences_${pnum}_${num}" name="protectionReferences_${pnum}_${num}" style="width: 100%;"></select>
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-default dropdown-toggle" onclick="removeDescriptionReferences(${pnum},${num});">
+                        <i class="fa fa-remove"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-2 col-md-2 col-xs-6">
+                  <input type="text" class="form-control" id="descriptionReferencesPageS_${pnum}_${num}" name="descriptionReferencesPageS_${pnum}_${num}" placeholder="起始页" /></div>
+                <div class="col-sm-2 col-md-2 col-xs-6">
+                  <input type="text" class="form-control" id="descriptionReferencesPageE_${pnum}_${num}" name="descriptionReferencesPageE_${pnum}_${num}" placeholder="终止页" /></div>
+                <input class="hidden" id="descriptionReferencesType_${pnum}_${num}" name="descriptionReferencesId_${pnum}_${num}"></input>
+              </td>
+            </tr>
+          </script>
+        </div>
+        <!-- 检索表面板 -->
         <div role="tabpanel" class="tab-pane fade" id="taxkey">这里是检索表</div>
+        <!-- 特征数据面板 -->
         <div role="tabpanel" class="tab-pane fade" id="traitdata">这里是特征信息</div></div>
     </div>
   </form>

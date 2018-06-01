@@ -1,14 +1,16 @@
 package org.big.controller;
 
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.big.entity.Message;
 import org.big.entity.Team;
 import org.big.entity.User;
-import org.big.entity.UserDetail;
 import org.big.service.TeamService;
 import org.big.service.UserService;
 import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -80,8 +82,6 @@ public class TeamController {
     @RequestMapping(value="/add", method = {RequestMethod.GET})
     public String Add(Model model) {
         Team thisTeam=new Team();
-        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        thisTeam.setLeader(thisUser.getId());
         model.addAttribute("thisTeam", thisTeam);
         return "team/add";
     }
@@ -109,11 +109,17 @@ public class TeamController {
      * @return java.lang.String
      */
     @RequestMapping(value="/save", method = {RequestMethod.POST})
-    public String Save(@ModelAttribute("thisTeam") Team thisTeam) {
+    public String Save(@ModelAttribute("thisTeam") Team thisTeam, HttpServletRequest request) {
         if (null != thisTeam.getNote() && !"".equals(thisTeam.getNote()) && "Default".equals(thisTeam.getNote())) {
 			thisTeam.setNote(thisTeam.getNote().toLowerCase());
 		}
-    	this.teamService.saveOneByUser(thisTeam);
+        String teamId = UUID.randomUUID().toString();
+        thisTeam.setId(teamId);
+        this.teamService.saveOneByUser(thisTeam);
+        String mark = (String) request.getAttribute("mark");
+        if (null == mark) {
+			return "redirect:/change/team/" + teamId;
+		}
         return "redirect:/console/team";
     }
 

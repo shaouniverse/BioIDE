@@ -121,7 +121,6 @@
 <script type="text/javascript">
 /* 添加Taxaset */
 function addTaxaset() {
-	alert("13126863899");
     if(dsnameValidator($('input[name="tsname"]').val()) && dsabstractionValidator($('textarea[name="tsinfo"]').val())){
         layer.load(2);
         $.post("console/taxaset/rest/new",
@@ -132,13 +131,9 @@ function addTaxaset() {
         },
         function(rsl){
             if(rsl.result == true){
-                $("#taxaset").val(rsl.newId);
-                $("#taxaset").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTsname+"</option>");
-	        	/* alert(rsl.result + "-----" + rsl.newId + "-----" + rsl.newTsname);
-                layer.close(parent.layer.getFrameIndex(window.name));  */
-                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                /* parent.showMessageLayer($('#message_successful_login').text()); */
-                parent.layer.close(index);
+            	parent.$("#taxaset").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTsname+"</option>");
+            	parent.$('#form_1').data('bootstrapValidator').updateStatus('taxaset.id', 'NOT_VALIDATED',null).validateField('taxaset.id');
+                parent.layer.close(parent.layer.getFrameIndex(window.name)); 
             }
             else{
             	alert("123");

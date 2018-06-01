@@ -1,13 +1,13 @@
 package org.big.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.big.entity.Dataset;
 import org.big.service.DatasetService;
-import org.big.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +32,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class DatasetController {
 	@Autowired
 	private DatasetService datasetService;
-	@Autowired
-	private TeamService teamService;
 	/**
      *<b>Dataset管理页</b>
      *<p> 包含所有Dataset的信息列表、操作选项</p>
@@ -52,10 +50,9 @@ public class DatasetController {
      * @param model 初始化模型
      * @return java.lang.String
      */
-	@RequestMapping(value = "/add/{id}", method = { RequestMethod.GET })
-	public String AddDatasetForTeam(Model model, @PathVariable String id) {
+	@RequestMapping(value = "/add", method = { RequestMethod.GET })
+	public String AddDatasetForTeam(Model model, HttpServletRequest request) {
 		Dataset thisDataset = new Dataset();
-		thisDataset.setTeam(this.teamService.findbyID(id));
 		model.addAttribute("thisDataset", thisDataset);
 		return "dataset/add";
 	}
@@ -122,7 +119,13 @@ public class DatasetController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "dataset/add";
 		}
-		this.datasetService.addOne(thisDataset);
+		String datasetID = UUID.randomUUID().toString();
+		thisDataset.setId(datasetID);
+		this.datasetService.addOne(thisDataset, request);
+		String mark = (String) request.getSession().getAttribute("datasetID");
+		if (null == mark) {
+			return "redirect:/change/dataset/" + datasetID;
+		}
 		return "redirect:/console/team/details/" + request.getSession().getAttribute("teamId");
 	}
     

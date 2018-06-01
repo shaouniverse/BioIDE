@@ -209,6 +209,8 @@ public class TeamServiceImpl implements TeamService  {
             thisTeam.setId(UUID.randomUUID().toString());
             thisTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
         }
+        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        thisTeam.setLeader(thisUser.getId());
         this.teamRepository.save(thisTeam);
         UserTeam thisUserTeam=new UserTeam();
         thisUserTeam.setUserId(thisTeam.getLeader());

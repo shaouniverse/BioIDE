@@ -174,6 +174,20 @@ function verifierStep(stepNum){
 function toStep(stepNum){
     var lable=$("#label_"+stepNum);
     lable.click();
+    var obj = $('#form_1').serialize();
+    $.ajax({
+      type: "POST",
+      url: "/console/taxon/add/baseinfo",
+      data: obj,	// 要提交的表单
+      dataType: "json",
+      contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+      success: function (msg) {
+    	  layer.msg(msg, {time: 2000});
+      },
+      error: function (error) {
+    	  layer.msg(msg, {time: 2000});
+      }
+    });
     //activeTab(stepNum);
 };
 

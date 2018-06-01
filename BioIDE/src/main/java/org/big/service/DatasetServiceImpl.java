@@ -27,7 +27,8 @@ import com.alibaba.fastjson.JSONObject;
 public class DatasetServiceImpl implements DatasetService {
 	@Autowired
 	private DatasetRepository datasetRepository;
-	
+	@Autowired
+	private TeamService teamService;
 	@Override  // 超级管理员 -- 数据集列表
 	public JSON findbyInfo(HttpServletRequest request) {
 		JSON json = null;
@@ -172,12 +173,13 @@ public class DatasetServiceImpl implements DatasetService {
 	}
 
 	@Override
-	public void addOne(Dataset thisDataset) {
-		thisDataset.setId(UUID.randomUUID().toString()); // 数据集ID(数据及名称及描述)
+	public void addOne(Dataset thisDataset, HttpServletRequest request) {
 		thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis())); // 创建日期
 		if (thisDataset.getDsabstract().equals("Default")) {
 			thisDataset.setDsabstract("default");
 		}
+		String teamId = (String) request.getSession().getAttribute("teamId");
+		thisDataset.setTeam(this.teamService.findbyID(teamId));
 		// 获取当前登录用户
 		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		thisDataset.setCreator(thisUser.getId()); // 创建人 -- 当前数据集的负责人

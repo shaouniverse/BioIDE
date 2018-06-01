@@ -55,8 +55,10 @@ public class IndexController {
      * @return java.lang.String
      */
     @RequestMapping(value="/select/team", method = {RequestMethod.GET})
-    public String SelectTeam(Model model) {
+    public String SelectTeam(Model model, HttpServletRequest request) {
         try{
+        	//删除dataset中的记录
+        	request.getSession().removeAttribute("teamId");
             UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<Team> teamList=this.teamService.selectTeamsByUserId(thisUser.getId());//根据user id查找所有team
             model.addAttribute("teamList", teamList);

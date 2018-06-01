@@ -655,4 +655,17 @@ public class Taxon implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Taxon [id=" + id + ", authorstr=" + authorstr + ", epithet=" + epithet + ", inputer=" + inputer
+				+ ", inputtime=" + inputtime + ", nomencode=" + nomencode + ", rankid=" + rankid + ", refjson="
+				+ refjson + ", remark=" + remark + ", scientificname=" + scientificname + ", sourcesid=" + sourcesid
+				+ ", status=" + status + ", synchdate=" + synchdate + ", synchstatus=" + synchstatus + ", tci=" + tci
+				+ ", citations=" + citations + ", descriptions=" + descriptions + ", distributiondata="
+				+ distributiondata + ", moleculars=" + moleculars + ", multimedias=" + multimedias + ", occurrences="
+				+ occurrences + ", protections=" + protections + ", specimendata=" + specimendata + ", taxkeys="
+				+ taxkeys + ", rank=" + rank + ", taxaset=" + taxaset + ", taxtrees=" + taxtrees + ", traitdata="
+				+ traitdata + "]";
+	}
+
 }

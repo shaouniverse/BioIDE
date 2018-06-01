@@ -61,7 +61,7 @@ public interface DatasetService {
      * @param thisDataset 实体
      * @return java.lang.String
      */
-    void addOne(Dataset thisDataset);
+    void addOne(Dataset thisDataset, HttpServletRequest request);
 
     /**
      *<b>根据id 逻辑删除一个实体</b>

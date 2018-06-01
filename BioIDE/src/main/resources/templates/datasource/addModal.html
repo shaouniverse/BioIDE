@@ -146,12 +146,9 @@ function addDatasource() {
         },
         function(rsl){
             if(rsl.result == true){
-                $("#sourcesid").val(rsl.newId);
-                $("#sourcesid").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
-               /*  $('#addForm').data('bootstrapValidator').updateStatus('datasetByDsid.id', 'NOT_VALIDATED',null)
-                .validateField('datasetByDsid.id'); */
-	        	alert(rsl.result + "-----" + rsl.newId + "-----" + rsl.newTitle);
-                layer.close(parent.layer.getFrameIndex(window.name)); 
+                parent.$("#sourcesid").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
+                parent.$('#form_1').data('bootstrapValidator').updateStatus('sourcesid', 'NOT_VALIDATED',null).validateField('sourcesid');
+                parent.layer.close(parent.layer.getFrameIndex(window.name)); 
             }
             else{
             	alert("123");

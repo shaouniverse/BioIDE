@@ -253,4 +253,22 @@ public class TeamServiceImpl implements TeamService  {
 			this.userTeamRepository.updateTeamInfoByLeader(name, userId, teamId);
 		}
 	}
+
+	@Override
+	public JSON newOne(Team thisTeam, HttpServletRequest request) {
+		JSONObject thisResult = new JSONObject();
+		try {
+			thisTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
+			// 获取当前登录用户
+			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			thisTeam.setLeader(thisUser.getId());
+			this.teamRepository.save(thisTeam);
+			
+			thisResult.put("result", true);
+			thisResult.put("newId", thisTeam.getId());
+		} catch (Exception e) {
+			thisResult.put("result", false);
+		}
+		return thisResult;
+	}
 }

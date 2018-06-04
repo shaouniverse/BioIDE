@@ -2,6 +2,7 @@ package org.big.service;
 
 
 import com.alibaba.fastjson.JSON;
+
 import org.big.entity.Team;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -126,4 +127,13 @@ public interface TeamService {
      * @return int
      */
     void updateTeamInfoByLeader(String teamId, String userId);
+    
+    /**
+     *<b>存储一个新的Team实体</b>
+     *<p> 存储一个新的Team实体</p>
+     * @author BINZI
+     * @param thisTeam 实体
+     * @return com.alibaba.fastjson.JSON
+     */
+	JSON newOne(Team thisTeam, HttpServletRequest request);
 }

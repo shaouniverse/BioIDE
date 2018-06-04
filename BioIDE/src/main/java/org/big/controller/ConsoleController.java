@@ -33,8 +33,6 @@ public class ConsoleController {
     @Autowired
     private MessageService messageService;
     @Autowired
-    private HttpServletRequest request;
-    @Autowired
     private DatasetService datasetService;
     @Autowired
     private TeamService teamService;

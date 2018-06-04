@@ -2,11 +2,9 @@ package org.big.controller.rest;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.big.entity.Dataset;
 import org.big.service.DatasetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,9 +26,9 @@ public class DatasetRestController {
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-    @RequestMapping("/list/{id}")
-    public JSON DataSetTeamList(HttpServletRequest request, @PathVariable String id) {
-    	return this.datasetService.findMyTeamDatasetsByTid(request, id);
+    @RequestMapping("/list")
+    public JSON DataSetTeamList(HttpServletRequest request) {
+    	return this.datasetService.findMyTeamDatasetsByTid(request);
     }
     
     /**

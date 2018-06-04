@@ -71,7 +71,7 @@ public class TaxonController {
      * @return java.lang.String
      */
     @RequestMapping(value="/add/baseinfo", method = {RequestMethod.POST})
-    public String AddBaseInfo(@ModelAttribute("thisTaxon") @Valid Taxon thisTaxon, BindingResult result, Model model, HttpServletRequest request) {
+    public String AddTaxonBaseInfo(@ModelAttribute("thisTaxon") @Valid Taxon thisTaxon, BindingResult result, Model model, HttpServletRequest request) {
 			if (result.hasErrors()) {
 				List<ObjectError> list = result.getAllErrors();
 				String errorMsg = "";
@@ -82,8 +82,7 @@ public class TaxonController {
 				model.addAttribute("errorMsg", errorMsg);
 				return "taxon/add";
 			}else {
-				/*this.taxonService.addBaseInfo(thisTaxon);*/
-				System.out.println(thisTaxon);
+				this.taxonService.addTaxonBaseInfo(thisTaxon);
 				return "redirect:/console/taxaset";
 			}
     }

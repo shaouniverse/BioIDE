@@ -1,5 +1,7 @@
 package org.big.controller.rest;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +12,8 @@ import org.big.service.UserService;
 import org.big.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -153,4 +157,23 @@ public class TeamRestController {
             return false;
         }
     }
+    
+    /**
+     *<b>Team的新建Team实体</b>
+     *<p> Team的新建Team实体</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	public JSON New(Model model, @ModelAttribute("thisTeam") Team thisTeam, HttpServletRequest request) {
+		if (null != thisTeam.getNote() && !"".equals(thisTeam.getNote()) && "Default".equals(thisTeam.getNote())) {
+			thisTeam.setNote(thisTeam.getNote().toLowerCase());
+		}
+		/*String teamId = UUID.randomUUID().toString();
+		thisTeam.setId(teamId);*/
+		/*model.addAttribute("rsl", this.teamService.newOne(thisTeam, request));*/
+		/*return "redirect:/change/team/" + teamId;*/
+		return this.teamService.newOne(thisTeam, request);
+	}
 }

@@ -71,7 +71,14 @@ public class TeamController {
         model.addAttribute("leader", leader);
         return "team/details";
     }
-
+    
+    @RequestMapping(value="/add/mark", method = {RequestMethod.GET})
+    public String Adds(Model model, HttpServletRequest request) {
+        Team thisTeam=new Team();
+        model.addAttribute("thisTeam", thisTeam);
+        return "team/addModal";
+    }
+    
     /**
      *<b>添加</b>
      *<p> 添加新的实体的编辑的页面</p>
@@ -80,7 +87,7 @@ public class TeamController {
      * @return java.lang.String
      */
     @RequestMapping(value="/add", method = {RequestMethod.GET})
-    public String Add(Model model) {
+    public String Add(Model model, HttpServletRequest request) {
         Team thisTeam=new Team();
         model.addAttribute("thisTeam", thisTeam);
         return "team/add";
@@ -109,17 +116,14 @@ public class TeamController {
      * @return java.lang.String
      */
     @RequestMapping(value="/save", method = {RequestMethod.POST})
-    public String Save(@ModelAttribute("thisTeam") Team thisTeam, HttpServletRequest request) {
-        if (null != thisTeam.getNote() && !"".equals(thisTeam.getNote()) && "Default".equals(thisTeam.getNote())) {
+    public String Save(Model model, @ModelAttribute("thisTeam") Team thisTeam, HttpServletRequest request) {
+    	System.out.println(thisTeam);
+    	if (null != thisTeam.getNote() && !"".equals(thisTeam.getNote()) && "Default".equals(thisTeam.getNote())) {
 			thisTeam.setNote(thisTeam.getNote().toLowerCase());
 		}
         String teamId = UUID.randomUUID().toString();
         thisTeam.setId(teamId);
         this.teamService.saveOneByUser(thisTeam);
-        String mark = (String) request.getAttribute("mark");
-        if (null == mark) {
-			return "redirect:/change/team/" + teamId;
-		}
         return "redirect:/console/team";
     }
 

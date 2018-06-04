@@ -19,7 +19,6 @@ $("select[id='sourcesid']").on("change", function(){
 			  title:'<h4>添加数据源</h4>',
 			  fixed: false, //不固定
 			  area: [layer_width, layer_height],
-			  skin: 'layui-layer-rim', //加上边框
 			  content: '/console/datasource/addNew'
 		});
 	}
@@ -34,7 +33,6 @@ $("select[id='taxaset']").on("change", function(){
 			  title:'<h4>添加分类单元集</h4>',
 			  fixed: false, //不固定
 			  area: [layer_width, layer_height],
-			  skin: 'layui-layer-rim', //加上边框
 			  content: '/console/taxaset/addNew'
 		});
 	}

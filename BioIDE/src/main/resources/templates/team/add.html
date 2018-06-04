@@ -44,7 +44,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="well">
-                <form id="thisForm" class="form-horizontal" th:action="@{/console/team/save}" method="post" th:object="${thisTeam}">
+                <form id="thisForm" class="form-horizontal" th:action="@{/console/team/new}" method="post" th:object="${thisTeam}">
                     <!-- 引入form -->
                     <span th:substituteby="team/form :: copy" />
                     <p></p>

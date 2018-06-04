@@ -103,7 +103,7 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	@Transactional
-	public JSON findMyTeamDatasetsByTid(HttpServletRequest request, String id) {
+	public JSON findMyTeamDatasetsByTid(HttpServletRequest request) {
 		JSON json = null;
 		String searchText = request.getParameter("search");
 		if (searchText == null || searchText.length() <= 0) {
@@ -126,8 +126,9 @@ public class DatasetServiceImpl implements DatasetService {
 
         //获取当前登录用户
 		// UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String teamId = (String) request.getSession().getAttribute("teamId");
 		Page<Dataset> thisPage = this.datasetRepository.searchMyTeamDataInfo(searchText, 
-				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order), id);
+				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order), teamId);
 		List<Dataset> thisList = new ArrayList<>();
 
 		thisList = thisPage.getContent();

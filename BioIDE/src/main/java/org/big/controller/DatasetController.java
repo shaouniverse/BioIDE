@@ -122,11 +122,11 @@ public class DatasetController {
 		String datasetID = UUID.randomUUID().toString();
 		thisDataset.setId(datasetID);
 		this.datasetService.addOne(thisDataset, request);
-		String mark = (String) request.getSession().getAttribute("datasetID");
-		if (null == mark) {
+		String mark = (String) request.getSession().getAttribute("teamId");
+		if (null != mark) {
 			return "redirect:/change/dataset/" + datasetID;
 		}
-		return "redirect:/console/team/details/" + request.getSession().getAttribute("teamId");
+		return "redirect:/console/team/details/" + mark;
 	}
     
     /**

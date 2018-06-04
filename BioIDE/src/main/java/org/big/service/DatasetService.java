@@ -43,7 +43,7 @@ public interface DatasetService {
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-    JSON findMyTeamDatasetsByTid(HttpServletRequest request, String id);
+    JSON findMyTeamDatasetsByTid(HttpServletRequest request);
 
     /**
      *<b>存储媒体实体</b>

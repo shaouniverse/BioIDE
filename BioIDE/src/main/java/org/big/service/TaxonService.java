@@ -11,6 +11,6 @@ public interface TaxonService {
 	 * @author BINZI
 	 * @param thisTaxon
 	 */
-	void addBaseInfo(@Valid Taxon thisTaxon);
+	void addTaxonBaseInfo(@Valid Taxon thisTaxon);
 	// 自定义Taxon增删改查
 }

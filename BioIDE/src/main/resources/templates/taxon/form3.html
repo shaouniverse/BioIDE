@@ -327,7 +327,129 @@
           </script>
         </div>
         <!-- 检索表面板 -->
-        <div role="tabpanel" class="tab-pane fade" id="taxkey">这里是检索表</div>
+        <div role="tabpanel" class="tab-pane fade" id="taxkey">
+          <h4>
+            <small>&nbsp;该阶元相关的检索表</small>
+            <p>&nbsp;</p>
+          </h4>
+          <div id="newTaxkey"></div>
+          <a class="btn btn-app" onclick="addTaxkey ();">
+            <i class="fa fa-plus"></i>添加新的检索表</a>
+          <input class="hidden" id="countTaxkey" name="countTaxkey" value="0"></input>
+          <!-- 检索表模板 -->
+          <script id="taxkeyForm" type="text/x-jquery-tmpl">
+            <form class="panel panel-default" id="taxkeyForm_${num}" th:action="@{/}" method="post">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <i class="fa fa-check-circle hidden" id="taxkeyStatus_${num}"></i>
+                  <a id="taxkeyCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#taxkeyCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的检索表</a>
+                  <a role="button" class="pull-right" onclick="removeTaxkey(${num});">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="taxkeyCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="keytitle_${num}" class="col-sm-2 control-label">检索表名:</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="keytitle_${num}" name="keytitle_${num}" placeholder="检索表名称" /></div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="abstraction_${num}" class="col-sm-2 control-label">摘要:</label>
+                      <div class="col-sm-10 col-md-10">
+                        <textarea class="form-control" rows="3" id="abstraction_${num}" name="abstraction_${num}" placeholder="摘要"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="box box-default box-solid">
+
+                  <p></p>
+                  <div class="text-center">
+                    <div class="btn-group" data-toggle="buttons">
+                      <label class="btn btn-default active">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> 双项式(平行式)
+                      </label>
+                      <label class="btn btn-default">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> 单项式(连续平行式)
+                      </label>
+                      <label class="btn btn-default">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> 定距式(退格式/包孕式)
+                      </label>
+                    </div>
+                  </div>
+                      <div class="box-body table-responsive">
+                      <table
+                              id="keytable_${num}"
+                              class="table table-hover table-condensed"
+                              data-toggle="table"
+                              data-classes="table table-no-bordered"
+                              data-height="350"
+                              data-row-style="rowStyle">
+                        <thead class="hidden">
+                          <tr>
+                              <th data-field="orderid"></th>
+                              <th data-field="item"></th>
+                              <th data-field="ellipsis"></th>
+                              <th data-field="branchid"></th>
+                              <th data-field="images"></th>
+                              <th data-field="edit"></th>
+                              <th data-field="remove"></th>
+                          </tr>
+                        </thead>
+                      </table>
+                      </div>
+                      <div class="box-footer">
+                        <div class="col-md-5">
+                          <div class="form-group">
+                            <label for="orderid_${num}" class="col-sm-4 control-label">序号:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="orderid_${num}" name="orderid_${num}" placeholder="特征序号，用于排序" /></div>
+                          </div>
+                          <div class="form-group">
+                            <label for="innerorder_${num}" class="col-sm-4 control-label">同级排序:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="innerorder_${num}" name="innerorder_${num}" placeholder="同一级检索特征排序" /></div>
+                          </div>
+                          <div class="form-group">
+                            <label for="branchid_${num}" class="col-sm-4 control-label">分支序号:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="branchid_${num}" name="branchid_${num}" placeholder="指向下一层特征分支的序号" /></div>
+                          </div>
+                          <div class="form-group">
+                            <label for="taxonid_${num}" class="col-sm-4 control-label">指向分类单元:</label>
+                            <div class="col-sm-8">
+                              <select class="form-control select2" id="taxonid_${num}" name="taxonid_${num}" style="width: 100%;">
+
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-7">
+                          <div class="form-group">
+                            <label for="item_${num}" class="col-sm-2 control-label">特征:</label>
+                            <div class="col-sm-10 col-md-10">
+                              <textarea class="form-control" rows="5" id="item_${num}" name="item_${num}" placeholder="特征"></textarea>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button type="button" class="btn btn-default pull-right" onclick="submitKeyitem(${num});">加入检索表</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button type="button" class="btn btn-primary pull-right" onclick="submitTaxkey(${num});">确认</button>
+                </div>
+              </div>
+            </form>
+          </script>
+        </div>
         <!-- 特征数据面板 -->
         <div role="tabpanel" class="tab-pane fade" id="traitdata">这里是特征信息</div></div>
     </div>

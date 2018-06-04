@@ -182,10 +182,10 @@ function toStep(stepNum){
       dataType: "json",
       contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
       success: function (msg) {
-    	  layer.msg(msg, {time: 2000});
+    	  //layer.msg(msg, {time: 2000});
       },
       error: function (error) {
-    	  layer.msg(msg, {time: 2000});
+    	  //layer.msg(msg, {time: 2000});
       }
     });
     //activeTab(stepNum);

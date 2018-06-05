@@ -1,11 +1,10 @@
-
 /**
  * Prism: Lightweight, robust, elegant syntax highlighting
  * MIT license http://www.opensource.org/licenses/mit-license.php/
  * @author Lea Verou http://lea.verou.me
  */
 
-(function(){
+(function () {
 
 // Private helper vars
     var lang = /\blang(?:uage)?-(?!\*)(\w+)\b/i;
@@ -79,7 +78,7 @@
             },
 
             // Traverse a language definition with Depth First Search
-            DFS: function(o, callback) {
+            DFS: function (o, callback) {
                 for (var i in o) {
                     callback.call(o, i, o[i]);
 
@@ -90,15 +89,15 @@
             }
         },
 
-        highlightAll: function(async, callback) {
+        highlightAll: function (async, callback) {
             var elements = document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');
 
-            for (var i=0, element; element = elements[i++];) {
+            for (var i = 0, element; element = elements[i++];) {
                 _.highlightElement(element, async === true, callback);
             }
         },
 
-        highlightElement: function(element, async, callback) {
+        highlightElement: function (element, async, callback) {
             // Find language
             var language, grammar, parent = element;
 
@@ -107,7 +106,7 @@
             }
 
             if (parent) {
-                language = (parent.className.match(lang) || [,''])[1];
+                language = (parent.className.match(lang) || [, ''])[1];
                 grammar = _.languages[language];
             }
 
@@ -127,7 +126,7 @@
 
             var code = element.textContent;
 
-            if(!code) {
+            if (!code) {
                 return;
             }
 
@@ -145,7 +144,7 @@
             if (async && self.Worker) {
                 var worker = new Worker(_.filename);
 
-                worker.onmessage = function(evt) {
+                worker.onmessage = function (evt) {
                     env.highlightedCode = Token.stringify(JSON.parse(evt.data), language);
 
                     _.hooks.run('before-insert', env);
@@ -178,7 +177,7 @@
             return Token.stringify(_.tokenize(text, grammar), language);
         },
 
-        tokenize: function(text, grammar, language) {
+        tokenize: function (text, grammar, language) {
             var Token = _.Token;
 
             var strarr = [text];
@@ -194,7 +193,7 @@
             }
 
             tokenloop: for (var token in grammar) {
-                if(!grammar.hasOwnProperty(token) || !grammar[token]) {
+                if (!grammar.hasOwnProperty(token) || !grammar[token]) {
                     continue;
                 }
 
@@ -205,7 +204,7 @@
 
                 pattern = pattern.pattern || pattern;
 
-                for (var i=0; i<strarr.length; i++) { // Don鈥檛 cache length as it changes during the loop
+                for (var i = 0; i < strarr.length; i++) { // Don鈥檛 cache length as it changes during the loop
 
                     var str = strarr[i];
 
@@ -223,7 +222,7 @@
                     var match = pattern.exec(str);
 
                     if (match) {
-                        if(lookbehind) {
+                        if (lookbehind) {
                             lookbehindLength = match[1].length;
                         }
 
@@ -240,7 +239,7 @@
                             args.push(before);
                         }
 
-                        var wrapped = new Token(token, inside? _.tokenize(match, inside) : match);
+                        var wrapped = new Token(token, inside ? _.tokenize(match, inside) : match);
 
                         args.push(wrapped);
 
@@ -274,25 +273,25 @@
                     return;
                 }
 
-                for (var i=0, callback; callback = callbacks[i++];) {
+                for (var i = 0, callback; callback = callbacks[i++];) {
                     callback(env);
                 }
             }
         }
     };
 
-    var Token = _.Token = function(type, content) {
+    var Token = _.Token = function (type, content) {
         this.type = type;
         this.content = content;
     };
 
-    Token.stringify = function(o, language, parent) {
+    Token.stringify = function (o, language, parent) {
         if (typeof o == 'string') {
             return o;
         }
 
         if (Object.prototype.toString.call(o) == '[object Array]') {
-            return o.map(function(element) {
+            return o.map(function (element) {
                 return Token.stringify(element, language, o);
             }).join('');
         }
@@ -325,7 +324,7 @@
 
     if (!self.document) {
         // In worker
-        self.addEventListener('message', function(evt) {
+        self.addEventListener('message', function (evt) {
             var message = JSON.parse(evt.data),
                 lang = message.language,
                 code = message.code;
@@ -350,7 +349,8 @@
         }
     }
 
-})();;
+})();
+;
 Prism.languages.markup = {
     'comment': /&lt;!--[\w\W]*?-->/g,
     'prolog': /&lt;\?.+?\?>/,
@@ -386,12 +386,13 @@ Prism.languages.markup = {
 };
 
 // Plugin to make entity title show the real entity, idea by Roman Komarov
-Prism.hooks.add('wrap', function(env) {
+Prism.hooks.add('wrap', function (env) {
 
     if (env.type === 'entity') {
         env.attributes['title'] = env.content.replace(/&amp;/, '&');
     }
-});;
+});
+;
 Prism.languages.css = {
     'comment': /\/\*[\w\W]*?\*\//g,
     'atrule': {
@@ -422,7 +423,8 @@ if (Prism.languages.markup) {
             }
         }
     });
-};
+}
+;
 Prism.languages.clike = {
     'comment': {
         pattern: /(^|[^\\])(\/\*[\w\W]*?\*\/|(^|[^:])\/\/.*?(\r?\n|$))/g,
@@ -484,7 +486,7 @@ if (Prism.languages.markup) {
  * License: MIT
  */
 
-(function(global) {
+(function (global) {
 
     'use strict';
 
@@ -495,18 +497,19 @@ if (Prism.languages.markup) {
      * @see http://www.html5rocks.com/en/tutorials/speed/animations/
      * @param {Function} callback The callback to handle whichever event
      */
-    function Debouncer (callback) {
+    function Debouncer(callback) {
         this.callback = callback;
         this.ticking = false;
     }
+
     Debouncer.prototype = {
-        constructor : Debouncer,
+        constructor: Debouncer,
 
         /**
          * dispatches the event to the supplied callback
          * @private
          */
-        update : function() {
+        update: function () {
             this.callback && this.callback();
             this.ticking = false;
         },
@@ -515,8 +518,8 @@ if (Prism.languages.markup) {
          * ensures events don't get stacked
          * @private
          */
-        requestTick : function() {
-            if(!this.ticking) {
+        requestTick: function () {
+            if (!this.ticking) {
                 requestAnimationFrame(this.update.bind(this));
                 this.ticking = true;
             }
@@ -525,7 +528,7 @@ if (Prism.languages.markup) {
         /**
          * Attach this as the event listeners
          */
-        handleEvent : function() {
+        handleEvent: function () {
             this.requestTick();
         }
     };
@@ -537,24 +540,25 @@ if (Prism.languages.markup) {
      * @param {DOMElement} elem the header element
      * @param {Object} options options for the widget
      */
-    function Headroom (elem, options) {
+    function Headroom(elem, options) {
         options = options || Headroom.options;
 
         this.lastKnownScrollY = 0;
-        this.elem             = elem;
-        this.debouncer        = new Debouncer(this.update.bind(this));
-        this.tolerance        = options.tolerance;
-        this.classes          = options.classes;
-        this.offset           = options.offset;
-        this.initialised      = false;
+        this.elem = elem;
+        this.debouncer = new Debouncer(this.update.bind(this));
+        this.tolerance = options.tolerance;
+        this.classes = options.classes;
+        this.offset = options.offset;
+        this.initialised = false;
     }
+
     Headroom.prototype = {
-        constructor : Headroom,
+        constructor: Headroom,
 
         /**
          * Initialises the widget
          */
-        init : function() {
+        init: function () {
             this.elem.classList.add(this.classes.initial);
 
             // defer event registration to handle browser
@@ -565,7 +569,7 @@ if (Prism.languages.markup) {
         /**
          * Unattaches events and removes any classes that were added
          */
-        destroy : function() {
+        destroy: function () {
             this.initialised = false;
             window.removeEventListener('scroll', this.debouncer, false);
             this.elem.classList.remove(this.classes.unpinned, this.classes.pinned, this.classes.initial);
@@ -575,8 +579,8 @@ if (Prism.languages.markup) {
          * Attaches the scroll event
          * @private
          */
-        attachEvent : function() {
-            if(!this.initialised){
+        attachEvent: function () {
+            if (!this.initialised) {
                 this.initialised = true;
                 window.addEventListener('scroll', this.debouncer, false);
             }
@@ -585,7 +589,7 @@ if (Prism.languages.markup) {
         /**
          * Unpins the header if it's currently pinned
          */
-        unpin : function() {
+        unpin: function () {
             this.elem.classList.add(this.classes.unpinned);
             this.elem.classList.remove(this.classes.pinned);
         },
@@ -593,7 +597,7 @@ if (Prism.languages.markup) {
         /**
          * Pins the header if it's currently unpinned
          */
-        pin : function() {
+        pin: function () {
             this.elem.classList.remove(this.classes.unpinned);
             this.elem.classList.add(this.classes.pinned);
         },
@@ -603,26 +607,26 @@ if (Prism.languages.markup) {
          * @see https://developer.mozilla.org/en-US/docs/Web/API/Window.scrollY
          * @return {Number} pixels the page has scrolled along the Y-axis
          */
-        getScrollY : function() {
+        getScrollY: function () {
             return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
         },
 
         /**
          * Handles updating the state of the widget
          */
-        update : function() {
-            var currentScrollY     = this.getScrollY(),
-                toleranceExceeded    = Math.abs(currentScrollY-this.lastKnownScrollY) >= this.tolerance;
+        update: function () {
+            var currentScrollY = this.getScrollY(),
+                toleranceExceeded = Math.abs(currentScrollY - this.lastKnownScrollY) >= this.tolerance;
 
-            if(currentScrollY < 0) { // Ignore bouncy scrolling in OSX
+            if (currentScrollY < 0) { // Ignore bouncy scrolling in OSX
                 return;
             }
 
-            if(toleranceExceeded) {
-                if(currentScrollY > this.lastKnownScrollY && currentScrollY >= this.offset) {
+            if (toleranceExceeded) {
+                if (currentScrollY > this.lastKnownScrollY && currentScrollY >= this.offset) {
                     this.unpin();
                 }
-                else if(currentScrollY < this.lastKnownScrollY) {
+                else if (currentScrollY < this.lastKnownScrollY) {
                     this.pin();
                 }
             }
@@ -635,41 +639,42 @@ if (Prism.languages.markup) {
      * @type {Object}
      */
     Headroom.options = {
-        tolerance : 0,
+        tolerance: 0,
         offset: 0,
-        classes : {
-            pinned : 'headroom--pinned',
-            unpinned : 'headroom--unpinned',
-            initial : 'headroom'
+        classes: {
+            pinned: 'headroom--pinned',
+            unpinned: 'headroom--unpinned',
+            initial: 'headroom'
         }
     };
 
     global.Headroom = Headroom;
 
 }(this));
-;(function() {
+;(function () {
 
-    function CodeGenerator (widgetCode, pluginCode, dataApiCode) {
-        this.pluginCode  = pluginCode;
-        this.widgetCode  = widgetCode;
+    function CodeGenerator(widgetCode, pluginCode, dataApiCode) {
+        this.pluginCode = pluginCode;
+        this.widgetCode = widgetCode;
         this.dataApiCode = dataApiCode;
     }
-    CodeGenerator.prototype = {
-        constructor : CodeGenerator,
 
-        widget : function(options) {
-            return 'var headroom = new Headroom(elem, ' + JSON.stringify(options, null, '  ') +');\nheadroom.init();\n\n'
+    CodeGenerator.prototype = {
+        constructor: CodeGenerator,
+
+        widget: function (options) {
+            return 'var headroom = new Headroom(elem, ' + JSON.stringify(options, null, '  ') + ');\nheadroom.init();\n\n'
                 + '// to destroy\n'
                 + 'headroom.destroy();';
         },
 
-        plugin : function(options) {
+        plugin: function (options) {
             return '$("header").headroom(' + JSON.stringify(options, null, '  ') + ');\n\n'
                 + '// to destroy\n'
                 + '$("#header").headroom("destroy");';
         },
 
-        dataApi : function(options) {
+        dataApi: function (options) {
             return '&lt;header data-headroom '
                 + 'data-tolerance="' + options.tolerance + '" '
                 + 'data-offset="' + options.offset + '" '
@@ -678,7 +683,7 @@ if (Prism.languages.markup) {
                 + '$("header").data("headroom").destroy();';
         },
 
-        generate : function(options) {
+        generate: function (options) {
             this.pluginCode.innerHTML = this.plugin(options);
             Prism.highlightElement(this.pluginCode, false);
 
@@ -694,18 +699,19 @@ if (Prism.languages.markup) {
     window.CodeGenerator = CodeGenerator;
 
 }());
-;(function() {
+;(function () {
 
-    function HeadroomExample (inputs, styles, codeGenerator) {
+    function HeadroomExample(inputs, styles, codeGenerator) {
         this.inputs = inputs;
         this.codeGenerator = codeGenerator;
-        this.styles  = styles;
+        this.styles = styles;
     }
-    HeadroomExample.prototype = {
-        constructor : HeadroomExample,
 
-        init : function() {
-            if(!this.inputs) {
+    HeadroomExample.prototype = {
+        constructor: HeadroomExample,
+
+        init: function () {
+            if (!this.inputs) {
                 return;
             }
             var options = this.getOptions(this.inputs);
@@ -716,25 +722,25 @@ if (Prism.languages.markup) {
             this.listen();
         },
 
-        getOptions : function () {
+        getOptions: function () {
             var styleOptions = this.inputs.querySelectorAll('[name=style]');
             var style;
 
             for (var i = styleOptions.length - 1; i >= 0; i--) {
-                if(styleOptions[i].checked) {
+                if (styleOptions[i].checked) {
                     style = this.styles[styleOptions[i].value];
                     break;
                 }
             }
 
             return {
-                tolerance : parseInt(this.inputs.querySelector('#tolerance').value,10),
-                offset : parseInt(this.inputs.querySelector('#offset').value,10),
-                classes : style,
+                tolerance: parseInt(this.inputs.querySelector('#tolerance').value, 10),
+                offset: parseInt(this.inputs.querySelector('#offset').value, 10),
+                classes: style,
             };
         },
 
-        updateWidget : function () {
+        updateWidget: function () {
             var options = this.getOptions(this.inputs);
             var headroom = this.headroom;
 
@@ -747,7 +753,7 @@ if (Prism.languages.markup) {
             this.codeGenerator.generate(options);
         },
 
-        listen : function() {
+        listen: function () {
             for (var i = this.inputs.length - 1; i >= 0; i--) {
                 this.inputs[i].addEventListener('change', this.updateWidget.bind(this), false);
             }
@@ -757,27 +763,27 @@ if (Prism.languages.markup) {
     window.HeadroomExample = HeadroomExample;
 
 }());
-;(function() {
+;(function () {
     var styles = {
-        swing : {
-            initial : 'animated',
-            pinned : 'swingInX',
-            unpinned : 'swingOutX'
+        swing: {
+            initial: 'animated',
+            pinned: 'swingInX',
+            unpinned: 'swingOutX'
         },
-        slide : {
-            initial : 'animated',
-            pinned : 'slideDown',
-            unpinned : 'slideUp'
+        slide: {
+            initial: 'animated',
+            pinned: 'slideDown',
+            unpinned: 'slideUp'
         },
-        flip : {
-            initial : 'animated',
-            pinned : 'flipInX',
-            unpinned : 'flipOutX'
+        flip: {
+            initial: 'animated',
+            pinned: 'flipInX',
+            unpinned: 'flipOutX'
         },
-        bounce : {
-            initial : 'animated',
-            pinned : 'bounceInDown',
-            unpinned : 'bounceOutUp'
+        bounce: {
+            initial: 'animated',
+            pinned: 'bounceInDown',
+            unpinned: 'bounceOutUp'
         }
     };
 

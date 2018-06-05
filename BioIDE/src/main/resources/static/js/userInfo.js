@@ -5,23 +5,23 @@
 //var AnnualChangeChart = echarts.init(document.getElementById('annual_change'), 'infographic');
 var mediaChart = echarts.init(document.getElementById('media_chart'));
 var identificationChart = echarts.init(document.getElementById('identification_chart'));
-$( document ).ready( function() {
+$(document).ready(function () {
     mediaChart.showLoading();
     identificationChart.showLoading();
     $.ajax({
-        url : 'user/rest/count/group',
-        type : 'GET',
-        cache : false,
-        processData : false,
-        contentType : false,
-        success : function(data) {
+        url: 'user/rest/count/group',
+        type: 'GET',
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (data) {
             var mediaChartOption = {
                 tooltip: {},
                 radar: {
                     // shape: 'circle',
                     name: {
                         textStyle: {
-                            color:'#5a925a',
+                            color: '#5a925a',
                             borderRadius: 3,
                             padding: [3, 5]
                         }
@@ -45,7 +45,7 @@ $( document ).ready( function() {
                             color: 'rgba(255, 255, 255, 0.5)'
                         }
                     },
-                    indicator:data.indicator,
+                    indicator: data.indicator,
                     center: ['50%', '50%'],
                     shape: 'circle',
                 },
@@ -54,13 +54,13 @@ $( document ).ready( function() {
                     // areaStyle: {normal: {}},
                     itemStyle: {
                         normal: {
-                            color : "rgba(0,0,0,0)", // 图表中各个图区域的边框线拐点颜色
+                            color: "rgba(0,0,0,0)", // 图表中各个图区域的边框线拐点颜色
                         }
                     },
-                    data : [
+                    data: [
                         {
-                            value : data.value,
-                            name : chart1_name,
+                            value: data.value,
+                            name: chart1_name,
                             lineStyle: {
                                 normal: {
                                     color: 'rgba(255, 255, 255, 0.5)'
@@ -80,28 +80,28 @@ $( document ).ready( function() {
             mediaChart.clear();
             mediaChart.setOption(mediaChartOption);
         },
-        error : function(data) {
+        error: function (data) {
 
         }
     });
     $.ajax({
-        url : 'user/rest/count/idrecord',
-        type : 'GET',
-        cache : false,
-        processData : false,
-        contentType : false,
-        success : function(data) {
+        url: 'user/rest/count/idrecord',
+        type: 'GET',
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (data) {
             var identificationChartOption = {
                 tooltip: {},
-                calculable : true,
-                color:['#439357','#749317','#788471','#4ea397','#BDB552','#647692','#c4cf5d','#379876'],//自己设置扇形图颜色
-                series : [
+                calculable: true,
+                color: ['#439357', '#749317', '#788471', '#4ea397', '#BDB552', '#647692', '#c4cf5d', '#379876'],//自己设置扇形图颜色
+                series: [
                     {
-                        name:'',
-                        type:'pie',
-                        radius : [30, 110],
-                        roseType : 'area',
-                        data:data
+                        name: '',
+                        type: 'pie',
+                        radius: [30, 110],
+                        roseType: 'area',
+                        data: data
                     }
                 ]
             };
@@ -110,11 +110,11 @@ $( document ).ready( function() {
             identificationChart.clear();
             identificationChart.setOption(identificationChartOption);
         },
-        error : function(data) {
+        error: function (data) {
 
         }
     });
-} );
+});
 //
 // $('#statistics_select').change(function(){
 //     var select = $("#statistics_select").find("option:selected").val();

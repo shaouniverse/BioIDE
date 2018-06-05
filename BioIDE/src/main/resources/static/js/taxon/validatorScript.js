@@ -1,12 +1,12 @@
 /**
  * Created by Tianshan on 18-5-16.
  */
-$(document).ready( function() {
+$(document).ready(function () {
     //获取host
     $("#base_url").val(window.location.host);
     //基础信息验证规则
     $('#form_1').bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -16,8 +16,7 @@ $(document).ready( function() {
         fields: {
             'scientificname': {
                 validators: {
-                    notEmpty: {
-                    },
+                    notEmpty: {},
                     stringLength: {
                         min: 2,
                         max: 80
@@ -50,14 +49,12 @@ $(document).ready( function() {
             },
             'rank.id': {
                 validators: {
-                    notEmpty: {
-                    }
+                    notEmpty: {}
                 }
             },
             'sourcesid': {
                 validators: {
-                    notEmpty: {
-                    }
+                    notEmpty: {}
                 }
             },
             'tci': {
@@ -70,8 +67,7 @@ $(document).ready( function() {
             },
             'taxaset.id': {
                 validators: {
-                    notEmpty: {
-                    }
+                    notEmpty: {}
                 }
             },
             'remark': {
@@ -86,7 +82,7 @@ $(document).ready( function() {
     });
     //引证验证规则
     $('#form_2').bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -108,7 +104,7 @@ $(document).ready( function() {
     });
     //描述验证规则
     $('#form_3').bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -129,7 +125,7 @@ $(document).ready( function() {
         }
     });
     $('#form_4').bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -139,8 +135,7 @@ $(document).ready( function() {
         fields: {
             'molecular1': {
                 validators: {
-                    notEmpty: {
-                    },
+                    notEmpty: {},
                     stringLength: {
                         min: 2,
                         max: 80
@@ -150,7 +145,7 @@ $(document).ready( function() {
         }
     });
     $('#form_5').bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -160,8 +155,7 @@ $(document).ready( function() {
         fields: {
             'commonname1': {
                 validators: {
-                    notEmpty: {
-                    },
+                    notEmpty: {},
                     stringLength: {
                         min: 2,
                         max: 80
@@ -171,7 +165,7 @@ $(document).ready( function() {
         }
     });
     $('#form_6').bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -181,8 +175,7 @@ $(document).ready( function() {
         fields: {
             'occurrence2': {
                 validators: {
-                    notEmpty: {
-                    },
+                    notEmpty: {},
                     stringLength: {
                         min: 2,
                         max: 80
@@ -192,7 +185,7 @@ $(document).ready( function() {
         }
     });
     $('#form_7').bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -202,8 +195,7 @@ $(document).ready( function() {
         fields: {
             'multimedia1': {
                 validators: {
-                    notEmpty: {
-                    },
+                    notEmpty: {},
                     stringLength: {
                         min: 2,
                         max: 80
@@ -212,24 +204,24 @@ $(document).ready( function() {
             },
         }
     });
-} );
+});
 
 
 //验证状态变更
-function changeVerificationTab(tabNum,status) {
-    this['verificationTab'+tabNum]=status;
+function changeVerificationTab(tabNum, status) {
+    this['verificationTab' + tabNum] = status;
 }
 
 //统一验证form
 function formValidator(formNum) {
-    $('#form_'+formNum).data('bootstrapValidator').validate();
+    $('#form_' + formNum).data('bootstrapValidator').validate();
     //是否通过校验
-    if(!$('#form_'+formNum).data('bootstrapValidator').isValid()){
-        changeVerificationTab(formNum,-1);
+    if (!$('#form_' + formNum).data('bootstrapValidator').isValid()) {
+        changeVerificationTab(formNum, -1);
         incompleteStep(formNum);
         return false;//没有通过校验
     } else {
-        changeVerificationTab(formNum,1);
+        changeVerificationTab(formNum, 1);
         completeStep(formNum);
         return true;//通过校验
     }
@@ -238,7 +230,7 @@ function formValidator(formNum) {
 //构造一个description验证规则
 function addDescriptionValidator(descriptionNum) {
     $("#descriptionForm_" + descriptionNum).bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -246,23 +238,22 @@ function addDescriptionValidator(descriptionNum) {
             validating: 'glyphicon glyphicon-refresh'
         }
     });
-    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "destitle_"+descriptionNum, {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "destitle_" + descriptionNum, {
         validators: {
-            notEmpty: {
-            },
+            notEmpty: {},
             stringLength: {
                 min: 1,
                 max: 100
             },
         }
     });
-    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "destypeid_"+descriptionNum, {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "destypeid_" + descriptionNum, {
         validators: {
             // notEmpty: {
             // }
         }
     });
-    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "desdate_"+descriptionNum, {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "desdate_" + descriptionNum, {
         validators: {
             stringLength: {
                 min: 0,
@@ -270,7 +261,7 @@ function addDescriptionValidator(descriptionNum) {
             },
         }
     });
-    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "describer_"+descriptionNum, {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "describer_" + descriptionNum, {
         validators: {
             stringLength: {
                 min: 0,
@@ -278,7 +269,7 @@ function addDescriptionValidator(descriptionNum) {
             },
         }
     });
-    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "rightsholder_"+descriptionNum, {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "rightsholder_" + descriptionNum, {
         validators: {
             stringLength: {
                 min: 0,
@@ -286,17 +277,16 @@ function addDescriptionValidator(descriptionNum) {
             },
         }
     });
-    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "descontent_"+descriptionNum, {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "descontent_" + descriptionNum, {
         validators: {
-            notEmpty: {
-            },
+            notEmpty: {},
             stringLength: {
                 min: 1,
                 // max: 100
             },
         }
     });
-    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "descriptionremark_"+descriptionNum, {
+    $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "descriptionremark_" + descriptionNum, {
         validators: {
             stringLength: {
                 min: 0,
@@ -307,13 +297,13 @@ function addDescriptionValidator(descriptionNum) {
 }
 //统一验证description
 function descriptionFormValidator(Num) {
-    $('#descriptionForm_'+Num).data('bootstrapValidator').validate();
+    $('#descriptionForm_' + Num).data('bootstrapValidator').validate();
 }
 
 //构造一个citation验证规则
 function addCitationValidator(citationNum) {
     $("#citationForm_" + citationNum).bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -321,42 +311,37 @@ function addCitationValidator(citationNum) {
             validating: 'glyphicon glyphicon-refresh'
         }
     });
-    $("#citationForm_" + citationNum).bootstrapValidator("addField", "sciname_"+citationNum, {
+    $("#citationForm_" + citationNum).bootstrapValidator("addField", "sciname_" + citationNum, {
         validators: {
-            notEmpty: {
-            },
+            notEmpty: {},
             stringLength: {
                 min: 1,
                 max: 100
             },
         }
     });
-    $("#citationForm_" + citationNum).bootstrapValidator("addField", "authorship_"+citationNum, {
+    $("#citationForm_" + citationNum).bootstrapValidator("addField", "authorship_" + citationNum, {
         validators: {
-            notEmpty: {
-            },
+            notEmpty: {},
             stringLength: {
                 min: 1,
                 max: 100
             },
         }
     });
-    $("#citationForm_" + citationNum).bootstrapValidator("addField", "nametype_"+citationNum, {
+    $("#citationForm_" + citationNum).bootstrapValidator("addField", "nametype_" + citationNum, {
         validators: {
-            notEmpty: {
-            }
+            notEmpty: {}
         }
     });
-    $("#citationForm_" + citationNum).bootstrapValidator("addField", "sourcesid_"+citationNum, {
+    $("#citationForm_" + citationNum).bootstrapValidator("addField", "sourcesid_" + citationNum, {
         validators: {
-            notEmpty: {
-            }
+            notEmpty: {}
         }
     });
-    $("#citationForm_" + citationNum).bootstrapValidator("addField", "citationstr_"+citationNum, {
+    $("#citationForm_" + citationNum).bootstrapValidator("addField", "citationstr_" + citationNum, {
         validators: {
-            notEmpty: {
-            },
+            notEmpty: {},
             stringLength: {
                 min: 1,
                 max: 500
@@ -366,12 +351,12 @@ function addCitationValidator(citationNum) {
 }
 //统一验证citation
 function citationFormValidator(Num) {
-    $('#citationForm_'+Num).data('bootstrapValidator').validate();
+    $('#citationForm_' + Num).data('bootstrapValidator').validate();
 }
 //构造一个protection验证规则
 function addProtectionValidator(protectionNum) {
     $("#protectionForm_" + protectionNum).bootstrapValidator({
-        excluded:[":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -379,25 +364,22 @@ function addProtectionValidator(protectionNum) {
             validating: 'glyphicon glyphicon-refresh'
         }
     });
-    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "standardname_"+protectionNum, {
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "standardname_" + protectionNum, {
         validators: {
-            notEmpty: {
-            }
+            notEmpty: {}
         }
     });
-    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "version_"+protectionNum, {
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "version_" + protectionNum, {
         validators: {
-            notEmpty: {
-            }
+            notEmpty: {}
         }
     });
-    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "protlevel_"+protectionNum, {
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "protlevel_" + protectionNum, {
         validators: {
-            notEmpty: {
-            }
+            notEmpty: {}
         }
     });
-    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "proassessment_"+protectionNum, {
+    $("#protectionForm_" + protectionNum).bootstrapValidator("addField", "proassessment_" + protectionNum, {
         validators: {
             stringLength: {
                 min: 0,
@@ -408,6 +390,6 @@ function addProtectionValidator(protectionNum) {
 }
 //统一验证protection
 function protectionFormValidator(Num) {
-    $('#protectionForm_'+Num).data('bootstrapValidator').validate();
+    $('#protectionForm_' + Num).data('bootstrapValidator').validate();
 }
 

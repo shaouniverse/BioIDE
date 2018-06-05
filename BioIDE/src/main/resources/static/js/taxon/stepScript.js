@@ -53,11 +53,15 @@ function verifierStep(stepNum){
                   data: obj,	// 要提交的表单
                   dataType: "json",
                   contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-                  success: function (msg) {
+                  success: function () {
+                      alert("ok");
                 	  //layer.msg(msg, {time: 2000});
+                      //return true;
                   },
-                  error: function (error) {
+                  error: function () {
+                      alert("error");
                 	  //layer.msg(msg, {time: 2000});
+                      //return false;
                   }
                 });
                 return true;

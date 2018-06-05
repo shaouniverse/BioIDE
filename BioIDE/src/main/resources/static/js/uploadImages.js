@@ -5,7 +5,7 @@ $(function () {
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
         url: 'upload/rest/imgs',
-        _csrf : $('input[name="_csrf"]').val(),
+        _csrf: $('input[name="_csrf"]').val(),
         file: $('#file')[0].files[0],
     });
 

@@ -14,7 +14,7 @@ function removeDistributiondata(distributiondataNum) {
 //提交一个描述
 function submitDistributiondata(distributiondataNum) {
     distributiondataFormValidator(distributiondataNum);
-    if($('#distributiondataForm_'+distributiondataNum).data('bootstrapValidator').isValid()){
+    if ($('#distributiondataForm_' + distributiondataNum).data('bootstrapValidator').isValid()) {
         //处理ajax提交
         //
         //
@@ -23,27 +23,27 @@ function submitDistributiondata(distributiondataNum) {
             {
                 time: 1500, //1.5s后自动关闭
             },
-            function(){
-                if($('#distributiondataCollapse_'+distributiondataNum).hasClass('in')){
-                    $('#distributiondataCollapseTitle_'+distributiondataNum).trigger("click");
+            function () {
+                if ($('#distributiondataCollapse_' + distributiondataNum).hasClass('in')) {
+                    $('#distributiondataCollapseTitle_' + distributiondataNum).trigger("click");
                 }
-                $('#distributiondataForm_'+distributiondataNum).removeClass("panel-default");
-                $('#distributiondataForm_'+distributiondataNum).removeClass("panel-danger");
-                $('#distributiondataForm_'+distributiondataNum).addClass("panel-success");
-                $('#distributiondataStatus_'+distributiondataNum).removeClass("hidden");
+                $('#distributiondataForm_' + distributiondataNum).removeClass("panel-default");
+                $('#distributiondataForm_' + distributiondataNum).removeClass("panel-danger");
+                $('#distributiondataForm_' + distributiondataNum).addClass("panel-success");
+                $('#distributiondataStatus_' + distributiondataNum).removeClass("hidden");
                 return true;
             });
         return true;
     }
-    else{
-        if(!$('#distributiondataCollapse_'+distributiondataNum).hasClass('in')){
-            $('#distributiondataCollapseTitle_'+distributiondataNum).trigger("click");
+    else {
+        if (!$('#distributiondataCollapse_' + distributiondataNum).hasClass('in')) {
+            $('#distributiondataCollapseTitle_' + distributiondataNum).trigger("click");
         }
-        $('#distributiondataForm_'+distributiondataNum).removeClass("panel-success");
-        $('#distributiondataForm_'+distributiondataNum).addClass("panel-default");
-        $('#distributiondataStatus_'+distributiondataNum).addClass("hidden");
+        $('#distributiondataForm_' + distributiondataNum).removeClass("panel-success");
+        $('#distributiondataForm_' + distributiondataNum).addClass("panel-default");
+        $('#distributiondataStatus_' + distributiondataNum).addClass("hidden");
         $('#tab-distributiondata').addClass("alert alert-danger");
-        layer.msg("请完成此分布数据的填写", function(){
+        layer.msg("请完成此分布数据的填写", function () {
         });
         return false;
     }
@@ -51,14 +51,14 @@ function submitDistributiondata(distributiondataNum) {
 
 //提交所有distributiondata
 function submitAllDistributiondata() {
-    var submitResult=true;
+    var submitResult = true;
     $('#tab-distributiondata').removeClass("alert-danger");
     $('#tab-distributiondata').removeClass("alert");
     $("form[id^='distributiondataForm_']").each(function () {
-        if(submitDistributiondata($(this).attr("id").substr($(this).attr("id").lastIndexOf("_")+1))){
+        if (submitDistributiondata($(this).attr("id").substr($(this).attr("id").lastIndexOf("_") + 1))) {
         }
-        else{
-            submitResult= false;
+        else {
+            submitResult = false;
         }
     });
     return submitResult;
@@ -96,7 +96,7 @@ function addDistributiondata() {
 
     //title变化后处理的函数
     $("#destitle_" + (countDistributiondata + 1)).on("change",
-        function() {
+        function () {
             $("#distributiondataCollapseTitle_" + (countDistributiondata + 1)).text($("#destitle_" + (countDistributiondata + 1)).val());
         });
 

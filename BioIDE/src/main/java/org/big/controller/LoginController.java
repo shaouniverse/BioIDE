@@ -32,25 +32,22 @@ public class LoginController {
      */
     @RequestMapping(value="", method = RequestMethod.GET)
     public String login(Model model) {
-    	String loginErrorMsg="";
-        try{
-            if(request.getSession().getAttribute("loginError").equals("name")){
+        String loginErrorMsg = "";
+        try {
+            if (request.getSession().getAttribute("loginError").equals("name")) {
                 model.addAttribute("loginError", 1);
-                loginErrorMsg="无此用户名";
-            }
-            else if(request.getSession().getAttribute("loginError").equals("password")){
+                loginErrorMsg = "无此用户名";
+            } else if (request.getSession().getAttribute("loginError").equals("password")) {
                 model.addAttribute("loginError", 1);
-                loginErrorMsg="密码错误";
-            }
-            else if(request.getSession().getAttribute("loginError").equals("token")){
+                loginErrorMsg = "密码错误";
+            } else if (request.getSession().getAttribute("loginError").equals("token")) {
                 model.addAttribute("loginError", 1);
-                loginErrorMsg="验证码错误";
-            }
-            else{
+                loginErrorMsg = "验证码错误";
+            } else {
                 model.addAttribute("loginError", 0);
             }
             model.addAttribute("loginErrorMsg", loginErrorMsg);
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         return "login";
     }

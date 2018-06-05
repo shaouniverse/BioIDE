@@ -1,13 +1,13 @@
-function Star(id, x, y){
+function Star(id, x, y) {
     this.id = id;
     this.x = x;
     this.y = y;
-    this.r = Math.floor(Math.random()*2)+1;
-    var alpha = (Math.floor(Math.random()*10)+1)/10/2;
-    this.color = "rgba(255,255,255,"+alpha+")";
+    this.r = Math.floor(Math.random() * 2) + 1;
+    var alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2;
+    this.color = "rgba(255,255,255," + alpha + ")";
 }
 
-Star.prototype.draw = function() {
+Star.prototype.draw = function () {
     ctx.fillStyle = this.color;
     ctx.shadowBlur = this.r * 2;
     ctx.beginPath();
@@ -16,13 +16,13 @@ Star.prototype.draw = function() {
     ctx.fill();
 }
 
-Star.prototype.move = function() {
+Star.prototype.move = function () {
     this.y -= .15;
     if (this.y <= -10) this.y = HEIGHT + 10;
     this.draw();
 }
 
-Star.prototype.die = function() {
+Star.prototype.die = function () {
     stars[this.id] = null;
     delete stars[this.id];
 }
@@ -32,18 +32,18 @@ function Dot(id, x, y, r) {
     this.id = id;
     this.x = x;
     this.y = y;
-    this.r = Math.floor(Math.random()*5)+1;
+    this.r = Math.floor(Math.random() * 5) + 1;
     this.maxLinks = 2;
     this.speed = .5;
     this.a = .5;
     this.aReduction = .005;
-    this.color = "rgba(255,255,255,"+this.a+")";
-    this.linkColor = "rgba(255,255,255,"+this.a/4+")";
+    this.color = "rgba(255,255,255," + this.a + ")";
+    this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
 
-    this.dir = Math.floor(Math.random()*140)+200;
+    this.dir = Math.floor(Math.random() * 140) + 200;
 }
 
-Dot.prototype.draw = function() {
+Dot.prototype.draw = function () {
     ctx.fillStyle = this.color;
     ctx.shadowBlur = this.r * 2;
     ctx.beginPath();
@@ -52,7 +52,7 @@ Dot.prototype.draw = function() {
     ctx.fill();
 }
 
-Dot.prototype.link = function() {
+Dot.prototype.link = function () {
     if (this.id == 0) return;
     var previousDot1 = getPreviousDot(this.id, 1);
     var previousDot2 = getPreviousDot(this.id, 2);
@@ -74,28 +74,28 @@ function getPreviousDot(id, stepback) {
     else return false;//getPreviousDot(id - stepback);
 }
 
-Dot.prototype.move = function() {
+Dot.prototype.move = function () {
     this.a -= this.aReduction;
     if (this.a <= 0) {
         this.die();
         return
     }
-    this.color = "rgba(255,255,255,"+this.a+")";
-    this.linkColor = "rgba(255,255,255,"+this.a/4+")";
-    this.x = this.x + Math.cos(degToRad(this.dir))*this.speed,
-        this.y = this.y + Math.sin(degToRad(this.dir))*this.speed;
+    this.color = "rgba(255,255,255," + this.a + ")";
+    this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+    this.x = this.x + Math.cos(degToRad(this.dir)) * this.speed,
+        this.y = this.y + Math.sin(degToRad(this.dir)) * this.speed;
 
     this.draw();
     this.link();
 }
 
-Dot.prototype.die = function() {
+Dot.prototype.die = function () {
     dots[this.id] = null;
     delete dots[this.id];
 }
 
 
-var canvas  = document.getElementById('canvas'),
+var canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     WIDTH,
     HEIGHT,
@@ -125,7 +125,7 @@ function init() {
     ctx.strokeStyle = "white";
     ctx.shadowColor = "white";
     for (var i = 0; i < initStarsPopulation; i++) {
-        stars[i] = new Star(i, Math.floor(Math.random()*WIDTH), Math.floor(Math.random()*HEIGHT));
+        stars[i] = new Star(i, Math.floor(Math.random() * WIDTH), Math.floor(Math.random() * HEIGHT));
         //stars[i].draw();
     }
     ctx.shadowBlur = 0;
@@ -156,25 +156,25 @@ function animate() {
 //        }
 
 
-$('#canvas').hover(function(){
-    window.onmousemove = function(e){
+$('#canvas').hover(function () {
+    window.onmousemove = function (e) {
         mouseMoving = false;
         mouseX = e.clientX;
         mouseY = e.clientY;
-       clearInterval(mouseMoveChecker);
-       mouseMoveChecker = setTimeout(function() {
-           mouseMoving = false;
-       }, 100);
+        clearInterval(mouseMoveChecker);
+        mouseMoveChecker = setTimeout(function () {
+            mouseMoving = false;
+        }, 100);
     }
 });
 
-$('#canvas').mouseout(function(){
-    window.onmousemove = function(e){
+$('#canvas').mouseout(function () {
+    window.onmousemove = function (e) {
         mouseMoving = false;
     }
 });
 
-function drawIfMouseMoving(){
+function drawIfMouseMoving() {
     if (!mouseMoving) return;
 
     if (dots.length == 0) {
@@ -193,12 +193,12 @@ function drawIfMouseMoving(){
     if (diffX < dotsMinDist || diffY < dotsMinDist) return;
 
     var xVariation = Math.random() > .5 ? -1 : 1;
-    xVariation = xVariation*Math.floor(Math.random()*maxDistFromCursor)+1;
+    xVariation = xVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
     var yVariation = Math.random() > .5 ? -1 : 1;
-    yVariation = yVariation*Math.floor(Math.random()*maxDistFromCursor)+1;
-    dots[dots.length] = new Dot(dots.length, mouseX+xVariation, mouseY+yVariation);
-    dots[dots.length-1].draw();
-    dots[dots.length-1].link();
+    yVariation = yVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
+    dots[dots.length] = new Dot(dots.length, mouseX + xVariation, mouseY + yVariation);
+    dots[dots.length - 1].draw();
+    dots[dots.length - 1].link();
 }
 //setInterval(drawIfMouseMoving, 17);
 

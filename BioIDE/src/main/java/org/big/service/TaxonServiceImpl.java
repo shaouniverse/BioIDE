@@ -64,9 +64,9 @@ public class TaxonServiceImpl implements TaxonService {
 	             "<span class=\"glyphicon glyphicon-remove\"></span>" +
 	             "</a>";
 			row.put("select", thisSelect);
-			row.put("scientificname", "<a href=\"console/taxon/show/" + thisList.get(i).getId() + "\">" + thisList.get(i).getScientificname() + "</a>");
+			row.put("scientificname", "<a href=\"console/taxon/show/" + thisList.get(i).getId() + "\"><em>" + thisList.get(i).getScientificname() + "</em></a>");
 			row.put("authorstr", thisList.get(i).getAuthorstr());
-			row.put("epithet", thisList.get(i).getEpithet());
+			/*row.put("epithet", thisList.get(i).getEpithet());*/
 			row.put("inputer", thisList.get(i).getInputer());
 			row.put("rankid", thisList.get(i).getRankid());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

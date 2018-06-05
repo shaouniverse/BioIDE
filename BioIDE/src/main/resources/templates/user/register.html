@@ -9,166 +9,153 @@
     Version: Html5
  -->
 <head>
-	<meta charset="UTF-8"/>
+    <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-	<title>BioIDE &nbsp;物种数据采集系统</title>
-    <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>BioIDE &nbsp;物种数据采集系统</title>
+    <link rel="shortcut icon" th:href="@{/images/logo-black.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="description" content=""/>
     <!-- 引入css -->
-    <span th:replace="pageFrame/basicsCss :: copy" />
+    <span th:replace="pageFrame/basicsCss :: copy"/>
 </head>
+<body class="hold-transition register-page">
 
-<body class="hold-transition skin-leaf fixed layout-top-nav">
-<!-- Site wrapper -->
-<div class="wrapper">
-    <!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
-		<!-- Main content -->
-		<section class="content">
-	    	<div class="register-box">
-				<div class="register-logo">
-		            Bio<b>IDE</b>
-		            <!-- <p><h4>物种数据采集系统</h4></p> -->
-		        </div>
-				<div th:if="${#lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}" class="register-box-body">
-		            <p class="login-box-msg">用户注册</p>
-					
-					<form id="register_form" th:action="@{/register/new}" action="register/new" method="post" th:object="${newUser}">
-                        <input id="errorMsg" th:value="${errorMsg}" class="hidden" readonly="readonly"></input>
-                        <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
-                        <input class="hidden" th:field="*{id}" readonly="readonly"></input>
-                        <input class="hidden" th:field="*{role}" readonly="readonly"></input>
-                        <div th:if="${not #strings.isEmpty(newUser.dtime)}">
-                            <input class="hidden" th:field="*{dtime}" readonly="readonly"></input>
-                        </div>
-                        <input class="hidden" th:field="*{score}" readonly="readonly"></input>
-                        <input class="hidden" th:field="*{level}" readonly="readonly"></input>
-                        <input class="hidden" th:field="*{uploadnum}" readonly="readonly"></input>
-                        <input class="hidden" th:field="*{idnum}" readonly="readonly"></input>
-                        <input class="hidden" th:field="*{avatar}" readonly="readonly"></input>
-                        <input class="hidden" th:field="*{mark}" readonly="readonly"></input>
-                        <div class="form-group has-feedback">
-                            <input th:field="*{userName}" id="r_username" name="userName" type="text" class="form-control" placeholder="用户名，用于登录">
-                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input th:field="*{email}" id="r_email" name="email" type="text" class="form-control" placeholder="邮箱，用来激活和找回密码">
-                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input th:field="*{password}" id="pwd" name="password" type="password" class="form-control" placeholder="输入密码">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input id="repassword" type="password" name="repassword" class="form-control" placeholder="确认密码">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input th:field="*{mobile}" id="r_mobile" name="mobile" type="text" class="form-control" placeholder="手机号">
-                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input th:field="*{nickname}" id="r_nickname" name="nickname" type="text" class="form-control" placeholder="昵称">
-                            <span class="fa fa-smile-o form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input type="text" class="form-control" id="r_token" name="token" placeholder="输入下方验证码">
-                            <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
-                            <p></p>
-                           <div>
-                                <i>
-                                	<img style="height:32px;" id="codeImg_register" th:src="@{/captchaImg}" src="/captchaImg" />
-                                    <a href="javascript:void(0);" onclick="reImg();">看不清，换一张</a>
-	                            </i>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-8">
-                                <div class="checkbox icheck">
-                                    <div class="form-group">
-                                        <label>
-                                            <input id="agreeTerms" name="agreeTerms" type="checkbox"> <span>我同意这些</span>
-                                            <a href="#" class="dropdown-toggle" data-toggle="modal" data-target="#modal-terms">协议</a>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group pull-right">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat" disabled="disabled">注册</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                        </div>
-                    </form>
-                    <div class="social-auth-links text-center">
-                        <p>- OR -</p>
-                        <a th:href="@{/login}" href="/" class="text-center dropdown-toggle">我已有账号</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="register-box">
+    <div class="register-logo">
+        <b>Bio</b>IDE
+        <p><h4>物种数据采集系统</h4></p>
     </div>
 
-    <div class="modal fade" id="modal-terms">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button id="closeTerms" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">协议</h4>
+    <div class="register-box-body">
+        <p class="login-box-msg">用户注册</p>
+
+        <form id="register_form" th:action="@{/register/new}" action="register/new" method="post"
+              th:object="${newUser}">
+            <input id="errorMsg" th:value="${errorMsg}" class="hidden" readonly="readonly"></input>
+            <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
+            <input class="hidden" th:field="*{id}" readonly="readonly"></input>
+            <input class="hidden" th:field="*{role}" readonly="readonly"></input>
+            <div th:if="${not #strings.isEmpty(newUser.dtime)}">
+                <input class="hidden" th:field="*{dtime}" readonly="readonly"></input>
+            </div>
+            <input class="hidden" th:field="*{score}" readonly="readonly"></input>
+            <input class="hidden" th:field="*{level}" readonly="readonly"></input>
+            <input class="hidden" th:field="*{uploadnum}" readonly="readonly"></input>
+            <input class="hidden" th:field="*{idnum}" readonly="readonly"></input>
+            <input class="hidden" th:field="*{avatar}" readonly="readonly"></input>
+            <input class="hidden" th:field="*{mark}" readonly="readonly"></input>
+            <div class="form-group has-feedback">
+                <input th:field="*{userName}" id="r_username" name="userName" type="text" class="form-control"
+                       placeholder="用户名，用于登录">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input th:field="*{email}" id="r_email" name="email" type="text" class="form-control"
+                       placeholder="邮箱，用来激活和找回密码">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input th:field="*{password}" id="pwd" name="password" type="password" class="form-control"
+                       placeholder="输入密码">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="repassword" type="password" name="repassword" class="form-control" placeholder="确认密码">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input th:field="*{mobile}" id="r_mobile" name="mobile" type="text" class="form-control"
+                       placeholder="手机号">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input th:field="*{nickname}" id="r_nickname" name="nickname" type="text" class="form-control"
+                       placeholder="昵称">
+                <span class="fa fa-smile-o form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" id="r_token" name="token" placeholder="输入下方验证码">
+                <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
+                <p></p>
+                <div>
+                    <i>
+                        <img style="height:32px;" id="codeImg_register" th:src="@{/captchaImg}" src="/captchaImg"/>
+                        <a href="javascript:void(0);" onclick="reImg();">看不清，换一张</a>
+                    </i>
                 </div>
-                <div class="modal-body">
-                    <p>这里是试用协议：哈哈哈哈哈</p>
-                    <p>这里是试用协议：哈哈哈哈哈</p>
-                    <p>这里是试用协议：哈哈哈哈哈</p>
-                    <p>这里是试用协议：哈哈哈哈哈</p>
-                    <p>这里是试用协议：哈哈哈哈哈</p>
-                    <p>这里是试用协议：哈哈哈哈哈</p>
-                    <p>这里是试用协议：哈哈哈哈哈</p>
-                    <p>这里是试用协议：哈哈哈哈哈</p>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <div class="checkbox icheck">
+                        <div class="form-group">
+                            <label>
+                                <input id="agreeTerms" name="agreeTerms" type="checkbox"> <span>我同意这些</span>
+                                <a href="#" class="dropdown-toggle" data-toggle="modal"
+                                   data-target="#modal-terms">协议</a>
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="agreeTerms();">我同意</button>
+                <div class="form-group pull-right">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat" disabled="disabled">注册</button>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </form>
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <a th:href="@{/login}" href="/" class="text-center dropdown-toggle">我已有账号</a>
+        </div>
+
+        <div class="modal fade" id="modal-terms">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button id="closeTerms" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">协议</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                        <p>这里是试用协议：哈哈哈哈哈</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" onclick="agreeTerms();">我同意</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <footer class="">
-        <span th:replace="pageFrame/basicsFooter :: copy" />
-    </footer>
-    <!-- Control Sidebar -->
-    <span th:replace="pageFrame/basicsControl :: copy" />
-    <div class="control-sidebar-bg"></div>
+    <!-- /.form-box -->
 </div>
 <!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
-<span th:replace="pageFrame/basicsJs :: copy" />
-<div th:if="${#lists.isEmpty(session.SPRING_SECURITY_CONTEXT)}">
-    <span th:replace="user/loginJs :: copy" />
-</div>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var warning_rename= [[#{warning_rename}]];
-    var warning_remeail= [[#{warning_remeail}]];
-    /*]]>*/
-</script>
+<span th:replace="pageFrame/basicsJs :: copy"/>
+<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
 <script>
+    var warning_rename = "用户名不可用";
+    var warning_remeail = "邮箱不可用";
     function agreeTerms() {
         $('#agreeTerms').attr("checked", true);
         $('#closeTerms').click();
     };
-    function reImg(){
-        var src='captchaImg?code='+Math.random();
+    function reImg() {
+        var src = 'captchaImg?code=' + Math.random();
         document.getElementById('codeImg_register').src = src;
     };
-    
-    $(document).ready(function() {
+
+    $(document).ready(function () {
         //错误提示
-        if($('#errorMsg').val().length>0)
-            layer.msg($('#errorMsg').val(), function(){
+        if ($('#errorMsg').val().length > 0)
+            layer.msg($('#errorMsg').val(), function () {
             });
         //获取host
         $("#base_url").val(window.location.host);
@@ -183,28 +170,28 @@
                 rename: {
                     selector: '#r_username',
                     validators: {
-                        notEmpty: {
-                        },
+                        notEmpty: {},
                         stringLength: {
                             min: 2,
                             max: 30,
                         },
                         regexp: {
                             regexp: /^[a-zA-Z0-9_\.]+$/,
-                            message: warning_name
+                            message: warning_rename
                         },
                         callback: {
                             message: warning_rename,
-                            callback: function(value, validator) {
-                                validator_name='register/rest/isReName';
+                            callback: function (value, validator) {
+                                validator_name = 'register/rest/isReName';
                                 $.ajax({
                                     url: 'register/rest/isReName',
                                     data: {
-                                        name:$('#r_username').val()},
+                                        name: $('#r_username').val()
+                                    },
                                     cache: false,
-                                    dataType:"json",
+                                    dataType: "json",
                                     success: function (data) {
-                                        if(!data){
+                                        if (!data) {
                                             validator.updateStatus('rename', 'VALID', 'callback');
                                             return true;
                                         }
@@ -225,27 +212,25 @@
                 reemail: {
                     selector: '#r_email',
                     validators: {
-                        notEmpty: {
-                        },
-                        emailAddress: {
-                        },
+                        notEmpty: {},
+                        emailAddress: {},
                         stringLength: {
                             min: 6,
                             max: 70,
                         },
                         callback: {
                             message: warning_remeail,
-                            callback: function(value, validator) {
-                                validator_email='register/rest/isReEmail';
+                            callback: function (value, validator) {
+                                validator_email = 'register/rest/isReEmail';
                                 $.ajax({
                                     url: 'register/rest/isReEmail',
                                     data: {
-                                        email:$('#r_email').val()
+                                        email: $('#r_email').val()
                                     },
                                     cache: false,
-                                    dataType:"json",
+                                    dataType: "json",
                                     success: function (data) {
-                                        if(!data){
+                                        if (!data) {
                                             validator.updateStatus('reemail', 'VALID', 'callback');
                                             return true;
                                         }
@@ -264,10 +249,9 @@
                     }
                 },
                 pwd: {
-                	selector: '#pwd',
+                    selector: '#pwd',
                     validators: {
-                        notEmpty: {
-                        },
+                        notEmpty: {},
                         stringLength: {
                             min: 6,
                             max: 30,
@@ -278,10 +262,9 @@
                     }
                 },
                 repassword: {
-                	selector: '#repassword',
+                    selector: '#repassword',
                     validators: {
-                        notEmpty: {
-                        },
+                        notEmpty: {},
                         identical: {
                             field: 'pwd',
                         }
@@ -289,22 +272,20 @@
                 },
                 'mobile': {
                     validators: {
-                        notEmpty: {
-                        },
+                        notEmpty: {},
                         stringLength: {
                             min: 11,
                             max: 11,
                         },
                         regexp: {
-                            regexp:/^1[3|4|5|7|8]\d{9}$/,
+                            regexp: /^1[3|4|5|7|8]\d{9}$/,
                             message: '输入不合法'
                         },
                     }
                 },
                 'nickname': {
                     validators: {
-                        notEmpty: {
-                        },
+                        notEmpty: {},
                         stringLength: {
                             min: 1,
                             max: 15,
@@ -314,22 +295,20 @@
                 token: {
                     selector: '#r_token',
                     validators: {
-                        notEmpty: {
-                        },
+                        notEmpty: {},
                         stringLength: {
                             min: 4,
                             max: 4,
                         },
                         regexp: {
                             regexp: /^[a-zA-Z0-9_\.]+$/,
-                            message: warning_name
+                            message: warning_rename
                         },
                     }
                 },
                 'agreeTerms': {
                     validators: {
-                        notEmpty: {
-                        },
+                        notEmpty: {},
                     }
                 },
             }
@@ -337,8 +316,8 @@
     });
 </script>
 <script>
-    $("#register_form").submit(function(e){
-        if($("#register_form").data('bootstrapValidator').isValid()){
+    $("#register_form").submit(function (e) {
+        if ($("#register_form").data('bootstrapValidator').isValid()) {
             layer.load(2);
         }
     });

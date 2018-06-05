@@ -23,17 +23,3 @@ $("select[id='sourcesid']").on("change", function(){
 		});
 	}
 });
-
-//taxaset变化监测
-$("select[id='taxaset']").on("change", function(){
-	if($("#taxaset").val() == "addNew"){
-		$("#taxaset").empty();
-		layer.open({
-			  type: 2,
-			  title:'<h4>添加分类单元集</h4>',
-			  fixed: false, //不固定
-			  area: [layer_width, layer_height],
-			  content: '/console/taxaset/addNew'
-		});
-	}
-});

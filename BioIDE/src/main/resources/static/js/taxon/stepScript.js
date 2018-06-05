@@ -49,15 +49,16 @@ function verifierStep(stepNum){
             	var obj = $('#form_1').serialize();
                 $.ajax({
                   type: "POST",
-                  url: "/console/taxon/add/baseinfo",
+                  url: "/console/taxon/rest/add",
                   data: obj,	// 要提交的表单
                   dataType: "json",
                   contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
                   success: function (msg) {
-                	  //layer.msg(msg, {time: 2000});
-                  },
-                  error: function (error) {
-                	  //layer.msg(msg, {time: 2000});
+                	if (msg.result == true) {
+                		layer.msg("添加成功！", {time: 1000});
+					}else{
+						layer.msg("添加失败！", {time: 1000});
+					}
                   }
                 });
                 return true;
@@ -188,7 +189,7 @@ function verifierStep(stepNum){
 function toStep(stepNum){
     var lable=$("#label_"+stepNum);
     lable.click();
-    //activeTab(stepNum);
+    activeTab(stepNum);
 };
 
 //添加当前步骤样式

@@ -74,7 +74,7 @@
                         data-locale="zh-CN"
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
-                        th:attr="data-url=@{/super/team/rest/list}"
+                        th:attr="data-url=@{/console/taxon/rest/list}"
                         data-pagination="true"
                         data-side-pagination="server"
                         data-page-list="[10, 20, 30, 50, 100]"
@@ -88,9 +88,12 @@
                     <thead>
                     <tr>
                         <th data-field="select" data-align="center" data-sortable="false"></th>
-                        <th data-field="name" data-align="center" data-sortable="true">团队名称</th>
-                        <th data-field="leader" data-align="center" data-sortable="true">团队负责人</th>
-                        <th data-field="adddate" data-align="center" data-sortable="true">注册时间</th>
+                        <th data-field="scientificname" data-align="center" data-sortable="true">学名</th>
+                        <th data-field="authorstr" data-align="center" data-sortable="true">命名人|年代</th>
+                        <th data-field="epithet" data-align="center" data-sortable="true">种|亚种加词</th>
+                        <th data-field="inputer" data-align="center" data-sortable="true">录入人</th>
+                        <th data-field="inputtime" data-align="center" data-sortable="true">录入时间</th>
+                        <th data-field="rankid" data-align="center" data-sortable="true">等级</th>
                         <th data-field="edit" data-align="center" data-sortable="false">操作</th>
                     </tr>
                     </thead>

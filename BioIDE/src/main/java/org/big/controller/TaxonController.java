@@ -1,21 +1,10 @@
 package org.big.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.big.entity.Dataset;
 import org.big.entity.Taxaset;
 import org.big.entity.Taxon;
-import org.big.service.TaxonService;
-import org.big.service.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,10 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/console/taxon")
 public class TaxonController {
-    @Autowired
-    private TeamService teamService;
-    @Autowired
-    private TaxonService taxonService;
     /**
      *<b>默认管理页面</b>
      *<p> 默认管理页面</p>
@@ -64,26 +49,5 @@ public class TaxonController {
         model.addAttribute("thisTaxaset", thisTaxaset);
         return "taxon/add";
     }
-    /**
-     *<b>新建Taxon添加基础信息</b>
-     *<p> 新建Taxon添加基础信息</p>
-     * @author WangTianshan (王天山)
-     * @return java.lang.String
-     */
-    @RequestMapping(value="/add/baseinfo", method = {RequestMethod.POST})
-    public String AddTaxonBaseInfo(@ModelAttribute("thisTaxon") @Valid Taxon thisTaxon, BindingResult result, Model model, HttpServletRequest request) {
-			if (result.hasErrors()) {
-				List<ObjectError> list = result.getAllErrors();
-				String errorMsg = "";
-				for (ObjectError error : list) {
-					errorMsg = errorMsg + error.getDefaultMessage() + ";";
-				}
-				model.addAttribute("thisTaxon", thisTaxon);
-				model.addAttribute("errorMsg", errorMsg);
-				return "taxon/add";
-			}else {
-				this.taxonService.addTaxonBaseInfo(thisTaxon);
-				return "redirect:/console/taxaset";
-			}
-    }
+ 
 }

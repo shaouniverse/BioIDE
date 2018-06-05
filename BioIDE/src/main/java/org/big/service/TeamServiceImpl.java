@@ -45,8 +45,7 @@ public class TeamServiceImpl implements TeamService  {
     private UserRepository userRepository;
     @Override
     public List<Team> selectTeamsByUserId(String userId) {
-        List<String> ids = this.teamRepository.selectTeamsByUserId(userId);
-        return this.teamRepository.findAllById(ids);
+        return this.teamRepository.selectTeamsByUserId(userId);
     }
 
     @Override
@@ -262,6 +261,7 @@ public class TeamServiceImpl implements TeamService  {
 			// 获取当前登录用户
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisTeam.setLeader(thisUser.getId());
+			thisTeam.setId(UUID.randomUUID().toString());
 			this.teamRepository.save(thisTeam);
 			
 			thisResult.put("result", true);

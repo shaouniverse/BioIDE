@@ -58,11 +58,14 @@ public class IndexController {
     public String SelectTeam(Model model, HttpServletRequest request) {
         try{
         	//删除dataset中的记录
-        	request.getSession().removeAttribute("teamId");
-            UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            List<Team> teamList=this.teamService.selectTeamsByUserId(thisUser.getId());//根据user id查找所有team
-            model.addAttribute("teamList", teamList);
-            return "team/select";
+			request.getSession().removeAttribute("teamId");
+			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			List<Team> teamList = this.teamService.selectTeamsByUserId(thisUser.getId());// 根据userid查找所有team
+			for (Team team : teamList) {
+				System.out.println(team);
+			}
+			model.addAttribute("teamList", teamList);
+			return "team/select";
         }
         catch(Exception e){
         }

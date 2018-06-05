@@ -1,7 +1,5 @@
 package org.big.controller.rest;
 
-import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -170,10 +168,6 @@ public class TeamRestController {
 		if (null != thisTeam.getNote() && !"".equals(thisTeam.getNote()) && "Default".equals(thisTeam.getNote())) {
 			thisTeam.setNote(thisTeam.getNote().toLowerCase());
 		}
-		/*String teamId = UUID.randomUUID().toString();
-		thisTeam.setId(teamId);*/
-		/*model.addAttribute("rsl", this.teamService.newOne(thisTeam, request));*/
-		/*return "redirect:/change/team/" + teamId;*/
 		return this.teamService.newOne(thisTeam, request);
 	}
 }

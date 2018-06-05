@@ -2,7 +2,7 @@
 <th:block th:fragment="copy">
   <form id="form_1" class="form-horizontal" th:action="@{/console/taxon/add/baseinfo}" method="post">
     <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
-    <input class="hidden" th:field="*{thisTaxon.id}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{thisTaxon.id}" readonly="readonly" th:value = ${thisTaxon.id}></input>
 
     <div class="">
       <div class="col-md-6">
@@ -120,10 +120,10 @@
                       </div>
                     </div>
                     <div class="col-sm-2 col-md-2 col-xs-6">
-                      <input type="text" class="form-control" id="referencesPageS_{num}" name="referencesPageS_{num}" placeholder="起始页" />
+                      <input type="text" class="form-control" id="referencesPageS_${num}" name="referencesPageS_${num}" placeholder="起始页" />
                     </div>
                     <div class="col-sm-2 col-md-2 col-xs-6">
-                      <input type="text" class="form-control" id="referencesPageE_{num}" name="referencesPageE_{num}" placeholder="终止页" />
+                      <input type="text" class="form-control" id="referencesPageE_${num}" name="referencesPageE_${num}" placeholder="终止页" />
                     </div>
                     <input class="hidden" id="referencesType_${num}" name="referencesType_${num}"></input>
                   </td>

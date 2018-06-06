@@ -119,11 +119,8 @@ public class TeamRestController {
      */
     @RequestMapping(value="/removeMember",method = {RequestMethod.POST})
     public boolean RemoveMember(HttpServletRequest request) {
-        System.out.println("====================");
         String teamId=request.getParameter("teamId");
         String userId=request.getParameter("userId");
-        System.out.println("teamId="+teamId);
-        System.out.println("userId="+userId);
         try{
             this.teamService.removeMembersByTeamIdAndUserId(teamId,userId);
             return true;

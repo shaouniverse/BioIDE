@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.big.common.StringJsonUserType;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import java.util.Date;
@@ -40,7 +39,6 @@ public class Taxon implements Serializable {
 	private String nomencode;
 
 	private int rankid;
-	@Type(type = "StringJsonUserType")
 	private String refjson;
 
 	private String remark;

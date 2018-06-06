@@ -469,6 +469,7 @@ CREATE TABLE IF NOT EXISTS `biodata`.`taxkey` (
   `keytitle` VARCHAR(100) NULL COMMENT '检索表名',
   `abstraction` TEXT NULL COMMENT '摘要',
   `taxon_id` VARCHAR(50) NOT NULL,
+  `keytype` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_taxkey_taxon1_idx` (`taxon_id` ASC),
   CONSTRAINT `fk_taxkey_taxon1`
@@ -668,10 +669,10 @@ COMMENT = '每个术语';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biodata`.`keyitem` (
   `id` VARCHAR(50) NOT NULL,
-  `item` VARCHAR(500) NULL,
-  `innerorder` INT NULL COMMENT '同一级检索特征排序',
-  `orderid` INT NULL COMMENT '整形表达的id，用于排序',
-  `branchid` INT NULL COMMENT '分支id，整型',
+  `item` VARCHAR(500) NULL DEFAULT NULL COMMENT '特征描述' ,
+  `innerorder` INT(11) NULL DEFAULT NULL COMMENT '同一级检索特征排序\n(双项式的每对的顺序)\n(单项式的序号)' ,
+  `orderid` INT(11) NULL DEFAULT NULL COMMENT '整形表达的id，用于排序\n(双项式的序号)' ,
+  `branchid` INT(11) NULL DEFAULT NULL COMMENT '分支id，整型\n(双项式的分支id)\n(单项式的括号内序号，即兄弟节点特征序号)',
   `taxonid` VARCHAR(50) NULL COMMENT '分类到哪个taxon，与taxon表关联',
   `pid` VARCHAR(50) NULL,
   `featureimgjson` VARCHAR(50) NULL COMMENT '特征图片，json',

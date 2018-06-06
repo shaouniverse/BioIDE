@@ -40,8 +40,7 @@ public interface TeamRepository extends BaseRepository<Team, String> {
      * @param pageable 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Team>
      */
-    @Query(value = "select t from Team t where (t.name like %?1% or t.leader like %?1%)"
-    )
+    @Query(value = "select t from Team t where (t.name like %?1% or t.leader like %?1%)")
     Page<Team> searchInfo(String findText, Pageable pageable);
 
     /**

@@ -31,7 +31,13 @@ public interface DatasourceRepository extends BaseRepository<Datasource, String>
      * @param pageable 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Taxaset>
      */
-    @Query(value = "Select ds from Datasource ds where (ds.title like %?1% or ds.inputer like %?1% or ds.inputtime like %?1% or ds.versions like %?1%) and ds.status = 1 and ds.dataset.id = ?2")
+    @Query(value = "Select ds from Datasource ds where ("
+    		+ "ds.title like %?1% or "
+    		+ "ds.inputer like %?1% or "
+    		+ "ds.inputtime like %?1% or "
+    		+ "ds.versions like %?1%) and "
+    		+ "ds.status = 1 and "
+    		+ "ds.dataset.id = ?2")
 	Page<Datasource> searchInfo(String searchText, Pageable pageable, String dsId);
    
     /**

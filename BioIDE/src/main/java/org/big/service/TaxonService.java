@@ -26,5 +26,13 @@ public interface TaxonService {
 	 */
 	JSON addTaxonBaseInfo(@Valid Taxon thisTaxon);
 	// 自定义Taxon增删改查
+	 /**
+     *<b>根据TaxonId查找一个Taxon实体</b>
+     *<p> 据id查找一个实体</p>
+     * @author BINZI
+     * @param Id 实体的id
+     * @return org.big.entity.Taxon
+     */
+	Taxon findOneById(String id);
 
 }

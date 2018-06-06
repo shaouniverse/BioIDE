@@ -88,8 +88,7 @@ function verifierStep(stepNum){
                 verificationTab1==1 &&
                 submitAllCitation() &&
                 submitAllDescription()&&
-                submitAllProtection()&&
-                submitAllTaxkey()
+                submitAllProtection()
             ){//验证通过
                 return true;
             }
@@ -107,7 +106,6 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
-                submitAllTaxkey() &&
                 verificationTab4==1
             ){//验证通过
                 return true;
@@ -127,7 +125,6 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
-                submitAllTaxkey() &&
                 verificationTab4==1 &&
                 verificationTab5==1
             ){//验证通过
@@ -149,7 +146,6 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
-                submitAllTaxkey() &&
                 verificationTab4==1 &&
                 verificationTab5==1 &&
                 verificationTab6==1
@@ -173,7 +169,6 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
-                submitAllTaxkey() &&
                 verificationTab4==1 &&
                 verificationTab5==1 &&
                 verificationTab6==1 &&
@@ -194,7 +189,7 @@ function verifierStep(stepNum){
 function toStep(stepNum){
     var lable=$("#label_"+stepNum);
     lable.click();
-    //activeTab(stepNum);
+    /*activeTab(stepNum);*/
 };
 
 //添加当前步骤样式

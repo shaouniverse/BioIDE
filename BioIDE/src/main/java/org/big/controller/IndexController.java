@@ -61,9 +61,6 @@ public class IndexController {
 			request.getSession().removeAttribute("teamId");
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			List<Team> teamList = this.teamService.selectTeamsByUserId(thisUser.getId());// 根据userid查找所有team
-			for (Team team : teamList) {
-				System.out.println(team);
-			}
 			model.addAttribute("teamList", teamList);
 			return "team/select";
         }

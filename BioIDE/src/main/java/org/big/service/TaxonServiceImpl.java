@@ -68,7 +68,7 @@ public class TaxonServiceImpl implements TaxonService {
 			row.put("authorstr", thisList.get(i).getAuthorstr());
 			/*row.put("epithet", thisList.get(i).getEpithet());*/
 			row.put("inputer", thisList.get(i).getInputer());
-			row.put("rankid", thisList.get(i).getRankid());
+			row.put("rankid", thisList.get(i).getRank().getId());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String addTime = "";
 			try {
@@ -90,7 +90,6 @@ public class TaxonServiceImpl implements TaxonService {
 		try {
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisTaxon.setInputer(thisUser.getId());
-			thisTaxon.setInputtime(new Timestamp(System.currentTimeMillis()));
 			thisTaxon.setSynchdate(new Timestamp(System.currentTimeMillis()));
 			thisTaxon.setStatus(1);
 			thisTaxon.setSynchstatus(0);
@@ -101,6 +100,11 @@ public class TaxonServiceImpl implements TaxonService {
 			thisResult.put("result", false);
 		}
 		return thisResult;
+	}
+
+	@Override
+	public Taxon findOneById(String id) {
+		return this.taxonRepository.findOneById(id);
 	}
 
 	

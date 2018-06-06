@@ -48,6 +48,7 @@
                             <li th:if="${not #lists.isEmpty(session.datasetID)}" ><a href="#"><i class="fa fa-sitemap"></i> 分类树集管理</a></li>
                             <li th:if="${not #lists.isEmpty(session.datasetID)}" ><a href="#"><i class="fa fa-code-fork"></i> 进化树集管理</a></li>
                             <li th:if="${not #lists.isEmpty(session.datasetID)}"><a th:href="@{/select/dataset}" href="team"><i class="fa fa-exchange"></i> <span>数据集变更</span></a></li>
+                            <li th:if="${not #lists.isEmpty(session.datasetID)}" ><a th:href="@{/console/dataset}" href="dataset/index.html"><i class="fa fa-database"></i> 数据集管理</a></li>
                             <li th:if="${#lists.isEmpty(session.datasetID)}" ><a th:href="@{/select/dataset}" href="dataset/index.html"><i class="fa fa-exchange"></i> 选择数据集</a></li>
                             <li th:if="${#lists.isEmpty(session.datasetID)}" ><a th:href="@{/console/dataset}" href="dataset/index.html"><i class="fa fa-database"></i> 数据集管理</a></li>
                         </ul>

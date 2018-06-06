@@ -88,7 +88,8 @@ function verifierStep(stepNum){
                 verificationTab1==1 &&
                 submitAllCitation() &&
                 submitAllDescription()&&
-                submitAllProtection()
+                submitAllProtection()&&
+                submitAllTaxkey()
             ){//验证通过
                 return true;
             }
@@ -106,6 +107,7 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
+                submitAllTaxkey() &&
                 verificationTab4==1
             ){//验证通过
                 return true;
@@ -125,6 +127,7 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
+                submitAllTaxkey() &&
                 verificationTab4==1 &&
                 verificationTab5==1
             ){//验证通过
@@ -146,6 +149,7 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
+                submitAllTaxkey() &&
                 verificationTab4==1 &&
                 verificationTab5==1 &&
                 verificationTab6==1
@@ -169,6 +173,7 @@ function verifierStep(stepNum){
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
+                submitAllTaxkey() &&
                 verificationTab4==1 &&
                 verificationTab5==1 &&
                 verificationTab6==1 &&

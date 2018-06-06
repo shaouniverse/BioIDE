@@ -72,7 +72,7 @@ function addTaxkey() {
 
     $('#countTaxkey').val(countTaxkey + 1);
 
-    //addTaxkeyValidator(countTaxkey + 1);
+    addTaxkeyValidator(countTaxkey + 1);
     //buildKeytable(countTaxkey + 1);
 
     //title变化后处理的函数
@@ -94,6 +94,7 @@ function changetaxkeyType(taxkeyNum, taxkeyType) {
                 case 1:
                     $("#taxkeyType1_"+taxkeyNum).addClass("active");
                     $("#taxkeyType2_"+taxkeyNum).removeClass("active");
+                    $("#keytype_"+taxkeyNum).val(1);
                     layer.msg('切换至【双项式】检索表', {
                             time: 500,
                             //1s后自动关闭
@@ -209,6 +210,7 @@ function changetaxkeyType(taxkeyNum, taxkeyType) {
                 case 2:
                     $("#taxkeyType2_"+taxkeyNum).addClass("active");
                     $("#taxkeyType1_"+taxkeyNum).removeClass("active");
+                    $("#keytype_"+taxkeyNum).val(2);
                     layer.msg('切换至【单项式】检索表', {
                             time: 500,
                             //1s后自动关闭

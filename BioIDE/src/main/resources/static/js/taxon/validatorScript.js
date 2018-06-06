@@ -392,4 +392,51 @@ function addProtectionValidator(protectionNum) {
 function protectionFormValidator(Num) {
     $('#protectionForm_' + Num).data('bootstrapValidator').validate();
 }
+//构造一个taxkey验证规则
+function addTaxkeyValidator(taxkeyNum) {
+    $("#taxkeyForm_" + taxkeyNum).bootstrapValidator({
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon ',
+            invalid: 'glyphicon ',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
+    $("#taxkeyForm_" + taxkeyNum).bootstrapValidator("addField", "keytitle_" + taxkeyNum, {
+        validators: {
+            notEmpty: {}
+        },
+        stringLength: {
+            min: 1,
+            max: 100
+        },
+    });
+    $("#taxkeyForm_" + taxkeyNum).bootstrapValidator("addField", "abstraction_" + taxkeyNum, {
+        validators: {
+            notEmpty: {}
+        },
+        stringLength: {
+            min: 1,
+            max: 1500
+        },
+    });
+    $("#taxkeyForm_" + taxkeyNum).bootstrapValidator("addField", "protlevel_" + taxkeyNum, {
+        validators: {
+            notEmpty: {}
+        }
+    });
+    $("#taxkeyForm_" + taxkeyNum).bootstrapValidator("addField", "proassessment_" + taxkeyNum, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 1500
+            },
+        }
+    });
+}
+//统一验证taxkey
+function taxkeyFormValidator(Num) {
+    $('#taxkeyForm_' + Num).data('bootstrapValidator').validate();
+}
 

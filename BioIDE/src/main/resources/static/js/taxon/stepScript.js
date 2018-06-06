@@ -189,7 +189,7 @@ function verifierStep(stepNum){
 function toStep(stepNum){
     var lable=$("#label_"+stepNum);
     lable.click();
-    activeTab(stepNum);
+    //activeTab(stepNum);
 };
 
 //添加当前步骤样式

@@ -1,255 +1,259 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="copy">
-  <form id="form_2" class="form-horizontal" th:action="@{/}" method="post">
-    <div>
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#description" id="tab-description" aria-controls="description" role="tab" data-toggle="tab">文本描述</a></li>
-        <li role="presentation">
-          <a href="#distributiondata" id="tab-distributiondata" aria-controls="distributiondata" role="tab" data-toggle="tab">分布数据</a></li>
-        <li role="presentation">
-          <a href="#protection" id="tab-protection" aria-controls="protection" role="tab" data-toggle="tab">保护数据</a></li>
-        <li role="presentation">
-          <a href="#taxkey" id="tab-taxkey" aria-controls="taxkey" role="tab" data-toggle="tab">检索表</a></li>
-        <li role="presentation">
-          <a href="#traitdata" id="tab-traitdata" aria-controls="traitdata" role="tab" data-toggle="tab">特征数据</a></li>
-      </ul>
-      <div class="tab-content">
-        <!-- 文本数据面板 -->
-        <div role="tabpanel" class="tab-pane active" id="description">
-          <h4>
-            <small>&nbsp;从历史资料、志书、文献、书籍、调查报告中提取的描述性文本</small>
-            <p>&nbsp;</p>
-          </h4>
-          <div id="newDescription"></div>
-          <a class="btn btn-app" onclick="addDescription ();">
-            <i class="fa fa-plus"></i>添加新描述</a>
-          <input class="hidden" id="countDescription" name="countDescription" value="0"></input>
-          <!-- 文本数据模板 -->
-          <script id="descriptionForm" type="text/x-jquery-tmpl">
-            <form class="panel panel-default" id="descriptionForm_${num}" th:action="@{/}" method="post">
-              <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                  <i class="fa fa-check-circle hidden" id="descriptionStatus_${num}"></i>
-                  <a id="descriptionCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#descriptionCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的描述</a>
-                  <a role="button" class="pull-right" onclick="removeDescription(${num});">
-                    <i class="fa fa-remove"></i>
-                  </a>
-                </h4>
-              </div>
-              <div id="descriptionCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="destitle_${num}" class="col-sm-4 control-label">描述标题:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" id="destitle_${num}" name="destitle_${num}" placeholder="描述标题" /></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="destypeid_${num}" class="col-sm-4 control-label">描述类型:</label>
-                      <div class="col-sm-8">
-                        <select class="form-control select2" id="destypeid_${num}" name="destypeid_${num}" style="width: 100%;"></select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="desdate_${num}" class="col-sm-4 control-label">描述时间:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" id="desdate_${num}" name="desdate_${num}" placeholder="描述时间，一般为年份" /></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="describer_${num}" class="col-sm-4 control-label">描述人:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" id="describer_${num}" name="describer_${num}" placeholder="描述人" /></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="language_${num}" class="col-sm-4 control-label">描述语言:</label>
-                      <div class="col-sm-8">
-                        <select class="form-control select2" id="language_${num}" name="language_${num}" style="width: 100%;"></select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="descriptionsourcesid_${num}" class="col-sm-4 control-label">数据源:</label>
-                      <div class="col-sm-8">
-                        <select class="form-control select2" id="descriptionsourcesid_${num}" name="descriptionsourcesid_${num}" style="width: 100%;"></select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="rightsholder_${num}" class="col-sm-4 control-label">权利所有人:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" id="rightsholder_${num}" name="rightsholder_${num}" placeholder="描述的权利所有人" /></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="licenseid_${num}" class="col-sm-4 control-label">共享协议:</label>
-                      <div class="col-sm-8">
-                        <select class="form-control select2" id="licenseid_${num}" name="licenseid_${num}" style="width: 100%;"></select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="descontent_${num}" class="col-sm-2 control-label">描述原文:</label>
-                      <div class="col-sm-10 col-md-10">
-                        <textarea class="form-control" rows="3" id="descontent_${num}" name="descontent_${num}" placeholder="描述原文"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="relation_${num}" class="col-sm-2 control-label">关系:</label>
-                      <div class="col-sm-10 col-md-10">
-                        <div class="input-group" id="relation">
-                          <select class="form-control select2 col-sm-6 col-md-6" id="relationDes_${num}" name="relationDes_${num}" style="width: 100%;"></select>
-                          <div class="input-group-btn">
-                            <button type="button" id="relationBtn_${num}" class="btn btn-default dropdown-toggle" data-toggle="dropdown">选择关系
-                              <span class="fa fa-caret-down"></span></button>
-                            <ul class="dropdown-menu">
-                              <li>
-                                <a onclick="selectRelation(${num},0,'无关系');">无关系</a></li>
-                              <li>
-                                <a onclick="selectRelation(${num},1,'的 翻译');">的 翻译</a></li>
-                              <li>
-                                <a onclick="selectRelation(${num},2,'的 总结');">的 总结</a></li>
-                              <li>
-                                <a onclick="selectRelation(${num},3,'的 说明');">的 说明</a></li>
-                            </ul>
+    <form id="form_2" class="form-horizontal" th:action="@{/}" method="post">
+        <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#description" id="tab-description" aria-controls="description" role="tab"
+                       data-toggle="tab">文本描述</a></li>
+                <li role="presentation">
+                    <a href="#distributiondata" id="tab-distributiondata" aria-controls="distributiondata" role="tab"
+                       data-toggle="tab">分布数据</a></li>
+                <li role="presentation">
+                    <a href="#protection" id="tab-protection" aria-controls="protection" role="tab" data-toggle="tab">保护数据</a>
+                </li>
+                <li role="presentation">
+                    <a href="#taxkey" id="tab-taxkey" aria-controls="taxkey" role="tab" data-toggle="tab">检索表</a></li>
+                <li role="presentation">
+                    <a href="#traitdata" id="tab-traitdata" aria-controls="traitdata" role="tab"
+                       data-toggle="tab">特征数据</a></li>
+            </ul>
+            <div class="tab-content">
+                <!-- 文本数据面板 -->
+                <div role="tabpanel" class="tab-pane active" id="description">
+                    <h4>
+                        <small>&nbsp;从历史资料、志书、文献、书籍、调查报告中提取的描述性文本</small>
+                        <p>&nbsp;</p>
+                    </h4>
+                    <div id="newDescription"></div>
+                    <a class="btn btn-app" onclick="addDescription ();">
+                        <i class="fa fa-plus"></i>添加新描述</a>
+                    <input class="hidden" id="countDescription" name="countDescription" value="0"></input>
+                    <!-- 文本数据模板 -->
+                    <script id="descriptionForm" type="text/x-jquery-tmpl">
+                        <form class="panel panel-default" id="descriptionForm_${num}" th:action="@{/}" method="post">
+                          <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                              <i class="fa fa-check-circle hidden" id="descriptionStatus_${num}"></i>
+                              <a id="descriptionCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#descriptionCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的描述</a>
+                              <a role="button" class="pull-right" onclick="removeDescription(${num});">
+                                <i class="fa fa-remove"></i>
+                              </a>
+                            </h4>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <input class="hidden" id="relationId_${num}" name="relationId_${num}"></input>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="descriptionremark_${num}" class="col-sm-2 control-label">备注:</label>
-                      <div class="col-sm-10 col-md-10">
-                        <input type="text" class="form-control" id="descriptionremark_${num}" name="descriptionremark_${num}" placeholder="备注信息" /></div>
-                    </div>
-                  </div>
+                          <div id="descriptionCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="destitle_${num}" class="col-sm-4 control-label">描述标题:</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="destitle_${num}" name="destitle_${num}" placeholder="描述标题" /></div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="destypeid_${num}" class="col-sm-4 control-label">描述类型:</label>
+                                  <div class="col-sm-8">
+                                    <select class="form-control select2" id="destypeid_${num}" name="destypeid_${num}" style="width: 100%;"></select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="desdate_${num}" class="col-sm-4 control-label">描述时间:</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="desdate_${num}" name="desdate_${num}" placeholder="描述时间，一般为年份" /></div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="describer_${num}" class="col-sm-4 control-label">描述人:</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="describer_${num}" name="describer_${num}" placeholder="描述人" /></div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="language_${num}" class="col-sm-4 control-label">描述语言:</label>
+                                  <div class="col-sm-8">
+                                    <select class="form-control select2" id="language_${num}" name="language_${num}" style="width: 100%;"></select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="descriptionsourcesid_${num}" class="col-sm-4 control-label">数据源:</label>
+                                  <div class="col-sm-8">
+                                    <select class="form-control select2" id="descriptionsourcesid_${num}" name="descriptionsourcesid_${num}" style="width: 100%;"></select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="rightsholder_${num}" class="col-sm-4 control-label">权利所有人:</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="rightsholder_${num}" name="rightsholder_${num}" placeholder="描述的权利所有人" /></div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="licenseid_${num}" class="col-sm-4 control-label">共享协议:</label>
+                                  <div class="col-sm-8">
+                                    <select class="form-control select2" id="licenseid_${num}" name="licenseid_${num}" style="width: 100%;"></select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="descontent_${num}" class="col-sm-2 control-label">描述原文:</label>
+                                  <div class="col-sm-10 col-md-10">
+                                    <textarea class="form-control" rows="3" id="descontent_${num}" name="descontent_${num}" placeholder="描述原文"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="relation_${num}" class="col-sm-2 control-label">关系:</label>
+                                  <div class="col-sm-10 col-md-10">
+                                    <div class="input-group" id="relation">
+                                      <select class="form-control select2 col-sm-6 col-md-6" id="relationDes_${num}" name="relationDes_${num}" style="width: 100%;"></select>
+                                      <div class="input-group-btn">
+                                        <button type="button" id="relationBtn_${num}" class="btn btn-default dropdown-toggle" data-toggle="dropdown">选择关系
+                                          <span class="fa fa-caret-down"></span></button>
+                                        <ul class="dropdown-menu">
+                                          <li>
+                                            <a onclick="selectRelation(${num},0,'无关系');">无关系</a></li>
+                                          <li>
+                                            <a onclick="selectRelation(${num},1,'的 翻译');">的 翻译</a></li>
+                                          <li>
+                                            <a onclick="selectRelation(${num},2,'的 总结');">的 总结</a></li>
+                                          <li>
+                                            <a onclick="selectRelation(${num},3,'的 说明');">的 说明</a></li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <input class="hidden" id="relationId_${num}" name="relationId_${num}"></input>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="descriptionremark_${num}" class="col-sm-2 control-label">备注:</label>
+                                  <div class="col-sm-10 col-md-10">
+                                    <input type="text" class="form-control" id="descriptionremark_${num}" name="descriptionremark_${num}" placeholder="备注信息" /></div>
+                                </div>
+                              </div>
 
-                  <input class="hidden" id="countDescriptionReferences_${num}" name="countDescriptionReferences_${num}" value="0"></input>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="refjson" class="col-sm-2 control-label">参考文献:</label>
-                      <div class="col-sm-10 col-md-10 table-responsive">
-                        <table class="table table-hover table-condensed">
-                          <tbody id="newDescriptionReferences_${num}"></tbody>
-                        </table>
-                        <button type="button" class="btn btn-default btn-sm" onclick="addDescriptionReferences (${num});">
-                          <i class="fa fa-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                              <input class="hidden" id="countDescriptionReferences_${num}" name="countDescriptionReferences_${num}" value="0"></input>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="refjson" class="col-sm-2 control-label">参考文献:</label>
+                                  <div class="col-sm-10 col-md-10 table-responsive">
+                                    <table class="table table-hover table-condensed">
+                                      <tbody id="newDescriptionReferences_${num}"></tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-default btn-sm" onclick="addDescriptionReferences (${num});">
+                                      <i class="fa fa-plus"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
 
-                  <button type="button" class="btn btn-primary pull-right" onclick="submitDescription(${num});">确认</button></div>
-              </div>
-            </form>
-          </script>
-          <!-- 文本数据的参考文献模板 -->
-          <script id="descriptionReferencesForm" type="text/x-jquery-tmpl">
-            <tr id="descriptionReferencesForm_${dnum}_${num}">
-              <td><label class="control-label">[${num}]</label><td>
-              <div class="form-group">
-                <div class="col-sm-8 col-md-8 col-xs-12">
-                  <div class="input-group">
-                    <select class="form-control select2" id="descriptionReferences_${dnum}_${num}" name="descriptionReferences_${dnum}_${num}" style="width: 100%;"></select>
-                    <div class="input-group-btn">
-                      <button type="button" id="descriptionReferencesBtn_${dnum}_${num}" class="btn btn-default dropdown-toggle" data-toggle="dropdown">选择参考类型
-                        <span class="fa fa-caret-down"></span></button>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a onclick="selectDescriptionReferences(${dnum},${num},0,'原始文献');">原始文献</a></li>
-                        <li>
-                          <a onclick="selectDescriptionReferences(${dnum},${num},1,'异名引证');">异名引证</a></li>
-                        <li>
-                          <a onclick="selectDescriptionReferences(${dnum},${num},2,'XXX引证');">XXX引证</a></li>
-                      </ul>
-                    </div>
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-default dropdown-toggle" onclick="removeDescriptionReferences(${dnum},${num});">
-                        <i class="fa fa-remove"></i>
-                      </button>
-                    </div>
-                  </div>
+                              <button type="button" class="btn btn-primary pull-right" onclick="submitDescription(${num});">确认</button></div>
+                          </div>
+                        </form>
+                    </script>
+                    <!-- 文本数据的参考文献模板 -->
+                    <script id="descriptionReferencesForm" type="text/x-jquery-tmpl">
+                        <tr id="descriptionReferencesForm_${dnum}_${num}">
+                          <td><label class="control-label">[${num}]</label><td>
+                          <div class="form-group">
+                            <div class="col-sm-8 col-md-8 col-xs-12">
+                              <div class="input-group">
+                                <select class="form-control select2" id="descriptionReferences_${dnum}_${num}" name="descriptionReferences_${dnum}_${num}" style="width: 100%;"></select>
+                                <div class="input-group-btn">
+                                  <button type="button" id="descriptionReferencesBtn_${dnum}_${num}" class="btn btn-default dropdown-toggle" data-toggle="dropdown">选择参考类型
+                                    <span class="fa fa-caret-down"></span></button>
+                                  <ul class="dropdown-menu">
+                                    <li>
+                                      <a onclick="selectDescriptionReferences(${dnum},${num},0,'原始文献');">原始文献</a></li>
+                                    <li>
+                                      <a onclick="selectDescriptionReferences(${dnum},${num},1,'异名引证');">异名引证</a></li>
+                                    <li>
+                                      <a onclick="selectDescriptionReferences(${dnum},${num},2,'XXX引证');">XXX引证</a></li>
+                                  </ul>
+                                </div>
+                                <div class="input-group-btn">
+                                  <button type="button" class="btn btn-default dropdown-toggle" onclick="removeDescriptionReferences(${dnum},${num});">
+                                    <i class="fa fa-remove"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-xs-6">
+                              <input type="text" class="form-control" id="descriptionReferencesPageS_${dnum}_${num}" name="descriptionReferencesPageS_${dnum}_${num}" placeholder="起始页" /></div>
+                            <div class="col-sm-2 col-md-2 col-xs-6">
+                              <input type="text" class="form-control" id="descriptionReferencesPageE_${dnum}_${num}" name="descriptionReferencesPageE_${dnum}_${num}" placeholder="终止页" /></div>
+                            <input class="hidden" id="descriptionReferencesType_${dnum}_${num}" name="descriptionReferencesId_${dnum}_${num}"></input>
+                          </td>
+                        </tr>
+                    </script>
                 </div>
-                <div class="col-sm-2 col-md-2 col-xs-6">
-                  <input type="text" class="form-control" id="descriptionReferencesPageS_${dnum}_${num}" name="descriptionReferencesPageS_${dnum}_${num}" placeholder="起始页" /></div>
-                <div class="col-sm-2 col-md-2 col-xs-6">
-                  <input type="text" class="form-control" id="descriptionReferencesPageE_${dnum}_${num}" name="descriptionReferencesPageE_${dnum}_${num}" placeholder="终止页" /></div>
-                <input class="hidden" id="descriptionReferencesType_${dnum}_${num}" name="descriptionReferencesId_${dnum}_${num}"></input>
-              </td>
-            </tr>
-          </script>
-        </div>
-        <!-- 分布数据面板 -->
-        <div role="tabpanel" class="tab-pane fade" id="distributiondata">
-          <h4>
-            <small>&nbsp;描述物种分布的信息；可添加多条</small>
-            <p>&nbsp;</p>
-          </h4>
-          <div id="newDistributiondata"></div>
-          <a class="btn btn-app" onclick="addDistributiondata ();">
-            <i class="fa fa-plus"></i>添加新分布数据</a>
-          <input class="hidden" id="countDistributiondata" name="countDistributiondata" value="0"></input>
-          <!-- 分布数据模板 -->
-          <script id="distributiondataForm" type="text/x-jquery-tmpl">
-            <form class="panel panel-default" id="distributiondataForm_${num}" th:action="@{/}" method="post">
-              <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                  <i class="fa fa-check-circle hidden" id="distributiondataStatus_${num}"></i>
-                  <a id="distributiondataCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#distributiondataCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的描述</a>
-                  <a role="button" class="pull-right" onclick="removeDistributiondata(${num});">
-                    <i class="fa fa-remove"></i>
-                  </a>
-                </h4>
-              </div>
-              <div id="distributiondataCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="lng_${num}" class="col-sm-4 control-label">经度:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" id="lng_${num}" name="lng_${num}" placeholder="经度(10进制)" /></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="lat_${num}" class="col-sm-4 control-label">纬度:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" id="lat_${num}" name="lat_${num}" placeholder="纬度(10进制)" /></div>
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-primary pull-right" onclick="submitDistributiondata(${num});">确认</button></div>
-              </div>
-            </form>
-          </script>
-        </div>
-        <!-- 保护数据面板 -->
-        <div role="tabpanel" class="tab-pane fade" id="protection">
-          <h4>
-            <small>&nbsp;该物种的保护信息</small>
-            <p>&nbsp;</p>
-          </h4>
-          <div id="newProtection"></div>
-          <a class="btn btn-app" onclick="addProtection ();">
-            <i class="fa fa-plus"></i>添加新的保护数据</a>
-          <input class="hidden" id="countProtection" name="countProtection" value="0"></input>
-          <!-- 保护数据模板 -->
-          <script id="protectionForm" type="text/x-jquery-tmpl">
+                <!-- 分布数据面板 -->
+                <div role="tabpanel" class="tab-pane fade" id="distributiondata">
+                    <h4>
+                        <small>&nbsp;描述物种分布的信息；可添加多条</small>
+                        <p>&nbsp;</p>
+                    </h4>
+                    <div id="newDistributiondata"></div>
+                    <a class="btn btn-app" onclick="addDistributiondata ();">
+                        <i class="fa fa-plus"></i>添加新分布数据</a>
+                    <input class="hidden" id="countDistributiondata" name="countDistributiondata" value="0"></input>
+                    <!-- 分布数据模板 -->
+                    <script id="distributiondataForm" type="text/x-jquery-tmpl">
+                        <form class="panel panel-default" id="distributiondataForm_${num}" th:action="@{/}" method="post">
+                          <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                              <i class="fa fa-check-circle hidden" id="distributiondataStatus_${num}"></i>
+                              <a id="distributiondataCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#distributiondataCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的描述</a>
+                              <a role="button" class="pull-right" onclick="removeDistributiondata(${num});">
+                                <i class="fa fa-remove"></i>
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="distributiondataCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="lng_${num}" class="col-sm-4 control-label">经度:</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="lng_${num}" name="lng_${num}" placeholder="经度(10进制)" /></div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="lat_${num}" class="col-sm-4 control-label">纬度:</label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="lat_${num}" name="lat_${num}" placeholder="纬度(10进制)" /></div>
+                                </div>
+                              </div>
+                              <button type="button" class="btn btn-primary pull-right" onclick="submitDistributiondata(${num});">确认</button></div>
+                          </div>
+                        </form>
+                    </script>
+                </div>
+                <!-- 保护数据面板 -->
+                <div role="tabpanel" class="tab-pane fade" id="protection">
+                    <h4>
+                        <small>&nbsp;该物种的保护信息</small>
+                        <p>&nbsp;</p>
+                    </h4>
+                    <div id="newProtection"></div>
+                    <a class="btn btn-app" onclick="addProtection ();">
+                        <i class="fa fa-plus"></i>添加新的保护数据</a>
+                    <input class="hidden" id="countProtection" name="countProtection" value="0"></input>
+                    <!-- 保护数据模板 -->
+                    <script id="protectionForm" type="text/x-jquery-tmpl">
             <form class="panel panel-default" id="protectionForm_${num}" th:action="@{/}" method="post">
               <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
@@ -301,43 +305,235 @@
                   <button type="button" class="btn btn-primary pull-right" onclick="submitProtection(${num});">确认</button></div>
               </div>
             </form>
-          </script>
-          <!-- 保护数据参考文献模板 -->
-          <script id="protectionReferencesForm" type="text/x-jquery-tmpl">
-            <tr id="descriptionReferencesForm_${pnum}_${num}">
-              <td><label class="control-label">[${num}]</label><td>
-              <div class="form-group">
-                <div class="col-sm-8 col-md-8 col-xs-12">
-                  <div class="input-group">
-                    <select class="form-control select2" id="protectionReferences_${pnum}_${num}" name="protectionReferences_${pnum}_${num}" style="width: 100%;"></select>
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-default dropdown-toggle" onclick="removeDescriptionReferences(${pnum},${num});">
-                        <i class="fa fa-remove"></i>
-                      </button>
-                    </div>
-                  </div>
+
+
+                    </script>
+                    <!-- 保护数据参考文献模板 -->
+                    <script id="protectionReferencesForm" type="text/x-jquery-tmpl">
+                        <tr id="descriptionReferencesForm_${pnum}_${num}">
+                          <td><label class="control-label">[${num}]</label><td>
+                          <div class="form-group">
+                            <div class="col-sm-8 col-md-8 col-xs-12">
+                              <div class="input-group">
+                                <select class="form-control select2" id="protectionReferences_${pnum}_${num}" name="protectionReferences_${pnum}_${num}" style="width: 100%;"></select>
+                                <div class="input-group-btn">
+                                  <button type="button" class="btn btn-default dropdown-toggle" onclick="removeDescriptionReferences(${pnum},${num});">
+                                    <i class="fa fa-remove"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-xs-6">
+                              <input type="text" class="form-control" id="descriptionReferencesPageS_${pnum}_${num}" name="descriptionReferencesPageS_${pnum}_${num}" placeholder="起始页" /></div>
+                            <div class="col-sm-2 col-md-2 col-xs-6">
+                              <input type="text" class="form-control" id="descriptionReferencesPageE_${pnum}_${num}" name="descriptionReferencesPageE_${pnum}_${num}" placeholder="终止页" /></div>
+                            <input class="hidden" id="descriptionReferencesType_${pnum}_${num}" name="descriptionReferencesId_${pnum}_${num}"></input>
+                          </td>
+                        </tr>
+
+
+                    </script>
                 </div>
-                <div class="col-sm-2 col-md-2 col-xs-6">
-                  <input type="text" class="form-control" id="descriptionReferencesPageS_${pnum}_${num}" name="descriptionReferencesPageS_${pnum}_${num}" placeholder="起始页" /></div>
-                <div class="col-sm-2 col-md-2 col-xs-6">
-                  <input type="text" class="form-control" id="descriptionReferencesPageE_${pnum}_${num}" name="descriptionReferencesPageE_${pnum}_${num}" placeholder="终止页" /></div>
-                <input class="hidden" id="descriptionReferencesType_${pnum}_${num}" name="descriptionReferencesId_${pnum}_${num}"></input>
-              </td>
-            </tr>
-          </script>
-        </div>
-        <!-- 检索表面板 -->
-        <div role="tabpanel" class="tab-pane fade" id="taxkey">
-          <h4>
-            <small>&nbsp;该阶元相关的检索表</small>
-            <p>&nbsp;</p>
-          </h4>
-          <div id="newTaxkey"></div>
-          <a class="btn btn-app" onclick="addTaxkey ();">
-            <i class="fa fa-plus"></i>添加新的检索表</a>
-          <input class="hidden" id="countTaxkey" name="countTaxkey" value="0"></input>
-          <!-- 检索表模板 -->
-          <script id="taxkeyForm" type="text/x-jquery-tmpl">
+                <!-- 检索表面板 -->
+                <div role="tabpanel" class="tab-pane fade" id="taxkey">
+                    <h4>
+                        <small>&nbsp;该阶元相关的检索表</small>
+                        <p>&nbsp;</p>
+                    </h4>
+                    <div id="newTaxkey"></div>
+                    <a class="btn btn-app" onclick="addTaxkey ();">
+                        <i class="fa fa-plus"></i>添加新的检索表</a>
+                    <input class="hidden" id="countTaxkey" name="countTaxkey" value="0"></input>
+                    <!-- 检索表说明示例 -->
+                    <div class="modal fade" id="modal-taxkey">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button id="closeTerms" type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">检索表说明</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p><b>双项式检索表：</b></p>
+                                    <p>
+                                        <small>左边的数字序号为特征排序(互斥的一组特征序号相同)同组中在前的特征其同级排序靠前；文字描述为特征内容；最右侧为分支序号或指向的分类单元
+                                        </small>
+                                    </p>
+                                    <div class="box-body table-responsive">
+                                        <table
+                                                id="keytable1"
+                                                class="table table-hover table-condensed"
+                                                data-toggle="table"
+                                                data-classes="table table-no-bordered"
+                                                data-height="350"
+                                                data-row-style="rowStyle">
+                                            <thead class="hidden">
+                                            <tr>
+                                                <th data-field="orderid"></th>
+                                                <th data-field="item"></th>
+                                                <th data-field="ellipsis"></th>
+                                                <th data-field="branchid"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1.</td>
+                                                <td>植物体无根、茎、叶的分化，无胚</td>
+                                                <td>…………………………………</td>
+                                                <td>2</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>植物体有根、茎、叶的分化，有胚</td>
+                                                <td>…………………………………</td>
+                                                <td>4</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2.</td>
+                                                <td>由藻类和菌类所组成的共生体</td>
+                                                <td>…………………………………</td>
+                                                <td>地衣植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>非藻类和菌类所组成的共生体</td>
+                                                <td>…………………………………</td>
+                                                <td>3</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3.</td>
+                                                <td>植物体有叶绿素或其他色素，为自养生活方式</td>
+                                                <td>…………………………………</td>
+                                                <td>藻类植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>植物体无叶绿素或其他色素，为异养生活方式</td>
+                                                <td>…………………………………</td>
+                                                <td>菌类植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4.</td>
+                                                <td>植物体有茎、叶，而无真根</td>
+                                                <td>…………………………………</td>
+                                                <td>苔藓植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>植物体有茎、叶，而有真根</td>
+                                                <td>…………………………………</td>
+                                                <td>5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5.</td>
+                                                <td>产生孢子</td>
+                                                <td>…………………………………</td>
+                                                <td>蕨类植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>产生种子</td>
+                                                <td>…………………………………</td>
+                                                <td>种子植物门</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p><b>单项式检索表：</b></p>
+                                    <p>
+                                        <small>左边的数字序号为特征排序；括号里的数字为分支序号；文字描述为特征内容；最右侧为指向的分类单元</small>
+                                    </p>
+                                    <div class="box-body table-responsive">
+                                        <table
+                                                id="keytable2"
+                                                class="table table-hover table-condensed"
+                                                data-toggle="table"
+                                                data-classes="table table-no-bordered"
+                                                data-height="350"
+                                                data-row-style="rowStyle">
+                                            <thead class="hidden">
+                                            <tr>
+                                                <th data-field="orderid"></th>
+                                                <th data-field="item"></th>
+                                                <th data-field="ellipsis"></th>
+                                                <th data-field="branchid"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1(6)</td>
+                                                <td>植物体无根、茎、叶的分化，无胚</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2(5)</td>
+                                                <td>非藻类和菌类所组成的共生体</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3(4)</td>
+                                                <td>植物体有叶绿素或其他色素，为自养生活方式</td>
+                                                <td>…………………………………</td>
+                                                <td>藻类植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4(3)</td>
+                                                <td>植物体无叶绿素或其他色素，为异养生活方式</td>
+                                                <td>…………………………………</td>
+                                                <td>菌类植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5(2)</td>
+                                                <td>由藻类和菌类所组成的共生体</td>
+                                                <td>…………………………………</td>
+                                                <td>地衣植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6(1)</td>
+                                                <td>植物体有根、茎、叶的分化，有胚</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>7(8)</td>
+                                                <td>植物体有茎、叶，而无真根</td>
+                                                <td>…………………………………</td>
+                                                <td>苔藓植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td>8(7)</td>
+                                                <td>植物体有茎、叶，而有真根</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>9(10)</td>
+                                                <td>产生孢子</td>
+                                                <td>…………………………………</td>
+                                                <td>蕨类植物门</td>
+                                            </tr>
+                                            <tr>
+                                                <td>10(9)</td>
+                                                <td>产生种子</td>
+                                                <td>…………………………………</td>
+                                                <td>种子植物门</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">返回
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 检索表模板 -->
+                    <script id="taxkeyForm" type="text/x-jquery-tmpl">
             <form class="panel panel-default" id="taxkeyForm_${num}" th:action="@{/}" method="post">
               <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
@@ -371,38 +567,35 @@
 
                   <p></p>
                   <div class="text-center">
-                    <div class="btn-group" data-toggle="buttons">
-                      <label class="btn btn-default active">
-                        <input type="radio" name="taxkeyType_${num}" value="option1" autocomplete="off" checked> 双项式(平行式)
-                      </label>
-                      <label class="btn btn-default">
-                        <input type="radio" name="taxkeyType_${num}" value="option2" autocomplete="off"> 单项式(连续平行式)
-                      </label>
-                      <label class="btn btn-default">
-                        <input type="radio" name="taxkeyType_${num}" value="option3" autocomplete="off"> 定距式(退格式/包孕式)
-                      </label>
+                    <div class="btn-group">
+                      <a type="reset" class="btn btn-default active" id="taxkeyType1_${num}" onclick="changetaxkeyType(${num},1);">双项式(平行式)</a>
+                      <a type="reset" class="btn btn-default" id="taxkeyType2_${num}" onclick="changetaxkeyType(${num},2);">单项式(连续平行式)</a>
+                      <button type="button" class="btn btn-default disabled" id="taxkeyType3_${num}" onclick="changetaxkeyType(${num},3);">定距式(退格式/包孕式)</button>
                     </div>
+                    <a role="button" class="dropdown-toggle" data-toggle="modal" data-target="#modal-taxkey">
+                      <i class="fa fa-question-circle"></i>
+                    </a>
                   </div>
                       <div class="box-body table-responsive">
-                      <table
-                              id="keytable_${num}"
-                              class="table table-hover table-condensed"
-                              data-toggle="table"
-                              data-classes="table table-no-bordered"
-                              data-height="350"
-                              data-row-style="rowStyle">
-                        <thead class="hidden">
-                          <tr>
-                              <th data-field="orderid"></th>
-                              <th data-field="item"></th>
-                              <th data-field="ellipsis"></th>
-                              <th data-field="branchid"></th>
-                              <th data-field="images"></th>
-                              <th data-field="edit"></th>
-                              <th data-field="remove"></th>
-                          </tr>
-                        </thead>
-                      </table>
+                          <table
+                                  id="keytable_${num}"
+                                  class="table table-hover table-condensed"
+                                  data-toggle="table"
+                                  data-classes="table table-no-bordered"
+                                  data-height="350"
+                                  data-row-style="rowStyle">
+                            <thead class="hidden">
+                              <tr>
+                                  <th data-field="orderid"></th>
+                                  <th data-field="item"></th>
+                                  <th data-field="ellipsis"></th>
+                                  <th data-field="branchid"></th>
+                                  <th data-field="images"></th>
+                                  <th data-field="edit"></th>
+                                  <th data-field="remove"></th>
+                              </tr>
+                            </thead>
+                          </table>
                       </div>
                       <div class="box-footer">
                         <div class="col-md-5">
@@ -411,7 +604,7 @@
                             <div class="col-sm-8">
                               <input type="text" class="form-control" id="orderid_${num}" name="orderid_${num}" placeholder="特征序号，用于排序" /></div>
                           </div>
-                          <div class="form-group">
+                          <div class="form-group" id="inputinnerorder_${num}">
                             <label for="innerorder_${num}" class="col-sm-4 control-label">同级排序:</label>
                             <div class="col-sm-8">
                               <input type="text" class="form-control" id="innerorder_${num}" name="innerorder_${num}" placeholder="同一级检索特征排序" /></div>
@@ -448,12 +641,17 @@
                 </div>
               </div>
             </form>
-          </script>
+
+
+
+
+                    </script>
+                </div>
+                <!-- 特征数据面板 -->
+                <div role="tabpanel" class="tab-pane fade" id="traitdata">这里是特征信息</div>
+            </div>
         </div>
-        <!-- 特征数据面板 -->
-        <div role="tabpanel" class="tab-pane fade" id="traitdata">这里是特征信息</div></div>
-    </div>
-  </form>
+    </form>
 </th:block>
 
 </html>

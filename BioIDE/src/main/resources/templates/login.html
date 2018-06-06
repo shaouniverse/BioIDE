@@ -95,7 +95,6 @@
 <!-- bootstrapValidator -->
 <script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
 <script th:src="@{/plugins/bootstrapValidator/js/language/zh_CN.js}"></script>
-
 <script th:inline="javascript">
     /*<![CDATA[*/
     var warning_name = [[#{warning_name}]];
@@ -143,7 +142,7 @@
         //获取host
         $("#base_url").val(window.location.host);
         $('#login_form').bootstrapValidator({
-            language:'zh-CN',
+            language: 'zh-CN',
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon ',
@@ -191,19 +190,5 @@
         });
     });
 </script>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var please_login = [[#{please_login}]];
-    /*]]>*/
-</script>
-<script>
-    //构造登录提示
-    function pleaseLogin() {
-        layer.msg(please_login, function () {
-        });
-        $("#modal-login").modal()
-    }
-</script>
-
 </body>
 </html>

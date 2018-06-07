@@ -206,16 +206,16 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void saveOneByUser(Team thisTeam) {
-        if (thisTeam.getId() == null || thisTeam.getId().equals("") || thisTeam.getId().length() <= 0) {
-            thisTeam.setId(UUID.randomUUID().toString());
-            thisTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
-        }
-        UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        thisTeam.setId(UUID.randomUUID().toString());
+    	UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         thisTeam.setLeader(thisUser.getId());
-        this.teamRepository.save(thisTeam);
+        thisTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
+        
         UserTeam thisUserTeam = new UserTeam();
-        thisUserTeam.setUserId(thisTeam.getLeader());
+        thisUserTeam.setUserId(thisUser.getId());
         thisUserTeam.setTeamId(thisTeam.getId());
+
+        this.teamRepository.save(thisTeam);
         this.userTeamRepository.save(thisUserTeam);
     }
 
@@ -259,12 +259,18 @@ public class TeamServiceImpl implements TeamService {
 	public JSON newOne(Team thisTeam, HttpServletRequest request) {
 		JSONObject thisResult = new JSONObject();
 		try {
-			thisTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
+			thisTeam.setId(UUID.randomUUID().toString());
 			// 获取当前登录用户
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisTeam.setLeader(thisUser.getId());
-			thisTeam.setId(UUID.randomUUID().toString());
+			thisTeam.setAdddate(new Timestamp(System.currentTimeMillis()));
+
+			UserTeam thisUserTeam = new UserTeam();
+	        thisUserTeam.setUserId(thisUser.getId());
+	        thisUserTeam.setTeamId(thisTeam.getId());
+			
 			this.teamRepository.save(thisTeam);
+			this.userTeamRepository.save(thisUserTeam);
 			
 			thisResult.put("result", true);
 			thisResult.put("newId", thisTeam.getId());
@@ -272,5 +278,10 @@ public class TeamServiceImpl implements TeamService {
 			thisResult.put("result", false);
 		}
 		return thisResult;
+	}
+
+	@Override
+	public void saveForUpdate(Team thisTeam) {
+		this.teamRepository.save(thisTeam);
 	}
 }

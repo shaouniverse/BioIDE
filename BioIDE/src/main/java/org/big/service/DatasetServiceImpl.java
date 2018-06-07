@@ -86,13 +86,15 @@ public class DatasetServiceImpl implements DatasetService {
 			}
 			row.put("status", thisStatus);
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String addTime = ""; // 添加时间
+			String addTime = "";
+			String editTime = "";
 			try {
-				addTime = formatter.format(thisPage.getContent().get(i).getCreatedDate());
+				addTime = formatter.format(thisList.get(i).getCreatedDate());
+				editTime = formatter.format(thisList.get(i).getSynchdate());
 			} catch (Exception e) {
 			}
-
 			row.put("createdDate", addTime);
+			row.put("synchdate", editTime);
 			row.put("edit", thisEdit);
 			rows.add(i, row);
 		}
@@ -145,16 +147,19 @@ public class DatasetServiceImpl implements DatasetService {
 						+ "','dataset')\" >" + "<span class=\"glyphicon glyphicon-remove\"></span>" + "</a>";
 			}
 			row.put("select", thisSelect);
-			row.put("dsname", "<a href=\"console/dataset/show/" + thisList.get(i).getId() + "\">"
+			row.put("dsname", "<a href=\"change/dataset/" + thisList.get(i).getId() + "\">"
 					+ thisList.get(i).getDsname() + "</a>");
 			row.put("dsabstract", thisList.get(i).getDsabstract());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String addTime = "";
+			String editTime = "";
 			try {
 				addTime = formatter.format(thisList.get(i).getCreatedDate());
+				editTime = formatter.format(thisList.get(i).getSynchdate());
 			} catch (Exception e) {
 			}
 			row.put("createdDate", addTime);
+			row.put("synchdate", editTime);
 			row.put("edit", thisEdit);
 			rows.add(i, row);
 		}
@@ -165,7 +170,6 @@ public class DatasetServiceImpl implements DatasetService {
 
 	@Override
 	public void saveOne(Dataset thisDataset) {
-		thisDataset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 		thisDataset.setSynchdate(new Timestamp(System.currentTimeMillis()));
 		if (thisDataset.getDsabstract().equals("Default")) {
 			thisDataset.setDsabstract("default");

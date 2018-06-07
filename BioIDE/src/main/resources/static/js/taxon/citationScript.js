@@ -107,3 +107,26 @@ function addCitationReferences(citationNum) {
     $('#countCitationReferences_' + citationNum).val(countCitationReferences + 1);
 
 }
+
+/*var width=$(window).width();
+var height=$(window).height();
+var layer_width="90%";
+var layer_height="90%";
+if(width>760){
+	layer_width="500px";
+	layer_height="500px";
+}
+
+//datasource -- Form1变化监测
+$("select[id='sourcesid_' + (countCitation + 1)]").on("change", function(){
+	if($("#sourcesid_" + (countCitation + 1)).val()=="addNew"){
+		$("#sourcesid" + (countCitation + 1)).empty();
+		layer.open({
+			type: 2,
+			title:'<h4>添加数据源</h4>',
+			fixed: false, //不固定
+			area: [layer_width, layer_height],
+			content: '/console/datasource/addNew'
+		});
+	}
+});*/

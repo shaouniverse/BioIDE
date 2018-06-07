@@ -1,5 +1,6 @@
 package org.big.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +77,7 @@ public class RefController {
 				isError(thisRef, result, model);
 				return "reference/add";
 			}else {
+				thisRef.setInputtime(new Timestamp(System.currentTimeMillis()));
 				this.refService.saveOne(thisRef);
 				return "redirect:/console/ref";
 			}

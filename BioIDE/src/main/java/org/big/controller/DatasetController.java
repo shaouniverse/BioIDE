@@ -53,6 +53,7 @@ public class DatasetController {
 	@RequestMapping(value = "/add", method = { RequestMethod.GET })
 	public String AddDatasetForTeam(Model model, HttpServletRequest request) {
 		Dataset thisDataset = new Dataset();
+		thisDataset.setId(UUID.randomUUID().toString());
 		model.addAttribute("thisDataset", thisDataset);
 		return "dataset/add";
 	}
@@ -83,11 +84,9 @@ public class DatasetController {
 	public String Show(Model model, @PathVariable String id, HttpServletRequest request) {
 		String teamId = (String) request.getSession().getAttribute("teamId");
 		List<Dataset> dsList = this.datasetService.findAllDatasetsByTeamId(teamId);
-		Dataset thisDataset = null;
 		for (Dataset dataset : dsList) {
 			if (dataset.getId().equals(id)) {
-				thisDataset = this.datasetService.findbyID(id);
-				model.addAttribute("thisDataset", thisDataset);
+				model.addAttribute("thisDataset", dataset);
 				int offset_serch = 0;
 				try {
 					offset_serch = Integer.parseInt(request.getParameter("offset"));
@@ -119,8 +118,7 @@ public class DatasetController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "dataset/add";
 		}
-		String datasetID = UUID.randomUUID().toString();
-		thisDataset.setId(datasetID);
+		String datasetID = thisDataset.getId();
 		this.datasetService.addOne(thisDataset, request);
 		String mark = (String) request.getSession().getAttribute("teamId");
 		if (null != mark) {
@@ -130,7 +128,7 @@ public class DatasetController {
 	}
     
     /**
-     *<b>保存Dataset</b>
+     *<b>保存修改后的Dataset</b>
      *<p> 将传入的Dataset实体保存</p>
      * @author BINZI
      * @param thisDataset 传入的Dataset实体
@@ -149,6 +147,6 @@ public class DatasetController {
 			return "dataset/edit";
 		}
 		this.datasetService.saveOne(thisDataset);
-		return "redirect:/console/team/details/" + request.getSession().getAttribute("teamId");
+		return "redirect:/console/dataset";
 	}
 }

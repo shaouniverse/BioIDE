@@ -30,9 +30,8 @@ public class TaxasetServiceImpl implements TaxasetService {
 	public void saveOne(Taxaset thisTaxaset) {
 		thisTaxaset.setId(UUID.randomUUID().toString());
 		thisTaxaset.setStatus(1);
-		thisTaxaset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 		thisTaxaset.setSynchdate(new Timestamp(System.currentTimeMillis()));
-		
+		thisTaxaset.setSynchstatus(0);
 		this.taxasetRepository.save(thisTaxaset);
 	}
 
@@ -54,7 +53,6 @@ public class TaxasetServiceImpl implements TaxasetService {
 	
 	@Override
 	public void updateOneById(Taxaset thisTaxaset) {
-		thisTaxaset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 		thisTaxaset.setSynchdate(new Timestamp(System.currentTimeMillis()));
 		this.taxasetRepository.save(thisTaxaset);
 	}
@@ -113,11 +111,14 @@ public class TaxasetServiceImpl implements TaxasetService {
 			row.put("tsinfo", thisList.get(i).getTsinfo());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String addTime = "";
+			String editTime = "";
 			try {
 				addTime = formatter.format(thisList.get(i).getCreatedDate());
+				editTime = formatter.format(thisList.get(i).getSynchdate());
 			} catch (Exception e) {
 			}
 			row.put("createdDate", addTime);
+			row.put("synchdate", editTime);
 			row.put("edit", thisEdit);
 			rows.add(i, row);
 		}

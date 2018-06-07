@@ -10,7 +10,7 @@ if(width>760){
 	layer_height="500px";
 }
 
-//dataset变化监测
+//datasource -- Form1变化监测
 $("select[id='sourcesid']").on("change", function(){
 	if($("#sourcesid").val()=="addNew"){
 		$("#sourcesid").empty();

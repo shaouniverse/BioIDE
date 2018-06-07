@@ -12,7 +12,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title th:text="#{web_title}">BioIDE</title>
+    <title>BioIDE &nbsp;物种数据采集系统</title>
     <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
@@ -57,9 +57,17 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">
-                                <a class="btn btn-app" th:href="@{/console/} + ${session.teamId}" href="/console/dataset">
-                                    <i class="fa fa-chevron-left"></i> <span>取消编辑</span>
-                                </a>
+                            	<!-- <sapn th:if="${not #strings.isEmpty(session.datasetID)}">
+		                        	<a class="btn btn-app" th:if="${id} ne ${session.datasetID}" th:href="@{/console/} + ${session.teamId}">
+		                        		<i class="fa fa-chevron-left"></i> <span>取消编辑</span>
+		                        	</a>
+		                        	<a class="btn btn-app" th:if="${id} eq ${session.datasetID}" th:href="@{/console/dataset}">
+		                         		<i class="fa fa-chevron-left"></i> <span>取消编辑</span>
+		                        	</a>
+							    </span> -->
+		                        <a class="btn btn-app" th:href="@{/console/} + ${session.teamId}">
+		                         	<i class="fa fa-chevron-left"></i> <span>取消编辑</span>
+		                        </a>
                                 <a class="btn btn-app" onclick="clearInput();">
                                     <i class="fa fa-rotate-left"></i> <span>清空表单</span>
                                 </a>

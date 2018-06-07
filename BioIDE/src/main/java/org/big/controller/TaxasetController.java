@@ -1,5 +1,6 @@
 package org.big.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,6 +91,7 @@ public class TaxasetController {
 			}else {
 				String datasetID = (String) request.getSession().getAttribute("datasetID");
 				thisTaxaset.setDataset(this.datasetService.findbyID(datasetID));
+				thisTaxaset.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 				this.taxasetService.saveOne(thisTaxaset);
 				return "redirect:/console/taxaset";
 			}

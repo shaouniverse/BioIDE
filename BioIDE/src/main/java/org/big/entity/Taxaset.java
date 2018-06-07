@@ -96,7 +96,7 @@ public class Taxaset implements Serializable {
 		return this.synchdate;
 	}
 
-	public void setSynchdate(Date synchdate) {
+	public void setSynchdate(Timestamp synchdate) {
 		this.synchdate = synchdate;
 	}
 
@@ -158,7 +158,7 @@ public class Taxaset implements Serializable {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 

@@ -80,7 +80,6 @@ public class DatasourceServiceImpl implements DatasourceService{
 		thisDatasource.setInputer(thisUser.getId());
 		thisDatasource.setId(UUID.randomUUID().toString());
 		thisDatasource.setStatus(1);
-		thisDatasource.setInputtime(new Timestamp(System.currentTimeMillis()));
 		thisDatasource.setSynchdate(new Timestamp(System.currentTimeMillis()));
 		thisDatasource.setSynchstatus(0);
 		
@@ -105,7 +104,6 @@ public class DatasourceServiceImpl implements DatasourceService{
 	
 	@Override
 	public void updateOneById(@Valid Datasource thisDatasource) {
-		thisDatasource.setInputtime(new Timestamp(System.currentTimeMillis()));
 		thisDatasource.setSynchdate(new Timestamp(System.currentTimeMillis()));
 		this.datasourceRepository.save(thisDatasource);
 	}
@@ -154,11 +152,14 @@ public class DatasourceServiceImpl implements DatasourceService{
 			row.put("inputer", this.userService.findbyID(thisList.get(i).getInputer()).getNickname());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String addTime = "";
+			String editTime = "";
 			try {
 				addTime = formatter.format(thisList.get(i).getInputtime());
+				editTime = formatter.format(thisList.get(i).getSynchdate());
 			} catch (Exception e) {
 			}
 			row.put("inputtime", addTime);
+			row.put("synchdate", editTime);
 			row.put("versions", thisList.get(i).getVersions());
 			row.put("edit", thisEdit);
 			rows.add(i, row);

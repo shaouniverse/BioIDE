@@ -136,4 +136,13 @@ public interface TeamService {
      * @return com.alibaba.fastjson.JSON
      */
 	JSON newOne(Team thisTeam, HttpServletRequest request);
+	
+	/**
+	 *<b>保存修改Team实体</b>
+	 *<p> 保存修改Team实体</p>
+	 * @author BINZI
+	 * @param thisTeam 实体
+	 * @return
+	 */
+	void saveForUpdate(Team thisTeam);
 }

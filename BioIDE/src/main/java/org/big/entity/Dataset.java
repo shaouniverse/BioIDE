@@ -69,7 +69,7 @@ public class Dataset implements Serializable {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -125,7 +125,7 @@ public class Dataset implements Serializable {
 		return synchdate;
 	}
 
-	public void setSynchdate(Date synchdate) {
+	public void setSynchdate(Timestamp synchdate) {
 		this.synchdate = synchdate;
 	}
 

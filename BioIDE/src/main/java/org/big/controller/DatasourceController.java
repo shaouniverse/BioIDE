@@ -1,5 +1,6 @@
 package org.big.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,6 +97,7 @@ public class DatasourceController {
 			}else {
 				String datasetID = (String) request.getSession().getAttribute("datasetID");
 				thisDatasource.setDataset(this.datasetService.findbyID(datasetID));
+				thisDatasource.setInputtime(new Timestamp(System.currentTimeMillis()));
 				this.datasourceService.saveOne(thisDatasource);
 				return "redirect:/console/datasource";
 			}

@@ -160,7 +160,7 @@ public class TeamRestController {
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public JSON New(Model model, @ModelAttribute("thisTeam") Team thisTeam, HttpServletRequest request) {
 		if (null != thisTeam.getNote() && !"".equals(thisTeam.getNote()) && "Default".equals(thisTeam.getNote())) {
 			thisTeam.setNote(thisTeam.getNote().toLowerCase());

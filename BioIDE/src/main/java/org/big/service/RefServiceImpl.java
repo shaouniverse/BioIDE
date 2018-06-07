@@ -80,11 +80,14 @@ public class RefServiceImpl implements RefService {
 			row.put("inputer", this.userService.findbyID(thisList.get(i).getInputer()).getNickname());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String addTime = "";
+			String editTime = "";
 			try {
 				addTime = formatter.format(thisList.get(i).getInputtime());
+				editTime = formatter.format(thisList.get(i).getSynchdate());
 			} catch (Exception e) {
 			}
 			row.put("inputtime", addTime);
+			row.put("synchdate", editTime);
 			row.put("edit", thisEdit);
 			rows.add(i, row);
 		}
@@ -103,7 +106,6 @@ public class RefServiceImpl implements RefService {
 		thisRef.setId(UUID.randomUUID().toString());
 		UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		thisRef.setInputer(thisUser.getId());
-		thisRef.setInputtime(new Timestamp(System.currentTimeMillis()));
 		thisRef.setSynchdate(new Timestamp(System.currentTimeMillis()));
 		thisRef.setSynchstatus(0);
 		thisRef.setStatus(1);
@@ -129,7 +131,6 @@ public class RefServiceImpl implements RefService {
 
 	@Override
 	public void updateOneById(@Valid Ref thisRef) {
-		thisRef.setInputtime(new Timestamp(System.currentTimeMillis()));
 		thisRef.setSynchdate(new Timestamp(System.currentTimeMillis()));
 		this.refRepository.save(thisRef);
 	}

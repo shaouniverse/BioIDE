@@ -1,6 +1,8 @@
 package org.big.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 import java.util.Date;
@@ -75,7 +77,7 @@ public class Datasource implements Serializable {
 		return this.inputtime;
 	}
 
-	public void setInputtime(Date inputtime) {
+	public void setInputtime(Timestamp inputtime) {
 		this.inputtime = inputtime;
 	}
 
@@ -91,7 +93,7 @@ public class Datasource implements Serializable {
 		return this.synchdate;
 	}
 
-	public void setSynchdate(Date synchdate) {
+	public void setSynchdate(Timestamp synchdate) {
 		this.synchdate = synchdate;
 	}
 

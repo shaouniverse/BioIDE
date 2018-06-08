@@ -25,23 +25,6 @@
     <input class="hidden" th:field="*{remark}" readonly="readonly"></input>
     <input class="hidden" th:field="*{status}" readonly="readonly"></input>
  	<div class="col-md-6">
-	 	<div class="form-group">
-	        <label for="author" class="col-sm-4 control-label">作者:</label>
-	        <div class="col-sm-8">
-	            <input th:field="*{author}" type="text" class="form-control" id="author" name="author" placeholder="1~30个字符"/>
-	        </div>
-	    </div>
-	</div>
-	<div class="col-md-6">
-	 	<div class="form-group">
-	        <label for="translator" class="col-sm-4 control-label">译者:</label>
-	        <div class="col-sm-8">
-	            <input th:field="*{translator}" type="text" class="form-control" id="translator" name="translator" placeholder="1~30个字符"/>
-	        </div>
-	    </div>
-	</div>
-	
-	<div class="col-md-6">
 	    <div class="form-group">
 	        <label for="title" class="col-sm-4 control-label">参考文献名称:</label>
 	        <div class="col-sm-8">
@@ -57,6 +40,15 @@
 	        </div>
 	    </div>
 	</div>
+ 	<div class="col-md-6">
+	 	<div class="form-group">
+	        <label for="author" class="col-sm-4 control-label">作者:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{author}" type="text" class="form-control" id="author" name="author" placeholder="1~30个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
 	<div class="col-md-6">
 	    <div class="form-group">
 	        <label for="tpage" class="col-sm-4 control-label">总页数:</label>
@@ -65,6 +57,16 @@
 	        </div>
 	    </div>
 	</div>
+	
+	<div class="col-md-6">
+	 	<div class="form-group">
+	        <label for="translator" class="col-sm-4 control-label">译者:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{translator}" type="text" class="form-control" id="translator" name="translator" placeholder="1~30个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
 	<div class="col-md-6">
 	    <div class="form-group">
 	        <label for="tchar" class="col-sm-4 control-label">总字数:</label>
@@ -81,14 +83,7 @@
 	        </div>
 	    </div>
 	</div>
-	<div class="col-md-6">
-	    <div class="form-group">
-	        <label for="journal" class="col-sm-4 control-label">期刊|专著名称:</label>
-	        <div class="col-sm-8">
-	            <input th:field="*{journal}" type="text" class="form-control" id="journal" name="journal" placeholder="1~50个字符"/>
-	        </div>
-	    </div>
-	</div>
+	
 	<div class="col-md-6">
 	    <div class="form-group">
 	        <label for="languages" class="col-sm-4 control-label">语言:</label>
@@ -97,6 +92,16 @@
 	        </div>
 	    </div>
     </div>
+	
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="journal" class="col-sm-4 control-label">期刊|专著名称:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{journal}" type="text" class="form-control" id="journal" name="journal" placeholder="1~50个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
 	<div class="col-md-6">
 	    <div class="form-group">
 	        <label for="olang" class="col-sm-4 control-label">原始语言:</label>

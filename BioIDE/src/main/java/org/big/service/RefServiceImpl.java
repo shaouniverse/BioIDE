@@ -44,7 +44,7 @@ public class RefServiceImpl implements RefService {
 		sort = request.getParameter("sort");
 		order = request.getParameter("order");
 		if (sort == null || sort.length() <= 0) {
-			sort = "inputtime";
+			sort = "synchdate";
 		}
 		if (order == null || order.length() <= 0) {
 			order = "desc";
@@ -184,18 +184,17 @@ public class RefServiceImpl implements RefService {
 	public JSON newOne(@Valid Ref thisRef, HttpServletRequest request) {
 		JSONObject thisResult = new JSONObject();
 		try {
-			thisRef.setInputtime(new Timestamp(System.currentTimeMillis()));
-			thisRef.setSynchdate(new Timestamp(System.currentTimeMillis()));
-			thisRef.setStatus(1);
 			String id = UUID.randomUUID().toString();
 			thisRef.setId(id);
+			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			thisRef.setInputer(thisUser.getId());
+			thisRef.setInputtime(new Timestamp(System.currentTimeMillis()));
+			thisRef.setSynchdate(new Timestamp(System.currentTimeMillis()));
 			thisRef.setSynchstatus(0);
-			// 获取当前登录用户
-			 UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			 thisRef.setInputer(thisUser.getId());
-			// 获取当前选中Dataset
-			String dsid = (String) request.getSession().getAttribute("datasetID");
-
+			thisRef.setStatus(1);
+			
+			this.refRepository.save(thisRef);
+			
 			thisResult.put("result", true);
 			thisResult.put("newId", this.refRepository.findOneById(id).getId());
 			thisResult.put("newTitle", this.refRepository.findOneById(id).getTitle());

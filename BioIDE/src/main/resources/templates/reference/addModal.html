@@ -48,8 +48,8 @@
 <script>
 //清空表单
 function clearInput() {
-    $('#thisForm')[0].reset();
-    $('#thisForm').data('bootstrapValidator')
+    $('#addForm')[0].reset();
+    $('#addForm').data('bootstrapValidator')
     .updateStatus('author', 'NOT_VALIDATED',null)
     .updateStatus('translator', 'NOT_VALIDATED',null)
     .updateStatus('title', 'NOT_VALIDATED',null)
@@ -105,7 +105,7 @@ function clearInput() {
 $(document).ready(function() {
     //获取host
     $("#base_url").val(window.location.host);
-    $('#thisForm').bootstrapValidator({
+    $('#addForm').bootstrapValidator({
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon ',
@@ -327,7 +327,7 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
 /* 添加Reference */
-/* function addRef() {
+function addRef() {
 	layer.load(2);
 	var obj = $('#addForm').serialize();
 	$.ajax({
@@ -338,16 +338,15 @@ $(document).ready(function() {
         contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
         success: function (rsl) {
       	if (rsl.result == true) {
-      		parent.$("#sourcesid").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
-            parent.$('#form_1').data('bootstrapValidator').updateStatus('sourcesid', 'NOT_VALIDATED',null).validateField('sourcesid');
+      		parent.$("#references_1").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
             parent.layer.close(parent.layer.getFrameIndex(window.name));
       		layer.msg("添加成功！", {time: 1000});
-			}else{
+		}else{
 				layer.msg("添加失败！", {time: 1000});
-			}
+			 }
         }
     });
-}; */
+};
 </script>
 </body>
 </html>

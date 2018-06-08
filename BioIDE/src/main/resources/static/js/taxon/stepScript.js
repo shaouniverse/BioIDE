@@ -69,7 +69,7 @@ function verifierStep(stepNum){
         case "3":
             if(
                 formValidator(1) &&
-                submitAllCitation()
+                formValidator(2)
             ){//验证通过
                 return true;
             }
@@ -80,10 +80,8 @@ function verifierStep(stepNum){
         case "4":
             if(
                 formValidator(1) &&
-                submitAllCitation() &&
-                submitAllDescription()&&
-                submitAllProtection()&&
-                submitAllTaxkey()
+                formValidator(2) &&
+                formValidator(3)
             ){//验证通过
                 return true;
             }
@@ -94,10 +92,8 @@ function verifierStep(stepNum){
         case "5":
             if(
                 formValidator(1) &&
-                submitAllCitation() &&
-                submitAllDescription() &&
-                submitAllProtection() &&
-                submitAllTaxkey()&&
+                formValidator(2) &&
+                formValidator(3) &&
                 formValidator(4)
             ){//验证通过
                 return true;
@@ -109,10 +105,8 @@ function verifierStep(stepNum){
         case "6":
             if(
                 formValidator(1) &&
-                submitAllCitation() &&
-                submitAllDescription() &&
-                submitAllProtection() &&
-                submitAllTaxkey() &&
+                formValidator(2) &&
+                formValidator(3)&&
                 formValidator(4) &&
                 formValidator(5)
             ){//验证通过
@@ -125,10 +119,8 @@ function verifierStep(stepNum){
         case "7":
             if(
                 formValidator(1) &&
-                submitAllCitation() &&
-                submitAllDescription() &&
-                submitAllProtection() &&
-                submitAllTaxkey() &&
+                formValidator(2) &&
+                formValidator(3) &&
                 formValidator(4) &&
                 formValidator(5) &&
                 formValidator(6)
@@ -142,10 +134,8 @@ function verifierStep(stepNum){
         case "8":
             if(
                 formValidator(1) &&
-                submitAllCitation() &&
-                submitAllDescription() &&
-                submitAllProtection() &&
-                submitAllTaxkey() &&
+                formValidator(2) &&
+                formValidator(3) &&
                 formValidator(4) &&
                 formValidator(5) &&
                 formValidator(6) &&

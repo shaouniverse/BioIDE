@@ -9,7 +9,7 @@ function removeProtection(protectionNum) {
 //提交一个保护数据
 function submitProtection(protectionNum) {
     protectionFormValidator(protectionNum);
-    if ($('#protectionForm_' + protectionNum).data('bootstrapValidator').isValid()) {
+    if ($('#protectionForm_' + protectionNum).data('bootstrapValidator').isValid() && referencesValidator('newProtectionReferences_'+protectionNum,3)) {
         //处理ajax提交
         //
         //
@@ -116,12 +116,6 @@ function addProtection() {
     });
 
 }
-
-//选择参考文献类型
-function selectProtectionReferences(protectionNum, referencesNum, referencesId, referencesText) {
-    $("#protectionReferencesType_" + protectionNum + "_" + referencesNum).val(referencesId);
-    $("#protectionReferencesBtn_" + protectionNum + "_" + referencesNum).text(referencesText);
-}
 //删除一个新参考文献
 function removeProtectionReferences(protectionNum, referencesNum) {
     $("#protectionReferencesForm_" + protectionNum + "_" + referencesNum).remove();
@@ -135,9 +129,16 @@ function addProtectionReferences(protectionNum) {
 
     $('#protectionReferencesForm').tmpl(thisReferencesNum).appendTo('#newProtectionReferences_' + protectionNum);
 
-    $("#protectionReferences_" + protectionNum + "_" + (countProtectionReferences + 1)).select2({
-        placeholder: "请选择参考文献"
-    });
+    buildSelect2("protectionReferences_" + protectionNum + "_" + (countProtectionReferences + 1), "console/ref/rest/select", "请选择参考文献");
+
+    //参考文献验证规则
+    addReferencesValidator(
+        "newProtectionReferences_"+protectionNum,
+        (countProtectionReferences+1),
+        "protectionReferences_"+protectionNum+"_",
+        "protectionReferencesPageS_"+protectionNum+"_",
+        "protectionReferencesPageE_"+protectionNum+"_"
+    );
 
     $('#countProtectionReferences_' + protectionNum).val(countProtectionReferences + 1);
 

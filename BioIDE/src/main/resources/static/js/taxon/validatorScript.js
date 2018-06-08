@@ -230,13 +230,14 @@ function formValidator(formNum) {
                     canPass = referencesValidator('newReferences',1);
                 break;
             case 2:
-                if($("tr[id^='referencesForm_']").length<=0)
-                    canPass = true;//通过校验
-                else
-                    canPass = referencesValidator('newReferences',1);
+                canPass = submitAllCitation();
                 break;
             case 3:
-                canPass = true;
+                canPass = (
+                    submitAllDescription()&&
+                    submitAllProtection()&&
+                    submitAllTaxkey()
+                );
                 break;
             case 4:
                 canPass = true;

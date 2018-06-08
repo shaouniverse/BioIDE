@@ -14,7 +14,7 @@ function removeDescription(descriptionNum) {
 //提交一个描述
 function submitDescription(descriptionNum) {
     descriptionFormValidator(descriptionNum);
-    if ($('#descriptionForm_' + descriptionNum).data('bootstrapValidator').isValid()) {
+    if ($('#descriptionForm_' + descriptionNum).data('bootstrapValidator').isValid() && referencesValidator('newDescriptionReferences_'+descriptionNum,3)) {
         //处理ajax提交
         //
         //
@@ -113,9 +113,16 @@ function addDescriptionReferences(descriptionNum) {
 
     $('#descriptionReferencesForm').tmpl(thisReferencesNum).appendTo('#newDescriptionReferences_' + descriptionNum);
 
-    $("#descriptionReferences_" + descriptionNum + "_" + (countDescriptionReferences + 1)).select2({
-        placeholder: "请选择参考文献"
-    });
+    buildSelect2("descriptionReferences_" + descriptionNum + "_" + (countDescriptionReferences + 1), "console/ref/rest/select", "请选择参考文献");
+
+    //参考文献验证规则
+    addReferencesValidator(
+        "newDescriptionReferences_"+descriptionNum,
+        (countDescriptionReferences+1),
+        "descriptionReferences_"+descriptionNum+"_",
+        "descriptionReferencesPageS_"+descriptionNum+"_",
+        "descriptionReferencesPageE_"+descriptionNum+"_"
+    );
 
     $('#countDescriptionReferences_' + descriptionNum).val(countDescriptionReferences + 1);
 

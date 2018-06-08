@@ -86,6 +86,7 @@ function addCitation() {
         $("#citationAuthor_" + (countCitation + 1)).text(" " + $("#authorship_" + (countCitation + 1)).val());
     });
 
+
 }
 //删除一个新参考文献
 function removeCitationReferences(citationNum, referencesNum) {
@@ -105,6 +106,15 @@ function addCitationReferences(citationNum) {
     });
 
     $('#countCitationReferences_' + citationNum).val(countCitationReferences + 1);
+
+    //参考文献验证规则
+    addReferencesValidator(
+        "newCitationReferences_"+citationNum,
+        (countCitationReferences+1),
+        "citationReferences_"+citationNum+"_",
+        "citationReferencesPageS_"+citationNum+"_",
+        "citationReferencesPageE_"+citationNum+"_"
+    );
 
 }
 

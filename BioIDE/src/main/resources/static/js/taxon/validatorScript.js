@@ -215,8 +215,87 @@ function changeVerificationTab(tabNum, status) {
 //统一验证form
 function formValidator(formNum) {
     $('#form_' + formNum).data('bootstrapValidator').validate();
+    var canPass=false;
     //是否通过校验
     if (!$('#form_' + formNum).data('bootstrapValidator').isValid()) {
+        //没有通过校验
+    }
+    else {
+        //处理参考文献
+        switch(formNum) {
+            case 1:
+                if($("tr[id^='referencesForm_']").length<=0)
+                    canPass = true;//通过校验
+                else
+                    canPass = referencesValidator('newReferences',1);
+                break;
+            case 2:
+                if($("tr[id^='referencesForm_']").length<=0)
+                    canPass = true;//通过校验
+                else
+                    canPass = referencesValidator('newReferences',1);
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+
+                break;
+            case 7:
+
+                break;
+            default:
+                canPass = true;
+        }
+    }
+    if(canPass){
+        changeVerificationTab(formNum, 1);
+        completeStep(formNum);
+        return true;//通过校验
+    }
+    else{
+        changeVerificationTab(formNum, -1);
+        incompleteStep(formNum);
+        return false;//没有通过校验
+    }
+}
+
+//构造一个ref验证规则
+function addReferencesValidator(formId,refId,references,referencesPageS,referencesPageE) {
+    $("#" + formId).bootstrapValidator("addField", references + refId, {
+        validators: {
+            notEmpty: {}
+        }
+    });
+    $("#" + formId).bootstrapValidator("addField", referencesPageS + refId, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 20
+            },
+        }
+    });
+    $("#" + formId).bootstrapValidator("addField", referencesPageE + refId, {
+        validators: {
+            stringLength: {
+                min: 0,
+                max: 20
+            },
+        }
+    });
+}
+
+//统一验证ref
+function referencesValidator(formId,formNum) {
+    $('#' + formId).data('bootstrapValidator').validate();
+    //是否通过校验
+    if (!$('#' + formId).data('bootstrapValidator').isValid()) {
         changeVerificationTab(formNum, -1);
         incompleteStep(formNum);
         return false;//没有通过校验

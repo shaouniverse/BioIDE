@@ -1,10 +1,14 @@
 package org.big.controller.rest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.big.entity.Datasource;
 import org.big.service.DatasourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -90,11 +94,7 @@ public class DatasourceRestController {
      * @return com.alibaba.fastjson.JSON
      */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public JSON New(HttpServletRequest request) {
-		Datasource thisDatasource = new Datasource();
-		thisDatasource.setVersions(request.getParameter("versions"));
-		thisDatasource.setTitle(request.getParameter("title"));
-		thisDatasource.setInfo(request.getParameter("info"));
+	public JSON New(@ModelAttribute("thisDatasource") @Valid Datasource thisDatasource, BindingResult result, Model model, HttpServletRequest request) {
 		return this.datasourceService.newOne(thisDatasource, request);
 	}
 }

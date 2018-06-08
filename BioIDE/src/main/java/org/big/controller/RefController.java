@@ -109,4 +109,18 @@ public class RefController {
 		model.addAttribute("errorMsg", errorMsg);
 	}
 	
+	
+	/**
+     *<b>Taxon的添加页面Select下拉选在指定Team下添加Ref</b>
+     *<p> 添加新的Ref的编辑的页面</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
+	@RequestMapping(value = "/addNew", method = RequestMethod.GET)
+	public String addNew(Model model, HttpServletRequest request) {
+		Ref thisRef = new Ref();
+        model.addAttribute("thisRef", thisRef);
+		return "reference/addModal";
+	}
 }

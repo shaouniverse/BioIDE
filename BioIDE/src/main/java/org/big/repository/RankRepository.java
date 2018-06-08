@@ -63,7 +63,14 @@ public interface RankRepository extends BaseRepository<Rank, Integer> {
      */
 	@Query(value = "Select r from Rank r where r.enname = ?1")
     Rank findOneByEnname(String EnName);
-	
+	/**
+     *<b>带分页排序的条件查询</b>
+     *<p> 带分页排序的条件查询</p>
+     * @author BINZI
+     * @param findText 条件关键词，这里是模糊匹配
+     * @param pageable 分页排序方案实体
+     * @return org.springframework.data.domain.Page<org.big.entity.Rank>
+     */
 	@Query(value = "Select r from Rank r where (r.enname like %?1%)")
 	Page<Rank> searchByEnname(String findText, Pageable pageable);
 }

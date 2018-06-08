@@ -43,33 +43,33 @@
                 <li class="active"><i class="fa fa-cube"></i> 分类单元管理</li>
             </ol>
         </section>
-        <!-- Main content -->
+        <!-- 内容区 -->
         <section class="content">
             <div class="box box-default box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">操作</h3>
-
+                    
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
-                <!-- /.box-header -->
+                <!-- box-body -->
                 <div class="box-body">
-                    <a class="btn btn-app" th:href="@{/console/taxon/add}" href="/taxon/add">
-                        <i class="fa fa-plus"></i> 新建
+                    <a class="btn btn-app" th:href="@{/console/taxon/add}" href="/">
+                        <i class="fa fa-plus"></i> <span>新建</span>
                     </a>
                     <a class="btn btn-app" onclick="editSelectObject('taxon');">
-                        <i class="fa fa-edit"></i> 修改
+                        <i class="fa fa-edit"></i> <span>修改</span>
                     </a>
                     <a class="btn btn-app" onclick="removeSelectObject('taxon');">
-                        <i class="fa fa-remove"></i> 删除
+                        <i class="fa fa-remove"></i> <span>删除</span>
                     </a>
                 </div>
-                <!-- /.box-body -->
             </div>
+            <!-- table -->
             <div class="table table-responsive">
-                <table
+            	<table
                         id="results_table"
                         data-locale="zh-CN"
                         data-classes="table table-hover table-condensed"
@@ -90,9 +90,10 @@
                         <th data-field="select" data-align="center" data-sortable="false"></th>
                         <th data-field="scientificname" data-align="center" data-sortable="true">学名</th>
                         <th data-field="authorstr" data-align="center" data-sortable="true">命名人|年代</th>
-                       <!--  <th data-field="epithet" data-align="center" data-sortable="true">种|亚种加词</th> -->
+                        <th data-field="epithet" data-align="center" data-sortable="true">种|亚种加词</th>
                         <th data-field="inputer" data-align="center" data-sortable="true">录入人</th>
                         <th data-field="inputtime" data-align="center" data-sortable="true">录入时间</th>
+                        <th data-field="synchdate" data-align="center" data-sortable="true">更新时间</th>
                         <th data-field="rankid" data-align="center" data-sortable="true">等级</th>
                         <th data-field="edit" data-align="center" data-sortable="false">操作</th>
                     </tr>
@@ -100,20 +101,26 @@
                 </table>
             </div>
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
     <footer class="main-footer">
         <th:block th:replace="pageFrame/basicsFooter :: copy"></th:block>
     </footer>
     <!-- Control Sidebar -->
-    <th:block th:replace="pageFrame/basicsControl :: copy"></th:block>
+    <span th:replace="pageFrame/basicsControl :: copy" />
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
-<!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
+<!-- 引入js -->
 <th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
+<!-- page_script -->
+<script th:src="@{/js/TableScript.js}"></script>
 </body>
+<script type="text/javascript">
+	$(function() {
+		$('#results_table').bootstrapTable('hideColumn', 'epithet');
+		$('#results_table').bootstrapTable('hideColumn', 'inputtime');
+	});
+</script>
 </html>

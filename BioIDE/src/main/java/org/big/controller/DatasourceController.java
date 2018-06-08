@@ -54,8 +54,8 @@ public class DatasourceController {
 	}
 	
 	/**
-     *<b>Taxon的添加页面Select下拉选在指定Team下添加Dataset</b>
-     *<p> 添加新的Dataset的编辑的页面</p>
+     *<b>Taxon的添加页面Select下拉选在指定Team下添加Datasource</b>
+     *<p> 添加新的Datasource的编辑的页面</p>
      * @author BINZI
      * @param model 初始化模型
      * @return java.lang.String

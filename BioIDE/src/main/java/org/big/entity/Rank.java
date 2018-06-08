@@ -20,7 +20,7 @@ public class Rank implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	private String id;
 
 	private int sort;
 	
@@ -35,13 +35,15 @@ public class Rank implements Serializable {
 	public Rank() {
 	}
 
-	public int getId() {
-		return this.id;
+	public String getId() {
+		return id;
 	}
 
-	public void setId(int id) {
+
+	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	public int getSort() {
 		return sort;
@@ -95,7 +97,8 @@ public class Rank implements Serializable {
 		int result = 1;
 		result = prime * result + ((chname == null) ? 0 : chname.hashCode());
 		result = prime * result + ((enname == null) ? 0 : enname.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + sort;
 		result = prime * result + ((taxons == null) ? 0 : taxons.hashCode());
 		return result;
 	}
@@ -119,7 +122,12 @@ public class Rank implements Serializable {
 				return false;
 		} else if (!enname.equals(other.enname))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (sort != other.sort)
 			return false;
 		if (taxons == null) {
 			if (other.taxons != null)

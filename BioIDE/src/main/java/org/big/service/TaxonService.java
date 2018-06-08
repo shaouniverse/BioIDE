@@ -24,7 +24,7 @@ public interface TaxonService {
 	 * @author BINZI
 	 * @param thisTaxon
 	 */
-	JSON addTaxonBaseInfo(@Valid Taxon thisTaxon);
+	JSON addTaxonBaseInfo(@Valid Taxon thisTaxon, HttpServletRequest request);
 	// 自定义Taxon增删改查
 	 /**
      *<b>根据TaxonId查找一个Taxon实体</b>
@@ -35,4 +35,28 @@ public interface TaxonService {
      */
 	Taxon findOneById(String id);
 
+	/**
+     *<b>将Form1的Reference相关属性拼装成JSON数据</b>
+     *<p> 将Form1的Reference相关属性拼装成JSON数据</p>
+     * @author BINZI
+     * @param Id 实体的id
+     * @return com.alibaba.fastjson.JSON
+     */
+	JSON handleReferenceToJson(HttpServletRequest request);
+	
+	/**
+     *<b> 根据id逻辑删除一个实体</b>
+     *<p> 据id逻辑删除一个实体</p>
+     * @param id
+     * @return
+     */
+	boolean logicRemove(String id);
+	
+	/**
+     *<b> 根据id修改一个实体</b>
+     *<p> 据id修改一个实体</p>
+     * @param id
+     * @return
+     */
+	void updateOneById(@Valid Taxon thisTaxon);
 }

@@ -1,11 +1,15 @@
 package org.big.controller.rest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.big.entity.Taxaset;
 import org.big.service.TaxasetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -90,10 +94,7 @@ public class TaxasetRestController {
      * @return com.alibaba.fastjson.JSON
      */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public JSON New(HttpServletRequest request) {
-		Taxaset thisTaxaset = new Taxaset();
-		thisTaxaset.setTsname(request.getParameter("tsname"));
-		thisTaxaset.setTsinfo(request.getParameter("tsinfo"));
+	public JSON New(@ModelAttribute("thisTaxaset") @Valid Taxaset thisTaxaset, BindingResult result, Model model, HttpServletRequest request) {
 		return this.taxasetService.newOne(thisTaxaset, request);
 	}
 }

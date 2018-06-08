@@ -1,7 +1,10 @@
 package org.big.controller;
 
-import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.big.entity.Dataset;
 import org.big.entity.Taxaset;
@@ -10,6 +13,9 @@ import org.big.service.TaxonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +60,6 @@ public class TaxonController {
         Dataset thisDataset = new Dataset();
         Taxaset thisTaxaset = new Taxaset();
         thisTaxon.setId(UUID.randomUUID().toString());
-        thisTaxon.setInputtime(new Timestamp(System.currentTimeMillis()));
         model.addAttribute("thisTaxon", thisTaxon);
         model.addAttribute("thisDataset", thisDataset);
         model.addAttribute("thisTaxaset", thisTaxaset);
@@ -62,7 +67,7 @@ public class TaxonController {
     }
     
     /**
-     *<b>修改Taxon</b>
+     *<b>去修改Taxon</b>
      *<p> 修改Taxon的编辑的页面</p>
      * @author BINZI
      * @param model 初始化模型
@@ -73,5 +78,29 @@ public class TaxonController {
 		Taxon thisTaxon = this.taxonService.findOneById(id);
 		model.addAttribute("thisTaxon", thisTaxon);
 		return "taxon/edit";
+	}
+	
+	/**
+     *<b>保存修改Taxon</b>
+     *<p> 修改Taxon的编辑的页面</p>
+     * @author BINZI
+     * @param model 初始化模型
+     * @return java.lang.String
+     */
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveEdit(@ModelAttribute("thisTaxon") @Valid Taxon thisTaxon, BindingResult result, Model model, HttpServletRequest request){
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			String errorMsg = "";
+			for (ObjectError error : list) {
+				errorMsg = errorMsg + error.getDefaultMessage() + ";";
+			}
+			model.addAttribute("thisTaxon", thisTaxon);
+			model.addAttribute("errorMsg", errorMsg);
+			return "taxon/edit";
+		}else {
+			this.taxonService.updateOneById(thisTaxon);
+			return "redirect:/console/taxon";
+		}
 	}
 }

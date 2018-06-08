@@ -164,12 +164,12 @@ public class RefServiceImpl implements RefService {
 		}
 		thisSelect.put("incompleteResulte", incompleteResulte);
 		thisList = thisPage.getContent();
-		/*if (findPage == 1) {
+		if (findPage == 1) {
 			JSONObject row = new JSONObject();
 			row.put("id", "addNew");
-			row.put("full_name", "新建一个分类单元集");
+			row.put("full_name", "新建参考文献");
 			items.add(row);
-		}*/
+		}
 		for (int i = 0; i < thisList.size(); i++) {
 			JSONObject row = new JSONObject();
 			row.put("id", thisList.get(i).getId());
@@ -178,5 +178,30 @@ public class RefServiceImpl implements RefService {
 		}
 		thisSelect.put("items", items);
 		return thisSelect;
+	}
+
+	@Override
+	public JSON newOne(@Valid Ref thisRef, HttpServletRequest request) {
+		JSONObject thisResult = new JSONObject();
+		try {
+			thisRef.setInputtime(new Timestamp(System.currentTimeMillis()));
+			thisRef.setSynchdate(new Timestamp(System.currentTimeMillis()));
+			thisRef.setStatus(1);
+			String id = UUID.randomUUID().toString();
+			thisRef.setId(id);
+			thisRef.setSynchstatus(0);
+			// 获取当前登录用户
+			 UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			 thisRef.setInputer(thisUser.getId());
+			// 获取当前选中Dataset
+			String dsid = (String) request.getSession().getAttribute("datasetID");
+
+			thisResult.put("result", true);
+			thisResult.put("newId", this.refRepository.findOneById(id).getId());
+			thisResult.put("newTitle", this.refRepository.findOneById(id).getTitle());
+		} catch (Exception e) {
+			thisResult.put("result", false);
+		}
+		return thisResult;
 	}
 }

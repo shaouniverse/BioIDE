@@ -13,7 +13,7 @@ function removeReferences (referencesNum) {
 }
 //添加一个新参考文献
 function addReferences () {
-
+	
     var countReferences=parseInt($('#countReferences').val());
 
     var thisReferencesNum = {num: countReferences+1};
@@ -22,5 +22,4 @@ function addReferences () {
     // 参考文件下拉选   
     buildSelect2("references_" + (countReferences + 1), "console/ref/rest/select", "请选择参考文献");
     $('#countReferences').val(countReferences+1);
-
 }

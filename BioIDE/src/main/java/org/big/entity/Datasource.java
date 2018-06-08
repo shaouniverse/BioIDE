@@ -202,4 +202,10 @@ public class Datasource implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Datasource [id=" + id + ", info=" + info + ", title="
+				+ title + ", versions=" + versions + "]";
+	}
+
 }

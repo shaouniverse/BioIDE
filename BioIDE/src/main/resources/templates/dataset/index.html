@@ -114,4 +114,9 @@
 <!-- page_script -->
 <script th:src="@{/js/TableScript.js}"></script>
 </body>
+<script type="text/javascript">
+	$(function() {
+		$('#results_table').bootstrapTable('hideColumn', 'createdDate');
+	});
+</script>
 </html>

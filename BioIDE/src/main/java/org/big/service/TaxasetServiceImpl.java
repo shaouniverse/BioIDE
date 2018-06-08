@@ -77,15 +77,15 @@ public class TaxasetServiceImpl implements TaxasetService {
 		}
 		int limit_serch = Integer.parseInt(request.getParameter("limit"));
 		int offset_serch = Integer.parseInt(request.getParameter("offset"));
-		String sort = "desc";
+		String sort = "asc";
 		String order = "date";
 		sort = request.getParameter("sort");
 		order = request.getParameter("order");
 		if (sort == null || sort.length() <= 0) {
-			sort = "createdDate";
+			sort = "synchdate";
 		}
 		if (order == null || order.length() <= 0) {
-			order = "desc";
+			order = "asc";
 		}
 		JSONObject thisTable = new JSONObject();
 		JSONArray rows = new JSONArray();

@@ -12,7 +12,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title th:text="#{web_title}">BioIDE</title>
+    <title>BioIDE &nbsp;物种数据采集系统</title>
     <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
@@ -136,40 +136,26 @@
 <script type="text/javascript">
 /* 添加Datasource */
 function addDatasource() {
-    if(dsnameValidator($('input[name="title"]').val()) && dsabstractionValidator($('textarea[name="info"]').val())){
-        layer.load(2);
-        $.post("console/datasource/rest/new",
-        {
-            "_csrf":$('input[name="_csrf"]').val(),
-            "title":$('input[name="title"]').val(),
-            "info":$('textarea[name="info"]').val()
-        },
-        function(rsl){
-            if(rsl.result == true){
-                parent.$("#sourcesid").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
-                parent.$('#form_1').data('bootstrapValidator').updateStatus('sourcesid', 'NOT_VALIDATED',null).validateField('sourcesid');
-                parent.layer.close(parent.layer.getFrameIndex(window.name)); 
-            }
-            else{
-            	alert("123");
-            }
-        });
-    }
-    else{
-        layer.msg(warning_Illegal, function(){
-        });
-    }
+	layer.load(2);
+	var obj = $('#addForm').serialize();
+	$.ajax({
+        type: "POST",
+        url: "console/datasource/rest/new",
+        data: obj,	// 要提交的表单
+        dataType: "json",
+        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        success: function (rsl) {
+      	if (rsl.result == true) {
+      		parent.$("#sourcesid").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
+            parent.$('#form_1').data('bootstrapValidator').updateStatus('sourcesid', 'NOT_VALIDATED',null).validateField('sourcesid');
+            parent.layer.close(parent.layer.getFrameIndex(window.name));
+      		layer.msg("添加成功！", {time: 1000});
+			}else{
+				layer.msg("添加失败！", {time: 1000});
+			}
+        }
+      });
 };
-//验证dsname
-function dsnameValidator(dsname) {
-    var pattern = /^[\da-zA-Z_\u4e00-\u9f5a【】]{1,30}$/;
-    return pattern.test(dsname);
-}
-//验证dsabstraction
-function dsabstractionValidator(dsabstraction) {
-    var pattern = /^[\da-zA-Z_\u4e00-\u9f5a【】]{0,100}$/;
-    return pattern.test(dsabstraction);
-}
 </script>
 </body>
 </html>

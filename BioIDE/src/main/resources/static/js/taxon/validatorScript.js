@@ -236,19 +236,19 @@ function formValidator(formNum) {
                     canPass = referencesValidator('newReferences',1);
                 break;
             case 3:
-
+                canPass = true;
                 break;
             case 4:
-
+                canPass = true;
                 break;
             case 5:
-
+                canPass = true;
                 break;
             case 6:
-
+                canPass = true;
                 break;
             case 7:
-
+                canPass = true;
                 break;
             default:
                 canPass = true;

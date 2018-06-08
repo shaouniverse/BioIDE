@@ -44,8 +44,7 @@ function verifierStep(stepNum){
     switch(stepNum)
     {
         case "2":
-            formValidator(1);
-            if(verificationTab1==1){//验证通过
+            if(formValidator(1)){//验证通过
             	var obj = $('#form_1').serialize();
                 $.ajax({
                   type: "POST",
@@ -68,10 +67,8 @@ function verifierStep(stepNum){
             }
             break;
         case "3":
-            formValidator(1);
-            //formValidator(2);
             if(
-                verificationTab1==1 &&
+                formValidator(1) &&
                 submitAllCitation()
             ){//验证通过
                 return true;
@@ -81,11 +78,8 @@ function verifierStep(stepNum){
             }
             break;
         case "4":
-            formValidator(1);
-            //formValidator(2);
-            //formValidator(3);
             if(
-                verificationTab1==1 &&
+                formValidator(1) &&
                 submitAllCitation() &&
                 submitAllDescription()&&
                 submitAllProtection()&&
@@ -98,17 +92,13 @@ function verifierStep(stepNum){
             }
             break;
         case "5":
-            formValidator(1);
-            //formValidator(2);
-            //formValidator(3);
-            formValidator(4);
             if(
-                verificationTab1==1 &&
+                formValidator(1) &&
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
                 submitAllTaxkey()&&
-                verificationTab4==1
+                formValidator(4)
             ){//验证通过
                 return true;
             }
@@ -117,19 +107,14 @@ function verifierStep(stepNum){
             }
             break;
         case "6":
-            formValidator(1);
-            //formValidator(2);
-            //formValidator(3);
-            formValidator(4);
-            formValidator(5);
             if(
-                verificationTab1==1 &&
+                formValidator(1) &&
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
                 submitAllTaxkey() &&
-                verificationTab4==1 &&
-                verificationTab5==1
+                formValidator(4) &&
+                formValidator(5)
             ){//验证通过
                 return true;
             }
@@ -138,21 +123,15 @@ function verifierStep(stepNum){
             }
             break;
         case "7":
-            formValidator(1);
-            //formValidator(2);
-            //formValidator(3);
-            formValidator(4);
-            formValidator(5);
-            formValidator(6);
             if(
-                verificationTab1==1 &&
+                formValidator(1) &&
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
                 submitAllTaxkey() &&
-                verificationTab4==1 &&
-                verificationTab5==1 &&
-                verificationTab6==1
+                formValidator(4) &&
+                formValidator(5) &&
+                formValidator(6)
             ){//验证通过
                 return true;
             }
@@ -161,23 +140,16 @@ function verifierStep(stepNum){
             }
             break;
         case "8":
-            formValidator(1);
-            //formValidator(2);
-            //formValidator(3);
-            formValidator(4);
-            formValidator(5);
-            formValidator(6);
-            formValidator(7);
             if(
-                verificationTab1==1 &&
+                formValidator(1) &&
                 submitAllCitation() &&
                 submitAllDescription() &&
                 submitAllProtection() &&
                 submitAllTaxkey() &&
-                verificationTab4==1 &&
-                verificationTab5==1 &&
-                verificationTab6==1 &&
-                verificationTab7==1
+                formValidator(4) &&
+                formValidator(5) &&
+                formValidator(6) &&
+                formValidator(7)
             ){//验证通过
                 return true;
             }

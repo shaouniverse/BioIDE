@@ -8,7 +8,7 @@ function removeCitation(citationNum) {
 //提交一个引证
 function submitCitation(citationNum) {
     citationFormValidator(citationNum);
-    if ($('#citationForm_' + citationNum).data('bootstrapValidator').isValid()) {
+    if ($('#citationForm_' + citationNum).data('bootstrapValidator').isValid() && referencesValidator('newCitationReferences_'+citationNum,2)) {
         //处理ajax提交
         //
         //
@@ -36,7 +36,7 @@ function submitCitation(citationNum) {
         $('#citationForm_' + citationNum).removeClass("panel-success");
         $('#citationForm_' + citationNum).addClass("panel-danger");
         $('#citationStatus_' + citationNum).addClass("hidden");
-        layer.msg("请完成此文本描述的填写", function () {
+        layer.msg("请完成此引证信息的填写", function () {
         });
         return false;
     }
@@ -101,9 +101,7 @@ function addCitationReferences(citationNum) {
 
     $('#citationReferencesForm').tmpl(thisReferencesNum).appendTo('#newCitationReferences_' + citationNum);
 
-    $("#citationReferences_" + citationNum + "_" + (countCitationReferences + 1)).select2({
-        placeholder: "请选择参考文献"
-    });
+    buildSelect2("citationReferences_" + citationNum + "_" + (countCitationReferences + 1), "console/ref/rest/select", "请选择参考文献");
 
     $('#countCitationReferences_' + citationNum).val(countCitationReferences + 1);
 

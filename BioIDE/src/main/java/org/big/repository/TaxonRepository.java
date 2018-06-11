@@ -17,7 +17,11 @@ public interface TaxonRepository extends BaseRepository<Taxon, String> {
      * @param pageable 分页排序方案实体
      * @return org.springframework.data.domain.Page<org.big.entity.Taxon>
      */
-    @Query(value = "Select t from Taxon t where (t.scientificname like %?1% or t.authorstr like %?1% or t.inputer like %?1% or t.inputtime like %?1%) and t.status = 1")
+    @Query(value = "Select t from Taxon t where ("
+    		+ "t.scientificname like %?1% or "
+    		+ "t.authorstr like %?1% or "
+    		+ "t.inputer like %?1% or "
+    		+ "t.synchdate like %?1%) and t.status = 1")
 	Page<Taxon> searchInfo(String searchText, Pageable pageable);
 
     /**

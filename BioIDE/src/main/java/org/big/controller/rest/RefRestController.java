@@ -1,5 +1,7 @@
 package org.big.controller.rest;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -8,6 +10,7 @@ import org.big.service.RefService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-
+/**
+ *<p><b>Ref相关的Controller的Rest风格类</b></p>
+ *<p> Ref相关的Controller的Rest风格类</p>
+ * @author BINZI
+ *<p>Created date: 2018/06/11 10:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
+ */
 @RestController
 @RequestMapping(value = "/console/ref/rest")
 public class RefRestController {
@@ -94,6 +105,15 @@ public class RefRestController {
      */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public JSON New(@ModelAttribute("thisRef") @Valid Ref thisRef, BindingResult result, Model model, HttpServletRequest request) {
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			String errorMsg = "";
+			for (ObjectError error : list) {
+				errorMsg = errorMsg + error.getDefaultMessage() + ";";
+			}
+			model.addAttribute("thisRef", thisRef);
+			model.addAttribute("errorMsg", errorMsg);
+		}
 		return this.refService.newOne(thisRef, request);
 	}
 }

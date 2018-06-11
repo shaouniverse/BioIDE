@@ -3,6 +3,7 @@ package org.big.service;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -188,6 +189,10 @@ public class RefServiceImpl implements RefService {
 			thisRef.setId(id);
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisRef.setInputer(thisUser.getId());
+			Date inputtime = thisRef.getInputtime();
+			if (null != inputtime) {
+				thisRef.setInputtime((Timestamp)inputtime);
+			}
 			thisRef.setInputtime(new Timestamp(System.currentTimeMillis()));
 			thisRef.setSynchdate(new Timestamp(System.currentTimeMillis()));
 			thisRef.setSynchstatus(0);

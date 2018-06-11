@@ -40,10 +40,14 @@ public class TaxonRestController {
 	}
 	
 	/**
-	 * <b> Taxon的Index页面分页列表查询</b>
-	 * <p> Taxon的Index页面分页列表查询</p>
+	 * <b> Taxon添加</b>
+	 * <p> Taxon添加</p>
 	 * @param request
-	 * @return
+	 * @param thisTaxon
+	 * @param result
+	 * @param model
+	 * @param request
+	 * @return com.alibaba.fastjson.JSON
 	 */
 	@RequestMapping(value="/add", method = {RequestMethod.POST})
 	public JSON AddTaxonBaseInfo(@ModelAttribute("thisTaxon") @Valid Taxon thisTaxon, BindingResult result, Model model, HttpServletRequest request) {
@@ -65,7 +69,7 @@ public class TaxonRestController {
 	 * <b> 根据Id批量逻辑删除指定Taxon</b>
 	 * <p> 根据Id批量逻辑删除指定Taxon</p>
 	 * @param request
-	 * @return
+	 * @return 
 	 */
 	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
 	public int removeMany(@PathVariable String ids) {

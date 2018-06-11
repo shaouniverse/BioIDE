@@ -9,10 +9,22 @@ function removeCitation(citationNum) {
 function submitCitation(citationNum) {
     citationFormValidator(citationNum);
     if ($('#citationForm_' + citationNum).data('bootstrapValidator').isValid() && referencesValidator('newCitationReferences_'+citationNum,2)) {
-        //处理ajax提交
-        //
-        //
-        //
+    	//处理ajax提交
+        var obj = $('#citationForm_' + citationNum).serialize();
+        $.ajax({
+            type: "POST",
+            url: "/console/citation/rest/add",
+            data: obj,	// 要提交的表单
+            dataType: "json",
+            contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (msg) {
+	          	if (msg.result == true) {
+	          		layer.msg("添加成功！", {time: 1000});
+				}else{
+					layer.msg("添加失败！", {time: 1000});
+				}
+            }
+        });
         layer.msg('提交成功，请继续填写其他内容',
             {
                 time: 1500, //1.5s后自动关闭

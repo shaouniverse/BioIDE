@@ -414,7 +414,7 @@ function addCitationValidator(citationNum) {
             notEmpty: {}
         }
     });
-    $("#citationForm_" + citationNum).bootstrapValidator("addField", "sourcesid_" + citationNum, {
+    $("#citationForm_" + citationNum).bootstrapValidator("addField", "citationSourcesid_" + citationNum, {
         validators: {
             notEmpty: {}
         }

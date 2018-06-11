@@ -78,11 +78,9 @@ function addCitation() {
 
     $('#countCitation').val(countCitation + 1);
 
-    buildSelect2("sourcesid_" + (countCitation + 1), "console/datasource/rest/select");
 
-    // $("#sourcesid_" + (countCitation+1)).select2({
-    //     placeholder: "请选择数据源",
-    // });
+    buildSelect2("citationSourcesid_" + (countCitation + 1), "console/datasource/rest/select", "请选择数据来源");
+
 
     $("#nametype_" + (countCitation + 1)).select2({
         placeholder: "请选择名称类型",

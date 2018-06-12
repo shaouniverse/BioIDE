@@ -22,24 +22,24 @@ function submitCitation(citationNum) {
 	          		layer.msg("添加成功！", {time: 1000});
 				}else{
 					layer.msg("添加失败！", {time: 1000});
+					return false;
 				}
             }
         });
-        layer.msg('提交成功，请继续填写其他内容',
-            {
-                time: 1500, //1.5s后自动关闭
-            },
-            function () {
-                if ($('#citationCollapse_' + citationNum).hasClass('in')) {
-                    $('#citationCollapseTitle_' + citationNum).trigger("click");
-                }
-                $('#citationForm_' + citationNum).removeClass("panel-default");
-                $('#citationForm_' + citationNum).removeClass("panel-danger");
-                $('#citationForm_' + citationNum).addClass("panel-success");
-                $('#citationStatus_' + citationNum).removeClass("hidden");
-                return true;
-            });
-        return true;
+        layer.msg(
+  				'提交成功，请继续填写其他内容',
+  				{time: 1500},
+  	            function () {
+  	                if ($('#citationCollapse_' + citationNum).hasClass('in')) {
+  	                    $('#citationCollapseTitle_' + citationNum).trigger("click");
+  	                }
+  	                $('#citationForm_' + citationNum).removeClass("panel-default");
+  	                $('#citationForm_' + citationNum).removeClass("panel-danger");
+  	                $('#citationForm_' + citationNum).addClass("panel-success");
+  	                $('#citationStatus_' + citationNum).removeClass("hidden");
+  	                return true;
+  	            });
+  	        return true;
     }
     else {
         if (!$('#citationCollapse_' + citationNum).hasClass('in')) {

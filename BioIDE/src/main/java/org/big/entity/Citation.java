@@ -43,7 +43,7 @@ public class Citation implements Serializable {
 	private Date inputtime;
 
 	private int nametype;
-	@Type(type = "StringJsonUserType")
+	
 	private String refjson;
 
 	private String sciname;
@@ -178,7 +178,13 @@ public class Citation implements Serializable {
 	public void setTaxon(Taxon taxon) {
 		this.taxon = taxon;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Citation [id=" + id + ", authorship=" + authorship + ", citationstr=" + citationstr + ", inputer="
+				+ inputer + ", inputtime=" + inputtime + ", nametype=" + nametype + ", refjson=" + refjson
+				+ ", sciname=" + sciname + ", shortrefs=" + shortrefs + ", sourcesid=" + sourcesid + ", status="
+				+ status + ", synchdate=" + synchdate + ", synchstatus=" + synchstatus + ", taxon=" + taxon + "]";
+	}
 
 }

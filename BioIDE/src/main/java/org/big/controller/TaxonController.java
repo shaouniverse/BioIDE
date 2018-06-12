@@ -55,11 +55,13 @@ public class TaxonController {
      * @author WangTianshan (王天山)
      */
     @RequestMapping(value = "/add", method = {RequestMethod.GET})
-    public String Add(Model model) {
+    public String Add(Model model, HttpServletRequest request) {
         Taxon thisTaxon = new Taxon();
+        String taxonId = UUID.randomUUID().toString();
+        request.getSession().setAttribute("taxonId", taxonId);
+        thisTaxon.setId(taxonId);
         Dataset thisDataset = new Dataset();
         Taxaset thisTaxaset = new Taxaset();
-        thisTaxon.setId(UUID.randomUUID().toString());
         model.addAttribute("thisTaxon", thisTaxon);
         model.addAttribute("thisDataset", thisDataset);
         model.addAttribute("thisTaxaset", thisTaxaset);

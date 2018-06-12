@@ -1,19 +1,15 @@
 package org.big.controller.rest;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.big.entity.Citation;
 import org.big.service.CitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,19 +54,69 @@ public class CitationRestController {
 	 * @return com.alibaba.fastjson.JSON
 	 */
 	@RequestMapping(value="/add", method = {RequestMethod.POST})
-	public JSON AddTaxonBaseInfo(@ModelAttribute("thisTaxon") @Valid Citation thisCitation, BindingResult result, Model model, HttpServletRequest request) {
-		if (result.hasErrors()) {
-			List<ObjectError> list = result.getAllErrors();
-			String errorMsg = "";
-			for (ObjectError error : list) {
-				errorMsg = errorMsg + error.getDefaultMessage() + ";";
+	public JSON addCitation(HttpServletRequest request) {
+		Citation thisCitation = new Citation();
+		Enumeration<String> paraNames = request.getParameterNames();
+		String paraName = null;
+		while (paraNames.hasMoreElements()) {
+			paraName = (String) paraNames.nextElement();
+			if (paraName.indexOf("sciname_") == 0) {
+				thisCitation.setSciname(request.getParameter(paraName));
 			}
-			model.addAttribute("thisCitation", thisCitation);
-			model.addAttribute("errorMsg", errorMsg);
+			if (paraName.indexOf("authorship_") == 0) {
+				thisCitation.setAuthorship(request.getParameter(paraName));
+			}
+			if (paraName.indexOf("nametype_") == 0) {
+				thisCitation.setNametype(Integer.valueOf(request.getParameter(paraName)));
+			}
+			if (paraName.indexOf("citationSourcesid_") == 0) {
+				thisCitation.setSourcesid(request.getParameter(paraName));
+			}
+			if (paraName.indexOf("citationstr_") == 0) {
+				thisCitation.setCitationstr(request.getParameter(paraName));
+			}
 		}
 		thisCitation.setInputtime(new Timestamp(System.currentTimeMillis()));
 		return this.citationService.addCitation(thisCitation, request);
-		
+	}
+	
+	/**
+	 * <b> 根据Id批量逻辑删除指定Citation</b>
+	 * <p> 根据Id批量逻辑删除指定Citation</p>
+	 * @param request
+	 * @return 
+	 */
+	@RequestMapping(value = "/removeMany/{ids}", method = RequestMethod.GET)
+	public int removeMany(@PathVariable String ids) {
+		try {
+			String[] idArr = ids.split("￥");
+			int isRemove = 0;
+			for (String id : idArr) {
+				if (this.citationService.logicRemove(id)) {
+					isRemove = isRemove + 1;
+				}
+			}
+			return isRemove;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	/**
+	 * <b> 根据Id单个逻辑删除指定Citation</b>
+	 * <p> 根据Id单个逻辑删除指定Citation</p>
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
+	public boolean remove(@PathVariable String id) {
+		try {
+			return this.citationService.logicRemove(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 }

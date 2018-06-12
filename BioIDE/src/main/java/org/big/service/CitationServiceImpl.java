@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.big.common.QueryTool;
 import org.big.entity.Citation;
 import org.big.entity.UserDetail;
@@ -27,6 +27,10 @@ import com.alibaba.fastjson.JSONObject;
 public class CitationServiceImpl implements CitationService {
 	@Autowired
 	private CitationRepository citationRepository;
+	@Autowired
+	private TaxonService taxonService;
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public JSON findCitationList(HttpServletRequest request) {
@@ -69,7 +73,7 @@ public class CitationServiceImpl implements CitationService {
 			row.put("sciname", "<a href=\"console/taxaset/show/" + thisList.get(i).getId() + "\">" + thisList.get(i).getSciname() + "</a>");
 			row.put("authorship", thisList.get(i).getAuthorship());
 			row.put("nametype", thisList.get(i).getNametype());
-			row.put("inputer", thisList.get(i).getInputer());
+			row.put("inputer", this.userService.findbyID(thisList.get(i).getInputer()).getNickname());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String addTime = "";
 			String editTime = "";
@@ -89,7 +93,7 @@ public class CitationServiceImpl implements CitationService {
     }
 
 	@Override
-	public JSON addCitation(@Valid Citation thisCitation, HttpServletRequest request) {
+	public JSON addCitation(Citation thisCitation, HttpServletRequest request) {
 		JSONObject thisResult = new JSONObject();
 		try {
 			thisCitation.setId(UUID.randomUUID().toString());
@@ -99,10 +103,12 @@ public class CitationServiceImpl implements CitationService {
 			thisCitation.setStatus(1);
 			thisCitation.setSynchstatus(0);
 			thisCitation.setRefjson(handleReferenceToJson(request).toJSONString());
+			String taxonId = (String) request.getSession().getAttribute("taxonId");
+			thisCitation.setTaxon(taxonService.findOneById(taxonId));
 			this.citationRepository.save(thisCitation);
-			
 			thisResult.put("result", true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			thisResult.put("result", false);
 		}
 		return thisResult;
@@ -114,25 +120,51 @@ public class CitationServiceImpl implements CitationService {
 		JSONArray jsonArray = new JSONArray();
 		Enumeration<String> paraNames = request.getParameterNames();
 		String paraName = null;
+		String countCitationReferences = null;
+		String citationReferencesPageE = null;
+		String citationReferencesPageS = null;
+		String citationReferenceId = null;
+		String jsonStr = null;
+		
 		while (paraNames.hasMoreElements()) {
 			paraName = (String) paraNames.nextElement();
 			if (paraName.indexOf("countCitationReferences_") == 0) {
-				System.out.println(paraName + " : " + request.getParameter(paraName));
-			}
-			if (paraName.indexOf("citationReferencesPageE_") == 0) {
-				System.out.println(paraName + " : " + request.getParameter(paraName));
-			}
-			if (paraName.indexOf("citationReferencesPageS_") == 0) {
-				System.out.println(paraName + " : " + request.getParameter(paraName));
+				countCitationReferences = request.getParameter(paraName);
 			}
 			if (paraName.indexOf("citationReferences_") == 0) {
-				System.out.println(paraName + " : " + request.getParameter(paraName));
+				citationReferenceId = request.getParameter(paraName);
+			}
+			if (paraName.indexOf("citationReferencesPageS_") == 0) {
+				citationReferencesPageS = request.getParameter(paraName);
+			}
+			if (paraName.indexOf("citationReferencesPageE_") == 0) {
+				citationReferencesPageE = request.getParameter(paraName);
 			}
 		}
-		
-		
-		return null;
+		for (int i = 1; i <= Integer.parseInt(countCitationReferences); i++) {
+			if (StringUtils.isNotBlank(citationReferenceId) && StringUtils.isNotBlank(citationReferencesPageS)
+					&& StringUtils.isNotBlank(citationReferencesPageE)) {
+				jsonStr = "{"
+						+ "\"referencesId\"" + ":\"" + citationReferenceId + "\","
+						+ "\"referencesPageS\"" + ":\"" + citationReferencesPageS + "\"," 
+						+ "\"referencesPageE\"" + ":\"" + citationReferencesPageE + "\""
+						+ "}";
+			}
+			JSONObject jsonText = JSON.parseObject(jsonStr);
+			jsonArray.add(i - 1, jsonText);
+		}
+		return jsonArray;
 	}
-	
+
+	@Override
+	public boolean logicRemove(String id) {
+		Citation thisCitation = this.citationRepository.findOneById(id);
+		if (null != thisCitation && 1 == thisCitation.getStatus()) {
+			thisCitation.setStatus(0);
+			this.citationRepository.save(thisCitation);
+			return true;
+		}
+		return false;
+	}
 	
 }

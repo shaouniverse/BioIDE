@@ -24,4 +24,13 @@ public interface CitationRepository extends BaseRepository<Citation, String> {
 			+ "c.status = 1")
 	Page<Citation> searchInfo(String searchText, Pageable pageable);
 
+	/**
+	 *<b>根据id查询一个实体</b>
+     *<p> 带分页排序的条件查询</p>
+	 * @param id
+	 * @return
+	 */
+	@Query(value = "Select c from Citation c Where c.id = ?1")
+	Citation findOneById(String id);
+
 }

@@ -1,7 +1,6 @@
 package org.big.service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.big.entity.Citation;
 
@@ -26,7 +25,7 @@ public interface CitationService {
 	 * @param request
 	 * @return com.alibaba.fastjson.JSON
 	 */
-	JSON addCitation(@Valid Citation thisCitation, HttpServletRequest request);
+	JSON addCitation(Citation thisCitation, HttpServletRequest request);
 	
 	/**
      *<b>将引证表单的Reference相关属性拼装成JSON数据</b>
@@ -36,5 +35,13 @@ public interface CitationService {
      * @return com.alibaba.fastjson.JSON
      */
 	JSON handleReferenceToJson(HttpServletRequest request);
+	
+	/**
+	 *<b>根据id逻辑删除一个实体</b>
+     *<p> 根据id逻辑删除一个实体</p>
+	 * @param id
+	 * @return
+	 */
+	boolean logicRemove(String id);
 	
 }

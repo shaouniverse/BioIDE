@@ -14,11 +14,10 @@ function removeDescription(descriptionNum) {
 //提交一个描述
 function submitDescription(descriptionNum) {
     descriptionFormValidator(descriptionNum);
-    if ($('#descriptionForm_' + descriptionNum).data('bootstrapValidator').isValid() && referencesValidator('newDescriptionReferences_'+descriptionNum,3)) {
+    if (
+        $('#descriptionForm_' + descriptionNum).data('bootstrapValidator').isValid() &&
+        ($("tr[id^='"+'descriptionReferencesForm_'+descriptionNum+"_']").length<=0 || referencesValidator('newDescriptionReferences_'+descriptionNum,3))) {
         //处理ajax提交
-        //
-        //
-        //
         layer.msg('提交成功，请继续填写其他内容',
             {
                 time: 1500, //1.5s后自动关闭

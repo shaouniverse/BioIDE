@@ -9,11 +9,10 @@ function removeProtection(protectionNum) {
 //提交一个保护数据
 function submitProtection(protectionNum) {
     protectionFormValidator(protectionNum);
-    if ($('#protectionForm_' + protectionNum).data('bootstrapValidator').isValid() && referencesValidator('newProtectionReferences_'+protectionNum,3)) {
+    if (
+        $('#protectionForm_' + protectionNum).data('bootstrapValidator').isValid() &&
+        ($("tr[id^='"+'protectionReferencesForm_'+protectionNum+"_']").length<=0 || referencesValidator('newProtectionReferences_'+protectionNum,3))) {
         //处理ajax提交
-        //
-        //
-        //
         layer.msg('提交成功，请继续填写其他内容',
             {
                 time: 1500, //1.5s后自动关闭

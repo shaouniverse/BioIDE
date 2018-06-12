@@ -8,10 +8,12 @@ function removeCitation(citationNum) {
 //提交一个引证
 function submitCitation(citationNum) {
     citationFormValidator(citationNum);
-    if ($('#citationForm_' + citationNum).data('bootstrapValidator').isValid() && referencesValidator('newCitationReferences_'+citationNum,2)) {
+    if (
+        $('#citationForm_' + citationNum).data('bootstrapValidator').isValid() &&
+        ($("tr[id^='"+'citationReferencesForm_'+citationNum+"_']").length<=0 || referencesValidator('newCitationReferences_'+citationNum,2))) {
     	//处理ajax提交
         var obj = $('#citationForm_' + citationNum).serialize();
-        $.ajax({
+        return $.ajax({
             type: "POST",
             url: "/console/citation/rest/add",
             data: obj,	// 要提交的表单
@@ -19,27 +21,26 @@ function submitCitation(citationNum) {
             contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (msg) {
 	          	if (msg.result == true) {
-	          		layer.msg("添加成功！", {time: 1000});
+                    layer.msg(
+                        '提交成功，请继续填写其他内容',
+                        {time: 1500},
+                        function () {
+                            if ($('#citationCollapse_' + citationNum).hasClass('in')) {
+                                $('#citationCollapseTitle_' + citationNum).trigger("click");
+                            }
+                            $('#citationForm_' + citationNum).removeClass("panel-default");
+                            $('#citationForm_' + citationNum).removeClass("panel-danger");
+                            $('#citationForm_' + citationNum).addClass("panel-success");
+                            $('#citationStatus_' + citationNum).removeClass("hidden");
+                            //return true;
+                        });
+                    return true;
 				}else{
 					layer.msg("添加失败！", {time: 1000});
 					return false;
 				}
             }
         });
-        layer.msg(
-  				'提交成功，请继续填写其他内容',
-  				{time: 1500},
-  	            function () {
-  	                if ($('#citationCollapse_' + citationNum).hasClass('in')) {
-  	                    $('#citationCollapseTitle_' + citationNum).trigger("click");
-  	                }
-  	                $('#citationForm_' + citationNum).removeClass("panel-default");
-  	                $('#citationForm_' + citationNum).removeClass("panel-danger");
-  	                $('#citationForm_' + citationNum).addClass("panel-success");
-  	                $('#citationStatus_' + citationNum).removeClass("hidden");
-  	                return true;
-  	            });
-  	        return true;
     }
     else {
         if (!$('#citationCollapse_' + citationNum).hasClass('in')) {

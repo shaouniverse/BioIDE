@@ -6,6 +6,7 @@
       <a class="btn btn-app" onclick="addCitation ();">
         <i class="fa fa-plus"></i>添加新引证</a>
     </div>
+    <input class="hidden" id="citationId" name="citationId" readonly="readonly" th:value="${num}"></input>
     <input class="hidden" id="countCitation" name="countCitation" value="0"></input>
     <script id="citationForm" type="text/x-jquery-tmpl">
       <form class="panel panel-default" id="citationForm_${num}" th:action="@{/}" method="post">

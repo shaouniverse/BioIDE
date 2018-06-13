@@ -62,4 +62,9 @@ public class DescriptiontypeServiceImpl implements DescriptiontypeService {
 		thisSelect.put("items", items);
 		return thisSelect;
 	}
+
+	@Override
+	public Descriptiontype findOneById(String id) {
+		return this.descriptiontypeRepository.findOneById(id);
+	}
 }

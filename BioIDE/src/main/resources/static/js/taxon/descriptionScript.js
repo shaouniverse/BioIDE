@@ -14,25 +14,36 @@ function removeDescription(descriptionNum) {
 //提交一个描述
 function submitDescription(descriptionNum) {
     descriptionFormValidator(descriptionNum);
-    if (
-        $('#descriptionForm_' + descriptionNum).data('bootstrapValidator').isValid() &&
+    if ($('#descriptionForm_' + descriptionNum).data('bootstrapValidator').isValid() &&
         ($("tr[id^='"+'descriptionReferencesForm_'+descriptionNum+"_']").length<=0 || referencesValidator('newDescriptionReferences_'+descriptionNum,3))) {
         //处理ajax提交
-        layer.msg('提交成功，请继续填写其他内容',
-            {
-                time: 1500, //1.5s后自动关闭
-            },
-            function () {
-                if ($('#descriptionCollapse_' + descriptionNum).hasClass('in')) {
-                    $('#descriptionCollapseTitle_' + descriptionNum).trigger("click");
-                }
-                $('#descriptionForm_' + descriptionNum).removeClass("panel-default");
-                $('#descriptionForm_' + descriptionNum).removeClass("panel-danger");
-                $('#descriptionForm_' + descriptionNum).addClass("panel-success");
-                $('#descriptionStatus_' + descriptionNum).removeClass("hidden");
-                return true;
-            });
-        return true;
+    	var obj = $('#descriptionForm_' + descriptionNum).serialize();
+        $.ajax({
+          type: "POST",
+          url: "/console/description/rest/add",
+          data: obj,	// 要提交的表单
+          dataType: "json",
+          contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+          success: function (msg) {
+        	if (msg.result == true) {
+        		layer.msg(
+        				'提交成功，请继续填写其他内容',
+        	            {time: 1500},
+        	            function () {
+        	                if ($('#descriptionCollapse_' + descriptionNum).hasClass('in')) {
+        	                    $('#descriptionCollapseTitle_' + descriptionNum).trigger("click");
+        	                }
+        	                $('#descriptionForm_' + descriptionNum).removeClass("panel-default");
+        	                $('#descriptionForm_' + descriptionNum).removeClass("panel-danger");
+        	                $('#descriptionForm_' + descriptionNum).addClass("panel-success");
+        	                $('#descriptionStatus_' + descriptionNum).removeClass("hidden");
+        	            });
+        	        return true;
+			}else{
+				layer.msg("添加失败！", {time: 1000});
+			}
+          }
+        });
     }
     else {
         if (!$('#descriptionCollapse_' + descriptionNum).hasClass('in')) {

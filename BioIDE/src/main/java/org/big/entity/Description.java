@@ -12,7 +12,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.big.common.StringJsonUserType;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 /**
@@ -52,10 +51,9 @@ public class Description implements Serializable {
 	private String language;
 
 	private String licenseid;
-	@Type(type = "StringJsonUserType")
+	
 	private String refjson;
 
-	@Type(type = "StringJsonUserType")
 	private String relation;
 
 	private String remark;

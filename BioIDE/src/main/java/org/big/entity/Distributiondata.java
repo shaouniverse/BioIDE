@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.big.common.StringJsonUserType;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import java.util.Date;
@@ -35,7 +34,7 @@ public class Distributiondata implements Serializable {
 	private double lat;
 
 	private double lng;
-	@Type(type = "StringJsonUserType")
+
 	private String refjson;
 
 	private String sourcesid;

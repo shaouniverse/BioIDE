@@ -8,10 +8,9 @@ function removeCitation(citationNum) {
 //提交一个引证
 function submitCitation(citationNum) {
     citationFormValidator(citationNum);
-    if (
-        $('#citationForm_' + citationNum).data('bootstrapValidator').isValid() &&
+    if ($('#citationForm_' + citationNum).data('bootstrapValidator').isValid() &&
         ($("tr[id^='"+'citationReferencesForm_'+citationNum+"_']").length<=0 || referencesValidator('newCitationReferences_'+citationNum,2))) {
-    	//处理ajax提交
+    	// 处理Ajax提交
         var obj = $('#citationForm_' + citationNum).serialize();
         return $.ajax({
             type: "POST",

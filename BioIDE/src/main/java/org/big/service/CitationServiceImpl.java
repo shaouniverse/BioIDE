@@ -70,7 +70,7 @@ public class CitationServiceImpl implements CitationService {
 	             "<span class=\"glyphicon glyphicon-remove\"></span>" +
 	             "</a>";
 			row.put("select", thisSelect);
-			row.put("sciname", "<a href=\"console/taxaset/show/" + thisList.get(i).getId() + "\">" + thisList.get(i).getSciname() + "</a>");
+			row.put("sciname", "<a href=\"console/citation/show/" + thisList.get(i).getId() + "\">" + thisList.get(i).getSciname() + "</a>");
 			row.put("authorship", thisList.get(i).getAuthorship());
 			row.put("nametype", thisList.get(i).getNametype());
 			row.put("inputer", this.userService.findbyID(thisList.get(i).getInputer()).getNickname());
@@ -94,11 +94,33 @@ public class CitationServiceImpl implements CitationService {
 
 	@Override
 	public JSON addCitation(Citation thisCitation, HttpServletRequest request) {
+		Enumeration<String> paraNames = request.getParameterNames();
+		String paraName = null;
+		while (paraNames.hasMoreElements()) {
+			paraName = (String) paraNames.nextElement();
+			if (paraName.indexOf("sciname_") == 0) {
+				thisCitation.setSciname(request.getParameter(paraName));
+			}
+			if (paraName.indexOf("authorship_") == 0) {
+				thisCitation.setAuthorship(request.getParameter(paraName));
+			}
+			if (paraName.indexOf("nametype_") == 0) {
+				thisCitation.setNametype(Integer.valueOf(request.getParameter(paraName)));
+			}
+			if (paraName.indexOf("citationSourcesid_") == 0) {
+				thisCitation.setSourcesid(request.getParameter(paraName));
+			}
+			if (paraName.indexOf("citationstr_") == 0) {
+				thisCitation.setCitationstr(request.getParameter(paraName));
+			}
+		}
+		
 		JSONObject thisResult = new JSONObject();
 		try {
 			thisCitation.setId(UUID.randomUUID().toString());
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisCitation.setInputer(thisUser.getId());
+			thisCitation.setInputtime(new Timestamp(System.currentTimeMillis()));
 			thisCitation.setSynchdate(new Timestamp(System.currentTimeMillis()));
 			thisCitation.setStatus(1);
 			thisCitation.setSynchstatus(0);
@@ -145,9 +167,9 @@ public class CitationServiceImpl implements CitationService {
 			if (StringUtils.isNotBlank(citationReferenceId) && StringUtils.isNotBlank(citationReferencesPageS)
 					&& StringUtils.isNotBlank(citationReferencesPageE)) {
 				jsonStr = "{"
-						+ "\"referencesId\"" + ":\"" + citationReferenceId + "\","
-						+ "\"referencesPageS\"" + ":\"" + citationReferencesPageS + "\"," 
-						+ "\"referencesPageE\"" + ":\"" + citationReferencesPageE + "\""
+						+ "\"citationReferenceId\"" + ":\"" + citationReferenceId + "\","
+						+ "\"citationReferencesPageS\"" + ":\"" + citationReferencesPageS + "\"," 
+						+ "\"citationReferencesPageE\"" + ":\"" + citationReferencesPageE + "\""
 						+ "}";
 			}
 			JSONObject jsonText = JSON.parseObject(jsonStr);

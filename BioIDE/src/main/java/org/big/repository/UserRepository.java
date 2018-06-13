@@ -2,13 +2,10 @@ package org.big.repository;
 
 import org.big.entity.User;
 import org.big.repository.base.BaseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  *<p><b>User的DAO类接口</b></p>

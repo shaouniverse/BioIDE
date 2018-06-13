@@ -9,6 +9,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ *<p><b>Datasource的DAO类接口</b></p>
+ *<p> Datasource的DAO类接口，与User有关的持久化操作方法</p>
+ * @author BINZI
+ *<p>Created date: 2018/06/11 10:35</p>
+ *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
+ * @version: 0.1
+ * @since JDK 1.80_144
+ */
 @Repository
 public interface DatasourceRepository extends BaseRepository<Datasource, String> {
     /**

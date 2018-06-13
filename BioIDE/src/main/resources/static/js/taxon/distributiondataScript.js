@@ -16,24 +16,32 @@ function submitDistributiondata(distributiondataNum) {
     distributiondataFormValidator(distributiondataNum);
     if ($('#distributiondataForm_' + distributiondataNum).data('bootstrapValidator').isValid()) {
         //处理ajax提交
-        //
-        //
-        //
-        layer.msg('提交成功，请继续填写其他内容',
-            {
-                time: 1500, //1.5s后自动关闭
-            },
-            function () {
-                if ($('#distributiondataCollapse_' + distributiondataNum).hasClass('in')) {
-                    $('#distributiondataCollapseTitle_' + distributiondataNum).trigger("click");
-                }
-                $('#distributiondataForm_' + distributiondataNum).removeClass("panel-default");
-                $('#distributiondataForm_' + distributiondataNum).removeClass("panel-danger");
-                $('#distributiondataForm_' + distributiondataNum).addClass("panel-success");
-                $('#distributiondataStatus_' + distributiondataNum).removeClass("hidden");
-                return true;
-            });
-        return true;
+    	var obj = $('#distributiondataForm_' + distributiondataNum).serialize();
+        $.ajax({
+          type: "POST",
+          url: "/console/distributiondata/rest/add",
+          data: obj,	// 要提交的表单
+          dataType: "json",
+          contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+          success: function (msg) {
+        	if (msg.result == true) {
+        		layer.msg('提交成功，请继续填写其他内容',
+        	            {time: 1500},
+        	            function () {
+        	                if ($('#distributiondataCollapse_' + distributiondataNum).hasClass('in')) {
+        	                    $('#distributiondataCollapseTitle_' + distributiondataNum).trigger("click");
+        	                }
+        	                $('#distributiondataForm_' + distributiondataNum).removeClass("panel-default");
+        	                $('#distributiondataForm_' + distributiondataNum).removeClass("panel-danger");
+        	                $('#distributiondataForm_' + distributiondataNum).addClass("panel-success");
+        	                $('#distributiondataStatus_' + distributiondataNum).removeClass("hidden");
+        	            });
+        	        return true;
+			}else{
+				layer.msg("添加失败！", {time: 1000});
+			}
+          }
+        });
     }
     else {
         if (!$('#distributiondataCollapse_' + distributiondataNum).hasClass('in')) {

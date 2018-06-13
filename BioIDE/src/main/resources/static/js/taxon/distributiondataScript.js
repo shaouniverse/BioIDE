@@ -17,7 +17,7 @@ function submitDistributiondata(distributiondataNum) {
     if ($('#distributiondataForm_' + distributiondataNum).data('bootstrapValidator').isValid()) {
         //处理ajax提交
     	var obj = $('#distributiondataForm_' + distributiondataNum).serialize();
-        $.ajax({
+        return $.ajax({
           type: "POST",
           url: "/console/distributiondata/rest/add",
           data: obj,	// 要提交的表单
@@ -39,6 +39,7 @@ function submitDistributiondata(distributiondataNum) {
         	        return true;
 			}else{
 				layer.msg("添加失败！", {time: 1000});
+                return false;
 			}
           }
         });

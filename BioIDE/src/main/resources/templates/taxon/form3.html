@@ -645,7 +645,92 @@
                     </script>
                 </div>
                 <!-- 特征数据面板 -->
-                <div role="tabpanel" class="tab-pane fade" id="traitdata">这里是特征信息</div>
+                <div role="tabpanel" class="tab-pane fade" id="traitdata">
+                    <h4>
+                        <small>&nbsp;该分类单元的特征数据</small>
+                        <p>&nbsp;</p>
+                    </h4>
+                    <div id="newTraitdata"></div>
+                    <a class="btn btn-app" onclick="addTraitdata ();">
+                        <i class="fa fa-plus"></i>添加新的特征数据</a>
+                    <input class="hidden" id="countTraitdata" name="countTraitdata" value="0"></input>
+                    <!-- 保护数据模板 -->
+                    <script id="traitdataForm" type="text/x-jquery-tmpl">
+                        <form class="panel panel-default" id="traitdataForm_${num}" th:action="@{/}" method="post">
+                          <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                              <i class="fa fa-check-circle hidden" id="traitdataStatus_${num}"></i>
+                              <a id="traitdataCollapseTitle_${num}" role="button" data-toggle="collapse" data-parent="#accordion" href="#traitdataCollapse_${num}" aria-expanded="true" aria-controls="collapseOne">新的特征数据</a>
+                              <a role="button" class="pull-right" onclick="removeTraitdata(${num});">
+                                <i class="fa fa-remove"></i>
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="traitdataCollapse_${num}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="trainsetid_${num}" class="col-sm-2 control-label">术语集:</label>
+                                  <div class="col-sm-3">
+                                    <select class="form-control select2" id="trainsetid_${num}" name="trainsetid_${num}" style="width: 100%;"></select>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <select class="form-control select2" id="trainSourcesid_${num}" name="trainSourcesid_${num}" style="width: 100%;"></select>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <select class="form-control select2" id="desid_${num}" name="desid_${num}" style="width: 100%;"></select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="proassessment_${num}" class="col-sm-2 control-label">术语赋值部分:</label>
+                                  <div class="col-sm-10 col-md-10">
+                                    <textarea class="form-control" rows="3" id="proassessment_${num}" name="proassessment_${num}" placeholder="保护评估"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <input class="hidden" id="countTraitdataReferences_${num}" name="countTraitdataReferences_${num}" value="0"></input>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="refjson" class="col-sm-2 control-label">参考文献:</label>
+                                  <div class="col-sm-10 col-md-10 table-responsive">
+                                    <table class="table table-hover table-condensed">
+                                      <tbody id="newTraitdataReferences_${num}"></tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-default btn-sm" onclick="addTraitdataReferences (${num});">
+                                      <i class="fa fa-plus"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <button type="button" class="btn btn-primary pull-right" onclick="submitTraitdata(${num});">确认</button></div>
+                          </div>
+                        </form>
+                    </script>
+                    <!-- 保护数据参考文献模板 -->
+                    <script id="traitdataReferencesForm" type="text/x-jquery-tmpl">
+                        <tr id="traitdataReferencesForm_${pnum}_${num}">
+                          <td><label class="control-label">[${num}]</label><td>
+                          <div class="form-group">
+                            <div class="col-sm-8 col-md-8 col-xs-12">
+                              <div class="input-group">
+                                <select class="form-control select2" id="traitdataReferences_${pnum}_${num}" name="traitdataReferences_${pnum}_${num}" style="width: 100%;"></select>
+                                <div class="input-group-btn">
+                                  <button type="button" class="btn btn-default dropdown-toggle" onclick="removeTraitdataReferences(${pnum},${num});">
+                                    <i class="fa fa-remove"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-xs-6">
+                              <input type="text" class="form-control" id="traitdataReferencesPageS_${pnum}_${num}" name="traitdataReferencesPageS_${pnum}_${num}" placeholder="起始页" /></div>
+                            <div class="col-sm-2 col-md-2 col-xs-6">
+                              <input type="text" class="form-control" id="traitdataReferencesPageE_${pnum}_${num}" name="traitdataReferencesPageE_${pnum}_${num}" placeholder="终止页" /></div>
+                          </td>
+                        </tr>
+                    </script>
+                </div>
             </div>
         </div>
     </form>

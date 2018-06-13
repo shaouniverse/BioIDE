@@ -433,6 +433,7 @@ function addCitationValidator(citationNum) {
 function citationFormValidator(Num) {
     $('#citationForm_' + Num).data('bootstrapValidator').validate();
 }
+
 //构造一个protection验证规则
 function addProtectionValidator(protectionNum) {
     $("#protectionForm_" + protectionNum).bootstrapValidator({
@@ -520,3 +521,28 @@ function taxkeyFormValidator(Num) {
     $('#taxkeyForm_' + Num).data('bootstrapValidator').validate();
 }
 
+//构造一个traitdata验证规则
+function addTraitdataValidator(traitdataNum) {
+    $("#traitdataForm_" + traitdataNum).bootstrapValidator({
+        excluded: [":disabled"],//只对于禁用域不进行验证，其他的表单元素都要验证
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon ',
+            invalid: 'glyphicon ',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
+    $("#traitdataForm_" + traitdataNum).bootstrapValidator("addField", "trainsetid_" + traitdataNum, {
+        validators: {
+            notEmpty: {}
+        },
+        // stringLength: {
+        //     min: 1,
+        //     max: 100
+        // },
+    });
+}
+//统一验证traitdata
+function traitdataFormValidator(Num) {
+    $('#traitdataForm_' + Num).data('bootstrapValidator').validate();
+}

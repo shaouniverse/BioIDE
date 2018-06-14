@@ -12,7 +12,8 @@ function submitCitation(citationNum) {
         ($("tr[id^='"+'citationReferencesForm_'+citationNum+"_']").length<=0 || referencesValidator('newCitationReferences_'+citationNum,2))) {
     	// 处理Ajax提交
         var obj = $('#citationForm_' + citationNum).serialize();
-        return $.ajax({
+        var postSuccess=false;
+        $.ajax({
             type: "POST",
             url: "/console/citation/rest/add",
             data: obj,	// 要提交的表单
@@ -31,15 +32,27 @@ function submitCitation(citationNum) {
                             $('#citationForm_' + citationNum).removeClass("panel-danger");
                             $('#citationForm_' + citationNum).addClass("panel-success");
                             $('#citationStatus_' + citationNum).removeClass("hidden");
-                            //return true;
+                            postSuccess = true;
                         });
-                    return true;
 				}else{
-					layer.msg("添加失败！", {time: 1000});
-					return false;
+                    layer.msg("添加失败", function () {
+                    });
+                    postSuccess = false;
 				}
-            }
+            },
+            error: function() {
+                postSuccess = false;
+            },
         });
+        if (!$('#citationCollapse_' + citationNum).hasClass('in')) {
+            $('#citationCollapseTitle_' + citationNum).trigger("click");
+        }
+        $('#citationForm_' + citationNum).removeClass("panel-success");
+        $('#citationForm_' + citationNum).addClass("panel-danger");
+        $('#citationStatus_' + citationNum).addClass("hidden");
+        layer.msg("添加失败", function () {
+        });
+        return postSuccess;
     }
     else {
         if (!$('#citationCollapse_' + citationNum).hasClass('in')) {

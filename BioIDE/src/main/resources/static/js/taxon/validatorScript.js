@@ -329,8 +329,8 @@ function addDescriptionValidator(descriptionNum) {
     });
     $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "destypeid_" + descriptionNum, {
         validators: {
-            // notEmpty: {
-            // }
+            notEmpty: {
+            }
         }
     });
     $("#descriptionForm_" + descriptionNum).bootstrapValidator("addField", "desdate_" + descriptionNum, {

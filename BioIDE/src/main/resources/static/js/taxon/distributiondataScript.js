@@ -108,5 +108,9 @@ function addDistributiondata() {
         function () {
             $("#distributiondataCollapseTitle_" + (countDistributiondata + 1)).text($("#destitle_" + (countDistributiondata + 1)).val());
         });
-
+    
+    // 唯一标识UUID
+    $.get("/console/taxon/rest/uuid", function(id){
+    	$("#distributiondataId_" + (countDistributiondata + 1)).val(id);
+    });
 }

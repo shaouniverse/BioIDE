@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.big.common.UUIDUtils;
 import org.big.entity.Taxon;
 import org.big.service.TaxonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +103,15 @@ public class TaxonRestController {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	/**
+	 * <b> 为Taxon下的各个实体设置唯一标识</b>
+	 * <p> 为Taxon下的各个实体设置唯一标识</p>
+	 * @return
+	 */
+	@RequestMapping(value = "/uuid", method = RequestMethod.GET)
+	private String uuid() {
+		return UUIDUtils.getUUID32();
 	}
 }

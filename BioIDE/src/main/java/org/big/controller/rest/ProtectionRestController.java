@@ -2,8 +2,8 @@ package org.big.controller.rest;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.big.entity.Distributiondata;
-import org.big.service.DistributiondataService;
+import org.big.entity.Protection;
+import org.big.service.ProtectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,47 +14,47 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 
 /**
- *<p><b>Distributiondata相关的Controller的Rest风格类</b></p>
- *<p> Distributiondata相关的Controller的Rest风格类</p>
+ *<p><b>Protection相关的Controller的Rest风格类</b></p>
+ *<p> Protection相关的Controller的Rest风格类</p>
  * @author BINZI
- *<p>Created date: 2018/06/13 10:35</p>
+ *<p>Created date: 2018/06/14 13:58</p>
  *<p>Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组</p>
  * @version: 0.1
  * @since JDK 1.80_144
  */
 @RestController  //返回json
 @Controller
-@RequestMapping("/console/distributiondata/rest")
-public class DistributiondataRestController {
+@RequestMapping("/console/protection/rest")
+public class ProtectionRestController {
 	@Autowired
-	private DistributiondataService distributiondataService;
+	private ProtectionService protectionService;
 	
 	/**
-	 * <b> Distributiondata的Index页面分页列表查询</b>
-	 * <p> Distributiondata的Index页面分页列表查询</p>
+	 * <b> Protection的Index页面分页列表查询</b>
+	 * <p> Protection的Index页面分页列表查询</p>
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSON list(HttpServletRequest request) {
-		return this.distributiondataService.findDistributiondataList(request);
+		return this.protectionService.findProtectionList(request);
 	}
 	
 	/**
-	 * <b> Distributiondata实体添加</b>
-	 * <p> Distributiondata实体添加</p>
+	 * <b> Protection实体添加</b>
+	 * <p> Protection实体添加</p>
 	 * @param request
 	 * @return com.alibaba.fastjson.JSON
 	 */
 	@RequestMapping(value="/add", method = {RequestMethod.POST})
-	public JSON addDistributiondata(HttpServletRequest request) {
-		Distributiondata thisDistributiondata = new Distributiondata();
-		return this.distributiondataService.addDistributiondata(thisDistributiondata, request);
+	public JSON addCitation(HttpServletRequest request) {
+		Protection thisProtection = new Protection();
+		return this.protectionService.addProtection(thisProtection, request);
 	}
 	
 	/**
-	 * <b> 根据Id批量逻辑删除指定Description</b>
-	 * <p> 根据Id批量逻辑删除指定Description</p>
+	 * <b> 根据Id批量逻辑删除指定Protection</b>
+	 * <p> 根据Id批量逻辑删除指定Protection</p>
 	 * @param ids
 	 * @return
 	 */
@@ -64,7 +64,7 @@ public class DistributiondataRestController {
 			String[] idArr = ids.split("￥");
 			int isRemove = 0;
 			for (String id : idArr) {
-				if (this.distributiondataService.logicRemove(id)) {
+				if (this.protectionService.logicRemove(id)) {
 					isRemove = isRemove + 1;
 				}
 			}
@@ -76,19 +76,30 @@ public class DistributiondataRestController {
 	}
 	
 	/**
-	 * <b> 根据Id单个逻辑删除指定Citation</b>
-	 * <p> 根据Id单个逻辑删除指定Citation</p>
+	 * <b> 根据Id单个逻辑删除指定Protection</b>
+	 * <p> 根据Id单个逻辑删除指定Protection</p>
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
 	public boolean remove(@PathVariable String id) {
 		try {
-			return this.distributiondataService.logicRemove(id);
+			return this.protectionService.logicRemove(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
+	/**
+     *<b>Protection的select列表(保护标准级别)</b>
+     *<p> 当前用户的Protection的select检索列表(保护标准级别)</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
+	public JSON select(HttpServletRequest request){
+		return this.protectionService.findBySelect(request);
+	}
 }

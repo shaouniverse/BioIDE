@@ -47,7 +47,7 @@ public class DescriptionRestController {
 	 * @return com.alibaba.fastjson.JSON
 	 */
 	@RequestMapping(value="/add", method = {RequestMethod.POST})
-	public JSON addCitation(HttpServletRequest request) {
+	public JSON addDescription(HttpServletRequest request) {
 		Description thisDescription = new Description();
 		return this.descriptionService.addDescription(thisDescription, request);
 	}

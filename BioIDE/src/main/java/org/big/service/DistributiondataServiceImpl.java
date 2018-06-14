@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -96,6 +95,9 @@ public class DistributiondataServiceImpl implements DistributiondataService {
 		String paraName = null;
 		while (paraNames.hasMoreElements()) {
 			paraName = (String) paraNames.nextElement();
+			if (paraName.indexOf("distributiondataId_") == 0) {
+				thisDistributiondata.setId(request.getParameter(paraName));
+			}
 			if (paraName.indexOf("relation_") == 0) {
 				thisDistributiondata.setLng(Double.parseDouble(request.getParameter(paraName)));
 			}
@@ -107,7 +109,6 @@ public class DistributiondataServiceImpl implements DistributiondataService {
 		
 		JSONObject thisResult = new JSONObject();
 		try {
-			thisDistributiondata.setId(UUID.randomUUID().toString());
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisDistributiondata.setInputer(thisUser.getId());
 			thisDistributiondata.setSynchdate(new Timestamp(System.currentTimeMillis()));

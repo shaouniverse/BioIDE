@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -104,6 +103,9 @@ public class DescriptionServiceImpl implements DescriptionService {
 		String paraName = null;
 		while (paraNames.hasMoreElements()) {
 			paraName = (String) paraNames.nextElement();
+			if (paraName.indexOf("descriptionId_") == 0) {
+				thisDescription.setId(request.getParameter(paraName));
+			}
 			if (paraName.indexOf("destitle_") == 0) {
 				thisDescription.setDestitle(request.getParameter(paraName));
 			}
@@ -143,7 +145,6 @@ public class DescriptionServiceImpl implements DescriptionService {
 		
 		JSONObject thisResult = new JSONObject();
 		try {
-			thisDescription.setId(UUID.randomUUID().toString());
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisDescription.setInputer(thisUser.getId());
 			thisDescription.setSynchdate(new Timestamp(System.currentTimeMillis()));

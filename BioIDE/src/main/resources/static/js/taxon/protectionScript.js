@@ -9,25 +9,36 @@ function removeProtection(protectionNum) {
 //提交一个保护数据
 function submitProtection(protectionNum) {
     protectionFormValidator(protectionNum);
-    if (
-        $('#protectionForm_' + protectionNum).data('bootstrapValidator').isValid() &&
+    if ($('#protectionForm_' + protectionNum).data('bootstrapValidator').isValid() &&
         ($("tr[id^='"+'protectionReferencesForm_'+protectionNum+"_']").length<=0 || referencesValidator('newProtectionReferences_'+protectionNum,3))) {
         //处理ajax提交
-        layer.msg('提交成功，请继续填写其他内容',
-            {
-                time: 1500, //1.5s后自动关闭
-            },
-            function () {
-                if ($('#protectionCollapse_' + protectionNum).hasClass('in')) {
-                    $('#protectionCollapseTitle_' + protectionNum).trigger("click");
-                }
-                $('#protectionForm_' + protectionNum).removeClass("panel-default");
-                $('#protectionForm_' + protectionNum).removeClass("panel-danger");
-                $('#protectionForm_' + protectionNum).addClass("panel-success");
-                $('#protectionStatus_' + protectionNum).removeClass("hidden");
-                return true;
-            });
-        return true;
+    	var obj = $('#protectionForm_' + protectionNum).serialize();
+        $.ajax({
+          type: "POST",
+          url: "/console/protection/rest/add",
+          data: obj,	// 要提交的表单
+          dataType: "json",
+          contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+          success: function (msg) {
+        	if (msg.result == true) {
+        		layer.msg(
+        		    '提交成功，请继续填写其他内容',
+        		    {time: 1500},
+        		    function () {
+        		        if ($('#protectionCollapse_' + protectionNum).hasClass('in')) {
+        		            $('#protectionCollapseTitle_' + protectionNum).trigger("click");
+        		        }
+        		        $('#protectionForm_' + protectionNum).removeClass("panel-default");
+        		        $('#protectionForm_' + protectionNum).removeClass("panel-danger");
+        		        $('#protectionForm_' + protectionNum).addClass("panel-success");
+        		        $('#protectionStatus_' + protectionNum).removeClass("hidden");
+        		    });
+        		return true;
+			}else{
+				layer.msg("添加失败！", {time: 1000});
+			}
+          }
+        });
     }
     else {
         if (!$('#protectionCollapse_' + protectionNum).hasClass('in')) {
@@ -66,9 +77,9 @@ function addProtection() {
 
     $('#protectionForm').tmpl(thisProtectionNum).appendTo('#newProtection');
     // 保护标准下拉选
-    buildSelect2("standardname_" + (countProtection + 1), "console/datasource/rest/select", "请选择保护标准");
+    buildSelect2("standardname_" + (countProtection + 1), "console/protectstandard/rest/selectStandard", "请选择保护标准");
     // 保护标准版本下拉选
-    buildSelect2("version_" + (countProtection + 1), "console/datasource/rest/select", "请选择标准版本");
+    buildSelect2("version_" + (countProtection + 1), "console/protectstandard/rest/selectVersion", "请选择标准版本");
     // 保护级别下拉选
     buildSelect2("protlevel_" + (countProtection + 1), "console/datasource/rest/select", "请选择保护级别");
 
@@ -76,6 +87,11 @@ function addProtection() {
 
     addProtectionValidator(countProtection + 1);
 
+    // 唯一标识UUID
+    $.get("/console/taxon/rest/uuid", function(id){
+    	$("#protectionId_" + (countProtection + 1)).val(id);
+    });
+    
     function buildProtectionTitle(countProtection) {
         var titleText = "";
         if ($("#standardname_" + (countProtection + 1)).select2('data')[0]) {

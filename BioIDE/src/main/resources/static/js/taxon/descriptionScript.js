@@ -103,7 +103,11 @@ function addDescription() {
     $("#destitle_" + (countDescription + 1)).on("change", function () {
         $("#descriptionCollapseTitle_" + (countDescription + 1)).text($("#destitle_" + (countDescription + 1)).val());
     });
-
+    
+    // 唯一标识UUID
+    $.get("/console/taxon/rest/uuid", function(id){
+    	$("#descriptionId_" + (countDescription + 1)).val(id);
+    });
 }
 
 //选择参考文献类型

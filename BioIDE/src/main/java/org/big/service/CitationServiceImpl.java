@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -98,6 +97,10 @@ public class CitationServiceImpl implements CitationService {
 		String paraName = null;
 		while (paraNames.hasMoreElements()) {
 			paraName = (String) paraNames.nextElement();
+			if (paraName.indexOf("citationId_") == 0) {
+				System.out.println(request.getParameter(paraName));
+				thisCitation.setId(request.getParameter(paraName));
+			}
 			if (paraName.indexOf("sciname_") == 0) {
 				thisCitation.setSciname(request.getParameter(paraName));
 			}
@@ -117,7 +120,7 @@ public class CitationServiceImpl implements CitationService {
 		
 		JSONObject thisResult = new JSONObject();
 		try {
-			thisCitation.setId(UUID.randomUUID().toString());
+			/*thisCitation.setId(UUID.randomUUID().toString());*/
 			UserDetail thisUser = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			thisCitation.setInputer(thisUser.getId());
 			thisCitation.setInputtime(new Timestamp(System.currentTimeMillis()));
@@ -127,6 +130,7 @@ public class CitationServiceImpl implements CitationService {
 			thisCitation.setRefjson(handleReferenceToJson(request).toJSONString());
 			String taxonId = (String) request.getSession().getAttribute("taxonId");
 			thisCitation.setTaxon(taxonService.findOneById(taxonId));
+			System.out.println(thisCitation);
 			this.citationRepository.save(thisCitation);
 			thisResult.put("result", true);
 		} catch (Exception e) {

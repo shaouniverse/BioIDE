@@ -32,6 +32,7 @@
                     <!-- 文本数据模板 -->
                     <script id="descriptionForm" type="text/x-jquery-tmpl">
                         <form class="panel panel-default" id="descriptionForm_${num}" th:action="@{/}" method="post">
+							<input class="hidden" id="descriptionId_${num}" name="descriptionId_${num}" readonly="readonly"></input>
                           <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                               <i class="fa fa-check-circle hidden" id="descriptionStatus_${num}"></i>
@@ -216,6 +217,7 @@
                     <!-- 分布数据模板 -->
                     <script id="distributiondataForm" type="text/x-jquery-tmpl">
                         <form class="panel panel-default" id="distributiondataForm_${num}" th:action="@{/}" method="post">
+							<input class="hidden" id="distributiondataId_${num}" name="distributiondataId_${num}" readonly="readonly"></input>
                           <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                               <i class="fa fa-check-circle hidden" id="distributiondataStatus_${num}"></i>
@@ -259,6 +261,7 @@
                     <!-- 保护数据模板 -->
                     <script id="protectionForm" type="text/x-jquery-tmpl">
                         <form class="panel panel-default" id="protectionForm_${num}" th:action="@{/}" method="post">
+							<input class="hidden" id="protectionId_${num}" name="protectionId_${num}" readonly="readonly"></input>
                           <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                               <i class="fa fa-check-circle hidden" id="protectionStatus_${num}"></i>

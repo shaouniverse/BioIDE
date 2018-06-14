@@ -11,6 +11,7 @@ function submitTraitdata(traitdataNum) {
     traitdataFormValidator(traitdataNum);
     if (
         $('#traitdataForm_' + traitdataNum).data('bootstrapValidator').isValid() &&
+        ($("tr[id^='"+'traitdataValueForm_'+traitdataNum+"_']").length>0 && traitdataValidator('newTraitdataValue_'+traitdataNum,3)) &&
         ($("tr[id^='"+'traitdataReferencesForm_'+traitdataNum+"_']").length<=0 || referencesValidator('newTraitdataReferences_'+traitdataNum,3))) {
         //处理ajax提交
         layer.msg('提交成功，请继续填写其他内容',
@@ -105,6 +106,32 @@ function addTraitdata() {
     });
 
 }
+//删除一个特征详细描述
+function removeTraitdataValue(traitdataNum, referencesNum) {
+    $("#traitdataValueForm_" + traitdataNum + "_" + referencesNum).remove();
+}
+//添加一个特征详细描述
+function addTraitdataValue(traitdataNum) {
+
+    var countTraitdataValue = parseInt($('#countTraitdataValue_' + traitdataNum).val());
+
+    var thisValueNum = {tnum: traitdataNum, num: countTraitdataValue + 1};
+
+    $('#traitdataValueForm').tmpl(thisValueNum).appendTo('#newTraitdataValue_' + traitdataNum);
+
+    buildSelect2("traitontology_" + traitdataNum + "_" + (countTraitdataValue + 1), "console/ref/rest/select", "请选择术语(特征)");
+
+    //特征详细描述验证规则
+    addTraitdataValueValidator(
+        "newTraitdataValue_"+traitdataNum,
+        (countTraitdataValue+1),
+        "traitontology_"+traitdataNum+"_",
+        "traitdataValue_"+traitdataNum+"_"
+    );
+
+    $('#countTraitdataValue_' + traitdataNum).val(countTraitdataValue + 1);
+
+}
 //删除一个新参考文献
 function removeTraitdataReferences(traitdataNum, referencesNum) {
     $("#traitdataReferencesForm_" + traitdataNum + "_" + referencesNum).remove();
@@ -114,7 +141,7 @@ function addTraitdataReferences(traitdataNum) {
 
     var countTraitdataReferences = parseInt($('#countTraitdataReferences_' + traitdataNum).val());
 
-    var thisReferencesNum = {pnum: traitdataNum, num: countTraitdataReferences + 1};
+    var thisReferencesNum = {tnum: traitdataNum, num: countTraitdataReferences + 1};
 
     $('#traitdataReferencesForm').tmpl(thisReferencesNum).appendTo('#newTraitdataReferences_' + traitdataNum);
 

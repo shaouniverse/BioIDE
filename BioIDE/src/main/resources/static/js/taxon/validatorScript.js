@@ -546,3 +546,37 @@ function addTraitdataValidator(traitdataNum) {
 function traitdataFormValidator(Num) {
     $('#traitdataForm_' + Num).data('bootstrapValidator').validate();
 }
+
+
+//构造一个TraitdataValue验证规则
+function addTraitdataValueValidator(formId,traitId,traitontology,traitdataValue) {
+    $("#" + formId).bootstrapValidator("addField", traitontology + traitId, {
+        validators: {
+            notEmpty: {}
+        }
+    });
+    $("#" + formId).bootstrapValidator("addField", traitdataValue + traitId, {
+        validators: {
+            notEmpty: {},
+            stringLength: {
+                min: 1,
+                max: 500
+            },
+        }
+    });
+}
+
+//统一验证TraitdataValue
+function traitdataValidator(formId,formNum) {
+    $('#' + formId).data('bootstrapValidator').validate();
+    //是否通过校验
+    if (!$('#' + formId).data('bootstrapValidator').isValid()) {
+        changeVerificationTab(formNum, -1);
+        incompleteStep(formNum);
+        return false;//没有通过校验
+    } else {
+        changeVerificationTab(formNum, 1);
+        completeStep(formNum);
+        return true;//通过校验
+    }
+}

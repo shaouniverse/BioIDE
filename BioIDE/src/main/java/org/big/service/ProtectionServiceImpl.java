@@ -157,13 +157,13 @@ public class ProtectionServiceImpl implements ProtectionService {
 				System.out.println(request.getParameter(paraName));
 				countProtectionReferences = request.getParameter(paraName);
 			}
-			if (paraName.indexOf("descriptionReferences_") == 0) {
+			if (paraName.indexOf("protectionReferences_") == 0) {
 				protectionReferenceId = request.getParameter(paraName);
 			}
-			if (paraName.indexOf("descriptionReferencesPageS_") == 0) {
+			if (paraName.indexOf("protectionReferencesPageS_") == 0) {
 				protectionReferencesPageS = request.getParameter(paraName);
 			}
-			if (paraName.indexOf("descriptionReferencesPageE_") == 0) {
+			if (paraName.indexOf("protectionReferencesPageE_") == 0) {
 				protectionReferencesPageE = request.getParameter(paraName);
 			}
 		}
@@ -235,5 +235,20 @@ public class ProtectionServiceImpl implements ProtectionService {
 		}
 		thisSelect.put("items", items);
 		return thisSelect;
+	}
+	@Override
+	public JSON deleteOne(HttpServletRequest request) {
+		JSONObject thisResult = new JSONObject();
+		String protectionId = request.getParameter("protectionId");
+		System.out.println(protectionId);
+		if (StringUtils.isNotBlank(protectionId)) {
+			if (null != this.protectionRepository.findOneById(protectionId)) {
+				this.protectionRepository.deleteOneById(protectionId);
+				thisResult.put("result", true);
+			}
+		}else {
+			thisResult.put("result", false);
+		}
+		return thisResult;
 	}
 }

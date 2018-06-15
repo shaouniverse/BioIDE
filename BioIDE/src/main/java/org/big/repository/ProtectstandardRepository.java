@@ -50,7 +50,7 @@ public interface ProtectstandardRepository extends BaseRepository<Protectstandar
      * @param pageable
      * @return com.alibaba.fastjson.JSON
      */
-    @Query(value = "Select ps from Protectstandard ps where (ps.standardname like %?1% or ps.version like %?1%) and ps.status = 1")
-	Page<Protectstandard> searchByVersionAndStandardname(String findText, Pageable pageable);
+    @Query(value = "Select ps from Protectstandard ps where (ps.standardname like %?1% or ps.version like %?1% or ps.protlevel like %?1%) and ps.status = 1")
+	Page<Protectstandard> searchByVersionAndStandardnameAndProtlevel(String findText, Pageable pageable);
 
 }

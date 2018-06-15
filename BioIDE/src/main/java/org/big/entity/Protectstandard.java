@@ -45,12 +45,24 @@ public class Protectstandard implements Serializable {
 
 	private String version;
 
+	private String protlevel;
+	
 	//bi-directional many-to-one association to Protection
 	@OneToMany(mappedBy="protectstandard")
 	private List<Protection> protections;
 
 	public Protectstandard() {
 	}
+	
+	public String getProtlevel() {
+		return protlevel;
+	}
+
+	public void setProtlevel(String protlevel) {
+		this.protlevel = protlevel;
+	}
+
+
 
 	public String getId() {
 		return this.id;

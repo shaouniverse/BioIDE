@@ -115,4 +115,16 @@ public class ProtectstandardRestController {
 		return this.protectstandardService.findBySelectVersion(request);
 	}
 	
+	/**
+     *<b>Protectstandard的select列表(保护标准级别)</b>
+     *<p> 当前用户的Protectstandard的select检索列表(保护标准级别)</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/selectProtlevel", method = RequestMethod.GET)
+	public JSON select(HttpServletRequest request){
+		return this.protectstandardService.findBySelectProtlevel(request);
+	}
+	
 }

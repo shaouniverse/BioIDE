@@ -4,7 +4,26 @@
 
 //删除一个新保护数据
 function removeProtection(protectionNum) {
-    $("#protectionForm_" + protectionNum).remove();
+	var obj = $("#protectionId_" + protectionNum).val();
+/*	var r = confirm("是否删除?");
+	if (r == true) {*/
+		$.post("/console/protection/rest/delete", {protectionId:obj}, 
+			function(status) {
+				if (status) {
+					layer.msg('删除成功', {time : 500}, 
+					function() {
+						 $("#protectionForm_" + protectionNum).remove();
+					})
+				}else {
+					layer.msg('操作失败', function(){})
+				}
+			})
+/*	}else {
+		layer.msg(
+			'操作取消', 
+			{time : 500}
+		)
+	}*/
 }
 //提交一个保护数据
 function submitProtection(protectionNum) {
@@ -13,7 +32,8 @@ function submitProtection(protectionNum) {
         ($("tr[id^='"+'protectionReferencesForm_'+protectionNum+"_']").length<=0 || referencesValidator('newProtectionReferences_'+protectionNum,3))) {
         //处理ajax提交
     	var obj = $('#protectionForm_' + protectionNum).serialize();
-        $.ajax({
+    	var postSuccess=false;
+    	$.ajax({
           type: "POST",
           url: "/console/protection/rest/add",
           data: obj,	// 要提交的表单
@@ -32,13 +52,26 @@ function submitProtection(protectionNum) {
         		        $('#protectionForm_' + protectionNum).removeClass("panel-danger");
         		        $('#protectionForm_' + protectionNum).addClass("panel-success");
         		        $('#protectionStatus_' + protectionNum).removeClass("hidden");
+        		        postSuccess = true;
         		    });
-        		return true;
 			}else{
 				layer.msg("添加失败！", {time: 1000});
+				postSuccess = false;
 			}
+          },
+          error: function() {
+        	  postSuccess = false;
           }
         });
+    	if (!$('#protectionCollapse_' + protectionNum).hasClass('in')) {
+            $('#protectionCollapseTitle_' + protectionNum).trigger("click");
+        }
+        $('#protectionForm_' + protectionNum).removeClass("panel-success");
+        $('#protectionForm_' + protectionNum).addClass("panel-danger");
+        $('#protectionStatus_' + protectionNum).addClass("hidden");
+        layer.msg("添加失败", function () {
+        });
+        return postSuccess;
     }
     else {
         if (!$('#protectionCollapse_' + protectionNum).hasClass('in')) {
@@ -81,7 +114,7 @@ function addProtection() {
     // 保护标准版本下拉选
     buildSelect2("version_" + (countProtection + 1), "console/protectstandard/rest/selectVersion", "请选择标准版本");
     // 保护级别下拉选
-    buildSelect2("protlevel_" + (countProtection + 1), "console/datasource/rest/select", "请选择保护级别");
+    buildSelect2("protlevel_" + (countProtection + 1), "console/protectstandard/rest/selectProtlevel", "请选择保护级别");
 
     $('#countProtection').val(countProtection + 1);
 

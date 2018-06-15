@@ -55,7 +55,7 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		JSONArray items = new JSONArray();
 		List<Protectstandard> thisList = new ArrayList<>();
 		// 获取当前选中Dataset下的Taxaset
-		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardname(findText,
+		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardnameAndProtlevel(findText,
 				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
 		thisSelect.put("total_count", thisPage.getTotalElements());
 		Boolean incompleteResulte = true;
@@ -99,7 +99,7 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		JSONArray items = new JSONArray();
 		List<Protectstandard> thisList = new ArrayList<>();
 		// 获取当前选中Dataset下的Taxaset
-		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardname(findText,
+		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardnameAndProtlevel(findText,
 				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
 		thisSelect.put("total_count", thisPage.getTotalElements());
 		Boolean incompleteResulte = true;
@@ -124,4 +124,47 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		return thisSelect;
 	}
 
+	@Override
+	public JSON findBySelectProtlevel(HttpServletRequest request) {
+		String findText = request.getParameter("find");
+		if (findText == null || findText.length() <= 0) {
+			findText = "";
+		}
+		int findPage = 1;
+		try {
+			findPage = Integer.valueOf(request.getParameter("page"));
+		} catch (Exception e) {
+		}
+		int limit_serch = 30;
+		int offset_serch = (findPage - 1) * 30;
+		String sort = "protlevel";
+		String order = "asc";
+		JSONObject thisSelect = new JSONObject();
+		JSONArray items = new JSONArray();
+		List<Protectstandard> thisList = new ArrayList<>();
+		// 获取当前选中Dataset下的Taxaset
+		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardnameAndProtlevel(findText,
+				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
+		thisSelect.put("total_count", thisPage.getTotalElements());
+		Boolean incompleteResulte = true;
+		if ((thisPage.getTotalElements() / 30) > findPage) {
+			incompleteResulte = false;
+		}
+		thisSelect.put("incompleteResulte", incompleteResulte);
+		thisList = thisPage.getContent();
+		/*if (findPage == 1) {
+			JSONObject row = new JSONObject();
+			row.put("id", "addNew");
+			row.put("full_name", "新建一个分类单元集");
+			items.add(row);
+		}*/
+		for (int i = 0; i < thisList.size(); i++) {
+			JSONObject row = new JSONObject();
+			row.put("id", thisList.get(i).getId());
+			row.put("full_name", thisList.get(i).getProtlevel());
+			items.add(row);
+		}
+		thisSelect.put("items", items);
+		return thisSelect;
+	}
 }

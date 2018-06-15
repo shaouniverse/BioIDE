@@ -51,4 +51,12 @@ public interface ProtectionService {
      * @return com.alibaba.fastjson.JSON
      */
 	JSON findBySelect(HttpServletRequest request);
+	
+	/**
+	 *<b>根据id删除一个实体</b>
+     *<p> 根据id删除一个实体</p>
+	 * @param id
+	 * @return
+	 */
+	JSON deleteOne(HttpServletRequest request);
 }

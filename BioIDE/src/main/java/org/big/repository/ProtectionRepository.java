@@ -53,5 +53,14 @@ public interface ProtectionRepository extends BaseRepository<Protection, String>
      */
 	@Query(value = "Select p from Protection p where (p.protlevel like %?1%) and p.status = 1")
 	Page<Protection> searchByProtlevel(String findText, Pageable pageable);
+	
+	/**
+     *<b>通过Id删除一个实体</b>
+     *<p> 通过Id删除一个实体</p>
+     * @author BINZI
+     * @param protectionId
+     * @return org.big.entity.Protection
+     */
+	void deleteOneById(String protectionId);
 
 }

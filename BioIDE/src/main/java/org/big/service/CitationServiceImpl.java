@@ -193,4 +193,16 @@ public class CitationServiceImpl implements CitationService {
 		return false;
 	}
 	
+	@Override
+	public boolean deleteOne(HttpServletRequest request) {
+		String citationId = request.getParameter("descriptionId");
+		if (StringUtils.isNotBlank(citationId)) {
+			if (null != this.citationRepository.findOneById(citationId)) {
+				this.citationRepository.deleteOneById(citationId);
+			}
+			return true;
+		}
+		return false;
+	}
+	
 }

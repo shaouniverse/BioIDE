@@ -38,7 +38,7 @@ public class AspectConfig {
         String targetName = pjp.getSignature().getDeclaringTypeName();
         //System.out.println(pjp.getTarget().getClass().getName());
         //targetName=targetName.substring(16);
-        targetName=targetName.replace("org.big.service.","");
+        /*targetName=targetName.replace("org.big.service.","");*/
         if(thisIdentityVote.hasAuthority(targetName, objectId)){
             try {
                 return pjp.proceed();

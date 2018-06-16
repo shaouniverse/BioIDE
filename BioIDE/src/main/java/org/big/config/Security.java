@@ -59,7 +59,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 				.antMatchers("/register").permitAll()
 				.antMatchers("/console/**").hasAnyAuthority("ROLE_USER", "ROLE_SUPER")
 				.antMatchers("/super/**").hasAnyAuthority("ROLE_SUPER")
-				// .anyRequest().authenticated()
+				//.anyRequest().authenticated()
 				.and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/", true)
 				.authenticationDetailsSource(authenticationDetailsSource).and().logout().logoutUrl("/logout")
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").and().csrf();

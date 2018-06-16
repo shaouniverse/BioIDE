@@ -3,7 +3,28 @@
  */
 //删除一个新引证
 function removeCitation(citationNum) {
-    $("#citationForm_" + citationNum).remove();
+	var r = confirm("是否删除?");
+	if (r == true) {
+		$.post("/console/citation/rest/delete", 
+		{
+			"_csrf":$('input[name="_csrf"]').val(),
+			"citationId":$("#citationId_" + citationNum).val()
+		}, 
+		function(status) {
+			if (status) {
+				layer.msg('删除成功', {time : 500}, function() {
+					 $("#citationForm_" + citationNum).remove();
+				})
+			}else {
+				layer.msg('操作失败', function(){})
+			}
+		})
+	}else {
+		layer.msg(
+			'操作取消', 
+			{time : 500}
+		)
+	}
 }
 //提交一个引证
 function submitCitation(citationNum) {
@@ -13,7 +34,7 @@ function submitCitation(citationNum) {
     	// 处理Ajax提交
         var obj = $('#citationForm_' + citationNum).serialize();
         var postSuccess=false;
-        $.ajax({
+        return $.ajax({
             type: "POST",
             url: "/console/citation/rest/add",
             data: obj,	// 要提交的表单
@@ -21,10 +42,7 @@ function submitCitation(citationNum) {
             contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (msg) {
 	          	if (msg.result == true) {
-                    layer.msg(
-                        '提交成功，请继续填写其他内容',
-                        {time: 1500},
-                        function () {
+                    layer.msg('提交成功，请继续填写其他内容', {time: 1500}, function () {
                             if ($('#citationCollapse_' + citationNum).hasClass('in')) {
                                 $('#citationCollapseTitle_' + citationNum).trigger("click");
                             }

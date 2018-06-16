@@ -4,8 +4,10 @@ import org.big.entity.Distributiondata;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *<p><b>Distributiondata的DAO类接口</b></p>
@@ -44,4 +46,15 @@ public interface DistributiondataRepository extends BaseRepository<Distributiond
      */
 	@Query(value = "Select dd from Distributiondata dd where dd.id = ?1")
 	Distributiondata findOneById(String id);
+
+	/**
+     *<b>通过Id删除一个实体</b>
+     *<p> 通过Id删除一个实体</p>
+     * @author BINZI
+     * @param distributiondataId
+     */
+	@Modifying
+	@Transactional
+	@Query("Delete Distributiondata d where d.id =?1")
+	void deleteOneById(String distributiondataId);
 }

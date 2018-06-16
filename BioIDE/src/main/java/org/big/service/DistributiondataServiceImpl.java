@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.big.common.QueryTool;
 import org.big.entity.Distributiondata;
 import org.big.entity.UserDetail;
@@ -138,6 +139,18 @@ public class DistributiondataServiceImpl implements DistributiondataService {
 		if (null != thisDistributiondata && 1 == thisDistributiondata.getStatus()) {
 			thisDistributiondata.setStatus(0);
 			this.distributiondataRepository.save(thisDistributiondata);
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean deleteOne(HttpServletRequest request) {
+		String distributiondataId = request.getParameter("distributiondataId");
+		if (StringUtils.isNotBlank(distributiondataId)) {
+			if (null != this.distributiondataRepository.findOneById(distributiondataId)) {
+				this.distributiondataRepository.deleteOneById(distributiondataId);
+			}
 			return true;
 		}
 		return false;

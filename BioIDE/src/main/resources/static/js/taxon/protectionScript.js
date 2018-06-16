@@ -4,26 +4,29 @@
 
 //删除一个新保护数据
 function removeProtection(protectionNum) {
-	var obj = $("#protectionId_" + protectionNum).val();
-/*	var r = confirm("是否删除?");
-	if (r == true) {*/
-		$.post("/console/protection/rest/delete", {protectionId:obj}, 
-			function(status) {
-				if (status) {
-					layer.msg('删除成功', {time : 500}, 
-					function() {
-						 $("#protectionForm_" + protectionNum).remove();
-					})
-				}else {
-					layer.msg('操作失败', function(){})
-				}
-			})
-/*	}else {
+	var r = confirm("是否删除?");
+	if (r == true) {
+		$.post("/console/protection/rest/delete",
+		{
+	        "_csrf":$('input[name="_csrf"]').val(),
+	        "protectionId":$("#protectionId_" + protectionNum).val()
+	    },
+		function(status) {
+			if (status) {
+				layer.msg('删除成功', {time : 500}, 
+				function() {
+					 $("#protectionForm_" + protectionNum).remove();
+				})
+			}else {
+				layer.msg('操作失败', function(){})
+			}
+		})
+	}else {
 		layer.msg(
 			'操作取消', 
 			{time : 500}
 		)
-	}*/
+	}
 }
 //提交一个保护数据
 function submitProtection(protectionNum) {

@@ -237,18 +237,15 @@ public class ProtectionServiceImpl implements ProtectionService {
 		return thisSelect;
 	}
 	@Override
-	public JSON deleteOne(HttpServletRequest request) {
-		JSONObject thisResult = new JSONObject();
+	public boolean deleteOne(HttpServletRequest request) {
 		String protectionId = request.getParameter("protectionId");
 		System.out.println(protectionId);
 		if (StringUtils.isNotBlank(protectionId)) {
 			if (null != this.protectionRepository.findOneById(protectionId)) {
 				this.protectionRepository.deleteOneById(protectionId);
-				thisResult.put("result", true);
 			}
-		}else {
-			thisResult.put("result", false);
+			return true;
 		}
-		return thisResult;
+		return false;
 	}
 }

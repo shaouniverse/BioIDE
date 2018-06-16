@@ -55,8 +55,8 @@ public interface ProtectionService {
 	/**
 	 *<b>根据id删除一个实体</b>
      *<p> 根据id删除一个实体</p>
-	 * @param id
+	 * @param request
 	 * @return
 	 */
-	JSON deleteOne(HttpServletRequest request);
+	boolean deleteOne(HttpServletRequest request);
 }

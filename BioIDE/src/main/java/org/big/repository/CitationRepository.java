@@ -5,8 +5,10 @@ import org.big.entity.Citation;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *<p><b>Citation的DAO类接口</b></p>
@@ -45,5 +47,16 @@ public interface CitationRepository extends BaseRepository<Citation, String> {
 	 */
 	@Query(value = "Select c from Citation c Where c.id = ?1")
 	Citation findOneById(String id);
+	
+	/**
+     *<b>通过Id删除一个实体</b>
+     *<p> 通过Id删除一个实体</p>
+     * @author BINZI
+     * @param citationId
+     */
+	@Modifying
+	@Transactional
+	@Query("Delete Citation c where c.id =?1")
+	void deleteOneById(String citationId);
 
 }

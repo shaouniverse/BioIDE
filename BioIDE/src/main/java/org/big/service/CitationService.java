@@ -43,5 +43,13 @@ public interface CitationService {
 	 * @return
 	 */
 	boolean logicRemove(String id);
+
+	/**
+	 *<b>根据id删除一个实体</b>
+     *<p> 根据id删除一个实体</p>
+	 * @param request
+	 * @return
+	 */
+	boolean deleteOne(HttpServletRequest request);
 	
 }

@@ -108,10 +108,10 @@ public class ProtectionRestController {
      *<p> Protection信息添加后的删除</p>
      * @author BINZI
      * @param request 页面请求
-     * @return com.alibaba.fastjson.JSON
+     * @return 
      */
-/*	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public JSON delete(HttpServletRequest request){
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public boolean delete(HttpServletRequest request){
 		return this.protectionService.deleteOne(request);
-	}*/
+	}
 }

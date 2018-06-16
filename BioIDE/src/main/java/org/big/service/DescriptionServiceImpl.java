@@ -223,4 +223,15 @@ public class DescriptionServiceImpl implements DescriptionService {
 		return false;
 	}
 
+	@Override
+	public boolean deleteOne(HttpServletRequest request) {
+		String descriptionId = request.getParameter("descriptionId");
+		if (StringUtils.isNotBlank(descriptionId)) {
+			if (null != this.descriptionRepository.findOneById(descriptionId)) {
+				this.descriptionRepository.deleteOneById(descriptionId);
+			}
+			return true;
+		}
+		return false;
+	}
 }

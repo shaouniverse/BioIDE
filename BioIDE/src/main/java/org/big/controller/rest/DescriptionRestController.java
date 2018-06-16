@@ -76,8 +76,8 @@ public class DescriptionRestController {
 	}
 	
 	/**
-	 * <b> 根据Id单个逻辑删除指定Citation</b>
-	 * <p> 根据Id单个逻辑删除指定Citation</p>
+	 * <b> 根据Id单个逻辑删除指定Description</b>
+	 * <p> 根据Id单个逻辑删除指定Description</p>
 	 * @param request
 	 * @return
 	 */
@@ -89,6 +89,18 @@ public class DescriptionRestController {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	/**
+     *<b>Description信息添加后的删除</b>
+     *<p> Description信息添加后的删除</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public boolean delete(HttpServletRequest request){
+		return this.descriptionService.deleteOne(request);
 	}
 	
 }

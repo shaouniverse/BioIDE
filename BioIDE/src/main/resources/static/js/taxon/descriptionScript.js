@@ -9,20 +9,23 @@ function selectRelation(descriptionNum, relationId, relationText) {
 }
 //删除一个新描述
 function removeDescription(descriptionNum) {
-	var obj = $("#descriptionId_" + descriptionNum).val();
 		var r = confirm("是否删除?");
 		if (r == true) {
-			$.post("/console/description/rest/delete", {descriptionId:obj}, 
-				function(status) {
-					if (status) {
-						layer.msg('删除成功', {time : 500}, 
-						function() {
-							$("#descriptionForm_" + descriptionNum).remove();
-						})
-					}else {
-						layer.msg('操作失败', function(){})
-					}
-				})
+			$.post("/console/description/rest/delete",
+			{
+		        "_csrf":$('input[name="_csrf"]').val(),
+		        "descriptionId":$("#descriptionId_" + descriptionNum).val()
+		    },
+			function(status) {
+				if (status) {
+					layer.msg('删除成功', {time : 500}, 
+					function() {
+						$("#descriptionForm_" + descriptionNum).remove();
+					})
+				}else {
+					layer.msg('操作失败', function(){})
+				}
+			})
 		}else {
 			layer.msg(
 				'操作取消', 
@@ -38,7 +41,7 @@ function submitDescription(descriptionNum) {
         //处理ajax提交
     	var obj = $('#descriptionForm_' + descriptionNum).serialize();
     	var postSuccess=false;
-    	$.ajax({
+    	return $.ajax({
             type: "POST",
             url: "/console/description/rest/add",
             data: obj,	// 要提交的表单

@@ -4,7 +4,9 @@ import org.big.entity.Protection;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *<p><b>Protection的DAO类接口</b></p>
@@ -59,8 +61,10 @@ public interface ProtectionRepository extends BaseRepository<Protection, String>
      *<p> 通过Id删除一个实体</p>
      * @author BINZI
      * @param protectionId
-     * @return org.big.entity.Protection
      */
+	@Modifying
+	@Transactional
+	@Query("Delete Protection p where p.id =?1")
 	void deleteOneById(String protectionId);
 
 }

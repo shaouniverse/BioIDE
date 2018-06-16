@@ -4,8 +4,10 @@ import org.big.entity.Description;
 import org.big.repository.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *<p><b>Description的DAO类接口</b></p>
@@ -48,4 +50,15 @@ public interface DescriptionRepository extends BaseRepository<Description, Strin
      */
 	@Query(value = "Select d from Description d where d.id = ?1")
 	Description findOneById(String id);
+	
+	/**
+     *<b>通过Id删除一个实体</b>
+     *<p> 通过Id删除一个实体</p>
+     * @author BINZI
+     * @param descriptionId
+     */
+	@Modifying
+	@Transactional
+	@Query("Delete Description d where d.id =?1")
+	void deleteOneById(String descriptionId);
 }

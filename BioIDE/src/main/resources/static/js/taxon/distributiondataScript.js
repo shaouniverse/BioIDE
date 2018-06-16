@@ -9,7 +9,30 @@ function selectRelation(distributiondataNum, relationId, relationText) {
 }
 //删除一个新描述
 function removeDistributiondata(distributiondataNum) {
-    $("#distributiondataForm_" + distributiondataNum).remove();
+    var r = confirm("是否删除?");
+	if (r == true) {
+		$.post("/console/distributiondata/rest/delete",
+		{
+	        "_csrf":$('input[name="_csrf"]').val(),
+	        "distributiondataId":$("#distributiondataId_" + distributiondataNum).val()
+	    },
+		function(status) {
+			if (status) {
+				layer.msg('删除成功', {time : 500}, 
+				function() {
+					$("#distributiondataForm_" + distributiondataNum).remove();
+				})
+			}else {
+				layer.msg('操作失败', function(){})
+			}
+		})
+	}else {
+		layer.msg(
+			'操作取消', 
+			{time : 500}
+		)
+	}
+    
 }
 //提交一个描述
 function submitDistributiondata(distributiondataNum) {

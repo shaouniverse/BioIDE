@@ -91,4 +91,15 @@ public class CitationRestController {
 		return false;
 	}
 	
+	/**
+     *<b>Citation信息添加后的删除</b>
+     *<p> Citation信息添加后的删除</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return 
+     */
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public boolean delete(HttpServletRequest request){
+		return this.citationService.deleteOne(request);
+	}
 }

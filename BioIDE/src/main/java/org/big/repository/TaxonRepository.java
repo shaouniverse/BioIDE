@@ -42,5 +42,15 @@ public interface TaxonRepository extends BaseRepository<Taxon, String> {
      */
 	@Query(value = "Select t From Taxon t Where t.id = ?1")
 	Taxon findOneById(String id);
+	/**
+     *<b>Taxon的select列表</b>
+     *<p> 当前Taxkey下的Taxon的select检索列表</p>
+     * @author BINZI
+     * @param findText
+     * @param pageable
+     * @return com.alibaba.fastjson.JSON
+     */
+    @Query(value = "select t from Taxon t where (t.scientificname like %?1%) and t.status = 1")
+	Page<Taxon> searchByTaxonInfo(String findText, Pageable pageable);
 	
 }

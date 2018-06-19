@@ -4,31 +4,74 @@
 
 //删除一个新检索表
 function removeTaxkey(taxkeyNum) {
-    $("#taxkeyForm_" + taxkeyNum).remove();
+	var r = confirm("是否删除?");
+	if (r == true) {
+		$.post("/console/taxkey/rest/delete",
+		{
+	        "_csrf":$('input[name="_csrf"]').val(),
+	        "taxkeyId":$("#taxkeyId_" + taxkeyNum).val()
+	    },
+		function(status) {
+			if (status) {
+				layer.msg('删除成功', {time : 500}, 
+				function() {
+					$("#taxkeyForm_" + taxkeyNum).remove();
+				})
+			}else {
+				layer.msg('操作失败', function(){})
+			}
+		})
+	}else {
+		layer.msg(
+			'操作取消', 
+			{time : 500}
+		)
+	}
 }
 //提交一个检索表
 function submitTaxkey(taxkeyNum) {
     taxkeyFormValidator(taxkeyNum);
     if ($('#taxkeyForm_' + taxkeyNum).data('bootstrapValidator').isValid()) {
         //处理ajax提交
-        //
-        //
-        //
-        layer.msg('提交成功，请继续填写其他内容', {
-                time: 1500,
-                //1.5s后自动关闭
-            },
-            function () {
-                if ($('#taxkeyCollapse_' + taxkeyNum).hasClass('in')) {
-                    $('#taxkeyCollapseTitle_' + taxkeyNum).trigger("click");
-                }
-                $('#taxkeyForm_' + taxkeyNum).removeClass("panel-default");
-                $('#taxkeyForm_' + taxkeyNum).removeClass("panel-danger");
-                $('#taxkeyForm_' + taxkeyNum).addClass("panel-success");
-                $('#taxkeyStatus_' + taxkeyNum).removeClass("hidden");
-                return true;
-            });
-        return true;
+    	var obj = $('#taxkeyForm_' + taxkeyNum).serialize();
+    	var postSuccess=false;
+    	return $.ajax({
+          type: "POST",
+          url: "/console/taxkey/rest/add",
+          data: obj,	// 要提交的表单
+          dataType: "json",
+          contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+          success: function (msg) {
+        	if (msg.result == true) {
+        		layer.msg('提交成功，请继续填写其他内容', {time: 1500},
+                function () {
+                    if ($('#taxkeyCollapse_' + taxkeyNum).hasClass('in')) {
+                        $('#taxkeyCollapseTitle_' + taxkeyNum).trigger("click");
+                    }
+                    $('#taxkeyForm_' + taxkeyNum).removeClass("panel-default");
+                    $('#taxkeyForm_' + taxkeyNum).removeClass("panel-danger");
+                    $('#taxkeyForm_' + taxkeyNum).addClass("panel-success");
+                    $('#taxkeyStatus_' + taxkeyNum).removeClass("hidden");
+                    postSuccess = true;
+                });
+    		}else{
+    			layer.msg("添加失败！", {time: 1000});
+    			postSuccess = false;
+    		}
+          },
+          error: function() {
+          	  postSuccess = false;
+          }
+        });
+        if (!$('#taxkeyCollapse_' + taxkeyNum).hasClass('in')) {
+            $('#taxkeyCollapseTitle_' + taxkeyNum).trigger("click");
+        }
+        $('#taxkeyForm_' + taxkeyNum).removeClass("panel-danger");
+        $('#taxkeyForm_' + taxkeyNum).addClass("panel-success");
+        $('#taxkeyStatus_' + taxkeyNum).removeClass("hidden");
+        layer.msg("添加失败", function () {
+        });
+        return postSuccess;
     } else {
         if (!$('#taxkeyCollapse_' + taxkeyNum).hasClass('in')) {
             $('#taxkeyCollapseTitle_' + taxkeyNum).trigger("click");
@@ -37,9 +80,8 @@ function submitTaxkey(taxkeyNum) {
         $('#taxkeyForm_' + taxkeyNum).addClass("panel-danger");
         $('#taxkeyStatus_' + taxkeyNum).addClass("hidden");
         $('#tab-taxkey').addClass("alert alert-danger");
-        layer.msg("请完成此文本描述的填写",
-            function () {
-            });
+        layer.msg("请完成此文本描述的填写", function () {
+        });
         return false;
     }
 }
@@ -68,7 +110,7 @@ function addTaxkey() {
 
     $('#taxkeyForm').tmpl(thisTaxkeyNum).appendTo('#newTaxkey');
     // 指向分类单元下拉选
-    buildSelect2("taxonid_" + (countTaxkey + 1), "console/datasource/rest/select", "请选择指向分类单元");
+    buildSelect2("taxonid_" + (countTaxkey + 1), "console/taxon/rest/select", "请选择指向分类单元");
 
     $('#countTaxkey').val(countTaxkey + 1);
 
@@ -80,14 +122,23 @@ function addTaxkey() {
         function () {
             $("#taxkeyCollapseTitle_" + (countTaxkey + 1)).text($("#keytitle_" + (countTaxkey + 1)).val());
         });
+    
+ // 唯一标识UUID
+    $.get("/console/taxon/rest/uuid", function(id){
+    	$("#taxkeyId_" + (countTaxkey + 1)).val(id);
+    });
+    
+    // 唯一标识UUID
+    $.get("/console/taxon/rest/uuid", function(id){
+    	$("#keyitemId_" + (countTaxkey + 1)).val(id);
+    });
 }
 
 //切换检索表类型
 function changetaxkeyType(taxkeyNum, taxkeyType) {
     if($("#taxkeyType"+taxkeyType+"_"+taxkeyNum).hasClass("active")){
-
-    }
-    else{
+    	
+    }else{
         var r = confirm("切换检索表类型会删除您当前编辑的检索表内容，是否继续？");
         if (r == true) {
             switch (taxkeyType) {

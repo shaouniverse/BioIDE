@@ -195,7 +195,7 @@ public class CitationServiceImpl implements CitationService {
 	
 	@Override
 	public boolean deleteOne(HttpServletRequest request) {
-		String citationId = request.getParameter("descriptionId");
+		String citationId = request.getParameter("citationId");
 		if (StringUtils.isNotBlank(citationId)) {
 			if (null != this.citationRepository.findOneById(citationId)) {
 				this.citationRepository.deleteOneById(citationId);

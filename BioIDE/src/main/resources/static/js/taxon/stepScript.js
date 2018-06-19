@@ -35,6 +35,25 @@ $('#addSteps a').click(function (e) {
     }
 })
 
+//提交Form_1表单 
+function submitForm_1(){
+	var obj = $('#form_1').serialize();
+    $.ajax({
+      type: "POST",
+      url: "/console/taxon/rest/add",
+      data: obj,	// 要提交的表单
+      dataType: "json",
+      contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+      success: function (msg) {
+    	if (msg.result == true) {
+    		layer.msg("添加成功！", {time: 1000});
+		}else{
+			layer.msg("添加失败！", {time: 1000});
+		}
+      }
+    });
+}
+
 //验证前置步骤完善程度
 function verifierStep(stepNum){
     if(Number(stepNum)<Number(activeTab)){
@@ -45,21 +64,7 @@ function verifierStep(stepNum){
     {
         case "2":
             if(formValidator(1)){//验证通过
-            	var obj = $('#form_1').serialize();
-                $.ajax({
-                  type: "POST",
-                  url: "/console/taxon/rest/add",
-                  data: obj,	// 要提交的表单
-                  dataType: "json",
-                  contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-                  success: function (msg) {
-                	if (msg.result == true) {
-                		layer.msg("添加成功！", {time: 1000});
-					}else{
-						layer.msg("添加失败！", {time: 1000});
-					}
-                  }
-                });
+            	submitForm_1();
                 return true;
             }
             else{//验证不通过
@@ -67,10 +72,8 @@ function verifierStep(stepNum){
             }
             break;
         case "3":
-            if(
-                formValidator(1) &&
-                formValidator(2)
-            ){//验证通过
+            if(formValidator(1) && formValidator(2)){//验证通过
+            	submitForm_1();
                 return true;
             }
             else{//验证不通过
@@ -78,11 +81,8 @@ function verifierStep(stepNum){
             }
             break;
         case "4":
-            if(
-                formValidator(1) &&
-                formValidator(2) &&
-                formValidator(3)
-            ){//验证通过
+            if(formValidator(1) && formValidator(2) && formValidator(3)){//验证通过
+            	submitForm_1();
                 return true;
             }
             else{//验证不通过
@@ -90,12 +90,8 @@ function verifierStep(stepNum){
             }
             break;
         case "5":
-            if(
-                formValidator(1) &&
-                formValidator(2) &&
-                formValidator(3) &&
-                formValidator(4)
-            ){//验证通过
+            if(formValidator(1) && formValidator(2) && formValidator(3) && formValidator(4)){//验证通过
+            	submitForm_1();
                 return true;
             }
             else{//验证不通过
@@ -103,13 +99,8 @@ function verifierStep(stepNum){
             }
             break;
         case "6":
-            if(
-                formValidator(1) &&
-                formValidator(2) &&
-                formValidator(3)&&
-                formValidator(4) &&
-                formValidator(5)
-            ){//验证通过
+            if(formValidator(1) && formValidator(2) && formValidator(3)&& formValidator(4) && formValidator(5)){//验证通过
+            	submitForm_1();
                 return true;
             }
             else{//验证不通过
@@ -117,14 +108,8 @@ function verifierStep(stepNum){
             }
             break;
         case "7":
-            if(
-                formValidator(1) &&
-                formValidator(2) &&
-                formValidator(3) &&
-                formValidator(4) &&
-                formValidator(5) &&
-                formValidator(6)
-            ){//验证通过
+            if(formValidator(1) && formValidator(2) && formValidator(3)&& formValidator(4) && formValidator(5) && formValidator(6)){//验证通过
+            	submitForm_1();
                 return true;
             }
             else{//验证不通过
@@ -132,15 +117,8 @@ function verifierStep(stepNum){
             }
             break;
         case "8":
-            if(
-                formValidator(1) &&
-                formValidator(2) &&
-                formValidator(3) &&
-                formValidator(4) &&
-                formValidator(5) &&
-                formValidator(6) &&
-                formValidator(7)
-            ){//验证通过
+            if(formValidator(1) && formValidator(2) && formValidator(3)&& formValidator(4) && formValidator(5) && formValidator(6) && formValidator(7)){//验证通过
+            	submitForm_1();
                 return true;
             }
             else{//验证不通过

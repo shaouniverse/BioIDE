@@ -49,7 +49,7 @@ public interface ProtectstandardService {
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-	JSON findBySelectVersion(HttpServletRequest request);
+	JSON findBySelectVersion(HttpServletRequest request, String standardname);
 	
 	/**
      *<b>Protectstandard的select列表(保护标准级别)</b>
@@ -58,5 +58,5 @@ public interface ProtectstandardService {
      * @param request 页面请求
      * @return com.alibaba.fastjson.JSON
      */
-	JSON findBySelectProtlevel(HttpServletRequest request);
+	JSON findBySelectProtlevel(HttpServletRequest request, String version);
 }

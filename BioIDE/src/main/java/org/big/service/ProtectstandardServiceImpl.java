@@ -53,9 +53,9 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		String order = "asc";
 		JSONObject thisSelect = new JSONObject();
 		JSONArray items = new JSONArray();
-		List<Protectstandard> thisList = new ArrayList<>();
+		List<String> thisList = new ArrayList<>();
 		// 获取当前选中Dataset下的Taxaset
-		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardnameAndProtlevel(findText,
+		Page<String> thisPage = this.protectstandardRepository.searchByStandardname(findText,
 				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
 		thisSelect.put("total_count", thisPage.getTotalElements());
 		Boolean incompleteResulte = true;
@@ -72,8 +72,8 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		}*/
 		for (int i = 0; i < thisList.size(); i++) {
 			JSONObject row = new JSONObject();
-			row.put("id", thisList.get(i).getId());
-			row.put("full_name", thisList.get(i).getStandardname());
+			row.put("id", thisList.get(i));
+			row.put("full_name", thisList.get(i));
 			items.add(row);
 		}
 		thisSelect.put("items", items);
@@ -81,7 +81,7 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 	}
 
 	@Override
-	public JSON findBySelectVersion(HttpServletRequest request) {
+	public JSON findBySelectVersion(HttpServletRequest request, String standardname) {
 		String findText = request.getParameter("find");
 		if (findText == null || findText.length() <= 0) {
 			findText = "";
@@ -97,10 +97,10 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		String order = "asc";
 		JSONObject thisSelect = new JSONObject();
 		JSONArray items = new JSONArray();
-		List<Protectstandard> thisList = new ArrayList<>();
+		List<String> thisList = new ArrayList<>();
 		// 获取当前选中Dataset下的Taxaset
-		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardnameAndProtlevel(findText,
-				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
+		Page<String> thisPage = this.protectstandardRepository.searchByVersion(findText,
+				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order), standardname);
 		thisSelect.put("total_count", thisPage.getTotalElements());
 		Boolean incompleteResulte = true;
 		if ((thisPage.getTotalElements() / 30) > findPage) {
@@ -116,8 +116,8 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		}*/
 		for (int i = 0; i < thisList.size(); i++) {
 			JSONObject row = new JSONObject();
-			row.put("id", thisList.get(i).getId());
-			row.put("full_name", thisList.get(i).getVersion());
+			row.put("id", thisList.get(i));
+			row.put("full_name", thisList.get(i));
 			items.add(row);
 		}
 		thisSelect.put("items", items);
@@ -125,7 +125,7 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 	}
 
 	@Override
-	public JSON findBySelectProtlevel(HttpServletRequest request) {
+	public JSON findBySelectProtlevel(HttpServletRequest request, String version) {
 		String findText = request.getParameter("find");
 		if (findText == null || findText.length() <= 0) {
 			findText = "";
@@ -141,10 +141,10 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		String order = "asc";
 		JSONObject thisSelect = new JSONObject();
 		JSONArray items = new JSONArray();
-		List<Protectstandard> thisList = new ArrayList<>();
+		List<String> thisList = new ArrayList<>();
 		// 获取当前选中Dataset下的Taxaset
-		Page<Protectstandard> thisPage = this.protectstandardRepository.searchByVersionAndStandardnameAndProtlevel(findText,
-				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order));
+		Page<String> thisPage = this.protectstandardRepository.searchByProtlevel(findText,
+				QueryTool.buildPageRequest(offset_serch, limit_serch, sort, order), version);
 		thisSelect.put("total_count", thisPage.getTotalElements());
 		Boolean incompleteResulte = true;
 		if ((thisPage.getTotalElements() / 30) > findPage) {
@@ -160,8 +160,8 @@ public class ProtectstandardServiceImpl implements ProtectstandardService {
 		}*/
 		for (int i = 0; i < thisList.size(); i++) {
 			JSONObject row = new JSONObject();
-			row.put("id", thisList.get(i).getId());
-			row.put("full_name", thisList.get(i).getProtlevel());
+			row.put("id", thisList.get(i));
+			row.put("full_name", thisList.get(i));
 			items.add(row);
 		}
 		thisSelect.put("items", items);

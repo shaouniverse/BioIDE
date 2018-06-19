@@ -106,6 +106,18 @@ public class TaxonRestController {
 	}
 	
 	/**
+     *<b>Taxon的select列表</b>
+     *<p> 当前Taxkey下的Taxon的select检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
+	public JSON select(HttpServletRequest request) {
+		return this.taxonService.findBySelect(request);
+	}
+	
+	/**
 	 * <b> 为Taxon下的各个实体设置唯一标识</b>
 	 * <p> 为Taxon下的各个实体设置唯一标识</p>
 	 * @return

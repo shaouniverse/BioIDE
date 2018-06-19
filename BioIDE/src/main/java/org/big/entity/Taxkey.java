@@ -25,7 +25,8 @@ public class Taxkey implements Serializable {
 	private String abstraction;
 
 	private String keytitle;
-
+	
+	private String keytype;
 	//bi-directional many-to-one association to Keyitem
 	@OneToMany(mappedBy="taxkey")
 	private List<Keyitem> keyitems;
@@ -59,6 +60,14 @@ public class Taxkey implements Serializable {
 
 	public void setKeytitle(String keytitle) {
 		this.keytitle = keytitle;
+	}
+
+	public String getKeytype() {
+		return keytype;
+	}
+
+	public void setKeytype(String keytype) {
+		this.keytype = keytype;
 	}
 
 	public List<Keyitem> getKeyitems() {

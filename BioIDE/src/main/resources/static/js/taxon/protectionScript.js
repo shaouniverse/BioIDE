@@ -113,11 +113,11 @@ function addProtection() {
 
     $('#protectionForm').tmpl(thisProtectionNum).appendTo('#newProtection');
     // 保护标准下拉选
-    buildSelect2("standardname_" + (countProtection + 1), "console/protectstandard/rest/selectStandard", "请选择保护标准");
+    buildSelect("standardname_" + (countProtection + 1), "console/protectstandard/rest/selectStandard", "请选择保护标准");
     // 保护标准版本下拉选
-    buildSelect2("version_" + (countProtection + 1), "console/protectstandard/rest/selectVersion", "请选择标准版本");
+    buildSelect("version_" + (countProtection + 1), "console/protectstandard/rest/selectVersion", "请选择标准版本");
     // 保护级别下拉选
-    buildSelect2("protlevel_" + (countProtection + 1), "console/protectstandard/rest/selectProtlevel", "请选择保护级别");
+    buildSelect("protlevel_" + (countProtection + 1), "console/protectstandard/rest/selectProtlevel", "请选择保护级别");
 
     $('#countProtection').val(countProtection + 1);
 

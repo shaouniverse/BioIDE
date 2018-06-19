@@ -537,6 +537,8 @@
                     <!-- 检索表模板 -->
                     <script id="taxkeyForm" type="text/x-jquery-tmpl">
                         <form class="panel panel-default" id="taxkeyForm_${num}" th:action="@{/}" method="post">
+							<input class="hidden" id="taxkeyId_${num}" name="taxkeyId_${num}" readonly="readonly"></input>
+							<input class="hidden" id="keyitemId_${num}" name="keyitemId_${num}" readonly="readonly"></input>
                           <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                               <i class="fa fa-check-circle hidden" id="taxkeyStatus_${num}"></i>

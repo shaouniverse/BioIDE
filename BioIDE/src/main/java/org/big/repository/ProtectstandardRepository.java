@@ -42,15 +42,37 @@ public interface ProtectstandardRepository extends BaseRepository<Protectstandar
 	@Query(value = "Select ps from Protectstandard ps where ps.id = ?1")
 	Protectstandard findOneById(String id);
 
-    /**
-     *<b>Proteciton的select列表</b>
+	/**
+     *<b>Proteciton的select列表(保护标准)</b>
      *<p> 当前Taxon下的Proteciton的select检索列表</p>
      * @author BINZI
      * @param findText
      * @param pageable
      * @return com.alibaba.fastjson.JSON
      */
-    @Query(value = "Select ps from Protectstandard ps where (ps.standardname like %?1% or ps.version like %?1% or ps.protlevel like %?1%) and ps.status = 1")
-	Page<Protectstandard> searchByVersionAndStandardnameAndProtlevel(String findText, Pageable pageable);
+    @Query(value = "Select distinct ps.standardname from Protectstandard ps where (ps.standardname like %?1%) and ps.status = 1")
+	Page<String> searchByStandardname(String findText, Pageable pageable);
+    
+    /**
+     *<b>Proteciton的select列表(保护版本)</b>
+     *<p> 当前Taxon下的Proteciton的select检索列表</p>
+     * @author BINZI
+     * @param findText
+     * @param pageable
+     * @return com.alibaba.fastjson.JSON
+     */				
+    @Query(value = "Select distinct ps.version, ps.releasedate from Protectstandard ps where (ps.version like %?1% or ps.releasedate like %?1%) and ps.standardname = ?2 and ps.status = 1")
+    Page<String> searchByVersion(String findText, Pageable pageable, String standardname);
+	
+    /**
+     *<b>Proteciton的select列表(保护级别)</b>
+     *<p> 当前Taxon下的Proteciton的select检索列表</p>
+     * @author BINZI
+     * @param findText
+     * @param pageable
+     * @return com.alibaba.fastjson.JSON
+     */
+    @Query(value = "Select distinct ps.protlevel from Protectstandard ps where (ps.protlevel like %?1%) and ps.version = ?2 and ps.status = 1")
+	Page<String> searchByProtlevel(String findText, Pageable pageable, String version);
 
 }

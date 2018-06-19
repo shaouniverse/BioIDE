@@ -112,7 +112,8 @@ public class ProtectstandardRestController {
      */
 	@RequestMapping(value = "/selectVersion", method = RequestMethod.GET)
 	public JSON selectVersion(HttpServletRequest request){
-		return this.protectstandardService.findBySelectVersion(request);
+		String standardname = request.getParameter("standardname");
+		return this.protectstandardService.findBySelectVersion(request, standardname);
 	}
 	
 	/**
@@ -124,7 +125,8 @@ public class ProtectstandardRestController {
      */
 	@RequestMapping(value = "/selectProtlevel", method = RequestMethod.GET)
 	public JSON select(HttpServletRequest request){
-		return this.protectstandardService.findBySelectProtlevel(request);
+		String version = request.getParameter("version");
+		return this.protectstandardService.findBySelectProtlevel(request, version);
 	}
 	
 }

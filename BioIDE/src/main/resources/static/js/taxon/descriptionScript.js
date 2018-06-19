@@ -49,9 +49,7 @@ function submitDescription(descriptionNum) {
             contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function (msg) {
               if (msg.result == true) {
-                  layer.msg(
-                          '提交成功，请继续填写其他内容',
-                          {time: 1500},
+                  layer.msg('提交成功，请继续填写其他内容', {time: 1500},
                           function () {
                               if ($('#descriptionCollapse_' + descriptionNum).hasClass('in')) {
                                   $('#descriptionCollapseTitle_' + descriptionNum).trigger("click");
@@ -80,8 +78,7 @@ function submitDescription(descriptionNum) {
         layer.msg("添加失败", function () {
         });
         return postSuccess;
-    }
-    else {
+    } else {
         if (!$('#descriptionCollapse_' + descriptionNum).hasClass('in')) {
             $('#descriptionCollapseTitle_' + descriptionNum).trigger("click");
         }

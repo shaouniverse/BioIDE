@@ -86,3 +86,38 @@ function buildSelect(select_id, url, content) {
         templateSelection: formatRepoSelection
     });
 }
+
+//构造地理编码左右选择的方法
+function buildMultiple (selectId) {
+    $.ajax({
+        url:"/console/rank/rest/select",
+        type:"get",
+        async:true,
+        success:function(returnData){
+            $.each(returnData["items"], function(key, val) {
+                var o = document.createElement("option")
+                o.value = val.id;
+                o.text = val.full_name;
+                if("undefined" != typeof (selectedDataStr) && selectedDataStr != ""){
+                    var selectedDataArray = selectedDataStr.split(',');
+                    $.each(selectedDataArray, function (i, val){
+                        if(o.value = val){
+                            o.selected = "selected";
+                            return false;
+                        }
+                    });
+                }
+                $("select[multiple*='multiple']")[0].options.add(o);
+            });
+
+            $(selectId).bootstrapDualListbox({
+                nonSelectedListLabel : "Non-selected",
+                selectedListLabel : "selected",
+                preserveSelectionOnMove : "moved",
+            });
+        },
+        error: function(e){
+            alert(e.msg)
+        }
+    });
+}

@@ -106,25 +106,35 @@ function addDistributiondata() {
 
     $('#distributiondataForm').tmpl(thisDistributiondataNum).appendTo('#newDistributiondata');
 
-    $("#destypeid_" + (countDistributiondata + 1)).select2({
-        placeholder: "请选择描述类型"
+    // $("#destypeid_" + (countDistributiondata + 1)).select2({
+    //     placeholder: "请选择描述类型"
+    // });
+    // $("#licenseid_" + (countDistributiondata + 1)).select2({
+    //     placeholder: "请选择共享协议"
+    // });
+    // $("#language_" + (countDistributiondata + 1)).select2({
+    //     placeholder: "请选择描述语言"
+    // });
+    // $("#distributiondatasourcesid_" + (countDistributiondata + 1)).select2({
+    //     placeholder: "请选择数据来源"
+    // });
+    // $("#relationDes_" + (countDistributiondata + 1)).select2({
+    //     placeholder: "请选择描述"
+    // });
+
+    //左右多选
+    var geojson = $('#geojson_'+(countDistributiondata + 1)).bootstrapDualListbox({
+        nonSelectedListLabel: '所有地理位置',
+        selectedListLabel: '已记录的地理位置',
+        preserveSelectionOnMove: 'moved',
+        moveOnSelect: false,
     });
-    $("#licenseid_" + (countDistributiondata + 1)).select2({
-        placeholder: "请选择共享协议"
-    });
-    $("#language_" + (countDistributiondata + 1)).select2({
-        placeholder: "请选择描述语言"
-    });
-    $("#distributiondatasourcesid_" + (countDistributiondata + 1)).select2({
-        placeholder: "请选择数据来源"
-    });
-    $("#relationDes_" + (countDistributiondata + 1)).select2({
-        placeholder: "请选择描述"
-    });
+
+    buildMultiple('#geojson_'+(countDistributiondata + 1));
 
     $('#countDistributiondata').val(countDistributiondata + 1);
 
-    addDistributiondataValidator(countDistributiondata + 1);
+    //addDistributiondataValidator(countDistributiondata + 1);
 
     //title变化后处理的函数
     $("#destitle_" + (countDistributiondata + 1)).on("change",

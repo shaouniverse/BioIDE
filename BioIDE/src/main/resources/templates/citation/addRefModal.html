@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Title:添加Reference页面
+    Description：添加Reference页面
+    Author：BINZI
+    Created date: 2018/04/11 14:51
+    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
+    Version: Html5
+ -->
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>BioIDE &nbsp;物种数据采集系统</title>
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <!-- 引入css -->
+    <th:block th:replace="pageFrame/basicsCss :: copy"></th:block>
+</head>
+
+<body>
+	<!-- 内容区 -->
+	<div class="col-md-12">
+		<p></p>
+		<form id="addForm" class="form-horizontal" th:action="@{/console/ref/save}" method="post" th:object="${thisRef}">
+			<input id="refId" name="refId" th:value="${refId}"></input>
+			<input id="citationReferencesForm" name="citationReferencesForm" th:value="${citationReferencesForm}"></input>
+			<!-- 引入form -->
+			<th:block th:replace="citation/refForm :: copy"></th:block>
+			<p></p>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<div class="pull-right">
+						<a class="btn btn-app" onclick="clearInput();">
+							<i class="fa fa-rotate-left"></i> <span>清空表单</span>
+						</a>
+						<a class="btn btn-app" onclick="addRef();">
+							<i class="fa fa-check"></i> <span>提交</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+<!-- 引入js -->
+<th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
+<script>
+//清空表单
+function clearInput() {
+    $('#addForm')[0].reset();
+    $('#addForm').data('bootstrapValidator')
+    .updateStatus('author', 'NOT_VALIDATED',null)
+    .updateStatus('translator', 'NOT_VALIDATED',null)
+    .updateStatus('title', 'NOT_VALIDATED',null)
+    .updateStatus('keywords', 'NOT_VALIDATED',null)
+    .updateStatus('tpage', 'NOT_VALIDATED',null)
+    .updateStatus('tchar', 'NOT_VALIDATED',null)
+    .updateStatus('ptype', 'NOT_VALIDATED',null)
+    .updateStatus('journal', 'NOT_VALIDATED',null)
+    .updateStatus('languages', 'NOT_VALIDATED',null)
+    .updateStatus('olang', 'NOT_VALIDATED',null)
+    .updateStatus('place', 'NOT_VALIDATED',null)
+    .updateStatus('press', 'NOT_VALIDATED',null)
+    .updateStatus('pyear', 'NOT_VALIDATED',null)
+    .updateStatus('version', 'NOT_VALIDATED',null)    
+    .validateField('author')
+    .validateField('translator')
+    .validateField('title')
+    .validateField('keywords')
+    .validateField('tpage')
+    .validateField('tchar')
+    .validateField('ptype')
+    .validateField('journal')
+    .validateField('languages')
+    .validateField('olang')
+    .validateField('place')
+    .validateField('press')
+    .validateField('pyear')
+    .validateField('version')
+};
+    //后端验证错误提示
+    $(document).ready(function () {
+        if($('#errorMsg').val()==""||$('#errorMsg').val()==null){
+        }
+        else{
+            layer.msg($('#errorMsg').val(), function(){
+            });
+        }
+    });
+</script>
+<!-- bootstrapValidator -->
+<script th:src="@{/plugins/bootstrapValidator/js/bootstrapValidator.min.js}"></script>
+<th:block th:if="${#locale.getLanguage().equals('zh')}">
+    <script th:src="@{/plugins/bootstrapValidator/js/language/zh_CN.js}"></script>
+</th:block>
+<!-- page_script -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var warning_Illegal= [[#{warning_Illegal}]];
+    /*]]>*/
+</script>
+<script>
+    //前端验证错误提示
+    $(document).ready(function() {
+        //获取host
+	    $("#base_url").val(window.location.host);
+        $('#addFrom').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon ',
+                invalid: 'glyphicon ',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            	'author': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 30
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'translator': {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 30
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'title': {
+                    validators: {
+                        notEmpty: {
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a【】]+$/,
+                            message: warning_Illegal
+                        },
+                        stringLength: {
+                            min: 1,
+                            max: 50,
+                        },
+                    }
+                },
+                'keywords': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 50
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'tpage': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'tchar': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'ptype': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'journal': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 50
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'languages': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'pyear': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 30
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'olang': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'press': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 30
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'place': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 30
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'pyear': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 30
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+                'version': {
+                    validators: {
+                    	notEmpty: {
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
+                },
+            }
+        });
+    });
+</script>
+
+<script>
+    $("#addForm").submit(function (e) {
+        if ($("#addForm").data('bootstrapValidator').isValid()) {
+            layer.load(2);
+        }
+    });
+</script>
+
+
+<script type="text/javascript">
+/* 添加Reference */
+function addRef() {
+	layer.load(2);
+	var obj = $('#addForm').serialize();
+	var refId = $("#refId").val();
+	var citationReferencesForm = $("#citationReferencesForm").val();
+	alert(citationReferencesForm);
+	$.ajax({
+        type: "POST",
+        url: "console/ref/rest/new",
+        data: obj,	// 要提交的表单
+        dataType: "json",
+        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        success: function (rsl) {
+      	if (rsl.result == true) {
+      		parent.$("#" + refId).prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
+      		parent.$('#' + citationReferencesForm).data('bootstrapValidator').updateStatus(refId, 'NOT_VALIDATED',null).validateField(refId);
+            parent.layer.close(parent.layer.getFrameIndex(window.name));
+      		layer.msg("添加成功！", {time: 1000});
+		}else{
+				layer.msg("添加失败！", {time: 1000});
+			 }
+        }
+    });
+};
+</script>
+</body>
+</html>

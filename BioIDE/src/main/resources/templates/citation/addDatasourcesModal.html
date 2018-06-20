@@ -25,9 +25,10 @@
 	<div class="col-md-12">
 		<p></p>
 		<form id="addForm" class="form-horizontal" th:action="@{/console/datasource/save}" method="post" th:object="${thisDatasource}">
-			<input id="handle_status" value="" hidden="hidden">
+			<input class="hidden" id="datasourceId" name="datasourceId" th:value="${sourcesId}"></input>
+			<input class="hidden" id="citationFormNum" name="citationFormNum" th:value="${citationFormNum}"></input>
 			<!-- 引入form -->
-			<th:block th:replace="datasource/form :: copy"></th:block>
+			<th:block th:replace="citation/datasourcesForm :: copy"></th:block>
 			<p></p>
 			<div class="form-group">
 				<div class="col-sm-12">
@@ -89,45 +90,46 @@
                 valid: 'glyphicon ',
                 invalid: 'glyphicon ',
                 validating: 'glyphicon glyphicon-refresh'
-            }
-         });
-        
-        $("#addForm").bootstrapValidator("addField", "versions", {
-            validators: {
-                notEmpty: {},
-                stringLength: {
-                    min: 0,
-                    max: 15
+            },
+            fields: {
+            	'versions': {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 15
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
                 },
-                regexp: {
-                    regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
-                    message: warning_Illegal
-                }
-            }
-        });
-        $("#addForm").bootstrapValidator("addField", "title", {
-            validators: {
-                notEmpty: {},
-                stringLength: {
-                    min: 1,
-                    max: 30,
+                'title': {
+                    validators: {
+                        notEmpty: {
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a【】]+$/,
+                            message: warning_Illegal
+                        },
+                        stringLength: {
+                            min: 1,
+                            max: 30,
+                        },
+                    }
                 },
-                regexp: {
-                    regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
-                    message: warning_Illegal
-                }
-            }
-        });
-        $("#addForm").bootstrapValidator("addField", "info", {
-            validators: {
-            	stringLength: {
-                    min: 0,
-                    max: 100
+                'info': {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 100
+                        },
+                        regexp: {
+                            regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
+                            message: warning_Illegal
+                        },
+                    }
                 },
-                regexp: {
-                    regexp: /^[\da-zA-Z_\u4e00-\u9f5a，。,.【】]+$/,
-                    message: warning_Illegal
-                }
             }
         });
     });
@@ -135,27 +137,27 @@
 <script type="text/javascript">
 /* 添加Datasource */
 function addDatasource() {
-	if ($('#addForm').data('bootstrapValidator').isValid()) {
-		layer.load(2);
-		var obj = $('#addForm').serialize();
-		$.ajax({
-	        type: "POST",
-	        url: "console/datasource/rest/new",
-	        data: obj,	// 要提交的表单
-	        dataType: "json",
-	        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-	        success: function (rsl) {
-	      	if (rsl.result == true) {
-	      		parent.$("#sourcesid").prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
-	            parent.$('#form_1').data('bootstrapValidator').updateStatus('sourcesid', 'NOT_VALIDATED',null).validateField('sourcesid');
-	            parent.layer.close(parent.layer.getFrameIndex(window.name));
-	      		layer.msg("添加成功！", {time: 1000});
-				}else{
-					layer.msg("添加失败！", {time: 1000});
-				}
-	        }
-	      });
-	}
+	layer.load(2);
+	var obj = $('#addForm').serialize();
+	var sourcesId = $("#datasourceId").val();
+	var citationFormNum = $("#citationFormNum").val();
+	$.ajax({
+        type: "POST",
+        url: "console/datasource/rest/new",
+        data: obj,	// 要提交的表单
+        dataType: "json",
+        contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        success: function (rsl) {
+      	if (rsl.result == true) {
+      		parent.$("#" + sourcesId).prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
+            parent.$('#' + citationFormNum).data('bootstrapValidator').updateStatus(sourcesId, 'NOT_VALIDATED',null).validateField(sourcesId);
+            parent.layer.close(parent.layer.getFrameIndex(window.name));
+      		layer.msg("添加成功！", {time: 1000});
+			}else{
+				layer.msg("添加失败！", {time: 1000});
+			}
+        }
+      });
 };
 </script>
 </body>

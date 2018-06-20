@@ -109,10 +109,6 @@ function addCitation() {
 
     $('#countCitation').val(countCitation + 1);
 
-
-    buildSelect2("citationSourcesid_" + (countCitation + 1), "console/datasource/rest/select", "请选择数据来源");
-
-
     $("#nametype_" + (countCitation + 1)).select2({
         placeholder: "请选择名称类型",
     });
@@ -130,7 +126,32 @@ function addCitation() {
     $.get("/console/taxon/rest/uuid", function(id){
     	$("#citationId_" + (countCitation + 1)).val(id);
     });
-
+    
+    // Form2下的Datasource变化检测
+    var width=$(window).width();
+    var height=$(window).height();
+    var layer_width="90%";
+    var layer_height="90%";
+    if(width>760){
+    	layer_width="500px";
+    	layer_height="500px";
+    }
+	var citationFormNum = "citationForm_" + (countCitation + 1);
+    var citationSourcesid = "citationSourcesid_" + (countCitation + 1);
+    $("select[id = " + citationSourcesid + "]").on("change", function(){
+    	if($("#" + citationSourcesid).val()=="addNew"){
+    		$("#" + citationSourcesid).empty();
+    		layer.open({
+    			type: 2,
+    			title:'<h4>添加数据源</h4>',
+    			fixed: false, //不固定
+    			area: [layer_width, layer_height],
+    			content: '/console/citation/addDatasource?sourcesId=' + citationSourcesid + '&citationFormNum=' + citationFormNum
+    		});
+    	}
+    });
+    
+    buildSelect2(citationSourcesid, "console/datasource/rest/select", "请选择数据来源");
 }
 //删除一个新参考文献
 function removeCitationReferences(citationNum, referencesNum) {
@@ -145,7 +166,32 @@ function addCitationReferences(citationNum) {
 
     $('#citationReferencesForm').tmpl(thisReferencesNum).appendTo('#newCitationReferences_' + citationNum);
 
-    buildSelect2("citationReferences_" + citationNum + "_" + (countCitationReferences + 1), "console/ref/rest/select", "请选择参考文献");
+    var width = $(window).width();
+	var height = $(window).height();
+	var layer_width = "90%";
+	var layer_height = "90%";
+	if (width > 760) {
+		layer_width = "500px";
+		layer_height = "500px";
+	}
+	// Form2下的References变化监测
+	var citationReferencesForm = "citationForm_" + citationNum + "_" + (countCitationReferences + 1);
+	var citationReferencesId = "citationReferences_" + citationNum + "_" + (countCitationReferences + 1);
+	$("select[id=" + citationReferencesId + "]").on("change", function() {
+		if ($("#" + citationReferencesId).val() == "addNew") {
+			$("#" + citationReferencesId).empty();
+			layer.open({
+				type : 2,
+				title : '<h4>添加参考文献</h4>',
+				fixed : false, // 不固定
+				area : [ layer_width, layer_height ],
+				content : '/console/citation/addRef?citationReferencesId=' + citationReferencesId + '&citationReferencesForm=' + citationReferencesForm
+			});
+		}
+	});
+    
+    
+    buildSelect2(citationReferencesId, "console/ref/rest/select", "请选择参考文献");
 
     $('#countCitationReferences_' + citationNum).val(countCitationReferences + 1);
 

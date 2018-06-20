@@ -46,7 +46,7 @@ public class TaxkeyServiceImpl implements TaxkeyService {
 		sort = request.getParameter("sort");
 		order = request.getParameter("order");
 		if (sort == null || sort.length() <= 0) {
-			sort = "synchdate";
+			sort = "keytitle";
 		}
 		if (order == null || order.length() <= 0) {
 			order = "desc";

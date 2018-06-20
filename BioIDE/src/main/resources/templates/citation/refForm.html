@@ -1,0 +1,146 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Title:Reference添加/编辑时的form页
+    Description：超级管理员权限可见的用户添加/编辑时的form页
+    Author：BINZI
+    Created date: 2018/05/28 15:56
+    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
+    Version: Html5
+ -->
+<th:block th:fragment="copy" >
+
+    <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
+    <input id="errorMsg" class="hidden" th:value="${errorMsg}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{id}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{inputer}" readonly="readonly"></input>
+    <div th:if="${not #strings.isEmpty(thisRef.inputtime)}">
+        <input class="hidden" th:field="*{inputtime}" readonly="readonly"></input>
+    </div>
+    <input class="hidden" th:field="*{refstr}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{leftstr}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{synchstatus}" readonly="readonly"></input>
+    <div th:if="${not #strings.isEmpty(thisRef.synchdate)}">
+        <input class="hidden" th:field="*{synchdate}" readonly="readonly"></input>
+    </div>
+    <input class="hidden" th:field="*{remark}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{status}" readonly="readonly"></input>
+ 	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="title" class="col-sm-4 control-label">参考文献名称:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{title}" type="text" class="form-control" id="title" name="title" placeholder="1~50个字符"/>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="keywords" class="col-sm-4 control-label">关键字:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{keywords}" type="text" class="form-control" id="keywords" name="keywords" placeholder="1~50个字符"/>
+	        </div>
+	    </div>
+	</div>
+ 	<div class="col-md-6">
+	 	<div class="form-group">
+	        <label for="author" class="col-sm-4 control-label">作者:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{author}" type="text" class="form-control" id="author" name="author" placeholder="1~30个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="tpage" class="col-sm-4 control-label">总页数:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{tpage}" type="text" class="form-control" id="tpage" name="tpage" placeholder="1~15个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="col-md-6">
+	 	<div class="form-group">
+	        <label for="translator" class="col-sm-4 control-label">译者:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{translator}" type="text" class="form-control" id="translator" name="translator" placeholder="1~30个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="tchar" class="col-sm-4 control-label">总字数:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{tchar}" type="text" class="form-control" id="tchar" name="tchar" placeholder="1~15个字符"/>
+	        </div>
+	    </div>
+    </div>
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="ptype" class="col-sm-4 control-label">文献类型:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{ptype}" type="text" class="form-control" id="ptype" name="ptype" placeholder="1~15个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="languages" class="col-sm-4 control-label">语言:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{languages}" type="text" class="form-control" id="languages" name="languages" placeholder="1~15个字符"/>
+	        </div>
+	    </div>
+    </div>
+	
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="journal" class="col-sm-4 control-label">期刊|专著名称:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{journal}" type="text" class="form-control" id="journal" name="journal" placeholder="1~50个字符"/>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="olang" class="col-sm-4 control-label">原始语言:</label>
+	        <div class="col-sm-8">
+	        	<input th:field="*{olang}" type="text" class="form-control" id="olang" name="olang" placeholder="1~15个字符"/>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="place" class="col-sm-4 control-label">出版地址:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{place}" type="text" class="form-control" id="place" name="place" placeholder="1~30个字符"/>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="press" class="col-sm-4 control-label">出版社:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{press}" type="text" class="form-control" id="press" name="press" placeholder="1~30个字符"/>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="pyear" class="col-sm-4 control-label">出版时间:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{pyear}" type="text" class="form-control" id="pyear" name="pyear" placeholder="1~30个字符"/>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-6">
+	    <div class="form-group">
+	        <label for="version" class="col-sm-4 control-label">版本:</label>
+	        <div class="col-sm-8">
+	            <input th:field="*{version}" type="text" class="form-control" id="version" name="version" placeholder="1~15个字符"/>
+	        </div>
+	    </div>
+	</div>
+</th:block>
+</html>

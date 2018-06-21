@@ -24,7 +24,12 @@ public class DescriptiontypeRestController {
 
 	@Autowired
 	private DescriptiontypeService descriptiontypeService;
-	
+	/**
+	 * <b> Descriptiontype的Index页面分页列表查询</b>
+	 * <p> Descriptiontype的Index页面分页列表查询</p>
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public JSON data(HttpServletRequest request) {
 		return this.descriptiontypeService.findBySelect(request);

@@ -61,7 +61,6 @@ public class CitationController {
         model.addAttribute("thisRef", thisRef);
         model.addAttribute("refId", request.getParameter("citationReferencesId"));
         model.addAttribute("citationReferencesForm", request.getParameter("citationReferencesForm"));
-        System.out.println(request.getParameter("citationReferencesId") + "-----------" + request.getParameter("citationReferencesForm"));
 		return "citation/addRefModal";
 	}
 }

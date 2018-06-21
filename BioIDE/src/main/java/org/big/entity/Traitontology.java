@@ -1,10 +1,11 @@
 package org.big.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 import org.big.common.StringJsonUserType;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import java.util.Date;
@@ -47,7 +48,7 @@ public class Traitontology implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date inputtime;
-	@Type(type = "StringJsonUserType")
+	
 	private String sourcesjson;
 
 	private int status;
@@ -57,7 +58,6 @@ public class Traitontology implements Serializable {
 
 	private int synchstatus;
 
-	@Type(type = "StringJsonUserType")
 	private String synonymys;
 
 	//bi-directional many-to-one association to TraitsetHasTraitontology
@@ -143,7 +143,7 @@ public class Traitontology implements Serializable {
 		return this.inputtime;
 	}
 
-	public void setInputtime(Date inputtime) {
+	public void setInputtime(Timestamp inputtime) {
 		this.inputtime = inputtime;
 	}
 
@@ -167,7 +167,7 @@ public class Traitontology implements Serializable {
 		return this.synchdate;
 	}
 
-	public void setSynchdate(Date synchdate) {
+	public void setSynchdate(Timestamp synchdate) {
 		this.synchdate = synchdate;
 	}
 

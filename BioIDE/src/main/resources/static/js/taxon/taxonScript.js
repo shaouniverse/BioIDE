@@ -41,15 +41,16 @@ function addRefLayer(){
 		layer_height = "500px";
 	}
 	//References -- Form1变化监测
-	$("select[id=" + 'references_' + num + "]").on("change", function() {
-		if ($("#references_" + num).val() == "addNew") {
-			$("#references_" + num).empty();
+	var refId = "references_" + num;
+	$("select[id=" + refId + "]").on("change", function() {
+		if ($("#" + refId).val() == "addNew") {
+			$("#" + refId).empty();
 			layer.open({
 				type : 2,
 				title : '<h4>添加参考文献</h4>',
 				fixed : false, // 不固定
 				area : [ layer_width, layer_height ],
-				content : '/console/ref/addNew'
+				content : '/console/ref/addNew?refId = ' + refId
 			});
 		}
 	});

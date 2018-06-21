@@ -4,33 +4,78 @@
 
 //删除一个新特征数据
 function removeTraitdata(traitdataNum) {
-    $("#traitdataForm_" + traitdataNum).remove();
+	var r = confirm("是否删除?");
+	if (r == true) {
+		$.post("/console/traitdata/rest/delete",
+		{
+	        "_csrf":$('input[name="_csrf"]').val(),
+	        "traitdataId":$("#traitdataId_" + traitdataNum).val()
+	    },
+		function(status) {
+			if (status) {
+				layer.msg('删除成功', {time : 500}, 
+				function() {
+					$("#traitdataForm_" + traitdataNum).remove();
+				})
+			}else {
+				layer.msg('操作失败', function(){})
+			}
+		})
+	}else {
+		layer.msg(
+			'操作取消', 
+			{time : 500}
+		)
+	}
 }
 //提交一个特征数据
 function submitTraitdata(traitdataNum) {
     traitdataFormValidator(traitdataNum);
-    if (
-        $('#traitdataForm_' + traitdataNum).data('bootstrapValidator').isValid() &&
+    if ($('#traitdataForm_' + traitdataNum).data('bootstrapValidator').isValid() &&
         ($("tr[id^='"+'traitdataValueForm_'+traitdataNum+"_']").length>0 && traitdataValidator('newTraitdataValue_'+traitdataNum,3)) &&
         ($("tr[id^='"+'traitdataReferencesForm_'+traitdataNum+"_']").length<=0 || referencesValidator('newTraitdataReferences_'+traitdataNum,3))) {
         //处理ajax提交
-        layer.msg('提交成功，请继续填写其他内容',
-            {
-                time: 1500, //1.5s后自动关闭
-            },
-            function () {
-                if ($('#traitdataCollapse_' + traitdataNum).hasClass('in')) {
-                    $('#traitdataCollapseTitle_' + traitdataNum).trigger("click");
-                }
-                $('#traitdataForm_' + traitdataNum).removeClass("panel-default");
-                $('#traitdataForm_' + traitdataNum).removeClass("panel-danger");
-                $('#traitdataForm_' + traitdataNum).addClass("panel-success");
-                $('#traitdataStatus_' + traitdataNum).removeClass("hidden");
-                return true;
-            });
-        return true;
-    }
-    else {
+    	var obj = $('#traitdataForm_' + traitdataNum).serialize();
+    	var postSuccess=false;
+    	return $.ajax({
+          type: "POST",
+          url: "/console/traitdata/rest/add",
+          data: obj,	// 要提交的表单
+          dataType: "json",
+          contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+          success: function (msg) {
+        	if (msg.result == true) {
+        		layer.msg('提交成功，请继续填写其他内容', {time: 1500},
+	        	    function () {
+		        	    if ($('#traitdataCollapse_' + traitdataNum).hasClass('in')) {
+		        	        $('#traitdataCollapseTitle_' + traitdataNum).trigger("click");
+		        	    }
+		        	    $('#traitdataForm_' + traitdataNum).removeClass("panel-default");
+		        	    $('#traitdataForm_' + traitdataNum).removeClass("panel-danger");
+		        	    $('#traitdataForm_' + traitdataNum).addClass("panel-success");
+		        	    $('#traitdataStatus_' + traitdataNum).removeClass("hidden");
+		        	    postSuccess = true;
+        			});
+    		}else{
+    			layer.msg("添加失败！", {time: 1000});
+    			postSuccess = false;
+    		}
+          },
+          error: function() {
+        	  postSuccess = false;
+          }
+        });
+    	
+    	if (!$('#traitdataCollapse_' + traitdataNum).hasClass('in')) {
+            $('#traitdataCollapseTitle_' + traitdataNum).trigger("click");
+        }
+        $('#traitdataForm_' + traitdataNum).removeClass("panel-danger");
+        $('#traitdataForm_' + traitdataNum).addClass("panel-success");
+        $('#traitdataStatus_' + traitdataNum).removeClass("hidden");
+        layer.msg("添加失败", function () {
+        });
+        return postSuccess;
+    } else {
         if (!$('#traitdataCollapse_' + traitdataNum).hasClass('in')) {
             $('#traitdataCollapseTitle_' + traitdataNum).trigger("click");
         }
@@ -103,6 +148,11 @@ function addTraitdata() {
         $("#traitdataCollapseTitle_" + (countTraitdata + 1)).text(
             buildTraitdataTitle(countTraitdata)
         );
+    });
+    
+ // 唯一标识UUID
+    $.get("/console/taxon/rest/uuid", function(id){
+    	$("#traitdataId_" + (countTraitdata + 1)).val(id);
     });
 
 }

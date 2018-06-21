@@ -1,0 +1,44 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Title:Datasource添加/编辑时的form页
+    Description：超级管理员权限可见的用户添加/编辑时的form页
+    Author：BINZI
+    Created date: 2018/05/28 15:56
+    Copyright: The Research Group of Biodiversity Informatics (BiodInfo Group) - 中国科学院动物研究所生物多样性信息学研究组
+    Version: Html5
+ -->
+<th:block th:fragment="copy" >
+
+    <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
+    <input id="errorMsg" class="hidden" th:value="${errorMsg}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{id}" readonly="readonly"></input>
+    <div th:if="${not #strings.isEmpty(thisDatasource.inputtime)}">
+        <input class="hidden" th:field="*{inputtime}" readonly="readonly"></input>
+    </div>
+    <input class="hidden" th:field="*{inputer}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{status}" readonly="readonly"></input>
+    <div th:if="${not #strings.isEmpty(thisDatasource.dataset)}">
+	    <input class="hidden" th:field="*{dataset.id}" value="${thisDatasource.dataset.id}" readonly="readonly"></input>
+    </div>
+ 	<div class="form-group">
+        <label for="versions" class="col-sm-2 control-label">数据源版本:</label>
+        <div class="col-sm-10 col-md-10">
+            <input th:field="*{versions}" type="text" class="form-control" id="versions" name="versions" placeholder="1~15个字符"/>
+        </div>
+    </div>
+ 
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">数据源名称:</label>
+        <div class="col-sm-10 col-md-10">
+            <input th:field="*{title}" type="text" class="form-control" id="title" name="title" placeholder="1~30个字符"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="info" class="col-sm-2 control-label">说明/备注:</label>
+        <div class="col-sm-10 col-md-10">
+            <textarea th:field="*{info}" id="info" name="info" class="form-control" placeholder="0~100个字符" rows="10"></textarea>
+        </div>
+    </div>
+</th:block>
+</html>

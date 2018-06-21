@@ -121,8 +121,7 @@ function addDescription() {
     $("#language_" + (countDescription + 1)).select2({
         placeholder: "请选择描述语言"
     });
-    // 数据源下拉选
-    buildSelect2("descriptionsourcesid_" + (countDescription + 1), "console/datasource/rest/select", "请选择数据来源");
+    
     $("#relationDes_" + (countDescription + 1)).select2({
         placeholder: "请选择描述"
     });
@@ -140,6 +139,35 @@ function addDescription() {
     $.get("/console/taxon/rest/uuid", function(id){
     	$("#descriptionId_" + (countDescription + 1)).val(id);
     });
+    
+    
+    // Form3Description下的Datasource变化检测
+    var width=$(window).width();
+    var height=$(window).height();
+    var layer_width="90%";
+    var layer_height="90%";
+    if(width>760){
+    	layer_width="500px";
+    	layer_height="500px";
+    }						  
+	var descriptionFormNum = "descriptionForm_" + (countDescription + 1);
+    var descriptionsourcesid = "descriptionsourcesid_" + (countDescription + 1);
+    $("select[id = " + descriptionsourcesid + "]").on("change", function(){
+    	if($("#" + descriptionsourcesid).val()=="addNew"){
+    		$("#" + descriptionsourcesid).empty();
+    		layer.open({
+    			type: 2,
+    			title:'<h4>添加数据源</h4>',
+    			fixed: false, //不固定
+    			area: [layer_width, layer_height],
+    			content: '/console/description/addDatasource?sourcesId=' + descriptionsourcesid + '&descriptionFormNum=' + descriptionFormNum
+    		});
+    	}
+    });
+    
+    // 数据源下拉选
+    buildSelect2("descriptionsourcesid_" + (countDescription + 1), "console/datasource/rest/select", "请选择数据来源");
+    
 }
 
 //选择参考文献类型

@@ -26,7 +26,7 @@
 		<p></p>
 		<form id="addForm" class="form-horizontal" th:action="@{/console/datasource/save}" method="post" th:object="${thisDatasource}">
 			<input class="hidden" id="datasourceId" name="datasourceId" th:value="${sourcesId}"></input>
-			<input class="hidden" id="citationFormNum" name="citationFormNum" th:value="${citationFormNum}"></input>
+			<input class="hidden" id="descriptionFormNum" name="descriptionFormNum" th:value="${descriptionFormNum}"></input>
 			<!-- 引入form -->
 			<th:block th:replace="citation/datasourcesForm :: copy"></th:block>
 			<p></p>
@@ -140,7 +140,7 @@ function addDatasource() {
 		layer.load(2);
 		var obj = $('#addForm').serialize();
 		var sourcesId = $("#datasourceId").val();
-		var citationFormNum = $("#citationFormNum").val();
+		var descriptionFormNum = $("#descriptionFormNum").val();
 		$.ajax({
 	        type: "POST",
 	        url: "console/datasource/rest/new",
@@ -150,7 +150,7 @@ function addDatasource() {
 	        success: function (rsl) {
 	      	if (rsl.result == true) {
 	      		parent.$("#" + sourcesId).prepend("<option value='" + rsl.newId + "' selected='selected'>" + rsl.newTitle+"</option>");
-	            parent.$('#' + citationFormNum).data('bootstrapValidator').updateStatus(sourcesId, 'NOT_VALIDATED',null).validateField(sourcesId);
+	            /* parent.$('#' + descriptionFormNum).data('bootstrapValidator').updateStatus(sourcesId, 'NOT_VALIDATED',null).validateField(sourcesId); */
 	            parent.layer.close(parent.layer.getFrameIndex(window.name));
 	      		layer.msg("添加成功！", {time: 1000});
 				}else{

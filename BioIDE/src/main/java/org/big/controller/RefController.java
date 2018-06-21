@@ -129,6 +129,9 @@ public class RefController {
 	public String addNew(Model model, HttpServletRequest request) {
 		Ref thisRef = new Ref();
         model.addAttribute("thisRef", thisRef);
+        model.addAttribute("refId", request.getParameter("refId"));
+        System.out.println(request.getParameter("refId"));
+        System.out.println("-0------------------------");
 		return "reference/addModal";
 	}
 }

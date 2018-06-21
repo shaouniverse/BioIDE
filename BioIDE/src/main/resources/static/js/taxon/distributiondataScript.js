@@ -106,9 +106,8 @@ function addDistributiondata() {
 
     $('#distributiondataForm').tmpl(thisDistributiondataNum).appendTo('#newDistributiondata');
 
-    // $("#destypeid_" + (countDistributiondata + 1)).select2({
-    //     placeholder: "请选择描述类型"
-    // });
+    // 行政区下拉选
+    buildSelect("geojson_" + (countDistributiondata + 1), "console/datasource/rest/select", "请选择行政区分布地");
     // $("#licenseid_" + (countDistributiondata + 1)).select2({
     //     placeholder: "请选择共享协议"
     // });
@@ -122,15 +121,15 @@ function addDistributiondata() {
     //     placeholder: "请选择描述"
     // });
 
-    //左右多选
-    var geojson = $('#geojson_'+(countDistributiondata + 1)).bootstrapDualListbox({
-        nonSelectedListLabel: '所有地理位置',
-        selectedListLabel: '已记录的地理位置',
-        preserveSelectionOnMove: 'moved',
-        moveOnSelect: false,
-    });
-
-    buildMultiple('#geojson_'+(countDistributiondata + 1));
+    // //左右多选
+    // var geojson = $('#geojson_'+(countDistributiondata + 1)).bootstrapDualListbox({
+    //     nonSelectedListLabel: '所有地理位置',
+    //     selectedListLabel: '已记录的地理位置',
+    //     preserveSelectionOnMove: 'moved',
+    //     moveOnSelect: false,
+    // });
+    //
+    // buildMultiple('#geojson_'+(countDistributiondata + 1));
 
     $('#countDistributiondata').val(countDistributiondata + 1);
 

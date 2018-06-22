@@ -70,10 +70,10 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="#"><i class="fa fa-bug"></i> 标本管理</a></li>
-                                    <li><a href="#"><i class="fa fa-globe"></i> 分布信息管理</a></li>
+                                    <li><a th:href="@{/console/specimendata}"><i class="fa fa-bug"></i> 标本管理</a></li>
+                                    <li><a th:href="@{/console/distributiondata}"><i class="fa fa-globe"></i> 分布信息管理</a></li>
                                     <li><a th:href="@{/console/protection}"><i class="fa fa-flag"></i> 保护信息管理</a></li>
-                                    <li><a href="#"><i class="fa fa-key"></i> 检索表管理</a></li>
+                                    <li><a th:href="@{/console/taxkey}"><i class="fa fa-key"></i> 检索表管理</a></li>
                                     <li class="treeview">
                                         <a href="#"><i class="fa fa-book"></i> 术语管理
                                             <span class="pull-right-container">
@@ -81,9 +81,9 @@
                                             </span>
                                         </a>
                                         <ul class="treeview-menu">
-                                            <li><a href="#"><i class="fa fa-book"></i> 术语集管理</a></li>
-                                            <li><a href="#"><i class="fa fa-book"></i> 术语表管理</a></li>
-                                            <li><a href="#"><i class="fa fa-book"></i> 术语信息管理</a></li>
+                                            <li><a th:href="@{console/traitset}"><i class="fa fa-book"></i> 术语集管理</a></li>
+                                            <li><a th:href="@{console/traitontology}"><i class="fa fa-book"></i> 术语表管理</a></li>
+                                            <li><a th:href="@{console/traitdescription}"><i class="fa fa-book"></i> 术语信息管理</a></li>
                                         </ul>
                                     </li>
                                 </ul>

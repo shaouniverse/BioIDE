@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title th:text="#{web_title}">BioIDE</title>
+    <title>BioIDE &nbsp;物种数据采集系统</title>
     <link rel="shortcut icon" th:href="@{/img/logo.png}" href="/images/logo.png" type="images/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content=""/>
@@ -19,7 +19,7 @@
     <!-- 引入Header -->
     <header id="header" class="main-header">
         <th:block th:replace="pageFrame/basicsHeader :: copy"></th:block>
-    </header> 
+    </header>
     <!-- 引入左侧用户操作菜单-->
     <th:block th:replace="pageFrame/basicsMenu :: copy"></th:block>
     <!-- 显示区 -->
@@ -27,8 +27,8 @@
         <!-- 内容区 -->
         <section class="container content-header">
             <h1>
-                新建分类单元集
-                <small>添加一个新的分类单元集</small>
+                编辑分类单元集
+				<small>在这里您可以对一个已有的分类单元集信息进行修改</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
@@ -41,24 +41,20 @@
                         <i class="fa fa-database"></i><span th:text="${#strings.length(session.datasetName)<13} ? ${session.datasetName} : ${#strings.substring(session.datasetName,0,10)+'...'}" th:title="${session.datasetName}">数据集名称</span></a>
                 </li>
                 <li><a th:href="@{/console/taxaset}" href="/"><i class="fa fa-cubes"></i> 分类单元集管理</a></li>
-                <li class="active"><i class="fa fa-plus"></i> 新建</li>
+                <li class="active"><i class="fa fa-edit"></i> 编辑</li>
             </ol>
         </section>
         <!-- 内容区 -->
         <section class="container content">
             <div class="well">
-                <form id="thisForm" class="form-horizontal" 
-                	th:action="@{/console/taxaset/save}" 
-                	method="post" th:object="${thisTaxaset}">
-                    <div>
-                    </div>
+                <form id="thisForm" class="form-horizontal" th:action="@{/console/taxaset/save}" method="post" th:object="${thisTaxaset}">
                     <!-- 引入form -->
                     <th:block th:replace="taxaset/form :: copy"></th:block>
                     <p></p>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">
-                                <a class="btn btn-app" th:href="@{/console/taxaset}" href="/console/taxaset">
+                                <a class="btn btn-app" th:href="@{/console/taxaset}" href="/console/tsxaset">
                                     <i class="fa fa-chevron-left"></i> <span>取消编辑</span>
                                 </a>
                                 <a class="btn btn-app" onclick="clearInput();">
@@ -80,6 +76,8 @@
 </div>
 <!-- 引入js -->
 <th:block th:replace="pageFrame/basicsJs :: copy"></th:block>
+<!-- page_script -->
+<script th:src="@{/js/tableScript.js}"></script>
 <script>
     //清空表单
     function clearInput() {
@@ -115,7 +113,7 @@
     //前端验证错误提示
     $(document).ready(function() {
         //获取host
-	    $("#base_url").val(window.location.host);
+        $("#base_url").val(window.location.host);
         $('#thisForm').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {

@@ -61,4 +61,15 @@ public interface DescriptionRepository extends BaseRepository<Description, Strin
 	@Transactional
 	@Query("Delete Description d where d.id =?1")
 	void deleteOneById(String descriptionId);
+	
+	/**
+     *<b>Traitset的select列表</b>
+     *<p> Traitset的select检索列表</p>
+     * @author BINZI
+     * @param findText
+     * @param pageable
+     * @return com.alibaba.fastjson.JSON
+     */
+	@Query(value = "Select d from Description d where (d.destitle like %?1%)")
+	Page<Description> searchByDescriptionInfo(String findText, Pageable pageable);
 }

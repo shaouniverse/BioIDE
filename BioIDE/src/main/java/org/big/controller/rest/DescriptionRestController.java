@@ -103,4 +103,15 @@ public class DescriptionRestController {
 		return this.descriptionService.deleteOne(request);
 	}
 	
+	/**
+	 * <b>Description的Index页面分页列表查询</b>
+	 * <p> Description的Index页面分页列表查询</p>
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
+	public JSON data(HttpServletRequest request) {
+		return this.descriptionService.findBySelect(request);
+	}
+	
 }

@@ -26,8 +26,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                <span>特征数据管理</span><br/>
-                <small>在这里您可以对您的特征数据进行管理</small>
+                <span>描述信息管理</span><br/>
+                <small>在这里您可以对您的描述信息进行管理</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
@@ -39,7 +39,7 @@
                     <a th:href="@{/console/dataset/show/}+${session.datasetID}">
                         <i class="fa fa-database"></i><span th:text="${#strings.length(session.datasetName)<13} ? ${session.datasetName} : ${#strings.substring(session.datasetName,0,10)+'...'}" th:title="${session.datasetName}">数据集名称</span></a>
                 </li>
-                <li class="active"><i class="fa fa-cubes"></i> 特征数据管理</li>
+                <li class="active"><i class="fa fa-cubes"></i> 描述信息管理</li>
             </ol>
         </section>
         <!-- 内容区 -->
@@ -61,7 +61,7 @@
                     <a class="btn btn-app" href="javascript:void(0)">
                         <i class="fa fa-edit"></i> <span>修改</span>
                     </a>
-                    <a class="btn btn-app" onclick="removeSelectObject('traitdata');">
+                    <a class="btn btn-app" onclick="removeSelectObject('description');">
                         <i class="fa fa-remove"></i> <span>删除</span>
                     </a>
                 </div>
@@ -74,7 +74,7 @@
                         data-locale="zh-CN"
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
-                        th:attr="data-url=@{/console/traitdata/rest/list}"	
+                        th:attr="data-url=@{/console/description/rest/list}"	
                         data-pagination="true"
                         data-side-pagination="server"
                         data-page-list="[10, 20, 30, 50, 100]"
@@ -88,6 +88,12 @@
                     <thead>
                     <tr>
                         <th data-field="select" data-align="center" data-sortable="false"></th>
+                        <th data-field="destitle" data-align="center" data-sortable="true">描述标题</th>
+                        <th data-field="describer" data-align="center" data-sortable="false">描述人</th>
+                        <th data-field="desdate" data-align="center" data-sortable="false">描述日期(年)</th>
+                        <th data-field="destypeid" data-align="center" data-sortable="false">描述类型</th>
+                        <th data-field="rightsholder" data-align="center" data-sortable="false">权利所有人</th>
+                        <th data-field="language" data-align="center" data-sortable="false">语言</th>
                         <th data-field="inputer" data-align="center" data-sortable="false">创建人</th>
                         <th data-field="inputtime" data-align="center" data-sortable="true">创建时间</th>
                         <th data-field="synchdate" data-align="center" data-sortable="true">更新时间</th>

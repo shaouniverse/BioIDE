@@ -111,12 +111,12 @@ function addTraitdata() {
     var thisTraitdataNum = {num: countTraitdata + 1};
 
     $('#traitdataForm').tmpl(thisTraitdataNum).appendTo('#newTraitdata');
-    // 术语集下拉选
-    buildSelect2("trainsetid_" + (countTraitdata + 1), "console/datasource/rest/select", "请选择特征所属的大类");
-    // 源数据下拉选
+    // 术语集下拉选    TraitSet		-- 对应字段 -- traitsetId	
+    buildSelect2("trainsetid_" + (countTraitdata + 1), "console/traitset/rest/select", "请选择特征所属的大类");
+    // 源数据下拉选    Datasource		-- 对应字段 -- sourcesjson
     buildSelect2("trainSourcesid_" + (countTraitdata + 1), "console/datasource/rest/select", "请选择数据来源");
-    // 描述来源下拉选
-    buildSelect2("desid_" + (countTraitdata + 1), "console/datasource/rest/select", "请选择特征来源的描述信息");
+    // 描述来源下拉选 Description	-- 对应字段 -- desid
+    buildSelect2("desid_" + (countTraitdata + 1), "console/description/rest/select", "请选择特征来源的描述信息");
 
     $('#countTraitdata').val(countTraitdata + 1);
 
@@ -169,7 +169,7 @@ function addTraitdataValue(traitdataNum) {
 
     $('#traitdataValueForm').tmpl(thisValueNum).appendTo('#newTraitdataValue_' + traitdataNum);
 
-    buildSelect2("traitontology_" + traitdataNum + "_" + (countTraitdataValue + 1), "console/ref/rest/select", "请选择术语(特征)");
+    buildSelect2("traitontology_" + traitdataNum + "_" + (countTraitdataValue + 1), "console/traitontology/rest/select", "请选择术语(特征)");
 
     //特征详细描述验证规则
     addTraitdataValueValidator(

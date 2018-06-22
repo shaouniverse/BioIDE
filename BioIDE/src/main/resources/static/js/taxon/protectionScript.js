@@ -114,11 +114,9 @@ function addProtection() {
     $('#protectionForm').tmpl(thisProtectionNum).appendTo('#newProtection');
     // 保护标准下拉选
     buildSelect("standardname_" + (countProtection + 1), "console/protectstandard/rest/selectStandard", "请选择保护标准");
-    // 保护标准版本下拉选
-    buildSelect("version_" + (countProtection + 1), "console/protectstandard/rest/selectVersion", "请选择标准版本");
-    // 保护级别下拉选
-    buildSelect("protlevel_" + (countProtection + 1), "console/protectstandard/rest/selectProtlevel", "请选择保护级别");
 
+    $('#version_'  + (countProtection + 1)).select2({placeholder: '请选择标准版本'});
+    $('#protlevel_'  + (countProtection + 1)).select2({placeholder: '请选择保护级别'});
     $('#countProtection').val(countProtection + 1);
 
     addProtectionValidator(countProtection + 1);
@@ -166,6 +164,32 @@ function addProtection() {
         );
     });
 
+}
+//根据standardname是否被选中给出不同的结果
+function getStandardname(num){
+	$("#version").click(function () { 
+		var standardname = $("#standardname_" + num).select2("val");
+		if (null == standardname) {
+			layer.msg("请选择保护标准", {time:1500});
+		}else{
+			$.get("/console/protectstandard/rest/selectVersion",{"standardname":standardname});
+			// 保护标准版本下拉选
+		    buildSelect("version_" + num, "console/protectstandard/rest/selectVersion", "请选择标准版本");
+		}
+	});
+}
+//根据version是否被选中给出不同的结果
+function getVersion(num){
+	$("#protlevel").click(function () { 
+		var version = $("#version_" + num).select2("val");
+		if (null == version) {
+			layer.msg("请选择标准版本", {time:1500});
+		}else{
+			$.get("/console/protectstandard/rest/selectProtlevel",{"version":version});
+			// 保护级别下拉选
+		    buildSelect("protlevel_" + num, "console/protectstandard/rest/selectProtlevel", "请选择保护级别");
+		}
+	});
 }
 //删除一个新参考文献
 function removeProtectionReferences(protectionNum, referencesNum) {

@@ -49,5 +49,13 @@ public interface DescriptionService {
 	 * @return
 	 */
 	boolean deleteOne(HttpServletRequest request);
+	/**
+     *<b>Description的select列表</b>
+     *<p> Description的select检索列表</p>
+     * @author BINZI
+     * @param request 页面请求
+     * @return com.alibaba.fastjson.JSON
+     */
+	JSON findBySelect(HttpServletRequest request);
 	
 }

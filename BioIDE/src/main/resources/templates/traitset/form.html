@@ -1,0 +1,38 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="copy" >
+
+    <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
+    <input class="hidden" th:field="*{id}" readonly="readonly"></input>
+    <input id="errorMsg" class="hidden" th:value="${errorMsg}" readonly="readonly"></input>
+ 	<div th:if="${not #strings.isEmpty(thisTraitset.inputtime)}">
+        <input class="hidden" th:field="*{inputtime}" readonly="readonly"></input>
+    </div>
+ 	<div th:if="${not #strings.isEmpty(thisTraitset.synchdate)}">
+        <input class="hidden" th:field="*{synchdate}" readonly="readonly"></input>
+    </div>
+    <input class="hidden" th:field="*{status}" readonly="readonly"></input>
+    <input class="hidden" th:field="*{synchstatus}" readonly="readonly"></input>
+    
+    <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">特征集名称:</label>
+        <div class="col-sm-10 col-md-10">
+            <input th:field="*{name}" type="text" class="form-control" id="name" name="name" placeholder="1~30个字符"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="sourcesid" class="col-sm-2 control-label">特征集来源:</label>
+        <div class="col-sm-10 col-md-10">
+        	<input th:field="*{sourcesid}" type="text" class="form-control" id="sourcesid" name="sourcesid" placeholder="选择数据源"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="remark" class="col-sm-2 control-label">说明/备注:</label>
+        <div class="col-sm-10 col-md-10">
+            <textarea th:field="*{remark}" id="remark" name="remark" class="form-control" placeholder="0~100个字符" rows="10"></textarea>
+        </div>
+    </div>
+    
+</th:block>
+</html>

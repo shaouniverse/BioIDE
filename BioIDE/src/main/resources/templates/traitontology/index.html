@@ -26,8 +26,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                <span>特征数据管理</span><br/>
-                <small>在这里您可以对您的特征数据进行管理</small>
+                <span>分类单元集管理</span><br/>
+                <small>在这里您可以对您的分类单元集进行管理</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}" href="/"><i class="fa fa-home"></i> 首页</a></li>
@@ -39,7 +39,7 @@
                     <a th:href="@{/console/dataset/show/}+${session.datasetID}">
                         <i class="fa fa-database"></i><span th:text="${#strings.length(session.datasetName)<13} ? ${session.datasetName} : ${#strings.substring(session.datasetName,0,10)+'...'}" th:title="${session.datasetName}">数据集名称</span></a>
                 </li>
-                <li class="active"><i class="fa fa-cubes"></i> 特征数据管理</li>
+                <li class="active"><i class="fa fa-cubes"></i> 分类单元集管理</li>
             </ol>
         </section>
         <!-- 内容区 -->
@@ -55,13 +55,13 @@
                 </div>
                 <!-- box-body -->
                 <div class="box-body">
-                    <a class="btn btn-app" href="javascript:void(0)">
+                    <a class="btn btn-app" th:href="@{/console/taxaset/add}" href="/">
                         <i class="fa fa-plus"></i> <span>新建</span>
                     </a>
-                    <a class="btn btn-app" href="javascript:void(0)">
+                    <a class="btn btn-app" onclick="editSelectObject('taxaset');">
                         <i class="fa fa-edit"></i> <span>修改</span>
                     </a>
-                    <a class="btn btn-app" onclick="removeSelectObject('traitdata');">
+                    <a class="btn btn-app" onclick="removeSelectObject('taxaset');">
                         <i class="fa fa-remove"></i> <span>删除</span>
                     </a>
                 </div>
@@ -74,7 +74,7 @@
                         data-locale="zh-CN"
                         data-classes="table table-hover table-condensed"
                         data-toggle="table"
-                        th:attr="data-url=@{/console/traitdata/rest/list}"	
+                        th:attr="data-url=@{/console/taxaset/rest/list}"	
                         data-pagination="true"
                         data-side-pagination="server"
                         data-page-list="[10, 20, 30, 50, 100]"
@@ -88,8 +88,9 @@
                     <thead>
                     <tr>
                         <th data-field="select" data-align="center" data-sortable="false"></th>
-                        <th data-field="inputer" data-align="center" data-sortable="false">创建人</th>
-                        <th data-field="inputtime" data-align="center" data-sortable="true">创建时间</th>
+                        <th data-field="tsname" data-align="center" data-sortable="true">分类单元集名称</th>
+                        <th data-field="tsinfo" data-align="center" data-sortable="false">描述</th>
+                        <th data-field="createdDate" data-align="center" data-sortable="true">建立时间</th>
                         <th data-field="synchdate" data-align="center" data-sortable="true">更新时间</th>
                         <th data-field="edit" data-align="center" data-sortable="false">操作</th>
                     </tr>
@@ -115,7 +116,7 @@
 </body>
 <script type="text/javascript">
 	$(function() {
-		$('#results_table').bootstrapTable('hideColumn', 'inputtime');
+		$('#results_table').bootstrapTable('hideColumn', 'createdDate');
 	});
 </script>
 </html>

@@ -1,0 +1,29 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="copy" >
+
+    <input class="hidden" id="base_url" name="base_url" readonly="readonly"></input>
+    <input class="hidden" th:field="*{id}" readonly="readonly"></input>
+    <input id="errorMsg" class="hidden" th:value="${errorMsg}" readonly="readonly"></input>
+    
+    <div class="form-group">
+        <label for="tsname" class="col-sm-2 control-label">术语名称:</label>
+        <div class="col-sm-10 col-md-10">
+            <input th:field="*{traitontologyid}" type="text" class="form-control" id="traitontologyid" name="traitontologyid" placeholder="1~30个字符"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="tsname" class="col-sm-2 control-label">属性名称:</label>
+        <div class="col-sm-10 col-md-10">
+            <input th:field="*{propertyid}" type="text" class="form-control" id="propertyid" name="propertyid" placeholder="1~30个字符"/>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="tsinfo" class="col-sm-2 control-label">定义:</label>
+        <div class="col-sm-10 col-md-10">
+            <textarea th:field="*{definition}" id="definition" name="definition" class="form-control" placeholder="0~100个字符" rows="10"></textarea>
+        </div>
+    </div>
+</th:block>
+</html>

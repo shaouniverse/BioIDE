@@ -107,7 +107,7 @@ function addDistributiondata() {
     $('#distributiondataForm').tmpl(thisDistributiondataNum).appendTo('#newDistributiondata');
 
     // 行政区下拉选
-    buildSelect("geojson_" + (countDistributiondata + 1), "console/datasource/rest/select", "请选择行政区分布地");
+    buildSelect("geojson_" + (countDistributiondata + 1), "console/geoobject/rest/select/administrative", "请选择行政区分布地");
     // $("#licenseid_" + (countDistributiondata + 1)).select2({
     //     placeholder: "请选择共享协议"
     // });
